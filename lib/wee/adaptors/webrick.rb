@@ -1,5 +1,7 @@
 require 'webrick'
 
+Socket.do_not_reverse_lookup = true
+
 # Example of usage: 
 #
 #   require 'wee/adaptors/webrick'
@@ -19,8 +21,6 @@ require 'webrick'
 #     mount('/', WEBrick::HTTPServlet::FileHandler, '.').
 #     start(:Port => 2000)
 #
-
-Socket.do_not_reverse_lookup = true
 
 class Wee::WEBrickAdaptor < WEBrick::HTTPServlet::AbstractServlet
 

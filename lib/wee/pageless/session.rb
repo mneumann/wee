@@ -1,4 +1,5 @@
 require 'thread'
+require 'cgi'
 
 # A session class, which does not have a page-store and as such cannot
 # backtrack.
@@ -77,8 +78,7 @@ class Wee::PagelessSession < Wee::Session
   end
 
   def set_response(context, response)
-    # TODO: depends on WEBrick!
-    response.cookies << WEBrick::Cookie.new('SID', self.id)
+    response.cookies << CGI::Cookie.new('SID', self.id)
     response.header.delete('Expire')
     response.header['Pragma'] = 'No-Cache'
     super

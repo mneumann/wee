@@ -1,3 +1,12 @@
+Mon Apr  4 13:03:08 CET 2005	Michael Neumann <mneumann@ntecs.de>
+	* lib/wee/pageless/session.rb, lib/wee/pageless/application.rb: Remove
+	  dependency of WEBrick::Cookie, use CGI::Cookie instead.
+
+	* lib/wee/adaptors/fastcgi.rb: Added preliminary FastCGI adaptor
+	  (does not work yet with Pageless applications).
+
+	* lib/wee/adaptors/webrick.rb: reordered line
+
 Sun Apr  3 13:24:04 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* lib/wee/adaptors/webrick.rb: doc fix
