@@ -5,10 +5,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::Brush::TableDataTag</title>
+  <title>Class: Wee::LiteralMethodCallback</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
   // <![CDATA[
 
@@ -50,13 +50,13 @@
         <table class="header-table">
         <tr class="top-aligned-row">
           <td><strong>Class</strong></td>
-          <td class="class-name-in-header">Wee::Brush::TableDataTag</td>
+          <td class="class-name-in-header">Wee::LiteralMethodCallback</td>
         </tr>
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../../files/lib/wee/renderer/html/brushes_rb.html">
-                lib/wee/renderer/html/brushes.rb
+                <a href="../../files/lib/wee/core/callback_rb.html">
+                lib/wee/core/callback.rb
                 </a>
         <br />
             </td>
@@ -65,7 +65,9 @@
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
-                Brush::GenericTagBrush
+                <a href="../Object.html">
+                Object
+               </a>
             </td>
         </tr>
         </table>
@@ -78,6 +80,12 @@
 
   <div id="contextContent">
 
+    <div id="description">
+      <p>
+A serializable callback.
+</p>
+
+    </div>
 
 
    </div>
@@ -86,8 +94,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000089">align_top</a>&nbsp;&nbsp;
-      <a href="#M000088">new</a>&nbsp;&nbsp;
+      <a href="#M000207">call</a>&nbsp;&nbsp;
+      <a href="#M000206">new</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -109,23 +117,23 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000088" class="method-detail">
-        <a name="M000088"></a>
+      <div id="method-M000206" class="method-detail">
+        <a name="M000206"></a>
 
         <div class="method-heading">
-          <a href="#M000088" class="method-signature">
-          <span class="method-name">new</span><span class="method-args">()</span>
+          <a href="#M000206" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(obj, method_id=:call)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000088-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000088-source">
+            onclick="toggleCode('M000206-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000206-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 313</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
-    <span class="ruby-keyword kw">super</span>(<span class="ruby-value str">'td'</span>)
+<span class="ruby-comment cmt"># File lib/wee/core/callback.rb, line 101</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">method_id</span>=<span class="ruby-identifier">:call</span>)
+    <span class="ruby-ivar">@obj</span>, <span class="ruby-ivar">@method_id</span> = <span class="ruby-identifier">obj</span>, <span class="ruby-identifier">method_id</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -134,24 +142,23 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000089" class="method-detail">
-        <a name="M000089"></a>
+      <div id="method-M000207" class="method-detail">
+        <a name="M000207"></a>
 
         <div class="method-heading">
-          <a href="#M000089" class="method-signature">
-          <span class="method-name">align_top</span><span class="method-args">()</span>
+          <a href="#M000207" class="method-signature">
+          <span class="method-name">call</span><span class="method-args">(*args)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000089-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000089-source">
+            onclick="toggleCode('M000207-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000207-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 317</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">align_top</span>
-    <span class="ruby-ivar">@attributes</span>[<span class="ruby-value str">'align'</span>] = <span class="ruby-value str">'top'</span>
-    <span class="ruby-keyword kw">self</span>
+<span class="ruby-comment cmt"># File lib/wee/core/callback.rb, line 105</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+    <span class="ruby-ivar">@obj</span>.<span class="ruby-identifier">send</span>(<span class="ruby-ivar">@method_id</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>

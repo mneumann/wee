@@ -5,10 +5,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>File: callback.rb</title>
+  <title>File: INSTALL</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
   // <![CDATA[
 
@@ -47,16 +47,16 @@
 
 
   <div id="fileHeader">
-    <h1>callback.rb</h1>
+    <h1>INSTALL</h1>
     <table class="header-table">
     <tr class="top-aligned-row">
       <td><strong>Path:</strong></td>
-      <td>lib/wee/core/callback.rb
+      <td>INSTALL
       </td>
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Sun Jan 02 21:55:08 CET 2005</td>
+      <td>Sun Jan 02 21:04:57 CET 2005</td>
     </tr>
     </table>
   </div>
@@ -69,17 +69,20 @@
   <div id="contextContent">
 
     <div id="description">
-      <p>
-The callback registry is the central datastructure where all components of
-a session register their callbacks.
-</p>
-<p>
-The format of the internal datastructure is:
-</p>
-<pre>
-  @callbacks[type][callback_id] =&gt; callback
-  @obj_to_id_map[type][object] =&gt; [id*]
-</pre>
+      <h1>Installation</h1>
+<ol>
+<li>Download and Install RubyGems: <a
+href="http://rubygems.rubyforge.org">rubygems.rubyforge.org</a>
+
+</li>
+<li>Install <a href="../classes/Wee.html">Wee</a>: <tt>gem install wee</tt>
+
+</li>
+<li>Set environment variable (required to load RubyGems): <tt>export
+RUBYOPT=-rubygems</tt>
+
+</li>
+</ol>
 
     </div>
 

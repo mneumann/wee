@@ -1,0 +1,7 @@
+= Installation
+
+1. Download and Install RubyGems: http://rubygems.rubyforge.org
+
+2. Install Wee: <tt>gem install wee</tt>
+
+3. Set environment variable (required to load RubyGems): <tt>export RUBYOPT=-rubygems</tt>

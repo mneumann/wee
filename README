@@ -2,7 +2,7 @@
 
 == Copyright and License
 
-Copyright (c) 2004 by Michael Neumann (mneumann@ntecs.de).
+Copyright (c) 2004, 2005 by Michael Neumann (mneumann@ntecs.de).
 
 Released under the same terms of license as Ruby. Some files under directory
 <tt>examples/</tt> might be copyrighted by third parties and licensed under
@@ -24,25 +24,6 @@ Wee has _real_ components, which are like widgets in a GUI. Once written, you
 can use them everywhere. They are completely independent and do not interfere
 with other components. Components encapsulate state, a view and actions. Of
 course you can use an external model or use templates for rendering.
-
-=== Continuation based
-
-This is also known as _modal_. You can write code like the one shown below
-(taken from one of Avi's emails) where each method displays a new page:
-
-  def checkout
-    billing = getAddress("Billing Address")
-    if useSeparateShippingAddress()
-      shipping = getAddress("Shipping Address")
-    else
-      shipping = billing
-    end
-    payment = getPaymentInfo()
-    showConfirmation(billing, shipping, payment)
-  end 
-
-Try to implement the same in a non-continuation based framework and show me
-your code... ;-)
 
 === Backtracking
 
@@ -90,17 +71,52 @@ can be any object, e.g. whole components:
    items = labels.collect {|m| MessageBox.new(m)}
    r.select_list(items).labels(labels).callback {|choosen| call choosen.first} 
 
+=== Continuation based (Optional)
+
+<b>IMPORTANT:</b> <i>The current implementation of continuations in Ruby might lead
+to memory leaks, if you use continuations. Furthermore, if you use
+continuations, it's no longer possible to store the session state to disk.</i>
+
+Continuation-based frameworks are also known as _modal_ frameworks. You can
+write code like the one shown below (taken from one of Avi's emails) where each
+method displays a new page:
+
+  def checkout
+    billing = getAddress("Billing Address")
+    if useSeparateShippingAddress()
+      shipping = getAddress("Shipping Address")
+    else
+      shipping = billing
+    end
+    payment = getPaymentInfo()
+    showConfirmation(billing, shipping, payment)
+  end 
+
+Try to implement the same in a non-continuation based framework and show me
+your code... ;-)
+
+=== Fully Marshallable (drops Continuation support)
+
+If you don't need continuations, Wee can be made fully marshallable. It is not
+yet fully marshallable (it was in the past), but it can be made, if required. 
+
 == Observations and Limitations
 
-* Due to using continuations for cross-component calls, it's impossible to
+* Using continuations (might) lead to memory leaks! 
+
+* When using continuations for cross-component calls, it's impossible to
   store a session to disk (at least in Ruby). This problem is partly addressed
   by checkpointing provided by operating systems like
   DragonFly[www.dragonflybsd.org]. But with this approach it's still impossible
   to store sessions _selectively_ to disk. 
 
-* Each session runs in it's own (light-weigth) thread.
+* Each session runs in it's own (light-weigth) thread (this is a neccessity
+  when using continuations).
 
-* Only one action callback can be invoked per request.
+* Only one action callback can be invoked per request (a former version of Wee
+  was able to invoke multiple callback, and answer even from multiple
+  components at the same time, but this was removed, due to the unreliability of
+  continuations in Ruby).  
 
 == What is backtracking?
 
