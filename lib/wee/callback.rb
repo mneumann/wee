@@ -24,15 +24,16 @@ class Wee::Callback
 end
 
 class Wee::MethodCallback < Wee::Callback
-  attr_accessor :meth, :args
+  attr_accessor :meth
 
-  def initialize(obj, meth, *args)
-    super(obj)
-    @meth, @args = meth.to_s, args
+  def initialize(obj, meth, *values)
+    super(obj, *values)
+    @meth = meth
   end
 
   def invoke
-    @object.send(@meth, *@args)
+    m = @object.method(@meth)
+    m.call(*@values[0,m.arity])
   end
 end
 
@@ -42,7 +43,7 @@ end
 class Wee::CallbackStream
   
   # [+stream+]
-  #    A Hash object with shape "type -> component -> [callback*]" 
+  #    A Hash object with shape "type -> object -> [callback*]" 
 
   def initialize(stream)
     @stream = stream 
@@ -53,24 +54,24 @@ class Wee::CallbackStream
   end
 end
 
-# register_callback(Wee::MethodCallback[obj, :call], :input) 
-# @callbacks[type][callback_id] # => callback
 
 class Wee::CallbackRegistry
 
+  # format of @callbacks:
+  #   @callbacks[type][callback_id] # => callback
+
   def initialize
     @next_callback_id = 1
-    @callbacks = Hash.new { Hash.new }
+    @callbacks = Hash.new
   end
 
   # Registers +callback+ under +type+ and returns a unique callback id. 
 
   def register(callback, type=nil)
-    c = @callbacks[type]
+    c = (@callbacks[type] ||= Hash.new)
     cid = get_next_callback_id() 
     raise "duplicate callback id!" if c.has_key?(cid)
     c[cid] = callback
-    @callbacks[type] = c
     return cid
   end
 

@@ -65,8 +65,7 @@ class Wee::Session
         # 1. Reset the action/input fields (as they are regenerated in the
         #    rendering process).
         # 2. Render the page (respond).
-        # 3. Store the page back into the store (only neccessary if page is not
-        #    stored in memory).
+        # 3. Store the page back into the store 
 
         page = Wee::Page.new(page.snapshot, Wee::CallbackRegistry.new)  # remove all action/input handlers
         context.callback_registry = page.callback_registry
@@ -80,7 +79,7 @@ class Wee::Session
         # We process the request and invoke actions/inputs. Then we generate a
         # new page view. 
 
-        s = context.request.query.dup.update({context.handler_id => nil})
+        s = {context.handler_id => nil}.update(context.request.query)
         callback_stream = page.callback_registry.create_callback_stream(s)
 
         @root_component.process_callback_chain(callback_stream)
