@@ -83,7 +83,7 @@ class Wee::Session < Wee::RequestHandler
 
       # A valid page_id was specified and the corresponding page exists.
 
-      @page.snapshot.restore
+      @page.snapshot.restore if @context.request.page_id != @snapshot_page_id 
 
       p @context.request.fields if $DEBUG
 
@@ -124,6 +124,7 @@ class Wee::Session < Wee::RequestHandler
           # replace existing page with new snapshot
           @page.snapshot = self.snapshot
           @page_store[@context.request.page_id] = @page
+          @snapshot_page_id = @context.request.page_id  
           @context.response = live_update_response
         else
           handle_new_page_view(@context)
@@ -149,8 +150,8 @@ class Wee::Session < Wee::RequestHandler
     @context
   end
 
-  def current_page
-    @page
+  def current_callbacks
+    @page.callbacks
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -175,6 +176,7 @@ class Wee::Session < Wee::RequestHandler
     new_page_id = @idgen.next.to_s
     new_page = create_page(snapshot || self.snapshot())
     @page_store[new_page_id] = new_page
+    @snapshot_page_id = new_page_id 
     redirect_url = context.request.build_url(context.request.request_handler_id, new_page_id)
     context.response = Wee::RedirectResponse.new(redirect_url)
   end

@@ -1,3 +1,13 @@
+Fri Jan 28 02:32:30 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* Removed method Wee::Session#current_page and replaced it by
+	  #current_callbacks.
+
+	* Wee::Session no longer applies a snapshot if the snapshot equals the current 
+	  state of the components tree 
+
+	* removed duplicate code from continuation/session.rb
+
 Fri Jan 28 02:10:31 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* added 'wee' binary which generates a sample application and
