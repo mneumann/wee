@@ -1,9 +1,5 @@
 class Wee::Decoration < Wee::Presenter
 
-  # A pointer back to the component for which the decoration was specified.
-
-  attr_accessor :component
-
   # Points to the next decoration in the chain. A decoration is responsible for
   # all decorations or components "below" it (everything that follows this
   # decoration in the chain). In other words, it's the owner of everything
@@ -23,24 +19,10 @@ class Wee::Decoration < Wee::Presenter
     @owner.render(rendering_context)
   end
 
-  # Remove this decoration from the decoration chain.
-
-  def remove!
-    raise if @component.remove_decoration(self) != self
-  end
-
-  protected
-
-  def initialize(component)
-    @component = component
-    @owner = nil
-  end
-
 end
 
 class Wee::Delegate < Wee::Decoration
-  def initialize(component, delegate)
-    super(component)
+  def initialize(delegate)
     @delegate = delegate
   end
 
@@ -77,7 +59,6 @@ class Wee::AnswerDecoration < Wee::Decoration
     args = catch(:wee_answer) { super; nil }
     unless args.nil?
       # return to the calling component 
-      self.remove!
       @on_answer.call(*args) if @on_answer
     end
   end
