@@ -1,5 +1,12 @@
 Thu Jan 27 15:23:59 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
+	* Component#add_decoration returns now self. Example where this is
+	  useful:
+
+	    app = Wee::Utils.app_for {
+	      HelloWorld.new.add_decoration(Wee::PageDecoration.new("Hello World"))
+	    }
+	  
 	* add non-Rubygems way to install Wee: install.rb
 
 --------------------------------------------------------------------

@@ -152,6 +152,8 @@ class Wee::Component < Wee::Presenter
   # A global decoration is added in front of the decoration chain, a local
   # decoration is added in front of all other local decorations but after all
   # global decorations.
+  #
+  # Returns: +self+
 
   def add_decoration(d)
     if d.global?
@@ -176,6 +178,8 @@ class Wee::Component < Wee::Presenter
         last_global.owner = d 
       end
     end
+
+    return self
   end
 
   # Remove decoration +d+ from the decoration chain. 
