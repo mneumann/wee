@@ -5,7 +5,7 @@ class Wee::Window < Wee::Component
     @title = title
     @child = child
     @status = :normal  
-    @children = [@child]
+    self.children << @child
     @pos = pos
   end
 
@@ -34,12 +34,12 @@ class Wee::Window < Wee::Component
         r.table_data.style("text-align: left; width: 66%").with(@title)
         r.table_data.style("text-align: right").with do
           if @status == :minimized
-            r.anchor.action(:maximize).with("#")
+            r.anchor.callback{maximize}.with("#")
           else
-            r.anchor.action(:minimize).with("_")
+            r.anchor.callback{minimize}.with("_")
           end
           r.space
-          r.anchor.action(:close).with("X")
+          r.anchor.callback{close}.with("X")
         end
       end
       r.table_row do

@@ -24,9 +24,9 @@ class Counter < Wee::Component
   end
 
   def render_content_on(r)
-    r.anchor.action(:dec).with("--")
+    r.anchor.callback { dec }.with("--")
     r.space; r.text(@cnt.to_s); r.space 
-    r.anchor.action(:inc).with("++")
+    r.anchor.callback { inc }.with("++")
   end
 end
 
@@ -40,9 +40,9 @@ class MessageBox < Wee::Component
     r.break
     r.text(@text)
     r.form do 
-      r.submit_button.value('OK').action(:answer, true)
+      r.submit_button.value('OK').callback { answer true }
       r.space
-      r.submit_button.value('Cancel').action(:answer, false)
+      r.submit_button.value('Cancel').callback { answer false }
     end
     r.break
   end
@@ -73,7 +73,7 @@ class RegexpValidatedInput < Wee::Component
 
   def render_content_on(r)
     r.form do
-      r.text_input.attr(:input)
+      r.text_input.value(@input).callback(&method(:input=))
       r.text %(<div style="color: red">Invalid input</div>) if @error
     end
   end
@@ -103,19 +103,19 @@ class EditableCounter < Counter
   end
 
   def render_content_on(r)
-    #r.form.action(:submit).with do
-      r.anchor.action(:dec).with("--")
+    #r.form.callback{submit}.with do
+      r.anchor.callback { dec }.with("--")
       r.space
 
       if @show_edit_field
-        r.text_input.assign(:cnt=).value(@cnt).size(6)
-        r.submit_button.action(:submit).value('S')
+        r.text_input.callback{|@cnt|}.value(@cnt).size(6)
+        r.submit_button.callback{submit}.value('S')
       else
-        r.anchor.action(:submit).with(@cnt) 
+        r.anchor.callback{submit}.with(@cnt) 
       end
 
       r.space
-      r.anchor.action(:inc).with("++")
+      r.anchor.callback{inc}.with("++")
     #end
   end
 
@@ -144,18 +144,36 @@ class MainPage < Wee::Component
 
     @arr = []
     @text = ""
+
+    @list1 = (0..9).to_a
+    @selected1 = []
+    @list2 = []
+    @selected2 = []
   end
 
   def backtrack_state(snap)
     super
     snap.add(@arr)
     snap.add(@text)
+
+    snap.add(@list1)
+    snap.add(@selected1)
+    snap.add(@list2)
+    snap.add(@selected2)
   end
 
   attr_accessor :text
 
   def render_content_on(r)
     r.page.title("Counter Test").with do 
+
+      r.form do
+        r.select_list(@list1).size(10).multiple.selected(@selected1).callback {|choosen| @selected1.replace(choosen)}
+        r.submit_button.value('-&gt;').callback { @list2.push(*@selected1); @list1.replace(@list1-@selected1); @selected1.replace([]) } 
+        r.submit_button.value('&lt;-').callback { @list1.push(*@selected2); @list2.replace(@list2-@selected2); @selected2.replace([]) } 
+        r.select_list(@list2).size(10).multiple.selected(@selected2).callback {|choosen| @selected2.replace(choosen)}
+      end
+
       r.form do
 
       @counters.each { |cnt|
@@ -172,8 +190,8 @@ class MainPage < Wee::Component
       end
 
       r.form do
-        r.text_input.value(@text).assign(:text=)
-        r.submit_button.action(:add).value('add')
+        r.text_input.value(@text).callback{|@text|}
+        r.submit_button.callback{add}.value('add')
       end
 
     end 
@@ -195,11 +213,14 @@ class MySession < Wee::Session
   end
 end
 
+#Wee::Application.register '/app', MySession 
+
+#Wee::Application.new('/app', MySession
+
+
 if __FILE__ == $0
   Wee::Application.new {|app|
-    app.name = 'Counter'
-    app.path = '/app'
-    app.session_class = MySession
-    app.session_store = Wee::Utils::LRUCache.new(1000) # handle up to 1000 sessions
-  }.start
+    app.default_request_handler { MySession.new }
+    app.id_generator = Wee::SimpleIdGenerator.new(rand(1_000_000))
+  }.start(:mount_path => '/app')
 end
