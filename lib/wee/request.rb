@@ -12,7 +12,7 @@ class Wee::Request
   attr_reader :page_id, :fields, :cookies
 
   # The part of the URL that is user-defineable
-  attr_reader :info
+  attr_accessor :info
 
   def initialize(app_path, path, headers, fields, cookies)
     raise ArgumentError if app_path[-1] == ?/
@@ -35,7 +35,6 @@ class Wee::Request
     self.fields.empty?
   end
 
-
   def build_url(hash={})
     default = {
       :request_handler_id => self.request_handler_id,
@@ -50,7 +49,7 @@ class Wee::Request
     info = hash[:info]
 
     raise ArgumentError if request_handler_id.nil? and not page_id.nil?
-    unless pageless?
+    if not pageless?
       raise ArgumentError if page_id.nil? and not callback_id.nil?
     end
 

@@ -104,6 +104,8 @@ end
 
 # A serializable callback. 
 class Wee::LiteralMethodCallback
+  attr_reader :obj
+
   def initialize(obj, method_id=:call, *args)
     @obj, @method_id = obj, method_id
     @args = args unless args.empty?

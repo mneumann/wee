@@ -1,7 +1,7 @@
 require 'time'
 
 class Wee::Response
-  DEFAULT_HEADER = { 'Content-Type' => 'text/html' }.freeze
+  DEFAULT_HEADER = {}.freeze
 
   attr_accessor :status, :content
   attr_reader :header
@@ -17,6 +17,7 @@ class Wee::Response
   def initialize(mime_type = 'text/html', content='')
     @status = 200
     @header = DEFAULT_HEADER.dup
+    self.content_type = mime_type
     @content = content 
   end
 

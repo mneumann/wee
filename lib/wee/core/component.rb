@@ -79,11 +79,28 @@ class Wee::Component < Wee::Presenter
   def initialize() # :notnew:
     @__decoration = Wee::ValueHolder.new(self)
     @__children = []
+    @__parent = nil
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # :section: Children
+  # :section: Children/Composite
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  public
+
+  # Returns the parent component (or nil if it's the root component).  Note
+  # that if you #call a component, the parent attribute will not be set
+  # automatically.
+
+  def parent
+    @__parent
+  end
+
+  # Reparents the component. You should not call this method yourself!
+
+  def parent=(new_parent)
+    @__parent = new_parent
+  end
 
   protected
 
@@ -111,8 +128,14 @@ class Wee::Component < Wee::Presenter
   #     snapshot.add(self.children)
   #   end
   #
+  # NOTE: Each component has exactly one parent component (or none in the case
+  # of the root component or when using #call). As such, you can't (and should
+  # not!) add a child more than once to another component.
+  #
 
   def add_child(child)
+    raise "Child already has a parent!" if not child.parent.nil?
+    child.parent = self
     self.children << child
     child
   end
