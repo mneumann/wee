@@ -25,10 +25,3 @@ def parse_url(request)
   end
   hash
 end
-
-# for Ruby 1.8
-module Enumerable
-  def min_by(&block)
-    min {|i,j| block.call(i) <=> block.call(j) }
-  end
-end

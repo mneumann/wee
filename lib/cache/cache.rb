@@ -1,3 +1,12 @@
+unless Enumerable.instance_methods.include?("min_by")
+  # for Ruby 1.8
+  module Enumerable
+    def min_by(&block)
+      min {|i,j| block.call(i) <=> block.call(j) }
+    end
+  end
+end
+
 # Abstract super class of all cache implementations.
 class Cache; end
 
