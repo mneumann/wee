@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../files/lib/wee/snapshot_rb.html">
-                lib/wee/snapshot.rb
+                <a href="../files/lib/wee/snapshot_ext_rb.html">
+                lib/wee/snapshot_ext.rb
                 </a>
         <br />
             </td>
@@ -80,12 +80,6 @@
 
   <div id="contextContent">
 
-    <div id="description">
-      <p>
-TODO: ensure that undefine_finalizer returns the object
-</p>
-
-    </div>
 
 
    </div>
@@ -94,7 +88,7 @@ TODO: ensure that undefine_finalizer returns the object
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000034">apply_snapshot</a>&nbsp;&nbsp;
+      <a href="#M000034">restore_snapshot</a>&nbsp;&nbsp;
       <a href="#M000033">take_snapshot</a>&nbsp;&nbsp;
       </div>
     </div>
@@ -122,7 +116,7 @@ TODO: ensure that undefine_finalizer returns the object
 
         <div class="method-heading">
           <a href="#M000034" class="method-signature">
-          <span class="method-name">apply_snapshot</span><span class="method-args">(snap)</span>
+          <span class="method-name">restore_snapshot</span><span class="method-args">(snap)</span>
           </a>
         </div>
       
@@ -131,8 +125,8 @@ TODO: ensure that undefine_finalizer returns the object
             onclick="toggleCode('M000034-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000034-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/snapshot.rb, line 11</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">apply_snapshot</span>(<span class="ruby-identifier">snap</span>)
+<span class="ruby-comment cmt"># File lib/wee/snapshot_ext.rb, line 10</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">restore_snapshot</span>(<span class="ruby-identifier">snap</span>)
     <span class="ruby-identifier">instance_variables</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">iv</span><span class="ruby-operator">|</span>
       <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-identifier">iv</span>, <span class="ruby-identifier">snap</span>[<span class="ruby-identifier">iv</span>])
     <span class="ruby-keyword kw">end</span>
@@ -156,7 +150,7 @@ TODO: ensure that undefine_finalizer returns the object
             onclick="toggleCode('M000033-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000033-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/snapshot.rb, line 3</span>
+<span class="ruby-comment cmt"># File lib/wee/snapshot_ext.rb, line 2</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">take_snapshot</span>
     <span class="ruby-identifier">snap</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
     <span class="ruby-identifier">instance_variables</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">iv</span><span class="ruby-operator">|</span>

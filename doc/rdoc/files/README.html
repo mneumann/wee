@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Mon Nov 15 01:33:17 CET 2004</td>
+      <td>Fri Dec 10 13:06:21 CET 2004</td>
     </tr>
     </table>
   </div>
@@ -73,26 +73,55 @@
 <p>
 Copyright &#169; 2004 by Michael Neumann (mneumann@ntecs.de)
 </p>
-<h2>The anatomy of a request/response cycle</h2>
+<h1>The anatomy of a request/response cycle</h1>
 <p>
 The request/response cycle in <a href="../classes/Wee.html">Wee</a> is
 actually split into two separate phases or steps. Depending on the
 point-of-view (given that a page is rendered and the user clicks on a link
 or button), the first phase is to invoke an action (a
 &quot;callback&quot;). Then in the second phase, a new page is rendered and
-sent back to the user:
+sent back to the user. So the two steps are:
 </p>
 <ol>
-<li>invoke callback(s)
+<li>invoke callbacks (action phase)
 
 </li>
-<li>render new page and display
+<li>render new page and display (render phase)
 
 </li>
 </ol>
 <p>
-These two phases repeat permanently.
+These two phases repeat permanently. Which tasks are performed in each of
+them, is briefly listed below:
 </p>
+<p>
+<b>Action:</b>
+</p>
+<ol>
+<li>restore snapshot (if not up-to-date)
+
+</li>
+<li>invoke actions
+
+</li>
+<li>backtrack state
+
+</li>
+<li>update url -&gt; redirect to render phase (not yet)
+
+</li>
+</ol>
+<p>
+<b>Render:</b>
+</p>
+<ol>
+<li>restore snapshot (if not up-to-date)
+
+</li>
+<li>render
+
+</li>
+</ol>
 <h3>Invoking Callbacks</h3>
 <p>
 Possible sources for callbacks are links (anchors) and all kind of
@@ -172,6 +201,27 @@ components <em>render_chain</em> methods to display those components
 &quot;inside&quot; itself (usually a component does this for it&#8217;s
 child components, but this has to be implemented by the programmer).
 </p>
+<h3>Further Reads</h3>
+<p>
+In this order:
+</p>
+<ul>
+<li><a href="../classes/Wee/Presenter.html">Wee::Presenter</a>
+
+</li>
+<li><a href="../classes/Wee/Component.html">Wee::Component</a>
+
+</li>
+<li><a href="../classes/Wee/Decoration.html">Wee::Decoration</a>
+
+</li>
+<li><a href="../classes/Wee/Delegate.html">Wee::Delegate</a>
+
+</li>
+<li><a href="../classes/Wee/AnswerDecoration.html">Wee::AnswerDecoration</a>
+
+</li>
+</ul>
 
     </div>
 

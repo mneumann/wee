@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../files/lib/wee/snapshot_rb.html">
-                lib/wee/snapshot.rb
+                <a href="../files/lib/wee/snapshot_ext_rb.html">
+                lib/wee/snapshot_ext.rb
                 </a>
         <br />
             </td>
@@ -88,7 +88,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000036">apply_snapshot</a>&nbsp;&nbsp;
+      <a href="#M000036">restore_snapshot</a>&nbsp;&nbsp;
       <a href="#M000035">take_snapshot</a>&nbsp;&nbsp;
       </div>
     </div>
@@ -116,7 +116,7 @@
 
         <div class="method-heading">
           <a href="#M000036" class="method-signature">
-          <span class="method-name">apply_snapshot</span><span class="method-args">(snap)</span>
+          <span class="method-name">restore_snapshot</span><span class="method-args">(snap)</span>
           </a>
         </div>
       
@@ -125,8 +125,8 @@
             onclick="toggleCode('M000036-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000036-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/snapshot.rb, line 33</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">apply_snapshot</span>(<span class="ruby-identifier">snap</span>)
+<span class="ruby-comment cmt"># File lib/wee/snapshot_ext.rb, line 32</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">restore_snapshot</span>(<span class="ruby-identifier">snap</span>)
     <span class="ruby-identifier">replace</span>(<span class="ruby-identifier">snap</span>)
   <span class="ruby-keyword kw">end</span>
 </pre>
@@ -148,9 +148,9 @@
             onclick="toggleCode('M000035-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000035-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/snapshot.rb, line 29</span>
+<span class="ruby-comment cmt"># File lib/wee/snapshot_ext.rb, line 28</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">take_snapshot</span>
-    <span class="ruby-constant">ObjectSpace</span>.<span class="ruby-identifier">undefine_finalizer</span>(<span class="ruby-identifier">dup</span>)
+    <span class="ruby-identifier">dup</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
