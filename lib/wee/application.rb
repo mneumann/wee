@@ -137,7 +137,9 @@ class Wee::Application
   end
 
   def request_handler_expired(context)
-    context.response = Wee::RefreshResponse.new("Invalid or expired request handler!", context.request.application_path)
+    context.response = Wee::RefreshResponse.new("Invalid or expired request handler!",
+                       context.request.build_url(:request_handler_id => nil,
+                                                 :page_id => nil))
   end
 
 end

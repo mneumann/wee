@@ -1,3 +1,9 @@
+Thu Mar  3 11:38:21 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* wee/application.rb, wee/pageless/application.rb
+	  (request_handler_expired): Forward to an URL that includes the info
+	  part but neither the request_handler_id nor the page_id.
+
 Sat Feb 26 17:12:35 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* wee/request.rb, test/test_request.rb, wee/pageless/request.rb,
