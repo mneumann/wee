@@ -1,31 +1,17 @@
 $LOAD_PATH.unshift '../lib'
-require 'wee'
-require 'wee/utils'
-require 'wee/adaptors/webrick'
-require 'utils/webrick_background'
+
 require 'utils/memory_plotter'
-require 'utils/object_plotter'
 require 'utils/cross'
 
 require 'rubygems'
 require 'mechanize'   # requires my mechanize gem
 
-require 'components/calltest'
+Socket.do_not_reverse_lookup = true
 
-# for stressing continuations use this instead
-#require 'components/calltest-cont'
-#require 'wee/continuation'
+PID = ARGV.shift || raise
+NUM_SESSIONS = (ARGV.shift || 10).to_i
 
-require 'components/page'
-
-NUM_SESSIONS = 1
-
-app = Wee::Utils.app_for(CallTest, :page_cache_capacity => 1)
-Wee::WEBrickAdaptor.register('/app' => app).start
-
-MemoryPlotter.new(5, $$).run
-ObjectPlotter.new(5, Object, Array, String, Bignum).run
-ObjectPlotter.new(5, Thread, Continuation, Proc).run
+MemoryPlotter.new(5, PID).run
 
 class StressSession
   def initialize
