@@ -22,7 +22,7 @@ class Wee::Component
   end
 
   def process_request_inputs(context)
-    context.request.query.each do |hid, value|
+    context.input_ids.each do |hid, value|
       if act = context.handler_registry.get_input(hid, self)
         send(act, value) 
       end
@@ -30,13 +30,7 @@ class Wee::Component
   end
 
   def process_request_actions(context)
-    # handle URL actions
-    if act = context.handler_registry.get_action(context.handler_id, self)
-      act.invoke
-    end
-
-    # handle form actions
-    context.request.query.each do |hid, value|
+    context.action_ids.each do |hid, value|
       if act = context.handler_registry.get_action(hid, self)
         act.invoke
       end

@@ -7,6 +7,16 @@ class Wee::Context
   def initialize(request, response, session, session_id)
     @request, @response, @session, @session_id, @root = request, response, session, session_id
   end
+
+  def input_ids
+    request.query
+  end
+
+  def action_ids
+    a = request.query.to_a
+    a.unshift [handler_id, nil]
+    a
+  end
 end
 
 class Wee::RenderingContext < Struct.new(:context, :document); end
