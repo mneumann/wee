@@ -1,3 +1,13 @@
+* callback -> core, how is the callback registry best done?
+
+* Context.... reduce
+
+* root_for -> script style etc.
+
+* Application == Dispatcher... collection of Session classes (or RequestHandlers)
+
+* file-comments != class-comments... remove them
+
 application.template_manager = {
   My => {'html' => RDocTemplate.new('view/html/file.tmpl'), 'wap' => RDocTemplate.new('view/wap/file.tmpl')}
 }
@@ -25,9 +35,6 @@ view/html/filt.tmpl:
   </form>
 
 __action and __input get replaced
-
-
-* merge with trunk, but make a working-tag of trunk before
 
 * unify RequestHandler/Session
 

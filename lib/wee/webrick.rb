@@ -6,7 +6,6 @@ class Wee::Application
     server.mount_proc(hash[:mount_path] || self.path) {|req, res| self.handle_request(req, res)}
     trap("INT") { 
       trap("INT", "IGNORE")
-      self.shutdown
       server.shutdown
       exit
     }

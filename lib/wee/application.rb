@@ -1,15 +1,14 @@
 class Wee::Application
   attr_accessor :name, :path
   attr_accessor :session_store, :session_class
-  attr_accessor :dumpfile
 
   def initialize(&block)
     setup_session_id_generator
 
     block.call(self)
 
-    if [@name, @path, @session_class, @session_store, @dumpfile].any? {|i| i.nil?}
-      raise ArgumentError, "missing name, path, session_class, session_store or dumpfile"
+    if [@name, @path, @session_class, @session_store].any? {|i| i.nil?}
+      raise ArgumentError, "missing name, path, session_class or session_store" 
     end
   end
 
@@ -57,18 +56,6 @@ class Wee::Application
 
   def error_invalid_session(req, res)
     Wee::ErrorPage.new('Invalid Session').respond(Wee::Context.new(req,res,nil,nil))
-  end
-
-  def store_to_disk(dumpfile=nil)
-    File.open(dumpfile||@dumpfile, 'w+b') {|f| f << Marshal.dump(self) }
-  end
-
-  def self.load_from_disk(filename)
-    Marshal.load(File.read(filename))
-  end
-
-  def shutdown
-    store_to_disk
   end
 
   private
