@@ -106,7 +106,7 @@ class Wee::Session < Wee::RequestHandler
         callback_stream = Wee::CallbackStream.new(page.callbacks, @context.request.fields) 
 
         if callback_stream.all_of_type(:action).size > 1 
-          raise "Not allowed to specify more than oneaction callback"
+          raise "Not allowed to specify more than one action callback"
         end
 
         catch(:wee_back_to_session) {
