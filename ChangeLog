@@ -1,3 +1,15 @@
+	* New examples: hw.rb, live-update.rb, calculator.rb  
+
+	* Wee::Brush::InputTag: methods #disabled and #readonly added
+
+	* Wee::Utils.app_for takes now (optionally) a block.
+
+	* Wee::MessageBox, Wee::WrapperDecoration, Wee::FromDecoration added
+
+	* Wee::Session#current_page, #current_context methods added
+
+	* added ground-work for live-updates (see examples/live-update.rb)
+
 	* added wee/databases/og.rb, which defines OgApplication and
 	  OgSession, as well as a generic (but still very limited)
 	  OgScaffolder. 
@@ -5,5 +17,7 @@
 	* Methods Wee::Session#sleep and #awake added, which are called before and
 	  after the request is handled. They can be used for example to setup
 	  and release a database connection.
+
+	* Wee::Helper.app_for is now Wee::Utils.app_for
 
 	* require 'wee/utils' will load all utility methods.

@@ -1,7 +1,8 @@
 module Wee::Utils
 
   # [+component+]
-  #   The component class for which to create an application object.
+  #   The component class for which to create an application object.  If a
+  #   block is given, this will be invoked to create a new component object. 
   #
   # [+options+]
   #   A Hash. Following keys are accepted:
@@ -18,7 +19,9 @@ module Wee::Utils
   #   [:id_seed]
   #     Initial value of the SimpleIdGenerator (default: rand(1_000_000)) 
   # 
-  def self.app_for(component, options)
+  def self.app_for(component=nil, options={}, &block)
+    raise "either component or block must be given" if component.nil? and block.nil?  
+
     defaults = {
       :application => Wee::Application,
       :session => Wee::Session,
@@ -30,7 +33,11 @@ module Wee::Utils
     options[:application].new {|app|
       app.default_request_handler {
         options[:session].new {|sess|
-          sess.root_component = component.new
+          if component
+            sess.root_component = component.new
+          else
+            sess.root_component = block.call
+          end
           sess.page_store = Wee::Utils::LRUCache.new(options[:page_cache_capacity])
         }
       }

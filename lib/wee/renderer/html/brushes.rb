@@ -160,6 +160,17 @@ class Brush::InputTag < Brush::GenericTagBrush
     ]
   end
 
+  def disabled(bool=true)
+    @attributes['disabled'] = nil if bool
+    self
+  end
+
+  def readonly(bool=true)
+    @attributes['readonly'] = nil if bool
+    self
+  end
+
+
   def with
     super
   end
@@ -307,7 +318,7 @@ class Brush::TextInputTag < Brush::InputTag
   end
 end
 
-class Wee::Brush::FileUploadTag < Wee::Brush::InputTag
+class Brush::FileUploadTag < Brush::InputTag
   include Brush::InputCallbackMixin
 
   def initialize
@@ -334,7 +345,7 @@ end
 # #value method. Note that it's neccessary to parse the passed form-fields and
 # generate a "name" fields in the request, to make this image-button work. 
 
-class Wee::Brush::ImageButtonTag < Wee::Brush::InputTag
+class Brush::ImageButtonTag < Brush::InputTag
   include Brush::ActionCallbackMixin
 
   def initialize

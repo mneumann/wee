@@ -1,4 +1,4 @@
-class Wee::PageDecoration < Wee::Decoration
+class Wee::PageDecoration < Wee::WrapperDecoration
   def initialize(title='')
     @title = title
     super()
@@ -6,15 +6,9 @@ class Wee::PageDecoration < Wee::Decoration
 
   def global?() true end
 
-  def do_render(rendering_context)
-    with_renderer_for(rendering_context) do
-      render_page { super(rendering_context) }
-    end
-  end
-
   private
 
-  def render_page
+  def render_wrapper
     r.page.title(@title).with { yield }
   end
 end

@@ -107,11 +107,11 @@ class Wee::Session < Wee::RequestHandler
 
       handle_new_page_view(@context, @initial_snapshot)
 
-    elsif page = @page_store.fetch(@context.request.page_id, false)
+    elsif @page = @page_store.fetch(@context.request.page_id, false)
 
       # A valid page_id was specified and the corresponding page exists.
 
-      page.snapshot.restore
+      @page.snapshot.restore
 
       p @context.request.fields if $DEBUG
 
@@ -124,9 +124,9 @@ class Wee::Session < Wee::RequestHandler
         # 2. Render the page (respond).
         # 3. Store the page back into the store
 
-        page = create_page(page.snapshot)  # remove all action/input handlers
-        respond(@context, page.callbacks)                    # render
-        @page_store[@context.request.page_id] = page         # store
+        @page = create_page(@page.snapshot)  # remove all action/input handlers
+        respond(@context, @page.callbacks)                    # render
+        @page_store[@context.request.page_id] = @page         # store
 
       else
 
@@ -135,16 +135,27 @@ class Wee::Session < Wee::RequestHandler
         # We process the request and invoke actions/inputs. Then we generate a
         # new page view. 
 
-        callback_stream = Wee::CallbackStream.new(page.callbacks, @context.request.fields) 
+        callback_stream = Wee::CallbackStream.new(@page.callbacks, @context.request.fields) 
 
         if callback_stream.all_of_type(:action).size > 1 
           raise "Not allowed to specify more than one action callback"
         end
 
-        catch(:wee_back_to_session) {
-          @root_component.process_callbacks_chain(callback_stream)
+        live_update_response = catch(:wee_live_update) {
+          catch(:wee_back_to_session) {
+            @root_component.process_callbacks_chain(callback_stream)
+          }
+          nil
         }
-        handle_new_page_view(@context)
+
+        if live_update_response
+          # replace existing page with new snapshot
+          @page.snapshot = self.snapshot
+          @page_store[@context.request.page_id] = @page
+          @context.response = live_update_response
+        else
+          handle_new_page_view(@context)
+        end
 
       end
 
@@ -160,6 +171,14 @@ class Wee::Session < Wee::RequestHandler
       raise "Not yet implemented"
 
     end
+  end
+
+  def current_context
+    @context
+  end
+
+  def current_page
+    @page
   end
 
   private
