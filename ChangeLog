@@ -1,3 +1,9 @@
+Wed Jan 26 20:22:55 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* Raised version up to 0.5.0 (nearing a release)
+
+	* Fixed test cases.
+
 Wed Jan 26 18:19:39 CET 2005	Michael Neumann	<mneumann@ntecs.de>
 
 	* updated docs
