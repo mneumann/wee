@@ -136,6 +136,17 @@ class Wee::Component < Wee::Presenter
     @decoration.value = d
   end
 
+  # Iterates over all decorations (note that the component itself is excluded). 
+
+  def each_decoration # :yields: decoration
+    d = self.decoration
+    loop do
+      break if d == self or d.nil?
+      yield d
+      d = d.owner
+    end
+  end
+  
   # Adds decoration +d+ in front of the decoration chain.
 
   def add_decoration(d)
@@ -164,6 +175,19 @@ class Wee::Component < Wee::Presenter
     end
     d.owner = nil  # decoration 'd' no longer is an owner of anything!
     return d
+  end
+
+  # Remove all decorations that match the block condition.
+  # 
+  # Example (removes all decorations of class +HaloDecoration+):
+  # 
+  #   remove_decoration_if {|d| d.class == HaloDecoration}
+  #
+
+  def remove_decoration_if # :yields: decoration
+    to_remove = []
+    each_decoration {|d| to_remove << d if yield d}
+    to_remove.each {|d| remove_decoration(d)}
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
