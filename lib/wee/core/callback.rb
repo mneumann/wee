@@ -16,7 +16,7 @@ class Wee::CallbackRegistry
 
   # Register +callback+ for +object+ under +type+ and return a unique callback id. 
 
-  def register_for(object, type=nil, &callback)
+  def register_for(object, type, callback)
     c = (@callbacks[type] ||= Hash.new)
     o = (@obj_to_id_map[type] ||= Hash.new) 
     cid = @idgen.next.to_s
@@ -30,7 +30,7 @@ class Wee::CallbackRegistry
   # :section: Friend methods for Wee::CallbackStream
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def get_ids_for(object, type=nil)
+  def get_ids_for(object, type)
     if o = @obj_to_id_map[type]
       o[object] || []
     else
@@ -38,7 +38,7 @@ class Wee::CallbackRegistry
     end
   end
 
-  def get_callback_for(id, type=nil)
+  def get_callback_for(id, type)
     if c = @callbacks[type]
       c[id]
     else
@@ -46,7 +46,7 @@ class Wee::CallbackRegistry
     end
   end
 
-  def all_of_type(type=nil)
+  def all_of_type(type)
     if c = @callbacks[type]
       c
     else

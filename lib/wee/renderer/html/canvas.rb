@@ -46,17 +46,17 @@ class HtmlCanvas < Canvas
     handle(Brush::GenericTagBrush.new(id.to_s), *args, &block)
   end
 
-  def url_for_callback(symbol=nil, &block)
-    raise ArgumentError if symbol and block
-    block = Wee::LiteralMethodCallback.new(self.current_component, symbol) unless block
+  def url_for_callback(symbol_or_block)
     req = self.rendering_context.request
-    url = req.build_url(req.request_handler_id, req.page_id, register_callback(:action, &block))
+    url = req.build_url(req.request_handler_id, req.page_id, register_callback(:action, symbol_or_block))
     return url
   end
 
-  def register_callback(type, &block)
-    raise ArgumentError, "no callback block given" if block.nil?
-    self.rendering_context.callbacks.register_for(self.current_component, type, &block)
+  def register_callback(type, callback)
+    if callback.is_a?(Symbol)
+      callback = Wee::LiteralMethodCallback.new(self.current_component, callback)
+    end
+    self.rendering_context.callbacks.register_for(self.current_component, type, callback)
   end
 
   def table(*args, &block)

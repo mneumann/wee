@@ -17,34 +17,6 @@ class Brush
   def close
     with unless @closed
   end
-
-  def self.bool_attr(*attrs)
-    attrs.each { |a|
-      class_eval " 
-        def #{ a }(bool=true)
-          if bool
-            @attributes['#{ a }'] = nil
-          else
-            @attributes.delete('#{ a }')
-          end
-          self
-        end
-      "
-    }
-  end
-
-  def self.html_attr(*attrs)
-    attrs.each { |a|
-      class_eval " 
-        def #{ a }(str)
-          @attributes['#{ a }'] = str
-          self
-        end
-      "
-    }
-  end
-
-
 end
 
 class Brush::GenericTextBrush < Brush
@@ -76,6 +48,33 @@ class Brush::GenericEncodedTextBrush < Brush
 end
 
 class Brush::GenericTagBrush < Brush
+
+  def self.bool_attr(*attrs)
+    attrs.each { |a|
+      class_eval " 
+        def #{ a }(bool=true)
+          if bool
+            @attributes['#{ a }'] = nil
+          else
+            @attributes.delete('#{ a }')
+          end
+          self
+        end
+      "
+    }
+  end
+
+  def self.html_attr(*attrs)
+    attrs.each { |a|
+      class_eval " 
+        def #{ a }(str)
+          @attributes['#{ a }'] = str
+          self
+        end
+      "
+    }
+  end
+
   def initialize(tag, is_single_tag=false)
     super()
     @tag, @is_single_tag = tag, is_single_tag
@@ -188,8 +187,7 @@ module Brush::InputCallbackMixin
 
   def callback(symbol=nil, &block)
     raise ArgumentError if symbol and block
-    block = @canvas.current_component.method(symbol) unless block
-    name(@canvas.register_callback(:input, &block))
+    name(@canvas.register_callback(:input, symbol || block))
   end
 end
 
@@ -198,8 +196,7 @@ module Brush::ActionCallbackMixin
 
   def callback(symbol=nil, &block)
     raise ArgumentError if symbol and block
-    block = @canvas.current_component.method(symbol) unless block
-    name(@canvas.register_callback(:action, &block))
+    name(@canvas.register_callback(:action, symbol || block))
   end
 end
 
@@ -208,7 +205,8 @@ module Brush::ActionURLCallbackMixin
   public
 
   def callback(symbol=nil, &block)
-    __set_url(@canvas.url_for_callback(symbol, &block))
+    raise ArgumentError if symbol and block
+    __set_url(@canvas.url_for_callback(symbol || block))
   end
 end
 
@@ -396,7 +394,10 @@ end
 
 
 class Brush::Page < Brush
-  html_attr :title
+  def title(t)
+    @title = t
+    self
+  end
 
   def with(text=nil, &block)
     doc = @canvas.document
