@@ -146,7 +146,9 @@ module Brush::InputCallbackMixin
 
   public
 
-  def callback(&block)
+  def callback(symbol=nil, &block)
+    raise ArgumentError if symbol and block
+    block = @canvas.current_component.method(symbol) unless block
     name(register_callback(:input, &block))
   end
 end
@@ -156,7 +158,9 @@ module Brush::ActionCallbackMixin
 
   public
 
-  def callback(&block)
+  def callback(symbol=nil, &block)
+    raise ArgumentError if symbol and block
+    block = @canvas.current_component.method(symbol) unless block
     name(register_callback(:action, &block))
   end
 end
@@ -167,7 +171,9 @@ module Brush::ActionURLCallbackMixin
 
   public
 
-  def callback(&block)
+  def callback(symbol=nil, &block)
+    raise ArgumentError if symbol and block
+    block = @canvas.current_component.method(symbol) unless block
     req = @canvas.rendering_context.request
     url = req.build_url(nil, nil, register_callback(:action, &block))
     __set_url(url)
@@ -245,7 +251,10 @@ class Brush::SelectListTag < Brush::GenericTagBrush
 
   alias __old_callback callback
   private :__old_callback
-  def callback(&block)
+  def callback(symbol=nil, &block)
+    raise ArgumentError if symbol and block
+    block = @canvas.current_component.method(symbol) unless block
+
     @callback = block
     self
   end

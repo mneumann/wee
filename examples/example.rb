@@ -73,7 +73,7 @@ class RegexpValidatedInput < Wee::Component
 
   def render_content_on(r)
     r.form do
-      r.text_input.value(@input).callback(&method(:input=))
+      r.text_input.value(@input).callback(:input=)
       r.text %(<div style="color: red">Invalid input</div>) if @error
     end
   end
