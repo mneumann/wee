@@ -87,7 +87,6 @@ class HtmlCanvas < Canvas
     self.rendering_context.callbacks.register_named_for(self.current_component, type, callback, name)
   end
 
-
   def table(*args, &block)
     handle(Brush::TableTag.new, *args, &block)
   end
@@ -189,6 +188,23 @@ class HtmlCanvas < Canvas
     self.close
     obj.do_render_chain(@rendering_context)
     nil
+  end
+
+  require 'erb'
+
+  def template(filename)
+    raise "Template file #{ filename } not found!" unless File.exists?(filename)
+    self.close
+    compiler = ERB::Compiler.new(nil)
+    compiler.put_cmd = 'r << '
+    src = compiler.compile(File.read(filename))
+    if $DEBUG
+      puts "-------------------------"
+      puts src
+      puts "-------------------------"
+    end
+    @current_component.instance_eval(src, '(erb)', 1) 
+    return nil
   end
 
   private

@@ -38,7 +38,11 @@ module Wee::Utils
           else
             sess.root_component = block.call
           end
-          sess.page_store = Wee::Utils::LRUCache.new(options[:page_cache_capacity])
+          if sess.respond_to?(:page_store=)
+            # This is so that you can use a Pageless session, which does not have
+            # a page_store.
+            sess.page_store = Wee::Utils::LRUCache.new(options[:page_cache_capacity])
+          end
         }
       }
       app.id_generator = options[:id_gen]

@@ -47,7 +47,7 @@ class Wee::Session < Wee::RequestHandler
         process_request
         sleep
       rescue Exception => exn
-        context.response = Wee::ErrorResponse.new(exn) 
+        set_response(context, Wee::ErrorResponse.new(exn))
       ensure
         Thread.current[:wee_session] = nil
         @context = nil
@@ -125,7 +125,7 @@ class Wee::Session < Wee::RequestHandler
           @page.snapshot = self.snapshot
           @page_store[@context.request.page_id] = @page
           @snapshot_page_id = @context.request.page_id  
-          @context.response = live_update_response
+          set_response(@context, live_update_response) 
         else
           handle_new_page_view(@context)
         end
@@ -178,11 +178,15 @@ class Wee::Session < Wee::RequestHandler
     @page_store[new_page_id] = new_page
     @snapshot_page_id = new_page_id 
     redirect_url = context.request.build_url(context.request.request_handler_id, new_page_id)
-    context.response = Wee::RedirectResponse.new(redirect_url)
+    set_response(context, Wee::RedirectResponse.new(redirect_url))
+  end
+
+  def set_response(context, response)
+    context.response = response
   end
 
   def respond(context, callbacks)
-    context.response = Wee::GenericResponse.new('text/html', '')
+    set_response(context, Wee::GenericResponse.new('text/html', ''))
 
     rctx = Wee::RenderingContext.new(context.request, context.response, callbacks, Wee::HtmlWriter.new(context.response.content))
     @root_component.do_render_chain(rctx)

@@ -1,3 +1,42 @@
+Sat Jan 29 19:06:12 CET 2005	Michael Neumann	<mneumann@ntecs.de>
+
+	* Added ERB-templating. Example:
+
+	    # file: ~/components/main.rb
+	    class Test < Wee::Component
+
+	      # use template '~/components/main.tpl'
+	      template :render
+
+	      # use template '~/components/main.tpl-buttons'
+	      template :render_buttons
+	    end
+
+	  This allows you to use ERB-templates instead of the render_XXX
+	  methods. You can also call render_XXX methods from ERB, back and
+	  forth. The template file is relative to the file from which the
+	  'template :symbol' call is executed. The template method optionally
+	  takes the two hash-parameters :file and :property.
+	   
+	* Added "Pageless" mode. In pageless mode, the URL displayed in your
+	  browser always looks like "/app". The session id is stored as cookie
+	  and there is no page_id, hence "pageless" mode. No backtracking is
+	  performed! Example:
+
+	    require 'wee/pageless'
+
+	    app = Wee::Utils.app_for(YourMainComponent,
+	      :session => Wee::PagelessSession,
+	      :application => Wee::PagelessApplication)
+
+	    Wee::WEBrickAdaptor.
+	      request_class(Wee::PagelessRequest).
+	      register('/app' => app).
+	      start
+	
+	* Wee::Session: use #set_response, so that subclass of Wee::Session can more
+	  easily modify a response (e.g. add cookies or HTTP headers).
+
 Sat Jan 29 17:08:54 CET 2005	Michael Neumann	<mneumann@ntecs.de>
 
 	* Wee::LiteralMethodCallback and Component#call: Additional arguments
