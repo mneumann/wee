@@ -26,21 +26,28 @@ class Wee::HtmlWriter
     @tag_stack = []
   end
 
-  def start_tag(tag, attributes={})
+  def start_tag(tag, attributes=nil)
     @port << ">" if @open_start_tag
     @open_start_tag = true
     @tag_stack.push(tag)
 
     @port << "<#{ tag }"
-    attributes.each {|k, v| 
-      if v
-        @port << %[ #{ k }="#{ v }"] 
-      else
-        @port << %[ #{ k }] 
-      end
-    }
+    if attributes
+      attributes.each {|k, v| 
+        if v
+          @port << %[ #{ k }="#{ v }"] 
+        else
+          @port << %[ #{ k }] 
+        end
+      }
+    end
 
     self
+  end
+
+  def single_tag(tag, attributes=nil)
+    start_tag(tag, attributes)
+    end_tag(tag)
   end
 
   def end_tag(tag)

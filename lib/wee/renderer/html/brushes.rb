@@ -17,6 +17,34 @@ class Brush
   def close
     with unless @closed
   end
+
+  def self.bool_attr(*attrs)
+    attrs.each { |a|
+      class_eval " 
+        def #{ a }(bool=true)
+          if bool
+            @attributes['#{ a }'] = nil
+          else
+            @attributes.delete('#{ a }')
+          end
+          self
+        end
+      "
+    }
+  end
+
+  def self.html_attr(*attrs)
+    attrs.each { |a|
+      class_eval " 
+        def #{ a }(str)
+          @attributes['#{ a }'] = str
+          self
+        end
+      "
+    }
+  end
+
+
 end
 
 class Brush::GenericTextBrush < Brush
@@ -48,24 +76,16 @@ class Brush::GenericEncodedTextBrush < Brush
 end
 
 class Brush::GenericTagBrush < Brush
-  def initialize(tag)
+  def initialize(tag, is_single_tag=false)
     super()
-    @tag = tag
+    @tag, @is_single_tag = tag, is_single_tag
     @attributes = Hash.new
   end
 
-  def type(t)
-    @attributes["type"] = t
-    self
-  end
+  html_attr :type, :id
 
   def css_class(c)
     @attributes["class"] = c
-    self
-  end
-
-  def id(x)
-    @attributes["id"] = x
     self
   end
 
@@ -76,14 +96,18 @@ class Brush::GenericTagBrush < Brush
 
   def with(text=nil, &block)
     doc = @canvas.document
-    doc.start_tag(@tag, @attributes)
-    if text
-      doc.text(text)
-      super(text, &block)
+    if @is_single_tag
+      doc.single_tag(@tag, @attributes) 
     else
-      super(&block)
+      doc.start_tag(@tag, @attributes)
+      if text
+        doc.text(text)
+        super(text, &block)
+      else
+        super(&block)
+      end
+      doc.end_tag(@tag)
     end
-    doc.end_tag(@tag)
     nil
   end
 end
@@ -148,28 +172,11 @@ end
 
 class Brush::InputTag < Brush::GenericTagBrush
   def initialize
-    super('input')
+    super('input', true)
   end
 
-  %w(type name value size maxlength checked src).each do |meth|
-    eval %[
-      def #{ meth }(arg)
-        @attributes['#{ meth }'] = arg
-        self
-      end
-    ]
-  end
-
-  def disabled(bool=true)
-    @attributes['disabled'] = nil if bool
-    self
-  end
-
-  def readonly(bool=true)
-    @attributes['readonly'] = nil if bool
-    self
-  end
-
+  html_attr :type, :name, :value, :size, :maxlength, :src
+  bool_attr :checked, :disabled, :readonly
 
   def with
     super
@@ -212,24 +219,8 @@ class Brush::TextAreaTag < Brush::GenericTagBrush
     super('textarea')
   end
 
-  %w(name rows cols tabindex accesskey onfocus onblur onselect onchange).each do |meth|
-    eval %[
-      def #{ meth }(arg)
-        @attributes['#{ meth }'] = arg
-        self
-      end
-    ]
-  end
-
-  def disabled
-    @attributes['disabled'] = nil 
-    self
-  end
-
-  def readonly
-    @attributes['readonly'] = nil 
-    self
-  end
+  html_attr :name, :rows, :cols, :tabindex, :accesskey, :onfocus, :onblur, :onselect, :onchange
+  bool_attr :disabled, :readonly
 
   def with(*args, &block)
     super
@@ -241,14 +232,7 @@ class Brush::SelectOptionTag < Brush::GenericTagBrush
     super('option')
   end
 
-  def selected(bool=true)
-    if bool
-      @attributes['selected'] = nil
-    else
-      @attributes.delete('selected')
-    end
-    self
-  end
+  bool_attr :selected
 end
 
 class Brush::SelectListTag < Brush::GenericTagBrush
@@ -268,11 +252,7 @@ class Brush::SelectListTag < Brush::GenericTagBrush
     ]
   end
 
-  def multiple
-    @multiple = true
-    @attributes['multiple'] = nil
-    self
-  end
+  bool_attr :multiple
 
   alias __old_callback callback
   private :__old_callback
@@ -295,7 +275,9 @@ class Brush::SelectListTag < Brush::GenericTagBrush
           raise "invalid index in select list" if idx < 0 or idx > @items.size
           @items[idx]
         }
-        raise "choosen more than one element from a non-multiple select list" if not @multiple and choosen.size > 1
+        if choosen.size > 1 and not @attributes.has_key?('multiple')
+          raise "choosen more than one element from a non-multiple select list" 
+        end
         @callback.call(choosen)
       }
     end
@@ -304,6 +286,7 @@ class Brush::SelectListTag < Brush::GenericTagBrush
       @items.each_index do |i|
         @canvas.option.value(i).selected(@selected.include?(@items[i])).with(@labels[i])
       end
+      # TODO?
       @canvas.text("")
     end
   end
@@ -385,15 +368,7 @@ class Brush::FormTag < Brush::GenericTagBrush
     @attributes['method'] = 'POST'
   end
 
-  def action(href)
-    @attributes['action'] = href 
-    self
-  end
-
-  def enctype(typ)
-    @attributes['enctype'] = typ
-    self
-  end
+  html_attr :action, :enctype
 
   alias __set_url action
 
@@ -414,21 +389,14 @@ class Brush::AnchorTag < Brush::GenericTagBrush
     super('a')
   end
 
-  def url(href)
-    @attributes['href'] = href 
-    self
-  end
-  alias href url
-
+  html_attr :href
+  alias url href
   alias __set_url url
 end
 
 
 class Brush::Page < Brush
-  def title(str)
-    @title = str
-    self
-  end
+  html_attr :title
 
   def with(text=nil, &block)
     doc = @canvas.document
