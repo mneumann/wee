@@ -20,7 +20,7 @@ class Wee::CallbackRegistry
     c = (@callbacks[type] ||= Hash.new)
     o = (@obj_to_id_map[type] ||= Hash.new) 
     cid = @idgen.next.to_s
-    raise "duplicate callback id" c.has_key?(cid)
+    raise "duplicate callback id" if c.has_key?(cid)
     c[cid] = callback
     (o[object] ||= []) << cid  
     return cid

@@ -1,5 +1,5 @@
 class Wee::SimpleIdGenerator
-  def initialize(inital_value=0)
+  def initialize(initial_value=0)
     @value = initial_value
   end
 

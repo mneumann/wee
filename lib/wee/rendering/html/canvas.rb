@@ -277,7 +277,7 @@ module Brush::AssignMixin
     ctx = @canvas.context.context
     obj ||= @canvas.current_component
 
-    name(ctx.callbacks.register(Wee::MethodCallback[obj, act], :input))
+    name( ctx.callbacks.register_for(obj, :input) {|val| obj.send(act, val)} )
   end
 end
 
@@ -381,7 +381,7 @@ class Brush::SubmitButtonTag < Brush::InputTag
     ctx = @canvas.context.context
     obj = @canvas.current_component
 
-    name(ctx.callbacks.register(Wee::MethodCallback[obj, act, *args], :action))
+    name( ctx.callbacks.register_for(obj, :action) { obj.send(act, *args) } )
   end
 end
 
@@ -408,7 +408,7 @@ module Brush::ActionMixin
     ctx = @canvas.context.context
     obj = @canvas.current_component
     href = ctx.application.gen_handler_url(ctx.session_id, ctx.page_id, 
-           act ? ctx.callbacks.register(Wee::MethodCallback[obj, act, *args], :action) : '')
+           act ? ( ctx.callbacks.register_for(obj, :action) { obj.send(act, *args) }) : '' )
     __action(href)
   end
 end

@@ -1,5 +1,4 @@
 require 'wee/page'
-require 'wee/callback'
 require 'thread'
 
 class Wee::Session
@@ -14,7 +13,7 @@ class Wee::Session
   def initialize(&block)
     Thread.current['Wee::Session'] = self
 
-    @next_page_id = 0
+    @idgen = Wee::SimpleIdGenerator.new
     @in_queue, @out_queue = SizedQueue.new(1), SizedQueue.new(1)
 
     @continuation_stack = []
@@ -69,6 +68,11 @@ class Wee::Session
 
   attr_reader :continuation_stack
 
+  def create_page(snapshot)
+    idgen = Wee::SimpleIdGenerator.new
+    page = Wee::Page.new(snapshot, Wee::CallbackRegistry.new(idgen))
+  end
+
   def process_request
     if @context.page_id.nil?
 
@@ -92,7 +96,7 @@ class Wee::Session
         # 2. Render the page (respond).
         # 3. Store the page back into the store
 
-        page = Wee::Page.new(page.snapshot, Wee::CallbackRegistry.new)  # remove all action/input handlers
+        page = create_page(page.snapshot)  # remove all action/input handlers
         @context.callbacks = page.callbacks
         respond(@context)                            # render
         @page_store[@context.page_id] = page         # store
@@ -131,8 +135,8 @@ class Wee::Session
   private
 
   def handle_new_page_view(context, snapshot=nil)
-    new_page_id = create_new_page_id() 
-    new_page = Wee::Page.new(snapshot || self.snapshot(), Wee::CallbackRegistry.new)
+    new_page_id = @idgen.next.to_s
+    new_page = create_page(snapshot || self.snapshot())
     @page_store[new_page_id] = new_page
 
     redirect_url = "#{ context.application.path }/s:#{ context.session_id }/p:#{ new_page_id }"
@@ -145,12 +149,6 @@ class Wee::Session
 
     rctx = Wee::RenderingContext.new(context, Wee::HtmlWriter.new(context.response.body))
     @root_component.render_chain(rctx)
-  end
-
-  def create_new_page_id
-    @next_page_id.to_s
-  ensure
-    @next_page_id += 1
   end
 
 end

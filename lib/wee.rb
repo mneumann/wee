@@ -12,3 +12,4 @@ require 'wee/rendering/html/writer'
 require 'wee/rendering/html/canvas'
 
 require 'wee/stuff'
+require 'wee/idgen'

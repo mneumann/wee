@@ -202,17 +202,10 @@ class MySession < Wee::Session
 end
 
 if __FILE__ == $0
-  DUMP = 'dump'
-
-  if File.exists?(DUMP)
-    Wee::Application.load_from_disk(DUMP)
-  else
-    Wee::Application.new {|app|
-      app.name = 'Counter'
-      app.path = '/app'
-      app.session_class = MySession
-      app.session_store = Wee::Utils::LRUCache.new(1000) # handle up to 1000 sessions
-      app.dumpfile = DUMP
-    }
-  end.start
+  Wee::Application.new {|app|
+    app.name = 'Counter'
+    app.path = '/app'
+    app.session_class = MySession
+    app.session_store = Wee::Utils::LRUCache.new(1000) # handle up to 1000 sessions
+  }.start
 end
