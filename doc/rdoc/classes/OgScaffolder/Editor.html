@@ -88,20 +88,22 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000072">cancel</a>&nbsp;&nbsp;
-      <a href="#M000068">each_property</a>&nbsp;&nbsp;
-      <a href="#M000069">get_value_of</a>&nbsp;&nbsp;
-      <a href="#M000059">new</a>&nbsp;&nbsp;
-      <a href="#M000060">render</a>&nbsp;&nbsp;
-      <a href="#M000065">render_bool</a>&nbsp;&nbsp;
-      <a href="#M000066">render_buttons</a>&nbsp;&nbsp;
-      <a href="#M000061">render_header</a>&nbsp;&nbsp;
-      <a href="#M000067">render_label</a>&nbsp;&nbsp;
-      <a href="#M000063">render_numeric</a>&nbsp;&nbsp;
-      <a href="#M000062">render_property</a>&nbsp;&nbsp;
-      <a href="#M000064">render_string</a>&nbsp;&nbsp;
-      <a href="#M000071">save</a>&nbsp;&nbsp;
-      <a href="#M000070">set_value_of</a>&nbsp;&nbsp;
+      <a href="#M000073">cancel</a>&nbsp;&nbsp;
+      <a href="#M000071">each_property</a>&nbsp;&nbsp;
+      <a href="#M000074">get_value_of</a>&nbsp;&nbsp;
+      <a href="#M000061">new</a>&nbsp;&nbsp;
+      <a href="#M000062">render</a>&nbsp;&nbsp;
+      <a href="#M000067">render_bool</a>&nbsp;&nbsp;
+      <a href="#M000069">render_buttons</a>&nbsp;&nbsp;
+      <a href="#M000068">render_date</a>&nbsp;&nbsp;
+      <a href="#M000063">render_header</a>&nbsp;&nbsp;
+      <a href="#M000070">render_label</a>&nbsp;&nbsp;
+      <a href="#M000065">render_numeric</a>&nbsp;&nbsp;
+      <a href="#M000064">render_property</a>&nbsp;&nbsp;
+      <a href="#M000066">render_string</a>&nbsp;&nbsp;
+      <a href="#M000072">save</a>&nbsp;&nbsp;
+      <a href="#M000076">set_date_of</a>&nbsp;&nbsp;
+      <a href="#M000075">set_value_of</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -123,117 +125,12 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000059" class="method-detail">
-        <a name="M000059"></a>
-
-        <div class="method-heading">
-          <a href="#M000059" class="method-signature">
-          <span class="method-name">new</span><span class="method-args">(domain_object, action=&quot;Edit&quot;)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000059-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000059-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 91</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">domain_object</span>, <span class="ruby-identifier">action</span>=<span class="ruby-value str">&quot;Edit&quot;</span>)
-    <span class="ruby-keyword kw">super</span>()
-    <span class="ruby-ivar">@domain_object</span> = <span class="ruby-identifier">domain_object</span>
-    <span class="ruby-ivar">@action</span> = <span class="ruby-identifier">action</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <h3 class="section-bar">Public Instance methods</h3>
-
-      <div id="method-M000060" class="method-detail">
-        <a name="M000060"></a>
-
-        <div class="method-heading">
-          <a href="#M000060" class="method-signature">
-          <span class="method-name">render</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000060-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000060-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 97</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>
-    <span class="ruby-identifier">render_header</span>
-    <span class="ruby-identifier">each_property</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">prop</span><span class="ruby-operator">|</span> 
-      <span class="ruby-identifier">render_property</span>(<span class="ruby-identifier">prop</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">prop</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'oid'</span>
-    }
-    <span class="ruby-identifier">render_buttons</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000065" class="method-detail">
-        <a name="M000065"></a>
-
-        <div class="method-heading">
-          <a href="#M000065" class="method-signature">
-          <span class="method-name">render_bool</span><span class="method-args">(prop)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000065-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000065-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 133</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_bool</span>(<span class="ruby-identifier">prop</span>)
-    <span class="ruby-identifier">selected</span> = [ <span class="ruby-identifier">get_value_of</span>(<span class="ruby-identifier">prop</span>) <span class="ruby-operator">?</span> <span class="ruby-keyword kw">true</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">false</span> ]
-    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">select_list</span>([<span class="ruby-keyword kw">true</span>, <span class="ruby-keyword kw">false</span>]).<span class="ruby-identifier">labels</span>([<span class="ruby-value str">&quot;Yes&quot;</span>, <span class="ruby-value str">&quot;No&quot;</span>]).<span class="ruby-identifier">selected</span>(<span class="ruby-identifier">selected</span>).
-      <span class="ruby-identifier">callback</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">choosen</span><span class="ruby-operator">|</span> <span class="ruby-identifier">set_value_of</span>(<span class="ruby-identifier">prop</span>, <span class="ruby-identifier">choosen</span>.<span class="ruby-identifier">first</span>) }
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000066" class="method-detail">
-        <a name="M000066"></a>
-
-        <div class="method-heading">
-          <a href="#M000066" class="method-signature">
-          <span class="method-name">render_buttons</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000066-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000066-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 139</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_buttons</span>
-    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">paragraph</span>
-    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">submit_button</span>.<span class="ruby-identifier">value</span>(<span class="ruby-value str">'Save'</span>).<span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:save</span>)
-    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">space</span>
-    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">submit_button</span>.<span class="ruby-identifier">value</span>(<span class="ruby-value str">'Cancel'</span>).<span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:cancel</span>)
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
       <div id="method-M000061" class="method-detail">
         <a name="M000061"></a>
 
         <div class="method-heading">
           <a href="#M000061" class="method-signature">
-          <span class="method-name">render_header</span><span class="method-args">()</span>
+          <span class="method-name">new</span><span class="method-args">(domain_object)</span>
           </a>
         </div>
       
@@ -242,9 +139,42 @@
             onclick="toggleCode('M000061-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000061-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 105</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_header</span>
-    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">h1</span> <span class="ruby-node">&quot;#{ @action } #{ @domain_object.class }&quot;</span>
+<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 98</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">domain_object</span>)
+    <span class="ruby-keyword kw">super</span>()
+    <span class="ruby-ivar">@domain_object</span> = <span class="ruby-identifier">domain_object</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000062" class="method-detail">
+        <a name="M000062"></a>
+
+        <div class="method-heading">
+          <a href="#M000062" class="method-signature">
+          <span class="method-name">render</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000062-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000062-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 103</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>
+    <span class="ruby-identifier">render_header</span>
+    <span class="ruby-identifier">each_property</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">prop</span><span class="ruby-operator">|</span> 
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">prop</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'oid'</span>
+        <span class="ruby-identifier">render_label</span>(<span class="ruby-identifier">prop</span>)
+        <span class="ruby-identifier">render_property</span>(<span class="ruby-identifier">prop</span>) 
+      <span class="ruby-keyword kw">end</span>
+    }
+    <span class="ruby-identifier">render_buttons</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -256,7 +186,7 @@
 
         <div class="method-heading">
           <a href="#M000067" class="method-signature">
-          <span class="method-name">render_label</span><span class="method-args">(prop)</span>
+          <span class="method-name">render_bool</span><span class="method-args">(prop)</span>
           </a>
         </div>
       
@@ -265,11 +195,68 @@
             onclick="toggleCode('M000067-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000067-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 146</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_label</span>(<span class="ruby-identifier">prop</span>)
+<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 149</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_bool</span>(<span class="ruby-identifier">prop</span>)
+    <span class="ruby-identifier">selected</span> = <span class="ruby-identifier">get_value_of</span>(<span class="ruby-identifier">prop</span>) <span class="ruby-operator">?</span> <span class="ruby-keyword kw">true</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">false</span>
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">select_list</span>([<span class="ruby-keyword kw">true</span>, <span class="ruby-keyword kw">false</span>]).<span class="ruby-identifier">labels</span>([<span class="ruby-value str">&quot;Yes&quot;</span>, <span class="ruby-value str">&quot;No&quot;</span>]).<span class="ruby-identifier">selected</span>(<span class="ruby-identifier">selected</span>).
+      <span class="ruby-identifier">callback</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">choosen</span><span class="ruby-operator">|</span> <span class="ruby-identifier">set_value_of</span>(<span class="ruby-identifier">prop</span>, <span class="ruby-identifier">choosen</span>) }
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000069" class="method-detail">
+        <a name="M000069"></a>
+
+        <div class="method-heading">
+          <a href="#M000069" class="method-signature">
+          <span class="method-name">render_buttons</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000069-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000069-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 169</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_buttons</span>
     <span class="ruby-identifier">r</span>.<span class="ruby-identifier">paragraph</span>
-    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">text</span> <span class="ruby-identifier">prop</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">capitalize</span>
-    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">break</span>
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">submit_button</span>.<span class="ruby-identifier">value</span>(<span class="ruby-value str">'Save'</span>).<span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:save</span>)
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">space</span>
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">submit_button</span>.<span class="ruby-identifier">value</span>(<span class="ruby-value str">'Cancel'</span>).<span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:cancel</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000068" class="method-detail">
+        <a name="M000068"></a>
+
+        <div class="method-heading">
+          <a href="#M000068" class="method-signature">
+          <span class="method-name">render_date</span><span class="method-args">(prop)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000068-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000068-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 156</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_date</span>(<span class="ruby-identifier">prop</span>)
+    <span class="ruby-identifier">t</span> = <span class="ruby-identifier">get_value_of</span>(<span class="ruby-identifier">prop</span>) <span class="ruby-operator">||</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+    
+    <span class="ruby-identifier">m</span> = <span class="ruby-constant">Date</span><span class="ruby-operator">::</span><span class="ruby-constant">MONTHS</span>.<span class="ruby-identifier">invert</span>
+    <span class="ruby-identifier">months</span> = (<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">12</span>).<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">m</span>[<span class="ruby-identifier">i</span>].<span class="ruby-identifier">capitalize</span>}
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">select_list</span>((<span class="ruby-identifier">t</span>.<span class="ruby-identifier">year</span><span class="ruby-operator">-</span><span class="ruby-value">10</span> <span class="ruby-operator">..</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">year</span><span class="ruby-operator">+</span><span class="ruby-value">10</span>).<span class="ruby-identifier">to_a</span>).<span class="ruby-identifier">selected</span>(<span class="ruby-identifier">t</span>.<span class="ruby-identifier">year</span>).<span class="ruby-identifier">callback</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">year</span><span class="ruby-operator">|</span> <span class="ruby-identifier">set_date_of</span>(<span class="ruby-identifier">prop</span>, <span class="ruby-identifier">year</span>, <span class="ruby-identifier">:year</span>) }
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">space</span>
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">select_list</span>((<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">12</span>).<span class="ruby-identifier">to_a</span>).<span class="ruby-identifier">labels</span>(<span class="ruby-identifier">months</span>).<span class="ruby-identifier">selected</span>(<span class="ruby-identifier">t</span>.<span class="ruby-identifier">month</span>).<span class="ruby-identifier">callback</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">month</span><span class="ruby-operator">|</span> <span class="ruby-identifier">set_date_of</span>(<span class="ruby-identifier">prop</span>, <span class="ruby-identifier">month</span>, <span class="ruby-identifier">:month</span>) }
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">space</span>
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">select_list</span>((<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">31</span>).<span class="ruby-identifier">to_a</span>).<span class="ruby-identifier">selected</span>(<span class="ruby-identifier">t</span>.<span class="ruby-identifier">day</span>).<span class="ruby-identifier">callback</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">day</span><span class="ruby-operator">|</span> <span class="ruby-identifier">set_date_of</span>(<span class="ruby-identifier">prop</span>, <span class="ruby-identifier">day</span>, <span class="ruby-identifier">:day</span>) }
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -281,7 +268,7 @@
 
         <div class="method-heading">
           <a href="#M000063" class="method-signature">
-          <span class="method-name">render_numeric</span><span class="method-args">(prop)</span>
+          <span class="method-name">render_header</span><span class="method-args">()</span>
           </a>
         </div>
       
@@ -290,40 +277,64 @@
             onclick="toggleCode('M000063-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000063-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 121</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_numeric</span>(<span class="ruby-identifier">prop</span>)
-    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">text_input</span>.<span class="ruby-identifier">value</span>(<span class="ruby-identifier">get_value_of</span>(<span class="ruby-identifier">prop</span>)).<span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:set_value_of</span>, <span class="ruby-identifier">prop</span>) 
+<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 114</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_header</span>
+    <span class="ruby-identifier">action</span> =
+      <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@domain_object</span>.<span class="ruby-identifier">oid</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-value str">&quot;Create&quot;</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-value str">&quot;Edit&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">h1</span> <span class="ruby-node">&quot;#{ action } #{ @domain_object.class }&quot;</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000062" class="method-detail">
-        <a name="M000062"></a>
+      <div id="method-M000070" class="method-detail">
+        <a name="M000070"></a>
 
         <div class="method-heading">
-          <a href="#M000062" class="method-signature">
-          <span class="method-name">render_property</span><span class="method-args">(prop)</span>
+          <a href="#M000070" class="method-signature">
+          <span class="method-name">render_label</span><span class="method-args">(prop)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000062-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000062-source">
+            onclick="toggleCode('M000070-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000070-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 109</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_property</span>(<span class="ruby-identifier">prop</span>)
-    <span class="ruby-identifier">render_label</span>(<span class="ruby-identifier">prop</span>)
+<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 176</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_label</span>(<span class="ruby-identifier">prop</span>)
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">paragraph</span>
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">text</span> <span class="ruby-identifier">prop</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">capitalize</span>
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">break</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
 
-    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prop</span>.<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-constant">Numeric</span>)
-      <span class="ruby-identifier">render_numeric</span>(<span class="ruby-identifier">prop</span>)
-    <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">prop</span>.<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-constant">String</span>)
-      <span class="ruby-identifier">render_string</span>(<span class="ruby-identifier">prop</span>)
-    <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">prop</span>.<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-constant">TrueClass</span>)
-      <span class="ruby-identifier">render_bool</span>(<span class="ruby-identifier">prop</span>)
-    <span class="ruby-keyword kw">end</span>
+      <div id="method-M000065" class="method-detail">
+        <a name="M000065"></a>
+
+        <div class="method-heading">
+          <a href="#M000065" class="method-signature">
+          <span class="method-name">render_numeric</span><span class="method-args">(prop)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000065-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000065-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 137</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_numeric</span>(<span class="ruby-identifier">prop</span>)
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">text_input</span>.<span class="ruby-identifier">value</span>(<span class="ruby-identifier">get_value_of</span>(<span class="ruby-identifier">prop</span>)).<span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:set_value_of</span>, <span class="ruby-identifier">prop</span>) 
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -335,7 +346,7 @@
 
         <div class="method-heading">
           <a href="#M000064" class="method-signature">
-          <span class="method-name">render_string</span><span class="method-args">(prop)</span>
+          <span class="method-name">render_property</span><span class="method-args">(prop)</span>
           </a>
         </div>
       
@@ -345,6 +356,37 @@
           <div class="method-source-code" id="M000064-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 125</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_property</span>(<span class="ruby-identifier">prop</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prop</span>.<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-constant">Numeric</span>)
+      <span class="ruby-identifier">render_numeric</span>(<span class="ruby-identifier">prop</span>)
+    <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">prop</span>.<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-constant">String</span>)
+      <span class="ruby-identifier">render_string</span>(<span class="ruby-identifier">prop</span>)
+    <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">prop</span>.<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-constant">TrueClass</span>)
+      <span class="ruby-identifier">render_bool</span>(<span class="ruby-identifier">prop</span>)
+    <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">prop</span>.<span class="ruby-identifier">klass</span>.<span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-constant">Date</span>)
+      <span class="ruby-identifier">render_date</span>(<span class="ruby-identifier">prop</span>)
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000066" class="method-detail">
+        <a name="M000066"></a>
+
+        <div class="method-heading">
+          <a href="#M000066" class="method-signature">
+          <span class="method-name">render_string</span><span class="method-args">(prop)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000066-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000066-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 141</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_string</span>(<span class="ruby-identifier">prop</span>)
     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prop</span>.<span class="ruby-identifier">meta</span>[<span class="ruby-identifier">:ui</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">:textarea</span>
       <span class="ruby-identifier">r</span>.<span class="ruby-identifier">text_area</span>.<span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:set_value_of</span>, <span class="ruby-identifier">prop</span>).<span class="ruby-identifier">with</span>(<span class="ruby-identifier">get_value_of</span>(<span class="ruby-identifier">prop</span>))
@@ -359,69 +401,23 @@
 
       <h3 class="section-bar">Private Instance methods</h3>
 
-      <div id="method-M000072" class="method-detail">
-        <a name="M000072"></a>
+      <div id="method-M000073" class="method-detail">
+        <a name="M000073"></a>
 
         <div class="method-heading">
-          <a href="#M000072" class="method-signature">
+          <a href="#M000073" class="method-signature">
           <span class="method-name">cancel</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000072-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000072-source">
+            onclick="toggleCode('M000073-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000073-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 171</span>
+<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 193</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cancel</span>
     <span class="ruby-identifier">answer</span> <span class="ruby-keyword kw">nil</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000068" class="method-detail">
-        <a name="M000068"></a>
-
-        <div class="method-heading">
-          <a href="#M000068" class="method-signature">
-          <span class="method-name">each_property</span><span class="method-args">(&amp;block)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000068-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000068-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 154</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_property</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-    <span class="ruby-ivar">@domain_object</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">__props</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000069" class="method-detail">
-        <a name="M000069"></a>
-
-        <div class="method-heading">
-          <a href="#M000069" class="method-signature">
-          <span class="method-name">get_value_of</span><span class="method-args">(prop)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000069-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000069-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 158</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_value_of</span>(<span class="ruby-identifier">prop</span>)
-    <span class="ruby-ivar">@domain_object</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">prop</span>.<span class="ruby-identifier">symbol</span>)
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -433,7 +429,7 @@
 
         <div class="method-heading">
           <a href="#M000071" class="method-signature">
-          <span class="method-name">save</span><span class="method-args">()</span>
+          <span class="method-name">each_property</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
       
@@ -442,7 +438,53 @@
             onclick="toggleCode('M000071-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000071-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 166</span>
+<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 184</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_property</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-ivar">@domain_object</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">__props</span>.<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000074" class="method-detail">
+        <a name="M000074"></a>
+
+        <div class="method-heading">
+          <a href="#M000074" class="method-signature">
+          <span class="method-name">get_value_of</span><span class="method-args">(prop)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000074-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000074-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 197</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_value_of</span>(<span class="ruby-identifier">prop</span>)
+    <span class="ruby-ivar">@domain_object</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">prop</span>.<span class="ruby-identifier">symbol</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000072" class="method-detail">
+        <a name="M000072"></a>
+
+        <div class="method-heading">
+          <a href="#M000072" class="method-signature">
+          <span class="method-name">save</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000072-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000072-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 188</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save</span>
     <span class="ruby-ivar">@domain_object</span>.<span class="ruby-identifier">save!</span>
     <span class="ruby-identifier">answer</span> <span class="ruby-ivar">@domain_object</span>
@@ -452,21 +494,54 @@
         </div>
       </div>
 
-      <div id="method-M000070" class="method-detail">
-        <a name="M000070"></a>
+      <div id="method-M000076" class="method-detail">
+        <a name="M000076"></a>
 
         <div class="method-heading">
-          <a href="#M000070" class="method-signature">
+          <a href="#M000076" class="method-signature">
+          <span class="method-name">set_date_of</span><span class="method-args">(prop, val, pos)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000076-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000076-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 205</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_date_of</span>(<span class="ruby-identifier">prop</span>, <span class="ruby-identifier">val</span>, <span class="ruby-identifier">pos</span>)
+    <span class="ruby-identifier">v</span> = <span class="ruby-identifier">get_value_of</span>(<span class="ruby-identifier">prop</span>) <span class="ruby-operator">||</span> <span class="ruby-constant">Date</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-identifier">new_date</span> = [<span class="ruby-identifier">v</span>.<span class="ruby-identifier">year</span>, <span class="ruby-identifier">v</span>.<span class="ruby-identifier">month</span>, <span class="ruby-identifier">v</span>.<span class="ruby-identifier">day</span>]
+    <span class="ruby-identifier">pos</span> = 
+      <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">pos</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:year</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value">0</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:month</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value">1</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:day</span> <span class="ruby-keyword kw">then</span> <span class="ruby-value">2</span>
+      <span class="ruby-keyword kw">else</span> <span class="ruby-identifier">raise</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">new_date</span>[<span class="ruby-identifier">pos</span>] = <span class="ruby-identifier">val</span>
+    <span class="ruby-identifier">set_value_of</span>(<span class="ruby-identifier">prop</span>, <span class="ruby-constant">Date</span>.<span class="ruby-identifier">new</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">new_date</span>))
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000075" class="method-detail">
+        <a name="M000075"></a>
+
+        <div class="method-heading">
+          <a href="#M000075" class="method-signature">
           <span class="method-name">set_value_of</span><span class="method-args">(prop, value)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000070-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000070-source">
+            onclick="toggleCode('M000075-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000075-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 162</span>
+<span class="ruby-comment cmt"># File lib/wee/databases/og/scaffolder.rb, line 201</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_value_of</span>(<span class="ruby-identifier">prop</span>, <span class="ruby-identifier">value</span>)
     <span class="ruby-ivar">@domain_object</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">prop</span>.<span class="ruby-identifier">symbol</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;=&quot;</span>, <span class="ruby-identifier">value</span>)
   <span class="ruby-keyword kw">end</span>
