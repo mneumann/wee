@@ -48,7 +48,7 @@ class HtmlCanvas < Canvas
 
   def url_for_callback(symbol=nil, &block)
     raise ArgumentError if symbol and block
-    block = self.current_component.method(symbol) unless block
+    block = Wee::LiteralMethodCallback.new(self.current_component, symbol) unless block
     req = self.rendering_context.request
     url = req.build_url(req.request_handler_id, req.page_id, register_callback(:action, &block))
     return url
