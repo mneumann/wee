@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Mon Nov 15 01:33:17 CET 2004</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h1><a href="../classes/Wee.html">Wee</a> Web Framework</h1>
+<p>
+Copyright &#169; 2004 by Michael Neumann (mneumann@ntecs.de)
+</p>
+<h2>The anatomy of a request/response cycle</h2>
+<p>
+The request/response cycle in <a href="../classes/Wee.html">Wee</a> is
+actually split into two separate phases or steps. Depending on the
+point-of-view (given that a page is rendered and the user clicks on a link
+or button), the first phase is to invoke an action (a
+&quot;callback&quot;). Then in the second phase, a new page is rendered and
+sent back to the user:
+</p>
+<ol>
+<li>invoke callback(s)
+
+</li>
+<li>render new page and display
+
+</li>
+</ol>
+<p>
+These two phases repeat permanently.
+</p>
+<h3>Invoking Callbacks</h3>
+<p>
+Possible sources for callbacks are links (anchors) and all kind of
+form-elements like submit buttons, input-fields etc. There are two
+different kinds of callbacks:
+</p>
+<ul>
+<li>Input callbacks (input-fields)
+
+</li>
+<li>Action callbacks (anchor, submit-button)
+
+</li>
+</ul>
+<p>
+The distinction between input and action callbacks is important, as action
+callbacks might depend on values of input-fields being assigned to instance
+variables of the controlling component. Hence, <a
+href="../classes/Wee.html">Wee</a> first invokes all input callbacks before
+any action callback is triggered.
+</p>
+<p>
+There are two methods related to callback processing:
+</p>
+<ul>
+<li><em>Component#process_callback_chain</em>
+
+</li>
+<li><em>Presenter#process_callbacks</em>
+
+</li>
+</ul>
+<p>
+Note that each Component is also a Presenter, but a Decoration is not a
+Component!
+</p>
+<p>
+Method <em>process_callback_chain</em> invokes <em>process_callbacks</em>
+for it&#8217;s first decoration, or if the component has no decorations,
+the method is called for the component itself. As such,
+<em>process_callback_chain</em> is important to avoid entering an infinite
+loop (a method calling itself). What decorations are, is discussed
+elsewhere.
+</p>
+<p>
+Method <em>process_callbacks</em> of class Component first invokes all
+input callbacks specified for this component, then calls
+<em>process_callback_chain</em> for all of it&#8217;s child components.
+This ensures, that all input callbacks are triggered before the first
+action callback is run. Finally, it invokes all of it&#8217;s action
+callbacks.
+</p>
+<h3>Rendering Phase</h3>
+<p>
+The rendering phase is assumed to be side-effect free! So, you as a
+programmer should take care to meet this assumption.
+</p>
+<p>
+Similar as in the callback-step, there are two methods related to rendering
+a page:
+</p>
+<ul>
+<li><em>Component#render_chain</em>
+
+</li>
+<li><em>Presenter#render</em>
+
+</li>
+</ul>
+<p>
+Method <em>Component#render_chain</em> starts rendering the decoration
+chain by calling <em>Presenter#render</em> for the first decoration of the
+component or for the component itself if no decorations were specified.
+Method <em>Presenter#render</em> then generates the desired output which
+gets sent to the user. Note that method <em>render</em> might call other
+components <em>render_chain</em> methods to display those components
+&quot;inside&quot; itself (usually a component does this for it&#8217;s
+child components, but this has to be implemented by the programmer).
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

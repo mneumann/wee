@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Wee::Presenter</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Wee::Presenter</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/wee/presenter_rb.html">
+                lib/wee/presenter.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                <a href="../Object.html">
+                Object
+               </a>
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="Presenter.html">Wee::Presenter</a> is the superclass of all
+classes that want to participate in rendering and callback-processing. <a
+href="Component.html">Wee::Component</a> and <a
+href="Decoration.html">Wee::Decoration</a> are it&#8217;s two most
+important subclasses.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000171">process_callbacks</a>&nbsp;&nbsp;
+      <a href="#M000170">render</a>&nbsp;&nbsp;
+      <a href="#M000169">render_content_on</a>&nbsp;&nbsp;
+      <a href="#M000172">renderer_class</a>&nbsp;&nbsp;
+      <a href="#M000173">session</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000171" class="method-detail">
+        <a name="M000171"></a>
+
+        <div class="method-heading">
+          <a href="#M000171" class="method-signature">
+          <span class="method-name">process_callbacks</span><span class="method-args">(callback_stream) {|| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Process all callbacks specified for this presenter.
+</p>
+<p>
+At first, this method invokes all input callbacks of this presenter, then
+it calls the block if one was given (used by subclasses). Finally, all
+action callbacks are invoked.
+</p>
+<dl>
+<dt><tt>callback_stream</tt></dt><dd>An object of class <a href="CallbackStream.html">CallbackStream</a>
+
+</dd>
+</dl>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000171-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000171-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/presenter.rb, line 44</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callbacks</span>(<span class="ruby-identifier">callback_stream</span>) <span class="ruby-comment cmt"># :yields:</span>
+
+    <span class="ruby-comment cmt"># invoke input callbacks</span>
+    <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">callback</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">callback_stream</span>.<span class="ruby-identifier">get_callbacks_for</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">:input</span>)
+      <span class="ruby-identifier">callback</span>.<span class="ruby-identifier">invoke</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-comment cmt"># enable subclasses to add behaviour, e.g. a Component class will invoke</span>
+    <span class="ruby-comment cmt"># process_callback_chain for each child in the block.</span>
+    <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+
+    <span class="ruby-comment cmt"># invoke action callbacks</span>
+    <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">callback</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">callback_stream</span>.<span class="ruby-identifier">get_callbacks_for</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">:action</span>)
+
+      <span class="ruby-identifier">catch</span>(<span class="ruby-identifier">:wee_back_to_process_callbacks</span>) { <span class="ruby-identifier">callback</span>.<span class="ruby-identifier">invoke</span> }
+
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cont</span> = <span class="ruby-identifier">session</span>.<span class="ruby-identifier">continuation_stack</span>.<span class="ruby-identifier">pop</span>
+        <span class="ruby-identifier">cont</span>.<span class="ruby-identifier">call</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;FATAL&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-keyword kw">end</span>
+
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000170" class="method-detail">
+        <a name="M000170"></a>
+
+        <div class="method-heading">
+          <a href="#M000170" class="method-signature">
+          <span class="method-name">render</span><span class="method-args">(rendering_context)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Render the presenter in the given rendering context. DO NOT overwrite this
+method, unless you know exactly what you&#8217;re doing!
+</p>
+<p>
+Creates a new renderer object of the class returned by method <em><a
+href="Presenter.html#M000172">renderer_class</a></em>, then invokes <a
+href="Presenter.html#M000169">render_content_on</a> with the new renderer.
+</p>
+<dl>
+<dt><tt>rendering_context</tt></dt><dd>An object of class <a href="RenderingContext.html">RenderingContext</a>
+
+</dd>
+</dl>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000170-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000170-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/presenter.rb, line 28</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">rendering_context</span>)
+    <span class="ruby-identifier">r</span> = <span class="ruby-identifier">renderer_class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">rendering_context</span>)
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">current_component</span> = <span class="ruby-keyword kw">self</span>
+    <span class="ruby-identifier">render_content_on</span>(<span class="ruby-identifier">r</span>)
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">close</span> <span class="ruby-comment cmt"># write outstanding brushes to the document</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000169" class="method-detail">
+        <a name="M000169"></a>
+
+        <div class="method-heading">
+          <a href="#M000169" class="method-signature">
+          <span class="method-name">render_content_on</span><span class="method-args">(renderer)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This method renders the content of the presenter with the given renderer.
+</p>
+<p>
+OVERWRITE this method in your own presenter classes to implement the view.
+By default this method does nothing!
+</p>
+<dl>
+<dt><tt>renderer</tt></dt><dd>A renderer object.
+
+</dd>
+</dl>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000169-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000169-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/presenter.rb, line 15</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_content_on</span>(<span class="ruby-identifier">renderer</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Protected Instance methods</h3>
+
+      <div id="method-M000172" class="method-detail">
+        <a name="M000172"></a>
+
+        <div class="method-heading">
+          <a href="#M000172" class="method-signature">
+          <span class="method-name">renderer_class</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the class used as renderer for this presenter. Overwrite this
+method if you want to use a different renderer.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000172-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000172-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/presenter.rb, line 74</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">renderer_class</span>
+    <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">HtmlCanvas</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000173" class="method-detail">
+        <a name="M000173"></a>
+
+        <div class="method-heading">
+          <a href="#M000173" class="method-signature">
+          <span class="method-name">session</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the current session. A presenter (or component) has always an
+associated session. The returned object is of class <a
+href="Session.html">Wee::Session</a> or a subclass thereof.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000173-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000173-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/presenter.rb, line 82</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">session</span>
+    <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Session</span>.<span class="ruby-identifier">current</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
