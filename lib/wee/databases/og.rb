@@ -26,7 +26,10 @@ class OgScaffolder < Wee::Component
   end
 
   def confirm_delete(confirmed, obj)
-    obj.delete! if confirmed
+    if confirmed
+      @objs.delete(obj)
+      obj.delete!
+    end
   end
 
   def edit(obj)
@@ -39,16 +42,16 @@ class OgScaffolder < Wee::Component
   end
  
   def cancel
-    @objs.delete(@edit)
+    @objs.delete(@edit) if @edit and @edit.oid.nil?
     @edit = nil
   end
 
   def refresh
-    @objs = @domain_class.all
+    @objs = @domain_class.all || []
   end
 
   def create
-    @objs << (@edit =  @domain_class.new)
+    @objs << (@edit = @domain_class.new)
   end
 
   def render
@@ -59,7 +62,16 @@ class OgScaffolder < Wee::Component
 
     r.form do
       r.table.border(1).with {
-        r.table_row.headings(*@attributes.map{|a| a.capitalize}) {|h| r.bold(h)}
+
+        r.table_row.with {
+          @attributes.each {|a|
+            r.table_header.with {
+              r.bold(a.capitalize)
+            }
+          }
+          r.table_header.with(" ")
+        }
+
         @objs.each {|o| 
           r.table_row.with do 
             if @edit == o
