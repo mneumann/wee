@@ -30,7 +30,7 @@ class LiveUpdateTest < Wee::Component
     # simply omit this and just return the response with some html/xml filled
     # in.
     rendering_context = Wee::RenderingContext.new(context.request, 
-      context.response, session.current_page.callbacks, 
+      context.response, session.current_callbacks, 
       Wee::HtmlWriter.new(response.content))
 
     with_renderer_for(rendering_context) do 
