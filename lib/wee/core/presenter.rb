@@ -133,13 +133,14 @@ class Wee::Presenter
   # :section: Properties
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  attr_accessor :properties
+  def properties() @__properties end
+  def properties=(props) @__properties = props end
 
   # Returns an "owned" property.
 
   def get_property(prop)
-    if @properties
-      @properties[prop]
+    if self.properties
+      self.properties[prop]
     else
       nil
     end

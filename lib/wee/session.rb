@@ -158,13 +158,14 @@ class Wee::Session < Wee::RequestHandler
   # :section: Properties
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  attr_accessor :properties
+  def properties() @__properties end
+  def properties=(props) @__properties = props end
 
   # Returns an "owned" property for the given +klass+.
 
   def get_property(prop, klass)
-    if @properties
-      @properties.fetch(klass, {})[prop]
+    if self.properties
+      self.properties.fetch(klass, {})[prop]
     else
       nil
     end

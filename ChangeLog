@@ -1,3 +1,12 @@
+Sat Feb 26 14:22:34 CET 2005	Michael Neumann	<mneumann@ntecs.de>
+
+	* wee/core/presenter.rb, wee/session.rb, wee/application.rb: renamed @properties to @__properties
+
+	* wee/core/component.rb: rename @children to @__children
+
+	* wee/core/component.rb, wee/core/valueholder.rb: rename @decoration
+	  to @__decoration
+
 --------------------------------------------------------------------
 TAGGED 0.7.0
 --------------------------------------------------------------------

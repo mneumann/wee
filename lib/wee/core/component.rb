@@ -77,8 +77,8 @@ class Wee::Component < Wee::Presenter
   # +super+, before setting up anything else! 
 
   def initialize() # :notnew:
-    @decoration = Wee::ValueHolder.new(self)
-    @children = []
+    @__decoration = Wee::ValueHolder.new(self)
+    @__children = []
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -90,7 +90,7 @@ class Wee::Component < Wee::Presenter
   # Returns all direct child components collected in an array.
  
   def children
-    @children
+    @__children
   end
 
   # Add a child to the component. Example:
@@ -127,13 +127,13 @@ class Wee::Component < Wee::Presenter
   # +self+ if no decorations were specified for the component.
 
   def decoration
-    @decoration.value
+    @__decoration.value
   end
 
   # Set the pointer to the first decoration to +d+. 
 
   def decoration=(d) 
-    @decoration.value = d
+    @__decoration.value = d
   end
 
   # Iterates over all decorations (note that the component itself is excluded). 
@@ -248,7 +248,7 @@ class Wee::Component < Wee::Presenter
   # <i>marshal_load</i>). Overwrite them if you want to define special
   # behaviour. 
   #
-  # By default only <tt>@decoration</tt> is backtracked (which actually is a
+  # By default only <tt>@__decoration</tt> is backtracked (which actually is a
   # ValueHolder, as only the pointer changes not the decoration-object
   # itself!).
   #
@@ -270,7 +270,7 @@ class Wee::Component < Wee::Presenter
   #    An object of class Snapshot
 
   def backtrack_state(snapshot)
-    snapshot.add(@decoration)
+    snapshot.add(@__decoration)
     children.each do |child| child.backtrack_state_chain(snapshot) end
   end
 
