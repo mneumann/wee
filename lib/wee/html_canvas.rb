@@ -36,6 +36,14 @@ class HtmlCanvas < Canvas
     @document = rendering_context.document
   end
 
+  def bold(*args, &block)
+    handle(Brush::GenericTagBrush.new("b"), *args, &block)
+  end
+
+  def method_missing(id, *args, &block)
+    handle(Brush::GenericTagBrush.new(id.to_s), *args, &block)
+  end
+
   def table(*args, &block)
     handle(Brush::TableTag.new, *args, &block)
   end
@@ -83,6 +91,7 @@ class HtmlCanvas < Canvas
   def break
     set_brush(Brush::GenericTagBrush.new("br"))
   end
+
 
   def image
     set_brush(Brush::GenericTagBrush.new("img"))
