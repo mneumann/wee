@@ -20,7 +20,7 @@ class AjaxTest < Wee::Component
 
   def update
     send_render_response {
-      r.text "Live-updates works! This is no. #{ @live_updates += 1}" 
+      r.text "Live-updates works! This is no. #{ @live_updates = (@live_updates || 0) + 1 }"
     }
   end
 end
