@@ -94,10 +94,10 @@ Implements the least frequently used (<a href="LFU.html">LFU</a>) strategy.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000022">access</a>&nbsp;&nbsp;
-      <a href="#M000023">delete</a>&nbsp;&nbsp;
-      <a href="#M000024">insert_or_extrude</a>&nbsp;&nbsp;
-      <a href="#M000021">item_class</a>&nbsp;&nbsp;
+      <a href="#M000024">access</a>&nbsp;&nbsp;
+      <a href="#M000025">delete</a>&nbsp;&nbsp;
+      <a href="#M000026">insert_or_extrude</a>&nbsp;&nbsp;
+      <a href="#M000023">item_class</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -125,19 +125,19 @@ Implements the least frequently used (<a href="LFU.html">LFU</a>) strategy.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000022" class="method-detail">
-        <a name="M000022"></a>
+      <div id="method-M000024" class="method-detail">
+        <a name="M000024"></a>
 
         <div class="method-heading">
-          <a href="#M000022" class="method-signature">
+          <a href="#M000024" class="method-signature">
           <span class="method-name">access</span><span class="method-args">(item)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000022-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000022-source">
+            onclick="toggleCode('M000024-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000024-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/cache/cache.rb, line 60</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">access</span>(<span class="ruby-identifier">item</span>)
@@ -148,19 +148,19 @@ Implements the least frequently used (<a href="LFU.html">LFU</a>) strategy.
         </div>
       </div>
 
-      <div id="method-M000023" class="method-detail">
-        <a name="M000023"></a>
+      <div id="method-M000025" class="method-detail">
+        <a name="M000025"></a>
 
         <div class="method-heading">
-          <a href="#M000023" class="method-signature">
+          <a href="#M000025" class="method-signature">
           <span class="method-name">delete</span><span class="method-args">(item)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000023-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000023-source">
+            onclick="toggleCode('M000025-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000025-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/cache/cache.rb, line 64</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">item</span>)
@@ -171,11 +171,11 @@ Implements the least frequently used (<a href="LFU.html">LFU</a>) strategy.
         </div>
       </div>
 
-      <div id="method-M000024" class="method-detail">
-        <a name="M000024"></a>
+      <div id="method-M000026" class="method-detail">
+        <a name="M000026"></a>
 
         <div class="method-heading">
-          <a href="#M000024" class="method-signature">
+          <a href="#M000026" class="method-signature">
           <span class="method-name">insert_or_extrude</span><span class="method-args">(item, enum) {|enum.min_by {|key, it| it.freq| ...}</span>
           </a>
         </div>
@@ -187,8 +187,8 @@ Implements the least frequently used (<a href="LFU.html">LFU</a>) strategy.
 </td></tr>
 </table>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000024-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000024-source">
+            onclick="toggleCode('M000026-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000026-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/cache/cache.rb, line 71</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">insert_or_extrude</span>(<span class="ruby-identifier">item</span>, <span class="ruby-identifier">enum</span>)
@@ -202,19 +202,19 @@ Implements the least frequently used (<a href="LFU.html">LFU</a>) strategy.
         </div>
       </div>
 
-      <div id="method-M000021" class="method-detail">
-        <a name="M000021"></a>
+      <div id="method-M000023" class="method-detail">
+        <a name="M000023"></a>
 
         <div class="method-heading">
-          <a href="#M000021" class="method-signature">
+          <a href="#M000023" class="method-signature">
           <span class="method-name">item_class</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000021-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000021-source">
+            onclick="toggleCode('M000023-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000023-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/cache/cache.rb, line 58</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">item_class</span>() <span class="ruby-constant">Item</span> <span class="ruby-keyword kw">end</span>

@@ -86,10 +86,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000126">__set_url</a>&nbsp;&nbsp;
-      <a href="#M000125">href</a>&nbsp;&nbsp;
-      <a href="#M000123">new</a>&nbsp;&nbsp;
-      <a href="#M000124">url</a>&nbsp;&nbsp;
+      <a href="#M000143">new</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -109,6 +106,29 @@
 
 
 
+    <div id="aliases-list">
+      <h3 class="section-bar">External Aliases</h3>
+
+      <div class="name-list">
+                        <table summary="aliases">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">href</td>
+          <td>-></td>
+          <td class="context-item-value">url</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">title</td>
+          <td>-></td>
+          <td class="context-item-value">tooltip</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">url</td>
+          <td>-></td>
+          <td class="context-item-value">__set_url</td>
+        </tr>
+                        </table>
+      </div>
+    </div>
 
 
       
@@ -118,77 +138,23 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000123" class="method-detail">
-        <a name="M000123"></a>
+      <div id="method-M000143" class="method-detail">
+        <a name="M000143"></a>
 
         <div class="method-heading">
-          <a href="#M000123" class="method-signature">
+          <a href="#M000143" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000123-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000123-source">
+            onclick="toggleCode('M000143-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000143-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 386</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 470</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
     <span class="ruby-keyword kw">super</span>(<span class="ruby-value str">'a'</span>)
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <h3 class="section-bar">Public Instance methods</h3>
-
-      <div id="method-M000126" class="method-detail">
-        <a name="M000126"></a>
-
-        <div class="method-heading">
-          <span class="method-name">__set_url</span><span class="method-args">(href)</span>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Alias for <a href="AnchorTag.html#M000124">url</a>
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000125" class="method-detail">
-        <a name="M000125"></a>
-
-        <div class="method-heading">
-          <span class="method-name">href</span><span class="method-args">(href)</span>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Alias for <a href="AnchorTag.html#M000124">url</a>
-</p>
-        </div>
-      </div>
-
-      <div id="method-M000124" class="method-detail">
-        <a name="M000124"></a>
-
-        <div class="method-heading">
-          <a href="#M000124" class="method-signature">
-          <span class="method-name">url</span><span class="method-args">(href)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000124-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000124-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 390</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">url</span>(<span class="ruby-identifier">href</span>)
-    <span class="ruby-ivar">@attributes</span>[<span class="ruby-value str">'href'</span>] = <span class="ruby-identifier">href</span> 
-    <span class="ruby-keyword kw">self</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>

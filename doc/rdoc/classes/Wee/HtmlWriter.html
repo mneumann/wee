@@ -97,7 +97,6 @@ Usage:
   w.end_tag('body')
   w.end_tag('html')
 
-  p w.valid?   # =&gt; true
   p doc        # =&gt; '&lt;html&gt;&lt;body&gt;&lt;a href=&quot;http://...&quot;&gt;link&lt;/a&gt;&lt;/body&gt;&lt;/html&gt;'
 </pre>
 
@@ -110,13 +109,13 @@ Usage:
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000203">&lt;&lt;</a>&nbsp;&nbsp;
-      <a href="#M000204">encode_text</a>&nbsp;&nbsp;
-      <a href="#M000201">end_tag</a>&nbsp;&nbsp;
-      <a href="#M000199">new</a>&nbsp;&nbsp;
-      <a href="#M000200">start_tag</a>&nbsp;&nbsp;
-      <a href="#M000202">text</a>&nbsp;&nbsp;
-      <a href="#M000205">valid?</a>&nbsp;&nbsp;
+      <a href="#M000245">&lt;&lt;</a>&nbsp;&nbsp;
+      <a href="#M000246">encode_text</a>&nbsp;&nbsp;
+      <a href="#M000243">end_tag</a>&nbsp;&nbsp;
+      <a href="#M000240">new</a>&nbsp;&nbsp;
+      <a href="#M000242">single_tag</a>&nbsp;&nbsp;
+      <a href="#M000241">start_tag</a>&nbsp;&nbsp;
+      <a href="#M000244">text</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -151,25 +150,23 @@ Usage:
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000199" class="method-detail">
-        <a name="M000199"></a>
+      <div id="method-M000240" class="method-detail">
+        <a name="M000240"></a>
 
         <div class="method-heading">
-          <a href="#M000199" class="method-signature">
+          <a href="#M000240" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(port)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000199-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000199-source">
+            onclick="toggleCode('M000240-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000240-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/writer.rb, line 23</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/writer.rb, line 22</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">port</span>)
     <span class="ruby-ivar">@port</span> = <span class="ruby-identifier">port</span> 
-    <span class="ruby-ivar">@open_start_tag</span> = <span class="ruby-keyword kw">false</span>
-    <span class="ruby-ivar">@tag_stack</span> = []
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -178,8 +175,8 @@ Usage:
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000203" class="method-detail">
-        <a name="M000203"></a>
+      <div id="method-M000245" class="method-detail">
+        <a name="M000245"></a>
 
         <div class="method-heading">
           <span class="method-name">&lt;&lt;</span><span class="method-args">(str)</span>
@@ -187,57 +184,89 @@ Usage:
       
         <div class="method-description">
           <p>
-Alias for <a href="HtmlWriter.html#M000202">text</a>
+Alias for <a href="HtmlWriter.html#M000244">text</a>
 </p>
         </div>
       </div>
 
-      <div id="method-M000204" class="method-detail">
-        <a name="M000204"></a>
+      <div id="method-M000246" class="method-detail">
+        <a name="M000246"></a>
 
         <div class="method-heading">
-          <a href="#M000204" class="method-signature">
+          <a href="#M000246" class="method-signature">
           <span class="method-name">encode_text</span><span class="method-args">(str)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000204-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000204-source">
+            onclick="toggleCode('M000246-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000246-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/writer.rb, line 71</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/writer.rb, line 75</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">encode_text</span>(<span class="ruby-identifier">str</span>)
-    <span class="ruby-identifier">text</span>(<span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escapeHTML</span>(<span class="ruby-identifier">str</span>.<span class="ruby-identifier">to_s</span>))
+    <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escapeHTML</span>(<span class="ruby-identifier">str</span>.<span class="ruby-identifier">to_s</span>)
+
+    <span class="ruby-keyword kw">self</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000201" class="method-detail">
-        <a name="M000201"></a>
+      <div id="method-M000243" class="method-detail">
+        <a name="M000243"></a>
 
         <div class="method-heading">
-          <a href="#M000201" class="method-signature">
+          <a href="#M000243" class="method-signature">
           <span class="method-name">end_tag</span><span class="method-args">(tag)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000201-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000201-source">
+            onclick="toggleCode('M000243-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000243-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/writer.rb, line 46</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/writer.rb, line 62</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">end_tag</span>(<span class="ruby-identifier">tag</span>)
-    <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;unbalanced html&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@tag_stack</span>.<span class="ruby-identifier">pop</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">tag</span>
+    <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&lt;/#{ tag }&gt;&quot;</span>
 
-    <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@open_start_tag</span>
-      <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;/&gt;&quot;</span>
-      <span class="ruby-ivar">@open_start_tag</span> = <span class="ruby-keyword kw">false</span>
+    <span class="ruby-keyword kw">self</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000242" class="method-detail">
+        <a name="M000242"></a>
+
+        <div class="method-heading">
+          <a href="#M000242" class="method-signature">
+          <span class="method-name">single_tag</span><span class="method-args">(tag, attributes=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000242-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000242-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/writer.rb, line 44</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">single_tag</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">attributes</span>=<span class="ruby-keyword kw">nil</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attributes</span>
+      <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&lt;#{ tag }&quot;</span>
+      <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> 
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">v</span>
+          <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%[ #{ k }=&quot;#{ v }&quot;]</span> 
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%[ #{ k }]</span> 
+        <span class="ruby-keyword kw">end</span>
+      }
+      <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; /&gt;&quot;</span>
     <span class="ruby-keyword kw">else</span>
-      <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&lt;/#{ tag }&gt;&quot;</span>
+      <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&lt;#{ tag } /&gt;&quot;</span>
     <span class="ruby-keyword kw">end</span>
 
     <span class="ruby-keyword kw">self</span>
@@ -247,34 +276,35 @@ Alias for <a href="HtmlWriter.html#M000202">text</a>
         </div>
       </div>
 
-      <div id="method-M000200" class="method-detail">
-        <a name="M000200"></a>
+      <div id="method-M000241" class="method-detail">
+        <a name="M000241"></a>
 
         <div class="method-heading">
-          <a href="#M000200" class="method-signature">
-          <span class="method-name">start_tag</span><span class="method-args">(tag, attributes={})</span>
+          <a href="#M000241" class="method-signature">
+          <span class="method-name">start_tag</span><span class="method-args">(tag, attributes=nil)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000200-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000200-source">
+            onclick="toggleCode('M000241-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000241-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/writer.rb, line 29</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_tag</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">attributes</span>={})
-    <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&gt;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@open_start_tag</span>
-    <span class="ruby-ivar">@open_start_tag</span> = <span class="ruby-keyword kw">true</span>
-    <span class="ruby-ivar">@tag_stack</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">tag</span>)
-
-    <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&lt;#{ tag }&quot;</span>
-    <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> 
-      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">v</span>
-        <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%[ #{ k }=&quot;#{ v }&quot;]</span> 
-      <span class="ruby-keyword kw">else</span>
-        <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%[ #{ k }]</span> 
-      <span class="ruby-keyword kw">end</span>
-    }
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/writer.rb, line 26</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_tag</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">attributes</span>=<span class="ruby-keyword kw">nil</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attributes</span>
+      <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&lt;#{ tag }&quot;</span>
+      <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> 
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">v</span>
+          <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%[ #{ k }=&quot;#{ v }&quot;]</span> 
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%[ #{ k }]</span> 
+        <span class="ruby-keyword kw">end</span>
+      }
+      <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&gt;&quot;</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&lt;#{ tag }&gt;&quot;</span>
+    <span class="ruby-keyword kw">end</span>
 
     <span class="ruby-keyword kw">self</span>
   <span class="ruby-keyword kw">end</span>
@@ -283,53 +313,25 @@ Alias for <a href="HtmlWriter.html#M000202">text</a>
         </div>
       </div>
 
-      <div id="method-M000202" class="method-detail">
-        <a name="M000202"></a>
+      <div id="method-M000244" class="method-detail">
+        <a name="M000244"></a>
 
         <div class="method-heading">
-          <a href="#M000202" class="method-signature">
+          <a href="#M000244" class="method-signature">
           <span class="method-name">text</span><span class="method-args">(str)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000202-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000202-source">
+            onclick="toggleCode('M000244-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000244-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/writer.rb, line 59</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/writer.rb, line 68</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">text</span>(<span class="ruby-identifier">str</span>)
-    <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@open_start_tag</span>
-      <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&gt;&quot;</span>
-      <span class="ruby-ivar">@open_start_tag</span> = <span class="ruby-keyword kw">false</span>
-    <span class="ruby-keyword kw">end</span>
-
     <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">to_s</span>
 
     <span class="ruby-keyword kw">self</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000205" class="method-detail">
-        <a name="M000205"></a>
-
-        <div class="method-heading">
-          <a href="#M000205" class="method-signature">
-          <span class="method-name">valid?</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000205-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000205-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/writer.rb, line 75</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">valid?</span>
-    <span class="ruby-ivar">@tag_stack</span>.<span class="ruby-identifier">empty?</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>

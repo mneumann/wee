@@ -55,8 +55,16 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../files/lib/wee/utils/cache_rb.html">
-                lib/wee/utils/cache.rb
+                <a href="../../files/lib/wee/utils_rb.html">
+                lib/wee/utils.rb
+                </a>
+        <br />
+                <a href="../../files/lib/wee/utils/autoreload_rb.html">
+                lib/wee/utils/autoreload.rb
+                </a>
+        <br />
+                <a href="../../files/lib/wee/utils/helper_rb.html">
+                lib/wee/utils/helper.rb
                 </a>
         <br />
             </td>
@@ -76,6 +84,14 @@
 
    </div>
 
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000045">app_for</a>&nbsp;&nbsp;
+      <a href="#M000044">autoreload</a>&nbsp;&nbsp;
+      </div>
+    </div>
 
   </div>
 
@@ -98,6 +114,126 @@
 
 
     <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000045" class="method-detail">
+        <a name="M000045"></a>
+
+        <div class="method-heading">
+          <a href="#M000045" class="method-signature">
+          <span class="method-name">app_for</span><span class="method-args">(component=nil, options={}, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <dl>
+<dt><tt>component</tt></dt><dd>The component class for which to create an application object. If a block
+is given, this will be invoked to create a new component object.
+
+</dd>
+<dt><tt>options</tt></dt><dd>A Hash. Following keys are accepted:
+
+<dl>
+<dt>:application</dt><dd>The application class to use (default: <a
+href="Application.html">Wee::Application</a>)
+
+</dd>
+<dt>:session</dt><dd>The session class to use (default: <a href="Session.html">Wee::Session</a>)
+
+</dd>
+<dt>:page_cache_capacity</dt><dd>The size of the sessions page_store (default: 10)
+
+</dd>
+<dt>:id_seed</dt><dd>Initial value of the <a href="SimpleIdGenerator.html">SimpleIdGenerator</a>
+(default: rand(1_000_000))
+
+</dd>
+</dl>
+</dd>
+</dl>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000045-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000045-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/utils/helper.rb, line 22</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">app_for</span>(<span class="ruby-identifier">component</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">options</span>={}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;either component or block must be given&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">component</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">block</span>.<span class="ruby-identifier">nil?</span>  
+
+    <span class="ruby-identifier">defaults</span> = {
+      <span class="ruby-identifier">:application</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Application</span>,
+      <span class="ruby-identifier">:session</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Session</span>,
+      <span class="ruby-identifier">:page_cache_capacity</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>,
+      <span class="ruby-identifier">:id_seed</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">rand</span>(<span class="ruby-value">1_000_000</span>)
+    }
+    <span class="ruby-identifier">options</span> = <span class="ruby-identifier">defaults</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">options</span>)
+
+    <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:application</span>].<span class="ruby-identifier">new</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">app</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">app</span>.<span class="ruby-identifier">default_request_handler</span> {
+        <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:session</span>].<span class="ruby-identifier">new</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">sess</span><span class="ruby-operator">|</span>
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">component</span>
+            <span class="ruby-identifier">sess</span>.<span class="ruby-identifier">root_component</span> = <span class="ruby-identifier">component</span>.<span class="ruby-identifier">new</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">sess</span>.<span class="ruby-identifier">root_component</span> = <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>
+          <span class="ruby-keyword kw">end</span>
+          <span class="ruby-identifier">sess</span>.<span class="ruby-identifier">page_store</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Utils</span><span class="ruby-operator">::</span><span class="ruby-constant">LRUCache</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:page_cache_capacity</span>])
+        }
+      }
+      <span class="ruby-identifier">app</span>.<span class="ruby-identifier">id_generator</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">SimpleIdGenerator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:id_seed</span>])
+    }
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000044" class="method-detail">
+        <a name="M000044"></a>
+
+        <div class="method-heading">
+          <a href="#M000044" class="method-signature">
+          <span class="method-name">autoreload</span><span class="method-args">(check_interval=10)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000044-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000044-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/utils/autoreload.rb, line 4</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">autoreload</span>(<span class="ruby-identifier">check_interval</span>=<span class="ruby-value">10</span>)
+    <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">start_time</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">file_mtime</span> = {}
+      <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
+        <span class="ruby-identifier">sleep</span> <span class="ruby-identifier">check_interval</span> 
+        <span class="ruby-identifier">$LOADED_FEATURES</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">feature</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">$LOAD_PATH</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">lp</span><span class="ruby-operator">|</span>
+            <span class="ruby-identifier">file</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">lp</span>, <span class="ruby-identifier">feature</span>)
+            <span class="ruby-keyword kw">if</span> (<span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">file</span>) <span class="ruby-keyword kw">and</span> 
+              <span class="ruby-constant">File</span>.<span class="ruby-identifier">stat</span>(<span class="ruby-identifier">file</span>).<span class="ruby-identifier">mtime</span> <span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">file_mtime</span>[<span class="ruby-identifier">file</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">start_time</span>))
+              <span class="ruby-identifier">file_mtime</span>[<span class="ruby-identifier">file</span>] = <span class="ruby-constant">File</span>.<span class="ruby-identifier">stat</span>(<span class="ruby-identifier">file</span>).<span class="ruby-identifier">mtime</span>
+              <span class="ruby-constant">STDERR</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;reload #{ file }&quot;</span>
+              <span class="ruby-keyword kw">begin</span>
+                <span class="ruby-identifier">load</span>(<span class="ruby-identifier">file</span>)
+              <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+                <span class="ruby-constant">STDERR</span>.<span class="ruby-identifier">puts</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">inspect</span>
+              <span class="ruby-keyword kw">end</span>
+            <span class="ruby-keyword kw">end</span>
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    }
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
 
 
   </div>

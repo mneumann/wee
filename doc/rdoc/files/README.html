@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Wed Jan 12 16:49:13 CET 2005</td>
+      <td>Wed Jan 26 20:20:05 CET 2005</td>
     </tr>
     </table>
   </div>
@@ -81,17 +81,23 @@ licensed under different terms.
 </p>
 <h2>Status and Bugs</h2>
 <p>
-<a href="../classes/Wee.html">Wee</a> is not considered production ready!
-It should only be used for small things.
+<a href="../classes/Wee.html">Wee</a> is now considered pretty stable (if
+you don&#8217;t use continuations). Nevertheless I wouldn&#8217;t use it
+yet for mission-critical applications ;-)
 </p>
 <p>
 Known Bugs:
 </p>
 <ul>
-<li>Continuations leak memory!
+<li>Using continuations might leak memory, at least they did in the past. The
 
 </li>
 </ul>
+<p>
+latest memory stress-test has not showed up any memory problems, but since
+I haven&#8217;t changed anything at the continuation implementation, I
+can&#8217;t say for sure whether the problem has been fixed or not.
+</p>
 <h2>Introduction</h2>
 <p>
 <a href="../classes/Wee.html">Wee</a> is a light-weight, very high-level
@@ -163,12 +169,13 @@ array. Items can be any object, e.g. whole components:
    items = labels.collect {|m| MessageBox.new(m)}
    r.select_list(items).labels(labels).callback {|choosen| call choosen.first}
 </pre>
-<h3>Continuation based (Optional)</h3>
+<h3>Optional use of Continuations</h3>
 <p>
 <b>IMPORTANT:</b> <em>The current implementation of continuations in Ruby
-might lead to memory leaks, if you use continuations. Furthermore, if you
-use continuations, it&#8217;s no longer possible to store the session state
-to disk.</em>
+(or their use in <a href="../classes/Wee.html">Wee</a>) might lead to
+memory leaks, if you use continuations. Furthermore, if you use
+continuations, it&#8217;s no longer possible to store the session state to
+disk.</em>
 </p>
 <p>
 Continuation-based frameworks are also known as <em>modal</em> frameworks.
@@ -191,6 +198,12 @@ emails) where each method displays a new page:
 Try to implement the same in a non-continuation based framework and show me
 your code&#8230; ;-)
 </p>
+<p>
+To enable continuations, you have to require:
+</p>
+<pre>
+  require 'wee/continuation'
+</pre>
 <h3>Fully Marshallable (drops Continuation support)</h3>
 <p>
 If you don&#8217;t need continuations, <a
@@ -210,8 +223,9 @@ href="http://www.dragonflybsd.org">DragonFly</a>. But with this approach
 it&#8217;s still impossible to store sessions <em>selectively</em> to disk.
 
 </li>
-<li>Each session runs in it&#8217;s own (light-weigth) thread (this is a
-neccessity when using continuations).
+<li>When using continuations, each session runs in it&#8217;s own
+(light-weigth) thread. This is not the case if you don&#8217;t use
+continuations.
 
 </li>
 <li>Only one action callback can be invoked per request (a former version of <a
@@ -254,7 +268,7 @@ Decorations are used to modify the look and behaviour of a component,
 without modifying the components tree. A component can have more than one
 decoration. This is implemented as a linked list of decorations
 (Wee::Decoration#owner points to the next decoration). <a
-href="../classes/Wee/Component.html#M000179">Wee::Component#decoration</a>
+href="../classes/Wee/Component.html#M000215">Wee::Component#decoration</a>
 points to the first decoration in the chain or to the component itself, if
 no decorations were specified. We actually use a <a
 href="../classes/Wee/ValueHolder.html">Wee::ValueHolder</a> for the
@@ -347,11 +361,11 @@ There are two methods related to callback processing:
 </p>
 <ul>
 <li><a
-href="../classes/Wee/Component.html#M000174">Wee::Component#process_callbacks_chain</a>
+href="../classes/Wee/Component.html#M000210">Wee::Component#process_callbacks_chain</a>
 
 </li>
 <li><a
-href="../classes/Wee/Presenter.html#M000196">Wee::Presenter#process_callbacks</a>
+href="../classes/Wee/Presenter.html#M000234">Wee::Presenter#process_callbacks</a>
 
 </li>
 </ul>
@@ -388,11 +402,11 @@ a page:
 </p>
 <ul>
 <li><a
-href="../classes/Wee/Component.html#M000172">Wee::Component#do_render_chain</a>
+href="../classes/Wee/Component.html#M000208">Wee::Component#do_render_chain</a>
 
 </li>
 <li><a
-href="../classes/Wee/Presenter.html#M000191">Wee::Presenter#do_render</a>
+href="../classes/Wee/Presenter.html#M000229">Wee::Presenter#do_render</a>
 
 </li>
 </ul>

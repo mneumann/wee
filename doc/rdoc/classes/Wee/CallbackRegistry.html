@@ -99,7 +99,7 @@ The format of the internal datastructure is:
     <div id="contents-list">
       <h3 class="section-bar">Contents</h3>
       <ul>
-      <li><a href="#SEC00091">Friend methods for Wee::CallbackStream</a></li>
+      <li><a href="#SEC00100">Friend methods for Wee::CallbackStream</a></li>
      </ul>
    </div>
 
@@ -107,11 +107,11 @@ The format of the internal datastructure is:
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000160">all_of_type</a>&nbsp;&nbsp;
-      <a href="#M000159">get_callback_for</a>&nbsp;&nbsp;
-      <a href="#M000158">get_ids_for</a>&nbsp;&nbsp;
-      <a href="#M000156">new</a>&nbsp;&nbsp;
-      <a href="#M000157">register_for</a>&nbsp;&nbsp;
+      <a href="#M000196">all_of_type</a>&nbsp;&nbsp;
+      <a href="#M000195">get_callback_for</a>&nbsp;&nbsp;
+      <a href="#M000194">get_ids_for</a>&nbsp;&nbsp;
+      <a href="#M000192">new</a>&nbsp;&nbsp;
+      <a href="#M000193">register_for</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -133,19 +133,19 @@ The format of the internal datastructure is:
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000156" class="method-detail">
-        <a name="M000156"></a>
+      <div id="method-M000192" class="method-detail">
+        <a name="M000192"></a>
 
         <div class="method-heading">
-          <a href="#M000156" class="method-signature">
+          <a href="#M000192" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(id_generator)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000156-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000156-source">
+            onclick="toggleCode('M000192-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000192-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/callback.rb, line 11</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">id_generator</span>)
@@ -160,12 +160,12 @@ The format of the internal datastructure is:
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000157" class="method-detail">
-        <a name="M000157"></a>
+      <div id="method-M000193" class="method-detail">
+        <a name="M000193"></a>
 
         <div class="method-heading">
-          <a href="#M000157" class="method-signature">
-          <span class="method-name">register_for</span><span class="method-args">(object, type=nil, &amp;callback)</span>
+          <a href="#M000193" class="method-signature">
+          <span class="method-name">register_for</span><span class="method-args">(object, type, callback)</span>
           </a>
         </div>
       
@@ -175,11 +175,11 @@ Register <tt>callback</tt> for <tt>object</tt> under <tt>type</tt> and
 return a unique callback id.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000157-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000157-source">
+            onclick="toggleCode('M000193-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000193-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/callback.rb, line 19</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">register_for</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">register_for</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">callback</span>)
     <span class="ruby-identifier">c</span> = (<span class="ruby-ivar">@callbacks</span>[<span class="ruby-identifier">type</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>)
     <span class="ruby-identifier">o</span> = (<span class="ruby-ivar">@obj_to_id_map</span>[<span class="ruby-identifier">type</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>) 
     <span class="ruby-identifier">cid</span> = <span class="ruby-ivar">@idgen</span>.<span class="ruby-identifier">next</span>.<span class="ruby-identifier">to_s</span>
@@ -196,7 +196,7 @@ return a unique callback id.
 
     </div>
     <div id="section">
-      <h2 class="section-title"><a name="SEC00091">Friend methods for Wee::CallbackStream</a></h2>
+      <h2 class="section-title"><a name="SEC00100">Friend methods for Wee::CallbackStream</a></h2>
       <div class="section-comment">
         
       </div>      
@@ -212,22 +212,22 @@ return a unique callback id.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000160" class="method-detail">
-        <a name="M000160"></a>
+      <div id="method-M000196" class="method-detail">
+        <a name="M000196"></a>
 
         <div class="method-heading">
-          <a href="#M000160" class="method-signature">
-          <span class="method-name">all_of_type</span><span class="method-args">(type=nil)</span>
+          <a href="#M000196" class="method-signature">
+          <span class="method-name">all_of_type</span><span class="method-args">(type)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000160-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000160-source">
+            onclick="toggleCode('M000196-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000196-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/callback.rb, line 49</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">all_of_type</span>(<span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>)
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">all_of_type</span>(<span class="ruby-identifier">type</span>)
     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">c</span> = <span class="ruby-ivar">@callbacks</span>[<span class="ruby-identifier">type</span>]
       <span class="ruby-identifier">c</span>
     <span class="ruby-keyword kw">else</span>
@@ -239,22 +239,22 @@ return a unique callback id.
         </div>
       </div>
 
-      <div id="method-M000159" class="method-detail">
-        <a name="M000159"></a>
+      <div id="method-M000195" class="method-detail">
+        <a name="M000195"></a>
 
         <div class="method-heading">
-          <a href="#M000159" class="method-signature">
-          <span class="method-name">get_callback_for</span><span class="method-args">(id, type=nil)</span>
+          <a href="#M000195" class="method-signature">
+          <span class="method-name">get_callback_for</span><span class="method-args">(id, type)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000159-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000159-source">
+            onclick="toggleCode('M000195-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000195-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/callback.rb, line 41</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_callback_for</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>)
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_callback_for</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">type</span>)
     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">c</span> = <span class="ruby-ivar">@callbacks</span>[<span class="ruby-identifier">type</span>]
       <span class="ruby-identifier">c</span>[<span class="ruby-identifier">id</span>]
     <span class="ruby-keyword kw">else</span>
@@ -266,22 +266,22 @@ return a unique callback id.
         </div>
       </div>
 
-      <div id="method-M000158" class="method-detail">
-        <a name="M000158"></a>
+      <div id="method-M000194" class="method-detail">
+        <a name="M000194"></a>
 
         <div class="method-heading">
-          <a href="#M000158" class="method-signature">
-          <span class="method-name">get_ids_for</span><span class="method-args">(object, type=nil)</span>
+          <a href="#M000194" class="method-signature">
+          <span class="method-name">get_ids_for</span><span class="method-args">(object, type)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000158-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000158-source">
+            onclick="toggleCode('M000194-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000194-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/callback.rb, line 33</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_ids_for</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>)
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_ids_for</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">type</span>)
     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">o</span> = <span class="ruby-ivar">@obj_to_id_map</span>[<span class="ruby-identifier">type</span>]
       <span class="ruby-identifier">o</span>[<span class="ruby-identifier">object</span>] <span class="ruby-operator">||</span> []
     <span class="ruby-keyword kw">else</span>
