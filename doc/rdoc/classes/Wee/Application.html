@@ -55,12 +55,12 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../files/lib/wee/webrick_rb.html">
-                lib/wee/webrick.rb
-                </a>
-        <br />
                 <a href="../../files/lib/wee/application_rb.html">
                 lib/wee/application.rb
+                </a>
+        <br />
+                <a href="../../files/lib/wee/webrick_rb.html">
+                lib/wee/webrick.rb
                 </a>
         <br />
             </td>
@@ -92,16 +92,13 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000127">error_invalid_session</a>&nbsp;&nbsp;
-      <a href="#M000126">gen_handler_url</a>&nbsp;&nbsp;
-      <a href="#M000131">gen_unique_session_id</a>&nbsp;&nbsp;
-      <a href="#M000125">handle_request</a>&nbsp;&nbsp;
-      <a href="#M000129">load_from_disk</a>&nbsp;&nbsp;
-      <a href="#M000123">new</a>&nbsp;&nbsp;
-      <a href="#M000124">setup_session_id_generator</a>&nbsp;&nbsp;
-      <a href="#M000130">shutdown</a>&nbsp;&nbsp;
-      <a href="#M000122">start</a>&nbsp;&nbsp;
-      <a href="#M000128">store_to_disk</a>&nbsp;&nbsp;
+      <a href="#M000132">error_invalid_session</a>&nbsp;&nbsp;
+      <a href="#M000131">gen_handler_url</a>&nbsp;&nbsp;
+      <a href="#M000133">gen_unique_session_id</a>&nbsp;&nbsp;
+      <a href="#M000130">handle_request</a>&nbsp;&nbsp;
+      <a href="#M000128">new</a>&nbsp;&nbsp;
+      <a href="#M000129">setup_session_id_generator</a>&nbsp;&nbsp;
+      <a href="#M000134">start</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -121,11 +118,6 @@
 
       <div class="name-list">
         <table>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">dumpfile</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">name</td>
           <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
@@ -156,51 +148,28 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000129" class="method-detail">
-        <a name="M000129"></a>
+      <div id="method-M000128" class="method-detail">
+        <a name="M000128"></a>
 
         <div class="method-heading">
-          <a href="#M000129" class="method-signature">
-          <span class="method-name">load_from_disk</span><span class="method-args">(filename)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000129-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000129-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/application.rb, line 66</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">load_from_disk</span>(<span class="ruby-identifier">filename</span>)
-    <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">filename</span>))
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000123" class="method-detail">
-        <a name="M000123"></a>
-
-        <div class="method-heading">
-          <a href="#M000123" class="method-signature">
+          <a href="#M000128" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000123-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000123-source">
+            onclick="toggleCode('M000128-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000128-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/application.rb, line 6</span>
+<span class="ruby-comment cmt"># File lib/wee/application.rb, line 5</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">setup_session_id_generator</span>
 
     <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-keyword kw">self</span>)
 
-    <span class="ruby-keyword kw">if</span> [<span class="ruby-ivar">@name</span>, <span class="ruby-ivar">@path</span>, <span class="ruby-ivar">@session_class</span>, <span class="ruby-ivar">@session_store</span>, <span class="ruby-ivar">@dumpfile</span>].<span class="ruby-identifier">any?</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">i</span>.<span class="ruby-identifier">nil?</span>}
-      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;missing name, path, session_class, session_store or dumpfile&quot;</span>
+    <span class="ruby-keyword kw">if</span> [<span class="ruby-ivar">@name</span>, <span class="ruby-ivar">@path</span>, <span class="ruby-ivar">@session_class</span>, <span class="ruby-ivar">@session_store</span>].<span class="ruby-identifier">any?</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">i</span>.<span class="ruby-identifier">nil?</span>}
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;missing name, path, session_class or session_store&quot;</span> 
     <span class="ruby-keyword kw">end</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
@@ -210,21 +179,21 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000127" class="method-detail">
-        <a name="M000127"></a>
+      <div id="method-M000132" class="method-detail">
+        <a name="M000132"></a>
 
         <div class="method-heading">
-          <a href="#M000127" class="method-signature">
+          <a href="#M000132" class="method-signature">
           <span class="method-name">error_invalid_session</span><span class="method-args">(req, res)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000127-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000127-source">
+            onclick="toggleCode('M000132-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000132-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/application.rb, line 58</span>
+<span class="ruby-comment cmt"># File lib/wee/application.rb, line 64</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">error_invalid_session</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
     <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">ErrorPage</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'Invalid Session'</span>).<span class="ruby-identifier">respond</span>(<span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Context</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">req</span>,<span class="ruby-identifier">res</span>,<span class="ruby-keyword kw">nil</span>,<span class="ruby-keyword kw">nil</span>))
   <span class="ruby-keyword kw">end</span>
@@ -233,11 +202,11 @@
         </div>
       </div>
 
-      <div id="method-M000126" class="method-detail">
-        <a name="M000126"></a>
+      <div id="method-M000131" class="method-detail">
+        <a name="M000131"></a>
 
         <div class="method-heading">
-          <a href="#M000126" class="method-signature">
+          <a href="#M000131" class="method-signature">
           <span class="method-name">gen_handler_url</span><span class="method-args">(session_id, page_id, handler_id)</span>
           </a>
         </div>
@@ -247,10 +216,10 @@
 TODO: UrlModel, which knows how to create and parse URLs
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000126-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000126-source">
+            onclick="toggleCode('M000131-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000131-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/application.rb, line 49</span>
+<span class="ruby-comment cmt"># File lib/wee/application.rb, line 55</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gen_handler_url</span>(<span class="ruby-identifier">session_id</span>, <span class="ruby-identifier">page_id</span>, <span class="ruby-identifier">handler_id</span>)
     [
       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">path</span>, 
@@ -264,21 +233,21 @@ TODO: UrlModel, which knows how to create and parse URLs
         </div>
       </div>
 
-      <div id="method-M000125" class="method-detail">
-        <a name="M000125"></a>
+      <div id="method-M000130" class="method-detail">
+        <a name="M000130"></a>
 
         <div class="method-heading">
-          <a href="#M000125" class="method-signature">
+          <a href="#M000130" class="method-signature">
           <span class="method-name">handle_request</span><span class="method-args">(req, res)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000125-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000125-source">
+            onclick="toggleCode('M000130-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000130-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/application.rb, line 20</span>
+<span class="ruby-comment cmt"># File lib/wee/application.rb, line 19</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_request</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
     <span class="ruby-identifier">hash</span> = <span class="ruby-identifier">parse_url</span>(<span class="ruby-identifier">req</span>)
 
@@ -290,6 +259,8 @@ TODO: UrlModel, which knows how to create and parse URLs
 
       <span class="ruby-identifier">session</span> = <span class="ruby-ivar">@session_class</span>.<span class="ruby-identifier">new</span>
       <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">gen_unique_session_id</span>
+      <span class="ruby-identifier">session</span>.<span class="ruby-identifier">id</span> = <span class="ruby-identifier">session_id</span>
+      <span class="ruby-identifier">session</span>.<span class="ruby-identifier">application</span> = <span class="ruby-keyword kw">self</span>
       <span class="ruby-ivar">@session_store</span>[<span class="ruby-identifier">session_id</span>] = <span class="ruby-identifier">session</span>
     <span class="ruby-keyword kw">end</span>
 
@@ -305,27 +276,32 @@ TODO: UrlModel, which knows how to create and parse URLs
     <span class="ruby-identifier">context</span>.<span class="ruby-identifier">page_id</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value str">'p'</span>]
     <span class="ruby-identifier">context</span>.<span class="ruby-identifier">handler_id</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-value str">'h'</span>]
     <span class="ruby-identifier">session</span>.<span class="ruby-identifier">handle_request</span>(<span class="ruby-identifier">context</span>)
+
+    <span class="ruby-comment cmt"># TODO: move into RequestHandler (Session)</span>
+    <span class="ruby-identifier">res</span>.<span class="ruby-identifier">status</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span>.<span class="ruby-identifier">status</span>
+    <span class="ruby-identifier">res</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span>.<span class="ruby-identifier">content</span>
+    <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span>.<span class="ruby-identifier">header</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">header</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">v</span> }
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000124" class="method-detail">
-        <a name="M000124"></a>
+      <div id="method-M000129" class="method-detail">
+        <a name="M000129"></a>
 
         <div class="method-heading">
-          <a href="#M000124" class="method-signature">
+          <a href="#M000129" class="method-signature">
           <span class="method-name">setup_session_id_generator</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000124-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000124-source">
+            onclick="toggleCode('M000129-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000129-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/application.rb, line 16</span>
+<span class="ruby-comment cmt"># File lib/wee/application.rb, line 15</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup_session_id_generator</span>
     <span class="ruby-ivar">@session_cnt</span> = <span class="ruby-identifier">rand</span>(<span class="ruby-value">1000_000</span>)
   <span class="ruby-keyword kw">end</span>
@@ -334,42 +310,19 @@ TODO: UrlModel, which knows how to create and parse URLs
         </div>
       </div>
 
-      <div id="method-M000130" class="method-detail">
-        <a name="M000130"></a>
+      <div id="method-M000134" class="method-detail">
+        <a name="M000134"></a>
 
         <div class="method-heading">
-          <a href="#M000130" class="method-signature">
-          <span class="method-name">shutdown</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000130-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000130-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/application.rb, line 70</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">shutdown</span>
-    <span class="ruby-identifier">store_to_disk</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000122" class="method-detail">
-        <a name="M000122"></a>
-
-        <div class="method-heading">
-          <a href="#M000122" class="method-signature">
+          <a href="#M000134" class="method-signature">
           <span class="method-name">start</span><span class="method-args">(hash=nil)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000122-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000122-source">
+            onclick="toggleCode('M000134-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000134-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/webrick.rb, line 3</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start</span>(<span class="ruby-identifier">hash</span>=<span class="ruby-keyword kw">nil</span>)
@@ -378,7 +331,6 @@ TODO: UrlModel, which knows how to create and parse URLs
     <span class="ruby-identifier">server</span>.<span class="ruby-identifier">mount_proc</span>(<span class="ruby-identifier">hash</span>[<span class="ruby-identifier">:mount_path</span>] <span class="ruby-operator">||</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">path</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span><span class="ruby-operator">|</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">handle_request</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)}
     <span class="ruby-identifier">trap</span>(<span class="ruby-value str">&quot;INT&quot;</span>) { 
       <span class="ruby-identifier">trap</span>(<span class="ruby-value str">&quot;INT&quot;</span>, <span class="ruby-value str">&quot;IGNORE&quot;</span>)
-      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">shutdown</span>
       <span class="ruby-identifier">server</span>.<span class="ruby-identifier">shutdown</span>
       <span class="ruby-identifier">exit</span>
     }
@@ -389,36 +341,13 @@ TODO: UrlModel, which knows how to create and parse URLs
         </div>
       </div>
 
-      <div id="method-M000128" class="method-detail">
-        <a name="M000128"></a>
-
-        <div class="method-heading">
-          <a href="#M000128" class="method-signature">
-          <span class="method-name">store_to_disk</span><span class="method-args">(dumpfile=nil)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000128-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000128-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/application.rb, line 62</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">store_to_disk</span>(<span class="ruby-identifier">dumpfile</span>=<span class="ruby-keyword kw">nil</span>)
-    <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">dumpfile</span><span class="ruby-operator">||</span><span class="ruby-ivar">@dumpfile</span>, <span class="ruby-value str">'w+b'</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Marshal</span>.<span class="ruby-identifier">dump</span>(<span class="ruby-keyword kw">self</span>) }
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
       <h3 class="section-bar">Private Instance methods</h3>
 
-      <div id="method-M000131" class="method-detail">
-        <a name="M000131"></a>
+      <div id="method-M000133" class="method-detail">
+        <a name="M000133"></a>
 
         <div class="method-heading">
-          <a href="#M000131" class="method-signature">
+          <a href="#M000133" class="method-signature">
           <span class="method-name">gen_unique_session_id</span><span class="method-args">()</span>
           </a>
         </div>
@@ -428,10 +357,10 @@ TODO: UrlModel, which knows how to create and parse URLs
 TODO: that&#8217;s insecure. it&#8217;s just for development!
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000131-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000131-source">
+            onclick="toggleCode('M000133-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000133-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/application.rb, line 77</span>
+<span class="ruby-comment cmt"># File lib/wee/application.rb, line 71</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">gen_unique_session_id</span>
     (<span class="ruby-ivar">@session_cnt</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>).<span class="ruby-identifier">to_s</span>
   <span class="ruby-keyword kw">end</span>

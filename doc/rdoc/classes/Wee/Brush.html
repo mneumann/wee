@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../files/lib/wee/html_canvas_rb.html">
-                lib/wee/html_canvas.rb
+                <a href="../../files/lib/wee/rendering/html/canvas_rb.html">
+                lib/wee/rendering/html/canvas.rb
                 </a>
         <br />
             </td>
@@ -88,8 +88,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000066">close</a>&nbsp;&nbsp;
-      <a href="#M000065">with</a>&nbsp;&nbsp;
+      <a href="#M000067">close</a>&nbsp;&nbsp;
+      <a href="#M000066">with</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -152,21 +152,21 @@ Class <a href="Brush/TextInputTag.html" class="link">Wee::Brush::TextInputTag</a
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000066" class="method-detail">
-        <a name="M000066"></a>
+      <div id="method-M000067" class="method-detail">
+        <a name="M000067"></a>
 
         <div class="method-heading">
-          <a href="#M000066" class="method-signature">
+          <a href="#M000067" class="method-signature">
           <span class="method-name">close</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000066-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000066-source">
+            onclick="toggleCode('M000067-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000067-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 153</span>
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/canvas.rb, line 153</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
     <span class="ruby-identifier">with</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@closed</span>
   <span class="ruby-keyword kw">end</span>
@@ -175,21 +175,21 @@ Class <a href="Brush/TextInputTag.html" class="link">Wee::Brush::TextInputTag</a
         </div>
       </div>
 
-      <div id="method-M000065" class="method-detail">
-        <a name="M000065"></a>
+      <div id="method-M000066" class="method-detail">
+        <a name="M000066"></a>
 
         <div class="method-heading">
-          <a href="#M000065" class="method-signature">
+          <a href="#M000066" class="method-signature">
           <span class="method-name">with</span><span class="method-args">(*args, &amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000065-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000065-source">
+            onclick="toggleCode('M000066-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000066-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 146</span>
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/canvas.rb, line 146</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;either args or block, but not both&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>
 

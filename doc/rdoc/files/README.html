@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Fri Dec 10 14:50:27 CET 2004</td>
+      <td>Sun Dec 12 22:31:33 CET 2004</td>
     </tr>
     </table>
   </div>
@@ -157,11 +157,11 @@ There are two methods related to callback processing:
 </p>
 <ul>
 <li><a
-href="../classes/Wee/Component.html#M000141">Wee::Component#process_callback_chain</a>
+href="../classes/Wee/Component.html#M000151">Wee::Component#process_callback_chain</a>
 
 </li>
 <li><a
-href="../classes/Wee/Presenter.html#M000161">Wee::Presenter#process_callbacks</a>
+href="../classes/Wee/Presenter.html#M000176">Wee::Presenter#process_callbacks</a>
 
 </li>
 </ul>
@@ -198,10 +198,10 @@ a page:
 </p>
 <ul>
 <li><a
-href="../classes/Wee/Component.html#M000140">Wee::Component#render_chain</a>
+href="../classes/Wee/Component.html#M000149">Wee::Component#render_chain</a>
 
 </li>
-<li><a href="../classes/Wee/Presenter.html#M000158">Wee::Presenter#render</a>
+<li><a href="../classes/Wee/Presenter.html#M000173">Wee::Presenter#render</a>
 
 </li>
 </ul>
@@ -242,7 +242,7 @@ Decorations are used to modify the look and behaviour of a component,
 without modifying the components tree. A component can have more than one
 decoration. This is implemented as a linked list of decorations
 (Wee::Decoration#owner points to the next decoration), where <a
-href="../classes/Wee/Component.html#M000146">Wee::Component#decoration</a>
+href="../classes/Wee/Component.html#M000156">Wee::Component#decoration</a>
 points to the first decoration in the chain or to the component itself, if
 no decorations were specified. We actually use a <a
 href="../classes/Wee/ValueHolder.html">Wee::ValueHolder</a> for the
