@@ -29,6 +29,12 @@ class Wee::WEBrickAdaptor < WEBrick::HTTPServlet::AbstractServlet
       server.mount(path, self, path, app)
     end
 
+    @mounts.each do |args, block|
+      server.mount(*args, &block)
+    end
+
+    yield server if block_given?
+
     server.start
     server
   end
@@ -39,6 +45,12 @@ class Wee::WEBrickAdaptor < WEBrick::HTTPServlet::AbstractServlet
     hash.each do |path, application|
       @apps << [path, application]
     end
+    self
+  end
+
+  def mount(*args, &block)
+    @mounts ||= []
+    @mounts << [args, block]
     self
   end
 

@@ -81,6 +81,8 @@ class Wee::Session < Wee::RequestHandler
 
       page.snapshot.restore
 
+      p @context.request.fields if $DEBUG
+
       if @context.request.fields.empty?
 
         # No action/inputs were specified -> render page
