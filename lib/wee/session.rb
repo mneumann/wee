@@ -133,6 +133,7 @@ class Wee::Session
     rctx = Wee::RenderingContext.new(context, Wee::HtmlWriter.new(context.response.body))
     renderer = Wee::HtmlCanvas.new(rctx)
     @root_component.render_on(renderer)
+    renderer.close
   end
 
   def create_new_page_id
