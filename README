@@ -8,17 +8,40 @@ The request/response cycle in Wee is actually split into two separate phases
 or steps. Depending on the point-of-view (given that a page is rendered and
 the user clicks on a link or button), the first phase is to invoke an action
 (a "callback"). Then in the second phase, a new page is rendered and sent
-back to the user:
+back to the user. So the two steps are:
 
-1. invoke callback(s)
+1. invoke callbacks (action phase)
 
-2. render new page and display
+2. render new page and display (render phase)
 
-These two phases repeat permanently.
+These two phases repeat permanently. Which tasks are performed in each of them, is briefly listed below:
 
-=== Invoking Callbacks
+<b>Action:</b>
 
-Possible sources for callbacks are links (anchors) and all kind of
+1. restore snapshot (if not up-to-date)
+
+2. invoke actions   
+
+3. backtrack state
+
+4. update url -> redirect to render phase (not yet)
+
+<b>Render:</b>
+
+1. restore snapshot (if not up-to-date)
+
+2. render
+
+For each session there is at most one request handled at the same time. That
+means, that there is either one action request or one render request handled.
+Why? Because we have only one components tree, which we update on action
+requests. As Wee allows to go back in time, we have to restore this components
+tree to a certain point in time before we can handle an action or render
+request. This disallows to handle e.g. two render requests simultaneous.
+
+=== Action Phase (Invoking Callbacks)
+
+Possible sources for callbacks are links (anchors) and all kinds of
 form-elements like submit buttons, input-fields etc. There are two different
 kinds of callbacks:
 
@@ -33,12 +56,12 @@ callbacks before any action callback is triggered.
 
 There are two methods related to callback processing:
 
-* <i>Component#process_callback_chain</i>
+* Wee::Component#process_callback_chain
 
-* <i>Presenter#process_callbacks</i>
+* Wee::Presenter#process_callbacks
 
-Note that each Component is also a Presenter, but a Decoration is not a
-Component! 
+Note that each Wee::Component is also a Wee::Presenter, whereas a
+Wee::Decoration is not a Component (but a Presenter)! 
 
 Method <i>process_callback_chain</i> invokes <i>process_callbacks</i> for
 it's first decoration, or if the component has no decorations, the method is
@@ -60,9 +83,9 @@ programmer should take care to meet this assumption.
 Similar as in the callback-step, there are two methods related to rendering a
 page:
 
-* <i>Component#render_chain</i>
+* Wee::Component#render_chain
 
-* <i>Presenter#render</i>
+* Wee::Presenter#render
 
 Method <i>Component#render_chain</i> starts rendering the decoration chain by
 calling <i>Presenter#render</i> for the first decoration of the component or
@@ -72,3 +95,25 @@ the user. Note that method <i>render</i> might call other components
 <i>render_chain</i> methods to display those components "inside" itself
 (usually a component does this for it's child components, but this has to be
 implemented by the programmer). 
+
+=== Further Reads
+
+In this order:
+
+* Wee::Presenter
+* Wee::Component
+* Wee::Decoration
+* Wee::Delegate
+* Wee::AnswerDecoration
+
+== Decorations
+
+Decorations are used to modify the look and behaviour of a component, without
+modifying the components tree. A component can have more than one decoration.
+This is implemented as a linked list of decorations (Wee::Decoration#owner
+points to the next decoration), where Wee::Component#decoration points to the
+first decoration in the chain or to the component itself, if no decorations
+were specified. We actually use a Wee::ValueHolder for the <tt>@decoration</tt>
+instance variable of class Component to be able to easily backtrack it
+(required if you want to "undo" component calls).
+

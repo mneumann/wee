@@ -16,7 +16,7 @@ end
 
 class Array
   def take_snapshot
-    ObjectSpace.undefine_finalizer(dup)
+    dup
   end
 
   def restore_snapshot(snap)
@@ -26,7 +26,7 @@ end
 
 class String
   def take_snapshot
-    ObjectSpace.undefine_finalizer(dup)
+    dup
   end
 
   def restore_snapshot(snap)

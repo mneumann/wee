@@ -1,3 +1,8 @@
+module Wee
+  DefaultRenderer = Wee::HtmlCanvas
+  Version = "0.2-dev"
+end
+
 class Wee::ErrorPage < Wee::Component
   def initialize(msg)
     @msg = msg

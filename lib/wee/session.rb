@@ -93,7 +93,7 @@ class Wee::Session
         # 3. Store the page back into the store
 
         page = Wee::Page.new(page.snapshot, Wee::CallbackRegistry.new)  # remove all action/input handlers
-        @context.callback_registry = page.callback_registry
+        @context.callbacks = page.callbacks
         respond(@context)                            # render
         @page_store[@context.page_id] = page         # store
 
@@ -105,7 +105,7 @@ class Wee::Session
         # new page view. 
 
         s = {@context.handler_id => nil}.update(@context.request.query)
-        callback_stream = page.callback_registry.create_callback_stream(s)
+        callback_stream = page.callbacks.create_callback_stream(s)
 
         catch(:wee_back_to_session) {
           @root_component.process_callback_chain(callback_stream)

@@ -1,29 +1,99 @@
+application.template_manager = {
+  My => {'html' => RDocTemplate.new('view/html/file.tmpl'), 'wap' => RDocTemplate.new('view/wap/file.tmpl')}
+}
+
+either this way, or reversed: flavour/style => template-manager
+
+class My < TemplatedComponent
+  def action_blah
+  end
+  def action_blub
+  end
+
+  attr_accessor :blah
+
+  # run-time 
+  def template_flavour
+    session.property['style'] || 'html'
+  end
+end
+
+view/html/filt.tmpl:
+
+  <form action="__action_blah">
+    <input name="__input__blah">
+  </form>
+
+__action and __input get replaced
+
+
+* merge with trunk, but make a working-tag of trunk before
+
+* unify RequestHandler/Session
+
+* Wee = Web Engineering made Easy
+
+callback.rb -> core
+context -> core?
+
+Wee::Callback: abstract
+* values -> default_values
+Wee::BlockCallback
+* invoke -> call/[]
+
+overthink CallbackStream
+CallbackStream abstracts from the Request.
+use only blocks as callbacks.
+
+* different models:
+
+  M = Model, V = View, C = Controller
+
+  M: e.g. use ActiveRecord as model
+  V: use external templates 
+  C: Wee::Component
+
+  MC: Wee::Component
+  V: external template
+
+  MVC: Wee::Component
+
+* callbacks.create_callback_stream -> create_stream
+
+* better webrick
+
+* AbstractSession: 
+  
+  last_access: time of last access
+
+  expires_after: expires after n seconds of inactivity (Time.now - last_access > expires_after) if expires_after.not_nil?
+  expires_after = n_seconds
+
+  max_lifetime: how long may this session run in total?  nil == infinity
+  max_lifetime = 
+
+  Session#terminate: quits a session 
+
+    Application.remove_session(self.session_id)
+
+  Session#session_id
+  Session#application
+
+Application also stores other RequestHandlers. Session is one RequestHandler.
+
+  class RequestHandler
+    attr_reader :application
+
+    attr_reader :last_access
+    attr_accessor :expires_after, :max_lifetime
+
+    def alive?
+      returns true if it should not be terminated
+    end
+  end
+
 * Decoration#owner: use a ValueHolder, too. and register it for being backtracked.
 
 * mark_objects_for_backtracking() instead of state-registry (snapshot_objects)
 
-* callback_registry -> callbacks
-
-* apply_snapshot -> restore_snapshot? 
-
 * improve error messages
-
-* don't use Snapshot#apply directly. Everything should be done through the
-  StateRegistry API, as snapshot is a internal data-structure.
-
-* decoration: LiteralMethod. Move somewhere else.
-
-== Decorations
-
-Decorations are used to modify the look and behaviour of a component. A
-component can have more than one decoration, this is implemented by a
-linked list with the _next_ method of decorations. The @decoration instance
-variable points to the first decoration in the chain or to the component
-itself, if no decorations were specified. We use a ValueHolder for
-@decoration to be able to backtrack it. TODO
-
-== Children
-
-A component can have child components. These must be returned by method
-_children_, otherwise they will not take part in the process_request step
-and as such cannot perform actions. 

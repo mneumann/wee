@@ -1,1 +1,1 @@
-class Wee::Page < Struct.new(:snapshot, :callback_registry); end
+class Wee::Page < Struct.new(:snapshot, :callbacks); end

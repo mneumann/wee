@@ -4,10 +4,16 @@
 
 class Wee::Presenter
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # :section: Render
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  public
+
   # This method renders the content of the presenter with the given renderer.
   #
-  # OVERWRITE this method in your own presenter classes to implement the view.
-  # By default this method does nothing!
+  # *OVERWRITE* this method in your own presenter classes to implement the
+  # view.  By default this method does nothing!
   #
   # [+renderer+]
   #    A renderer object.
@@ -15,22 +21,48 @@ class Wee::Presenter
   def render_content_on(renderer)
   end
 
-  # Render the presenter in the given rendering context. DO NOT overwrite this
-  # method, unless you know exactly what you're doing!
+  # Render the presenter in the given rendering context. <b>DO NOT</b>
+  # overwrite this method, unless you know exactly what you're doing!
   #
   # Creates a new renderer object of the class returned by method
-  # <i>renderer_class</i>, then invokes render_content_on with the new
+  # #renderer_class, then invokes #render_content_on with the new
   # renderer.
   #
   # [+rendering_context+]
   #    An object of class RenderingContext
 
   def render(rendering_context)
-    r = renderer_class.new(rendering_context)
-    r.current_component = self
-    render_content_on(r)
-    r.close # write outstanding brushes to the document
+    with_renderer_for(rendering_context) do |r| render_content_on(r) end 
   end
+
+  protected
+
+  # Creates a new renderer object of the class returned by method
+  # #renderer_class, then yields it to the block and finally closes the
+  # renderer.
+
+  def with_renderer_for(rendering_context) 
+    renderer = renderer_class.new(rendering_context)
+    renderer.current_component = self
+    begin
+      yield renderer
+    ensure
+      renderer.close # write outstanding brushes to the document
+    end
+  end
+
+  # Returns the class used as renderer for this presenter. Overwrite this
+  # method if you want to use a different renderer.
+
+  def renderer_class
+    Wee::DefaultRenderer
+  end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # :section: Callback
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  public
 
   # Process all callbacks specified for this presenter. 
   #
@@ -59,21 +91,32 @@ class Wee::Presenter
 
       if cont = session.continuation_stack.pop
         cont.call
-        raise "FATAL"
+        raise "FATAL! Please inform the developer!"
       end
 
     end
 
   end
 
-  protected
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # :section: Backtrack
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  # Returns the class used as renderer for this presenter. Overwrite this
-  # method if you want to use a different renderer.
+  public
 
-  def renderer_class
-    Wee::HtmlCanvas
+  # Dummy implementation. See Component#backtrack_state for more information. 
+  #
+  # [+snapshot+]
+  #    An object of class Snapshot
+
+  def backtrack_state(snapshot)
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # :section: Session
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  public
 
   # Returns the current session. A presenter (or component) has always an
   # associated session. The returned object is of class Wee::Session or a
