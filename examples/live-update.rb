@@ -38,7 +38,7 @@ class LiveUpdateTest < Wee::Component
       render_live_update
     end
 
-    throw :wee_live_update, response
+    send_response(response)
   end
 end
 

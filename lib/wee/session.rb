@@ -1,153 +1,14 @@
+require 'wee/abstractsession'
 require 'wee/page'
-require 'thread'
 
-class Wee::Session < Wee::RequestHandler
-  attr_accessor :root_component, :page_store
+class Wee::Session < Wee::AbstractSession
 
-  def self.current
-    sess = Thread.current[:wee_session]
-    raise "not in session" if sess.nil?
-    return sess
-  end
+  attr_accessor :root_component
+  attr_accessor :page_store
 
   def initialize(&block)
-    Thread.current[:wee_session] = self
-
-    @idgen = Wee::SimpleIdGenerator.new
-
-    # to serialize the requests we need a mutex
-    @mutex = Mutex.new    
-
-    block.call(self)
-
-    raise ArgumentError, "No root component specified" if @root_component.nil?
-    raise ArgumentError, "No page_store specified" if @page_store.nil?
-    
-    @initial_snapshot = snapshot()
-
     super()
-  ensure
-    Thread.current[:wee_session] = nil
-  end
-
-  def snapshot
-    @root_component.backtrack_state_chain(snap = Wee::Snapshot.new)
-    return snap.freeze
-  end
-
-  # called by application to send the session a request
-
-  def handle_request(context)
-    @mutex.synchronize do
-      begin
-        Thread.current[:wee_session] = self
-        @context = context
-        super
-        awake
-        process_request
-        sleep
-      rescue Exception => exn
-        set_response(context, Wee::ErrorResponse.new(exn))
-      ensure
-        Thread.current[:wee_session] = nil
-        @context = nil
-        @page = nil
-      end
-    end
-  end
-
-  def create_page(snapshot)
-    idgen = Wee::SimpleIdGenerator.new
-    page = Wee::Page.new(snapshot, Wee::CallbackRegistry.new(idgen))
-  end
-
-  # Is called before process_request is invoked
-  # Can be used to setup e.g. a database connection.
-  def awake
-  end
-
-  # Is called after process_request is run
-  # Can be used to release e.g. a database connection.
-  def sleep
-  end
-
-  def process_request
-    if @context.request.page_id.nil?
-
-      # No page_id was specified in the URL. This means that we start with a
-      # fresh component and a fresh page_id, then redirect to render itself.
-
-      handle_new_page_view(@context, @initial_snapshot)
-
-    elsif @page = @page_store.fetch(@context.request.page_id, false)
-
-      # A valid page_id was specified and the corresponding page exists.
-
-      @page.snapshot.restore if @context.request.page_id != @snapshot_page_id 
-
-      p @context.request.fields if $DEBUG
-
-      if @context.request.render?
-
-        # No action/inputs were specified -> render page
-        #
-        # 1. Reset the action/input fields (as they are regenerated in the
-        #    rendering process).
-        # 2. Render the page (respond).
-        # 3. Store the page back into the store
-
-        @page = create_page(@page.snapshot)  # remove all action/input handlers
-        respond(@context, @page.callbacks)                    # render
-        @page_store[@context.request.page_id] = @page         # store
-
-      else
-
-        # Actions/inputs were specified.
-        #
-        # We process the request and invoke actions/inputs. Then we generate a
-        # new page view. 
-
-        @callback_stream = Wee::CallbackStream.new(@page.callbacks, @context.request.fields) 
-
-        if @callback_stream.all_of_type(:action).size > 1 
-          raise "Not allowed to specify more than one action callback"
-        end
-
-        live_update_response = catch(:wee_live_update) {
-          catch(:wee_back_to_session) { invoke_callbacks }
-          nil
-        }
-
-        post_callbacks_hook
-
-        if live_update_response
-          # replace existing page with new snapshot
-          @page.snapshot = self.snapshot
-          @page_store[@context.request.page_id] = @page
-          @snapshot_page_id = @context.request.page_id  
-          set_response(@context, live_update_response) 
-        else
-          handle_new_page_view(@context)
-        end
-
-      end
-
-    else
-
-      # A page_id was specified in the URL, but there's no page for it in the
-      # page store.  Either the page has timed out, or an invalid page_id was
-      # specified. 
-      #
-      # TODO:: Display an "invalid page or page timed out" message, which
-      # forwards to /app/session-id
-
-      raise "Not yet implemented"
-
-    end
-  end
-
-  def current_context
-    @context
+    setup(&block)
   end
 
   def current_callbacks
@@ -155,23 +16,108 @@ class Wee::Session < Wee::RequestHandler
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # :section: Properties
+  # :section: Request processing/handling
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  def properties() @__properties end
-  def properties=(props) @__properties = props end
+  protected
 
-  # Returns an "owned" property for the given +klass+.
+  def setup(&block)
+    @idgen = Wee::SimpleIdGenerator.new
 
-  def get_property(prop, klass)
-    if self.properties
-      self.properties.fetch(klass, {})[prop]
-    else
-      nil
+    with_session do
+      block.call(self) if block
+      raise ArgumentError, "No root component specified" if @root_component.nil?
+      raise ArgumentError, "No page_store specified" if @page_store.nil?
+    
+      @initial_snapshot = snapshot()
     end
   end
 
-  private
+  # The main routine where the request is processed.
+
+  def process_request
+    if @context.request.page_id.nil?
+
+      # No page_id was specified in the URL. This means that we start with a
+      # fresh component and a fresh page_id, then redirect to render itself.
+
+      handle_new_page
+
+    elsif @page = @page_store.fetch(@context.request.page_id, false)
+
+      # A valid page_id was specified and the corresponding page exists.
+
+      handle_existing_page
+
+    else
+
+      # A page_id was specified in the URL, but there's no page for it in the
+      # page store. Either the page has timed out, or an invalid page_id was
+      # specified. 
+
+      handle_invalid_page
+
+    end
+  end
+
+  def handle_new_page
+    handle_new_page_view(@context, @initial_snapshot)
+  end
+
+  def handle_existing_page
+    @page.snapshot.restore if @context.request.page_id != @snapshot_page_id 
+
+    p @context.request.fields if $DEBUG
+
+    if @context.request.render?
+      handle_render_phase
+    else
+      handle_callback_phase
+    end
+  end
+
+  def handle_invalid_page
+    # TODO:: Display an "invalid page or page timed out" message, which
+    # forwards to /app/session-id
+    raise "Not yet implemented"
+  end
+
+  def handle_render_phase
+    # No action/inputs were specified -> render page
+    #
+    # 1. Reset the action/input fields (as they are regenerated in the
+    #    rendering process).
+    # 2. Render the page (respond).
+    # 3. Store the page back into the store
+
+    @page = create_page(@page.snapshot)  # remove all action/input handlers
+    respond(@context, @page.callbacks)                    # render
+    @page_store[@context.request.page_id] = @page         # store
+  end
+
+  def handle_callback_phase
+    # Actions/inputs were specified.
+    #
+    # We process the request and invoke actions/inputs. Then we generate a
+    # new page view. 
+
+    callback_stream = Wee::CallbackStream.new(@page.callbacks, @context.request.fields) 
+    send_response = invoke_callbacks(callback_stream)
+
+    post_callbacks_hook()
+
+    if send_response
+      # replace existing page with new snapshot
+      @page.snapshot = self.snapshot
+      @page_store[@context.request.page_id] = @page
+      @snapshot_page_id = @context.request.page_id  
+
+      # and send response
+      set_response(@context, send_response) 
+    else
+      handle_new_page_view(@context)
+    end
+  end
 
   # This method triggers two tree traversals of process_callbacks on the root
   # component.  First, all input callbacks are invoked, then in the second
@@ -179,21 +125,32 @@ class Wee::Session < Wee::RequestHandler
   # one per request) and then the traversal is stopped 
   #
   # NOTE: Input callbacks should never call other components!
+  #
+  # Returns nil or send_response in case of a premature response.
 
-  def invoke_callbacks
-    # invoke input callbacks
-    @root_component.process_callbacks_chain {|this|
-      @callback_stream.with_callbacks_for(this, :input) { |callback, value|
-        callback.call(value)
-      }
-    }
+  def invoke_callbacks(callback_stream)
+    if callback_stream.all_of_type(:action).size > 1 
+      raise "Not allowed to specify more than one action callback"
+    end
 
-    # invoke first found action callback. only the first action callback is invoked.
-    @root_component.process_callbacks_chain {|this|
-      @callback_stream.with_callbacks_for(this, :action) { |callback, value|
-        callback.call
-        throw :wee_back_to_session
+    send_response = catch(:wee_send_response) { 
+      catch(:wee_back_to_session) { 
+          # invoke input callbacks
+          @root_component.process_callbacks_chain {|this|
+            callback_stream.with_callbacks_for(this, :input) { |callback, value|
+              callback.call(value)
+            }
+          }
+
+          # invoke first found action callback. only the first action callback is invoked.
+          @root_component.process_callbacks_chain {|this|
+            callback_stream.with_callbacks_for(this, :action) { |callback, value|
+              callback.call
+              throw :wee_back_to_session
+            }
+          }
       }
+      nil
     }
   end
 
@@ -206,10 +163,6 @@ class Wee::Session < Wee::RequestHandler
     set_response(context, Wee::RedirectResponse.new(redirect_url))
   end
 
-  def set_response(context, response)
-    context.response = response
-  end
-
   def respond(context, callbacks)
     pre_respond_hook
     set_response(context, Wee::GenericResponse.new('text/html', ''))
@@ -218,12 +171,24 @@ class Wee::Session < Wee::RequestHandler
     @root_component.do_render_chain(rctx)
   end
 
-  private
-
   def pre_respond_hook
   end
 
   def post_callbacks_hook
+  end
+
+  # Take a snapshot of the root component and return it.
+
+  def snapshot
+    @root_component.backtrack_state_chain(snap = Wee::Snapshot.new)
+    return snap.freeze
+  end
+
+  # Return a new Wee::Page object with the given snapshot assigned.
+
+  def create_page(snapshot)
+    idgen = Wee::SimpleIdGenerator.new
+    page = Wee::Page.new(snapshot, Wee::CallbackRegistry.new(idgen))
   end
 
 end

@@ -1,4 +1,14 @@
+Mon Apr  4 14:32:34 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* lib/wee/abstractsession.rb, lib/wee/session.rb,
+	  lib/wee/pageless/session.rb, examples/live-update.rb: refactored
+	  Session classes.
+
+	* lib/wee/core/presenter.rb: added send_response method, to send a
+	  premature response.
+
 Mon Apr  4 13:03:08 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
 	* lib/wee/pageless/session.rb, lib/wee/pageless/application.rb: Remove
 	  dependency of WEBrick::Cookie, use CGI::Cookie instead.
 

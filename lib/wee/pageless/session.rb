@@ -11,63 +11,51 @@ class Wee::PagelessSession < Wee::Session
   attr_accessor :callbacks
   alias current_callbacks callbacks
 
-  def initialize(&block)
-    Thread.current[:wee_session] = self
-
-    # to serialize the requests we need a mutex
-    @mutex = Mutex.new    
-
-    block.call(self)
-
-    raise ArgumentError, "No root component specified" if @root_component.nil?
-    
-    super()
-  ensure
-    Thread.current[:wee_session] = nil
+  def setup(&block)
+    with_session do
+      block.call(self) if block
+      raise ArgumentError, "No root component specified" if @root_component.nil?
+    end
   end
 
+  # The main routine where the request is processed.
+
   def process_request
-      p @context.request.fields if $DEBUG
+    handle_existing_page
+  end
 
-      if @context.request.fields.empty?
+  def handle_existing_page
+    p @context.request.fields if $DEBUG
 
-        # No action/inputs were specified -> render page
-        #
-        # 1. Reset the action/input fields (as they are regenerated in the
-        #    rendering process).
-        # 2. Render the page (respond).
-        # 3. Store the page back into the store
+    if @context.request.render?
+      handle_render_phase
+    else
+      handle_callback_phase
+    end
+  end
 
-        new_callbacks = Wee::CallbackRegistry.new(Wee::SimpleIdGenerator.new)
-        respond(@context, new_callbacks)                    # render
-        self.callbacks = new_callbacks
+  def handle_render_phase
+    new_callbacks = Wee::CallbackRegistry.new(Wee::SimpleIdGenerator.new)
+    respond(@context, new_callbacks)   # render
+    self.callbacks = new_callbacks
+  end
 
-      else
+  def handle_callback_phase
+    # Actions/inputs were specified.
+    #
+    # We process the request and invoke actions/inputs. Then we generate a
+    # new page view. 
 
-        # Actions/inputs were specified.
-        #
-        # We process the request and invoke actions/inputs. Then we generate a
-        # new page view. 
+    callback_stream = Wee::CallbackStream.new(self.callbacks, @context.request.fields) 
+    send_response = invoke_callbacks(callback_stream)
 
-        @callback_stream = Wee::CallbackStream.new(self.callbacks, @context.request.fields) 
+    post_callbacks_hook()
 
-        if @callback_stream.all_of_type(:action).size > 1 
-          raise "Not allowed to specify more than one action callback"
-        end
-
-        live_update_response = catch(:wee_live_update) {
-          catch(:wee_back_to_session) { invoke_callbacks }
-          nil
-        }
-
-        if live_update_response
-          @context.response = live_update_response
-        else
-          handle_new_page_view(@context)
-        end
-
-      end
-
+    if send_response
+      set_response(@context, send_response)    # @context.response = send_response
+    else
+      handle_new_page_view(@context)
+    end
   end
 
   private

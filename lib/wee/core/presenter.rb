@@ -111,9 +111,19 @@ class Wee::Presenter
     Wee::Session.current
   end
 
+  # Send a premature response. 
+
+  protected
+
+  def send_response(response)
+    throw :wee_send_response, response
+  end
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # :section: Properties
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  public
 
   def properties() @__properties end
   def properties=(props) @__properties = props end
