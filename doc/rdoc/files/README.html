@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Fri Dec 10 14:38:20 CET 2004</td>
+      <td>Fri Dec 10 14:50:27 CET 2004</td>
     </tr>
     </table>
   </div>
@@ -236,6 +236,20 @@ In this order:
 
 </li>
 </ul>
+<h2>Decorations</h2>
+<p>
+Decorations are used to modify the look and behaviour of a component,
+without modifying the components tree. A component can have more than one
+decoration. This is implemented as a linked list of decorations
+(Wee::Decoration#owner points to the next decoration), where <a
+href="../classes/Wee/Component.html#M000146">Wee::Component#decoration</a>
+points to the first decoration in the chain or to the component itself, if
+no decorations were specified. We actually use a <a
+href="../classes/Wee/ValueHolder.html">Wee::ValueHolder</a> for the
+<tt>@decoration</tt> instance variable of class Component to be able to
+easily backtrack it (required if you want to &quot;undo&quot; component
+calls).
+</p>
 
     </div>
 
