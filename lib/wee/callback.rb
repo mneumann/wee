@@ -1,89 +1,126 @@
-class Wee::ActionHandler
-  attr_accessor :obj, :meth, :args
+# Superclass of all callback handlers.
 
-  def self.[](obj, meth, *args)
-    new(obj, meth, *args)
+class Wee::Callback
+  attr_accessor :object # Callback registered for _object_
+  attr_accessor :values # An array of values passed during invoke 
+
+  # shortcut
+
+  def self.[](*args)
+    new(*args)
   end
 
+  def initialize(object, *values)
+    @object, @values = object, values
+  end
+
+  # Creates a new callback object, with additional values.
+
+  def new_with_values(*values)
+    obj = dup
+    obj.values = self.values + values
+    obj
+  end
+end
+
+class Wee::MethodCallback < Wee::Callback
+  attr_accessor :meth, :args
+
   def initialize(obj, meth, *args)
-    @obj, @meth, @args = obj, meth.to_s, args
+    super(obj)
+    @meth, @args = meth.to_s, args
   end
 
   def invoke
-    @obj.send(@meth, *@args)
+    @object.send(@meth, *@args)
   end
 end
 
-class Wee::ResourceHandler
-  attr_accessor :content, :content_type
-  def initialize(content, content_type) 
-    @content, @content_type = content, content_type
+# The intersection of registered callbacks and those that occured. Can be
+# created with method <i>CallbackRegistry#create_callback_stream</i>.
+
+class Wee::CallbackStream
+  
+  # [+stream+]
+  #    A Hash object with shape "type -> component -> [callback*]" 
+
+  def initialize(stream)
+    @stream = stream 
+  end
+
+  def get_callbacks_for(object, type)
+    @stream[type][object]
   end
 end
 
-class Wee::HandlerRegistry
+# register_callback(Wee::MethodCallback[obj, :call], :input) 
+# @callbacks[type][callback_id] # => callback
+
+class Wee::CallbackRegistry
+
   def initialize
-    @next_handler_id = 1
-    @action_registry = Hash.new
-    @input_registry = Hash.new
-    @resource_registry = Hash.new 
+    @next_callback_id = 1
+    @callbacks = Hash.new { Hash.new }
   end
 
-  def handler_id_for_action(action_handler)
-    hid = get_next_handler_id() 
-    raise if @action_registry.has_key?(hid)
-    @action_registry[hid] = action_handler
-    return hid
+  # Registers +callback+ under +type+ and returns a unique callback id. 
+
+  def register(callback, type=nil)
+    c = @callbacks[type]
+    cid = get_next_callback_id() 
+    raise "duplicate callback id!" if c.has_key?(cid)
+    c[cid] = callback
+    @callbacks[type] = c
+    return cid
   end
 
-  def handler_id_for_input(obj, input)
-    hid = get_next_handler_id() 
-    raise if @input_registry.has_key?(hid)
-    @input_registry[hid] = [obj, input.to_s]
-    return hid
-  end
+  # Create a CallbackStream for this CallbackRegistry, for the given
+  # +callback_ids+ argument.
+  #
+  # [+callback_ids+]
+  #    A hash that contains all callback id's together with it's values that
+  #    occurend e.g. in a request.
 
-  def handler_id_for_resource(resource)
-    hid = get_next_handler_id() 
-    raise if @resource_registry.has_key?(hid)
-    @resource_registry[hid] = resource
-    return hid
-  end
+  def create_callback_stream(callback_ids) 
+    cids = callback_ids.keys
+    cs = Hash.new { Hash.new { Array.new } }
 
-  def get_action(handler_id, obj) 
-    action_handler = @action_registry[handler_id]
-    return nil unless action_handler
+    @callbacks.each_pair do |type, reg|
+      h = cs[type]
 
-    if action_handler.obj == obj
-      action_handler 
-    else
-      nil
+      # find those callback-ids that occur in both callback_ids and reg.keys
+      matching = reg.keys & cids
+      cids -= matching
+
+      matching.each do |cid|
+        callback = reg[cid]
+        obj = callback.object
+        val = callback_ids[cid]
+        new_callback = 
+        if val.nil?
+          callback
+        else
+          callback.new_with_values(val)
+        end
+        a = h[obj]
+        a << new_callback
+        h[obj] = a
+      end
+
+      cs[type] = h
     end
-  end
 
-  def get_input(handler_id, obj) 
-    return nil unless @input_registry.has_key?(handler_id)
-
-    component, input = @input_registry[handler_id] 
-
-    if component == obj
-      input 
-    else
-      nil
-    end
-  end
-
-  def get_resource(handler_id)
-    return @resource_registry[handler_id]
+    raise "non-registered callback id(s) specified" unless cids.empty? 
+    Wee::CallbackStream.new(cs)
   end
 
   private
 
   # TODO: randomize
-  def get_next_handler_id
-    @next_handler_id.to_s
+  def get_next_callback_id
+    @next_callback_id.to_s
   ensure
-    @next_handler_id += 1
+    @next_callback_id += 1
   end
 
 end
