@@ -26,7 +26,7 @@ class Wee::Decoration < Wee::Presenter
   # Remove this decoration from the decoration chain.
 
   def remove!
-    @component.remove_decoration(self)
+    raise if @component.remove_decoration(self) != self
   end
 
   protected
@@ -57,7 +57,7 @@ class Wee::AnswerDecoration < Wee::Delegate
   attr_accessor :return_method
 
   def process_callbacks(callback_stream)
-    args = catch(:wee_answer_call) { super }
+    args = catch(:wee_answer_call) { super; nil }
     unless args.nil?
       # return to the calling component 
       self.remove!

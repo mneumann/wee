@@ -14,11 +14,12 @@ class Wee::Callback
     @object, @values = object, values
   end
 
-  # Creates a new callback object, with additional values.
+  # Creates a new callback object, with new values.
+  # Don't overwrite the values, if some were given.
 
   def new_with_values(*values)
     obj = dup
-    obj.values = self.values + values
+    obj.values = values if @values.empty?
     obj
   end
 end
@@ -33,7 +34,11 @@ class Wee::MethodCallback < Wee::Callback
 
   def invoke
     m = @object.method(@meth)
-    m.call(*@values[0,m.arity])
+    if m.arity == 0 
+      m.call
+    else
+      m.call(*@values)
+    end
   end
 end
 
@@ -91,7 +96,7 @@ class Wee::CallbackRegistry
 
       # find those callback-ids that occur in both callback_ids and reg.keys
       matching = reg.keys & cids
-      cids -= matching
+      #cids -= matching
 
       matching.each do |cid|
         callback = reg[cid]
@@ -111,7 +116,7 @@ class Wee::CallbackRegistry
       cs[type] = h
     end
 
-    raise "non-registered callback id(s) specified" unless cids.empty? 
+    #raise "non-registered callback id(s) specified" unless cids.empty? 
     Wee::CallbackStream.new(cs)
   end
 
