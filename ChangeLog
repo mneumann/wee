@@ -1,3 +1,11 @@
+Thu Jan 27 15:23:59 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* add non-Rubygems way to install Wee: install.rb
+
+--------------------------------------------------------------------
+TAGGED 0.5.0
+--------------------------------------------------------------------
+
 Wed Jan 26 20:22:55 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* Raised version up to 0.5.0 (nearing a release)
