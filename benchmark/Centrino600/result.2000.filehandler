@@ -1,0 +1,43 @@
+This is ApacheBench, Version 2.0.40-dev <$Revision: 1.121.2.8 $> apache-2.0
+Copyright (c) 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Copyright (c) 1998-2002 The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking localhost (be patient)
+
+
+Server Software:        WEBrick/1.3.1
+Server Hostname:        localhost
+Server Port:            2000
+
+Document Path:          /counter.html
+Document Length:        3728 bytes
+
+Concurrency Level:      1
+Time taken for tests:   14.912528 seconds
+Complete requests:      2000
+Failed requests:        0
+Write errors:           0
+Total transferred:      7942000 bytes
+HTML transferred:       7456000 bytes
+Requests per second:    134.12 [#/sec] (mean)
+Time per request:       7.456 [ms] (mean)
+Time per request:       7.456 [ms] (mean, across all concurrent requests)
+Transfer rate:          520.03 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.8      0      10
+Processing:     3    6  16.4      4     575
+Waiting:        0    3  16.3      1     568
+Total:          4    6  16.5      4     576
+
+Percentage of the requests served within a certain time (ms)
+  50%      4
+  66%      5
+  75%      5
+  80%      6
+  90%      8
+  95%     20
+  98%     23
+  99%     25
+ 100%    576 (longest request)
