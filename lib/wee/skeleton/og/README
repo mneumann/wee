@@ -14,7 +14,7 @@ Otherwise you can omit the -rubygems option:
 
   ruby run.rb
 
-Now point your browser to http://127.0.0.1/app
+Now point your browser to http://127.0.0.1:2000/app
 
 = Where do I get more information?
 
