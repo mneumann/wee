@@ -80,6 +80,18 @@
 
   <div id="contextContent">
 
+    <div id="description">
+      <p>
+Represents a request.
+</p>
+<p>
+NOTE that if there are fields named &quot;xxx&quot; and
+&quot;xxx.yyy&quot;, the value of fields[&#8216;xxx&#8217;] is a Hash {nil
+=&gt; val of &quot;xxx&quot;, &#8216;yyy&#8217; =&gt; val of
+&#8216;xxx.yyy&#8217;}. This is for the image-button to work correctly.
+</p>
+
+    </div>
 
 
    </div>
@@ -88,9 +100,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000195">application_path</a>&nbsp;&nbsp;
-      <a href="#M000196">build_url</a>&nbsp;&nbsp;
-      <a href="#M000194">new</a>&nbsp;&nbsp;
+      <a href="#M000198">application_path</a>&nbsp;&nbsp;
+      <a href="#M000199">build_url</a>&nbsp;&nbsp;
+      <a href="#M000197">new</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -135,24 +147,43 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000194" class="method-detail">
-        <a name="M000194"></a>
+      <div id="method-M000197" class="method-detail">
+        <a name="M000197"></a>
 
         <div class="method-heading">
-          <a href="#M000194" class="method-signature">
-          <span class="method-name">new</span><span class="method-args">(app_path, path, header, fields)</span>
+          <a href="#M000197" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(app_path, path, headers, fields)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000194-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000194-source">
+            onclick="toggleCode('M000197-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000197-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/request.rb, line 5</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app_path</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">header</span>, <span class="ruby-identifier">fields</span>)
-    <span class="ruby-ivar">@app_path</span>, <span class="ruby-ivar">@path</span>, <span class="ruby-ivar">@header</span>, <span class="ruby-ivar">@fields</span> = <span class="ruby-identifier">app_path</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">header</span>, <span class="ruby-identifier">fields</span>
+<span class="ruby-comment cmt"># File lib/wee/request.rb, line 11</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app_path</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">headers</span>, <span class="ruby-identifier">fields</span>)
+    <span class="ruby-ivar">@app_path</span>, <span class="ruby-ivar">@path</span>, <span class="ruby-ivar">@headers</span> = <span class="ruby-identifier">app_path</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">headers</span>
 
+    <span class="ruby-identifier">fields</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-ivar">@fields</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+
+    <span class="ruby-comment cmt"># sorted by decreasing key length, e.g. &quot;2.x&quot; comes before &quot;2&quot;</span>
+    <span class="ruby-identifier">fields</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort_by</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-operator">-</span><span class="ruby-identifier">k</span>.<span class="ruby-identifier">length</span>}.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">val</span> = <span class="ruby-identifier">fields</span>[<span class="ruby-identifier">key</span>] 
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">&quot;.&quot;</span>)
+        <span class="ruby-identifier">a</span>, <span class="ruby-identifier">b</span> = <span class="ruby-identifier">key</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;.&quot;</span>, <span class="ruby-value">2</span>)
+        <span class="ruby-ivar">@fields</span>[<span class="ruby-identifier">a</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+        <span class="ruby-ivar">@fields</span>[<span class="ruby-identifier">a</span>][<span class="ruby-identifier">b</span>] = <span class="ruby-identifier">val</span> 
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@fields</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">key</span>)
+          <span class="ruby-ivar">@fields</span>[<span class="ruby-identifier">key</span>][<span class="ruby-keyword kw">nil</span>] = <span class="ruby-identifier">val</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-ivar">@fields</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">val</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+    
     <span class="ruby-identifier">full_app_path</span>, <span class="ruby-identifier">req_path</span> = <span class="ruby-ivar">@path</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'@'</span>, <span class="ruby-value">2</span>)
     <span class="ruby-ivar">@request_handler_id</span> = <span class="ruby-ivar">@page_id</span> = <span class="ruby-keyword kw">nil</span>
     <span class="ruby-ivar">@request_handler_id</span>, <span class="ruby-ivar">@page_id</span> = <span class="ruby-identifier">req_path</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'/'</span>, <span class="ruby-value">2</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">req_path</span>
@@ -164,21 +195,21 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000195" class="method-detail">
-        <a name="M000195"></a>
+      <div id="method-M000198" class="method-detail">
+        <a name="M000198"></a>
 
         <div class="method-heading">
-          <a href="#M000195" class="method-signature">
+          <a href="#M000198" class="method-signature">
           <span class="method-name">application_path</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000195-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000195-source">
+            onclick="toggleCode('M000198-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000198-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/request.rb, line 13</span>
+<span class="ruby-comment cmt"># File lib/wee/request.rb, line 38</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">application_path</span>
     <span class="ruby-ivar">@app_path</span>
   <span class="ruby-keyword kw">end</span>
@@ -187,21 +218,21 @@
         </div>
       </div>
 
-      <div id="method-M000196" class="method-detail">
-        <a name="M000196"></a>
+      <div id="method-M000199" class="method-detail">
+        <a name="M000199"></a>
 
         <div class="method-heading">
-          <a href="#M000196" class="method-signature">
+          <a href="#M000199" class="method-signature">
           <span class="method-name">build_url</span><span class="method-args">(request_handler_id=nil, page_id=nil, callback_id=nil)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000196-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000196-source">
+            onclick="toggleCode('M000199-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000199-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/request.rb, line 17</span>
+<span class="ruby-comment cmt"># File lib/wee/request.rb, line 42</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_url</span>(<span class="ruby-identifier">request_handler_id</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">page_id</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">callback_id</span>=<span class="ruby-keyword kw">nil</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">request_handler_id</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">page_id</span>.<span class="ruby-identifier">nil?</span>
 

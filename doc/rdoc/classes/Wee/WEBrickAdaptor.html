@@ -215,11 +215,11 @@ Convenience method
     <span class="ruby-identifier">server</span> = <span class="ruby-constant">WEBrick</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTPServer</span>.<span class="ruby-identifier">new</span>({<span class="ruby-identifier">:Port</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">2000</span>}.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">options</span>))
     <span class="ruby-identifier">trap</span>(<span class="ruby-value str">&quot;INT&quot;</span>) { <span class="ruby-identifier">server</span>.<span class="ruby-identifier">shutdown</span> }
 
-    <span class="ruby-ivar">@apps</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span>, <span class="ruby-identifier">app</span><span class="ruby-operator">|</span>
+    (<span class="ruby-ivar">@apps</span><span class="ruby-operator">||</span>[]).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span>, <span class="ruby-identifier">app</span><span class="ruby-operator">|</span>
       <span class="ruby-identifier">server</span>.<span class="ruby-identifier">mount</span>(<span class="ruby-identifier">path</span>, <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">app</span>)
     <span class="ruby-keyword kw">end</span>
 
-    <span class="ruby-ivar">@mounts</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">args</span>, <span class="ruby-identifier">block</span><span class="ruby-operator">|</span>
+    (<span class="ruby-ivar">@mounts</span><span class="ruby-operator">||</span>[]).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">args</span>, <span class="ruby-identifier">block</span><span class="ruby-operator">|</span>
       <span class="ruby-identifier">server</span>.<span class="ruby-identifier">mount</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-keyword kw">end</span>
 
