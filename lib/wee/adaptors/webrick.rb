@@ -25,11 +25,11 @@ class Wee::WEBrickAdaptor < WEBrick::HTTPServlet::AbstractServlet
     server = WEBrick::HTTPServer.new({:Port => 2000}.update(options))
     trap("INT") { server.shutdown }
 
-    @apps.each do |path, app|
+    (@apps||[]).each do |path, app|
       server.mount(path, self, path, app)
     end
 
-    @mounts.each do |args, block|
+    (@mounts||[]).each do |args, block|
       server.mount(*args, &block)
     end
 
