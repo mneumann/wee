@@ -154,7 +154,7 @@ class Brush::GenericTagBrush < Brush
   def onclick_update(update_id, symbol=nil, *args, &block)
     raise ArgumentError if symbol and block
     url = @canvas.url_for_callback(to_callback(symbol, args, block))
-    onclick("javascript: new Ajax.Updater('#{ update_id }', '#{ url }', {method:'get'});")
+    onclick("javascript: new Ajax.Updater('#{ update_id }', '#{ url }', {method:'get'}); return false;")
   end
 
   # This method construct the css-class attribute by looking up the property
@@ -301,8 +301,21 @@ class Brush::TextAreaTag < Brush::GenericTagBrush
   html_attr :name, :rows, :cols, :tabindex, :accesskey, :onfocus, :onblur, :onselect, :onchange
   bool_attr :disabled, :readonly
 
+  def value(val)
+    @value = val
+    self
+  end
+
   def with(*args, &block)
-    super
+    if @value
+      if block or !args.empty?
+        raise "please use either method 'value' or 'with'"
+      else
+        super(@value)
+      end
+    else
+      super
+    end
   end
 end
 
@@ -505,6 +518,12 @@ class Brush::FormTag < Brush::GenericTagBrush
   alias __set_url action
   alias callback __actionurl_callback
   alias named_callback __actionurl_named_callback
+
+  def onsubmit_update(update_id, symbol=nil, *args, &block)
+    raise ArgumentError if symbol and block
+    url = @canvas.url_for_callback(to_callback(symbol, args, block), :live_update)
+    onsubmit("javascript: new Ajax.Updater('#{ update_id }', '#{ url }', {method:'get', parameters: Form.serialize(this)}); return false;")
+  end
 
   def with(*args, &block)
     # If no action was specified, use a dummy one.

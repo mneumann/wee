@@ -1,4 +1,13 @@
-Tue Apr  5 21:53:55 CET 2005	Michael Neumann <mneumann@ntecs.>
+Wed Apr  6 19:17:47 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* lib/wee/session.rb: introduced live_update callbacks, which are special
+	  action callbacks that are processed after any action callback.
+
+	* lib/wee/renderer/html/canvas.rb, lib/wee/renderer/html/brushes.rb:
+	  - You can now use #value of textarea fields instead of #with.  
+	  - Implemented form.onsubmit_update method
+
+Tue Apr  5 21:53:55 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* lib/wee/renderer/html/canvas.rb, lib/wee/renderer/html/brushes.rb,
 	  examples/radio.rb: Added support for radio buttons.

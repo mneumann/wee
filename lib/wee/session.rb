@@ -142,13 +142,23 @@ class Wee::Session < Wee::AbstractSession
             }
           }
 
-          # invoke first found action callback. only the first action callback is invoked.
-          @root_component.process_callbacks_chain {|this|
-            callback_stream.with_callbacks_for(this, :action) { |callback, value|
-              callback.call
-              throw :wee_back_to_session
+          catch(:wee_outer) {
+            # invoke first found action callback. only the first action callback is invoked.
+            @root_component.process_callbacks_chain {|this|
+              callback_stream.with_callbacks_for(this, :action) { |callback, value|
+                callback.call
+                throw :wee_outer
+              }
             }
           }
+
+          # process live_update callbacks (only ever one)
+          @root_component.process_callbacks_chain {|this|
+            callback_stream.with_callbacks_for(this, :live_update) { |callback, value|
+              callback.call
+            }
+          }
+
       }
       nil
     }
