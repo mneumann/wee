@@ -1,5 +1,6 @@
 require 'wee/page'
 require 'thread'
+require 'timeout'
 
 class Wee::Session < Wee::RequestHandler
   attr_accessor :root_component, :page_store
@@ -14,9 +15,7 @@ class Wee::Session < Wee::RequestHandler
     Thread.current[:wee_session] = self
 
     @idgen = Wee::SimpleIdGenerator.new
-
-    # to serialize the requests we need a mutex
-    @mutex = Mutex.new    
+    @in_queue, @out_queue = SizedQueue.new(1), SizedQueue.new(1)
 
     block.call(self)
 
@@ -25,6 +24,7 @@ class Wee::Session < Wee::RequestHandler
     
     @initial_snapshot = snapshot()
 
+    start_request_response_loop
     super()
   ensure
     Thread.current[:wee_session] = nil
@@ -36,24 +36,52 @@ class Wee::Session < Wee::RequestHandler
   end
 
   # called by application to send the session a request
-
   def handle_request(context)
-    @mutex.synchronize do
-      begin
-        Thread.current[:wee_session] = self
-        @context = context
-        super
-        awake
-        process_request
-        sleep
-      rescue Exception => exn
-        context.response = Wee::ErrorResponse.new(exn) 
-      ensure
-        Thread.current[:wee_session] = nil
+    super
+
+    # Send a request to the session. If the session is currently busy
+    # processing another request, this will block. 
+    @in_queue.push(context)
+
+    # Wait for the response.
+    return @out_queue.pop
+  end
+
+  def start_request_response_loop
+    Thread.abort_on_exception = true
+    Thread.new {
+      Thread.current[:wee_session] = self
+      loop {
         @context = nil
-        @page = nil
-      end
-    end
+
+        # get a request, check whether this session is alive after every 5
+        # seconds.
+        while @context.nil?
+          begin
+            Timeout.timeout(5) {
+              @context = @in_queue.pop
+            }
+          rescue Timeout::Error
+            break unless alive?
+          end
+        end
+
+        # abort thread if no longer alive
+        break if not alive?
+
+        raise "invalid request" if @context.nil?
+
+        begin
+          awake
+          process_request
+          sleep
+        rescue Exception => exn
+          @context.response = Wee::ErrorResponse.new(exn) 
+        end
+        @out_queue.push(@context)
+      }
+      p "session loop terminated" if $DEBUG
+    }
   end
 
   def create_page(snapshot)

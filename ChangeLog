@@ -1,3 +1,14 @@
+Wed Jan 26 18:19:39 CET 2005	Michael Neumann	<mneumann@ntecs.de>
+
+	* updated docs
+
+	* made Component#call's marshallable by using an object of class
+	  Wee::Component::OnAnswer instead of a Proc.  
+
+	* Moved all continuation-dependent code into directory
+	  wee/continuation. By default Wee uses no continuations, you have to
+	  require 'wee/continuation' to enable them.
+
 Wed Jan 26 13:51:22 CET 2005	Michael Neumann	<mneumann@ntecs.de>
 
 	* If you pass nil to an attribute method of a Brush, e.g.

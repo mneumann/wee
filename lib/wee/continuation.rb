@@ -2,4 +2,4 @@
 # default) by a continuation enabled implementation.
 
 require 'wee/continuation/session'
-require 'wee/continuation/component'
+require 'wee/continuation/core/component'
