@@ -3,16 +3,34 @@ class Wee::Component
   attr_accessor :caller # who is calling us
 
   # call another component
-  def call(component, return_method=nil)
-    component.caller = [self, return_method]
-    add_decoration(Wee::Delegate.new(component))
+  CallUsesContinuation = Object.new
+  def call(component, return_method=CallUsesContinuation)
+    if return_method == CallUsesContinuation
+      callcc {|cc|
+        component.caller = [self, cc]
+        add_decoration(Wee::Delegate.new(component))
+        throw :back_to_process_request_actions
+      }
+    else
+      component.caller = [self, return_method]
+      add_decoration(Wee::Delegate.new(component))
+    end
   end
 
   # return from a called component
   def answer(*args)
-    c, return_method = self.caller
-    c.remove_first_decoration
-    c.send(return_method, *args) if return_method
+    component, return_method = self.caller
+    component.remove_first_decoration
+    self.caller = nil
+
+    case return_method
+    when Continuation
+      return_method.call(*args)
+    when nil
+      # nothing
+    else
+      component.send(return_method, *args)
+    end 
   end
 
   def process_request(context)
@@ -30,17 +48,21 @@ class Wee::Component
   end
 
   def process_request_actions(context)
+    was_cc = [false]    # did we return from a continuation call or not?
+
     # handle URL actions
     if act = context.handler_registry.get_action(context.handler_id, self)
-      act.invoke
+      was_cc[0] = true if catch(:back_to_process_request_actions) { act.invoke; true }.nil?
     end
 
     # handle form actions
     context.request.query.each do |hid, value|
       if act = context.handler_registry.get_action(hid, self)
-        act.invoke
+        was_cc[0] = true if catch(:back_to_process_request_actions) { act.invoke; true }.nil?
       end
     end
+
+    throw :back_to_request_response_loop if was_cc[0]
   end
 
   # Creates a new renderer for this component and renders it.

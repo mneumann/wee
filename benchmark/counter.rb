@@ -77,10 +77,12 @@ end
 
 class MySession < Wee::Session
   def initialize
-    super do
-      self.root_component = Main.new
-      self.page_store = Wee::Utils::LRUCache.new(10) # backtrack up to 10 pages
-    end
+    self.page_store = Wee::Utils::LRUCache.new(10) # backtrack up to 10 pages
+    super
+  end
+
+  def root_component
+    Main.new
   end
 end
 
