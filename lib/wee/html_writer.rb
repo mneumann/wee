@@ -15,7 +15,13 @@ class Wee::HtmlWriter
     @tag_stack.push(tag)
 
     @port << "<#{ tag }"
-    attributes.each {|k, v| @port << %[ #{ k }="#{ v }"] }
+    attributes.each {|k, v| 
+      if v
+        @port << %[ #{ k }="#{ v }"] 
+      else
+        @port << %[ #{ k }] 
+      end
+    }
 
     self
   end
