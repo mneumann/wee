@@ -1,3 +1,7 @@
+--------------------------------------------------------------------
+TAGGED 0.7.0
+--------------------------------------------------------------------
+
 Tue Feb  1 19:58:08 CET 2005	Michael Neumann	<mneumann@ntecs.de>
 
 	* SelectListTag (r.select_list): NON-backwards-compatible change!!!
