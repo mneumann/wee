@@ -1,23 +1,9 @@
 require 'test/unit'
 $LOAD_PATH.unshift "../lib"
 module Wee; end
-require 'wee/presenter'
-require 'wee/component'
-require 'wee/decoration'
-require 'wee/holder'
+require 'wee/core'
 
-# Mock
-class Wee::Session
-  def self.current
-    @session ||= new
-  end
-
-  def register_object_for_backtracking(obj)
-    #p obj 
-  end
-end
-
-class TC_Component < Test::Unit::TestCase
+class Test_Component < Test::Unit::TestCase
   def test_add_remove_one_decoration
     c = Wee::Component.new
     d = Wee::Decoration.new
@@ -71,10 +57,5 @@ class TC_Component < Test::Unit::TestCase
     assert_same d3, c.remove_decoration(d3)
     assert_same c, c.decoration
     assert_nil  d3.owner
-
-    # TODO: teste, wenn man zuerst die erste decoration löscht
-    # TODO: Circular references and CC's
   end
-
-
 end
