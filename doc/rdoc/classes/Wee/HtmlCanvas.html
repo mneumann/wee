@@ -281,7 +281,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000119-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000119-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 146</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 147</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">anchor</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">AnchorTag</span>.<span class="ruby-identifier">new</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
@@ -304,7 +304,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000121-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000121-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 154</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 155</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">bold</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">GenericTagBrush</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;b&quot;</span>), <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
@@ -327,7 +327,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000124-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000124-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 166</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 167</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">break</span>
     <span class="ruby-identifier">set_brush</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">GenericSingleTagBrush</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;br&quot;</span>))
   <span class="ruby-keyword kw">end</span>
@@ -350,7 +350,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000129-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000129-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 183</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 184</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">encode_text</span>(<span class="ruby-identifier">str</span>)
     <span class="ruby-identifier">set_brush</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">GenericEncodedTextBrush</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">str</span>))
   <span class="ruby-keyword kw">end</span>
@@ -373,7 +373,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000117-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000117-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 138</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 139</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_upload</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">FileUploadTag</span>.<span class="ruby-identifier">new</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
@@ -396,7 +396,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000109-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000109-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 106</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 107</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">form</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">FormTag</span>.<span class="ruby-identifier">new</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
@@ -419,7 +419,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000125-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000125-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 170</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 171</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">image</span>
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">ImageTag</span>.<span class="ruby-identifier">new</span>)
   <span class="ruby-keyword kw">end</span>
@@ -442,7 +442,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000116-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000116-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 134</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 135</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">image_button</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">ImageButtonTag</span>.<span class="ruby-identifier">new</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
@@ -465,7 +465,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000110-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000110-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 110</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 111</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">input</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">InputTag</span>.<span class="ruby-identifier">new</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
@@ -488,7 +488,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000122-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000122-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 158</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 159</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">javascript</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">JavascriptTag</span>.<span class="ruby-identifier">new</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
@@ -511,7 +511,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000126-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000126-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 174</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 175</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">link_css</span>(<span class="ruby-identifier">url</span>)
     <span class="ruby-identifier">link</span>.<span class="ruby-identifier">type</span>(<span class="ruby-value str">'text/css'</span>).<span class="ruby-identifier">rel</span>(<span class="ruby-value str">'stylesheet'</span>).<span class="ruby-identifier">href</span>(<span class="ruby-identifier">url</span>)
   <span class="ruby-keyword kw">end</span>
@@ -534,7 +534,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000113-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000113-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 122</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 123</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">option</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">SelectOptionTag</span>.<span class="ruby-identifier">new</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
@@ -557,7 +557,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000118-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000118-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 142</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 143</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">page</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">Page</span>.<span class="ruby-identifier">new</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
@@ -580,7 +580,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000123-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000123-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 162</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 163</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">paragraph</span>
     <span class="ruby-identifier">set_brush</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">GenericSingleTagBrush</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;p&quot;</span>))
   <span class="ruby-keyword kw">end</span>
@@ -603,7 +603,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000103-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000103-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 82</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 83</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">register_callback</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">callback</span>)
     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">rendering_context</span>.<span class="ruby-identifier">callbacks</span>.<span class="ruby-identifier">register_for</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">current_component</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">callback</span>)
   <span class="ruby-keyword kw">end</span>
@@ -626,7 +626,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000104-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000104-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 86</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 87</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">register_named_callback</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">callback</span>)
     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">rendering_context</span>.<span class="ruby-identifier">callbacks</span>.<span class="ruby-identifier">register_named_for</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">current_component</span>, <span class="ruby-identifier">type</span>, <span class="ruby-identifier">callback</span>, <span class="ruby-identifier">name</span>)
   <span class="ruby-keyword kw">end</span>
@@ -649,7 +649,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000130-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000130-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 187</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 188</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">obj</span>)
     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">close</span>
     <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">do_render_chain</span>(<span class="ruby-ivar">@rendering_context</span>)
@@ -674,7 +674,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000114-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000114-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 126</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 127</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">select_list</span>(<span class="ruby-identifier">items</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">SelectListTag</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">items</span>))
   <span class="ruby-keyword kw">end</span>
@@ -697,7 +697,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000120-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000120-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 150</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 151</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">space</span>(<span class="ruby-identifier">n</span>=<span class="ruby-value">1</span>)
     <span class="ruby-identifier">set_brush</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">GenericTextBrush</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;&amp;nbsp;&quot;</span><span class="ruby-operator">*</span><span class="ruby-identifier">n</span>))
   <span class="ruby-keyword kw">end</span>
@@ -720,7 +720,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000115-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000115-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 130</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 131</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">submit_button</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">SubmitButtonTag</span>.<span class="ruby-identifier">new</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
@@ -743,7 +743,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000105-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000105-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 90</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 91</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">table</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">TableTag</span>.<span class="ruby-identifier">new</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
@@ -766,7 +766,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000107-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000107-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 98</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 99</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">table_data</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">TableDataTag</span>.<span class="ruby-identifier">new</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
@@ -789,7 +789,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000108-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000108-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 102</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 103</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">table_header</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">TableHeaderTag</span>.<span class="ruby-identifier">new</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
@@ -812,7 +812,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000106-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000106-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 94</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 95</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">table_row</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">TableRowTag</span>.<span class="ruby-identifier">new</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
@@ -835,7 +835,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000131-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000131-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 195</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 196</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template</span>(<span class="ruby-identifier">filename</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Template file #{ filename } not found!&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">filename</span>)
     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">close</span>
@@ -869,7 +869,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000127-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000127-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 178</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 179</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">text</span>(<span class="ruby-identifier">str</span>)
     <span class="ruby-identifier">set_brush</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">GenericTextBrush</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">str</span>))
   <span class="ruby-keyword kw">end</span>
@@ -892,7 +892,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000112-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000112-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 118</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 119</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">text_area</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">TextAreaTag</span>.<span class="ruby-identifier">new</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
@@ -915,7 +915,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000111-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000111-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 114</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 115</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">text_input</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">handle</span>(<span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">TextInputTag</span>.<span class="ruby-identifier">new</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
@@ -938,7 +938,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000100-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000100-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 68</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 69</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">url_for_callback</span>(<span class="ruby-identifier">callback</span>)
     <span class="ruby-identifier">url_for_callback_id</span>(<span class="ruby-identifier">register_callback</span>(<span class="ruby-identifier">:action</span>, <span class="ruby-identifier">callback</span>))
   <span class="ruby-keyword kw">end</span>
@@ -961,7 +961,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000102-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000102-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 76</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 77</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">url_for_callback_id</span>(<span class="ruby-identifier">callback_id</span>)
     <span class="ruby-identifier">req</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">rendering_context</span>.<span class="ruby-identifier">request</span>
     <span class="ruby-identifier">url</span> = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">build_url</span>(<span class="ruby-identifier">req</span>.<span class="ruby-identifier">request_handler_id</span>, <span class="ruby-identifier">req</span>.<span class="ruby-identifier">page_id</span>, <span class="ruby-identifier">callback_id</span>)
@@ -986,7 +986,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000101-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000101-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 72</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 73</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">url_for_named_callback</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">callback</span>)
     <span class="ruby-identifier">url_for_callback_id</span>(<span class="ruby-identifier">register_named_callback</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">:action</span>, <span class="ruby-identifier">callback</span>))
   <span class="ruby-keyword kw">end</span>
@@ -1011,7 +1011,7 @@ Alias for <a href="HtmlCanvas.html#M000127">text</a>
             onclick="toggleCode('M000132-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000132-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 212</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 213</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle</span>(<span class="ruby-identifier">brush</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">set_brush</span>(<span class="ruby-identifier">brush</span>)
     <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">block</span>
