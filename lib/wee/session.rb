@@ -107,7 +107,9 @@ class Wee::Session
         s = {@context.handler_id => nil}.update(@context.request.query)
         callback_stream = page.callback_registry.create_callback_stream(s)
 
-        @root_component.process_callback_chain(callback_stream)
+        catch(:wee_back_to_session) {
+          @root_component.process_callback_chain(callback_stream)
+        }
         handle_new_page_view(@context)
 
       end
