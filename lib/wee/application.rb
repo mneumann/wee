@@ -38,6 +38,7 @@ class Wee::Application
     if @default_request_handler.nil?
       raise ArgumentError, "No default request handler specified"
     end
+    @mutex = Mutex.new
   end
   
   # TODO: we have to use mutexes here 
@@ -45,29 +46,30 @@ class Wee::Application
   # TODO: test for max_request_handlers
 
   def handle_request(context)
-    request_handler_id = context.request.request_handler_id
-    request_handler = @request_handlers[request_handler_id]
+    @mutex.synchronize do
+      request_handler_id = context.request.request_handler_id
+      request_handler = @request_handlers[request_handler_id]
 
-    if request_handler_id.nil?
-      # No id was given -> create new id and handler
-      request_handler_id = unique_request_handler_id()
-      request_handler = @default_request_handler.call  
-      request_handler.id = request_handler_id
-      request_handler.application = self
-      @request_handlers[request_handler_id] = request_handler
+      if request_handler_id.nil?
+        # No id was given -> create new id and handler
+        request_handler_id = unique_request_handler_id()
+        request_handler = @default_request_handler.call  
+        request_handler.id = request_handler_id
+        request_handler.application = self
+        @request_handlers[request_handler_id] = request_handler
 
-      context.response = Wee::RedirectResponse.new(context.request.build_url(request_handler_id))
-      return
+        context.response = Wee::RedirectResponse.new(context.request.build_url(request_handler_id))
+        return
 
-    elsif request_handler.nil?
-      # A false request handler id was given. This might indicate that a
-      # request handler has expired. 
-      request_handler_expired(context)
-      return
+      elsif request_handler.nil?
+        # A false request handler id was given. This might indicate that a
+        # request handler has expired. 
+        request_handler_expired(context)
+        return
+      end
+
+      request_handler.handle_request(context)
     end
-
-    request_handler.handle_request(context)
-
   rescue => exn
     context.response = Wee::ErrorResponse.new(exn) 
   end
