@@ -20,3 +20,4 @@ require 'wee/renderer/html/canvas'
 Wee::DefaultRenderer = Wee::HtmlCanvas
 
 require 'wee/idgen'
+require 'wee/md5_idgen'
