@@ -1,6 +1,7 @@
 class Wee::Window < Wee::Component
 
   def initialize(title, pos, child)
+    super()
     @title = title
     @child = child
     @status = :normal  
@@ -8,7 +9,7 @@ class Wee::Window < Wee::Component
     @pos = pos
   end
 
-  def process_request(context)
+  def process_callbacks(callback_stream)
     return if @status == :closed
     super
   end

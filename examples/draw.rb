@@ -80,6 +80,7 @@ class MyApplication < Wee::Application
 end
 
 if __FILE__ == $0
+  raise "this example does not work with the current version of Wee"
   Wee::Application.new {|app|
     app.name = 'Counter'
     app.path = '/app'

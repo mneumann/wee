@@ -4,20 +4,9 @@ require 'wee/webrick'
 require 'wee/utils/cache'
 require 'window'
 
-module BacktrackableDecoration
-  def decoration
-    @decoration = Wee::StateHolder.new(nil) unless @decoration
-    @decoration.value || self
-  end
-
-  def decoration=(dec)
-    @decoration = Wee::StateHolder.new(nil) unless @decoration
-    @decoration.value = dec
-  end
-end
-
 class Counter < Wee::Component
   def initialize(cnt)
+    super()
     @cnt = cnt 
     session.register_object_for_backtracking(self)
   end
@@ -39,18 +28,9 @@ end
 
 class MessageBox < Wee::Component
   def initialize(text)
+    super()
     @text = text 
   end
-
-=begin
-  def ok
-    answer true
-  end
-
-  def cancel
-    answer false
-  end
-=end
 
   def render_content_on(r)
     r.break
@@ -67,6 +47,7 @@ end
 class RegexpValidatedInput < Wee::Component
 
   def initialize(init_value, regexp)
+    super()
     @regexp = regexp
     self.value = init_value
     @error = false
@@ -106,26 +87,12 @@ class RegexpValidatedInput < Wee::Component
 
 end
 
-#Handler[self, :obj]
-
 class EditableCounter < Counter 
-#  include BacktrackableDecoration
 
   def initialize(cnt)
-    @cnt = cnt
-    @show_edit_field = false
     super
+    @show_edit_field = false
   end
-
-=begin
-  def take_snapshot
-    [@cnt, @show_edit_field]
-  end
-
-  def apply_snapshot(snap)
-    @cnt, @show_edit_field = snap
-  end
-=end
 
   def render_content_on(r)
     #r.form.action(:submit).with do
@@ -158,51 +125,19 @@ class EditableCounter < Counter
     @cnt = val
   end
 
-  def mesg(res)
-    p "returned"
-  end
 end
-
-
-# TODO
-class Calculator < Wee::Component
-  attr_accessor :display
-
-  def initialize
-    @number_stack = []
-    @display = 0
-  end
-
-  def render_content_on(r)
-    r.text(@display)
-
-    r.form do
-      for num in 0..9 do
-        r.submit_button.action(:num).value(num)
-        r.space
-      end
-    end
-  end
-
-  def num(n)
-    @display = (@display * 10) + n.to_i if n =~ /^\d$/
-  end
-end
-
-
-
 
 class MainPage < Wee::Component
-  include BacktrackableDecoration
-
   def initialize
+    super()
     @counters = (1..10).map {|i| Wee::Window.new("Cnt #{ i }", "#{i*10}px", EditableCounter.new(i))}
-    add_children(*@counters)
-    add_child(@val_inp = RegexpValidatedInput.new('Michael Neumann', /^\w+\s+\w+$/))
+    children.push(*@counters)
+    children << (@val_inp = RegexpValidatedInput.new('Michael Neumann', /^\w+\s+\w+$/))
 
     @arr = []
     session.register_object_for_backtracking(@arr)
     session.register_object_for_backtracking(@text)
+    session.register_object_for_backtracking(@decoration)
   end
 
   attr_accessor :text
