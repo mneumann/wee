@@ -1,0 +1,29 @@
+* Decoration#owner: use a ValueHolder, too. and register it for being backtracked.
+
+* mark_objects_for_backtracking() instead of state-registry (snapshot_objects)
+
+* callback_registry -> callbacks
+
+* apply_snapshot -> restore_snapshot? 
+
+* improve error messages
+
+* don't use Snapshot#apply directly. Everything should be done through the
+  StateRegistry API, as snapshot is a internal data-structure.
+
+* decoration: LiteralMethod. Move somewhere else.
+
+== Decorations
+
+Decorations are used to modify the look and behaviour of a component. A
+component can have more than one decoration, this is implemented by a
+linked list with the _next_ method of decorations. The @decoration instance
+variable points to the first decoration in the chain or to the component
+itself, if no decorations were specified. We use a ValueHolder for
+@decoration to be able to backtrack it. TODO
+
+== Children
+
+A component can have child components. These must be returned by method
+_children_, otherwise they will not take part in the process_request step
+and as such cannot perform actions. 
