@@ -292,13 +292,12 @@ class Wee::Component < Wee::Presenter
   #   Either a symbol or any object that responds to #call. If it's a symbol,
   #   then the corresponding method of the current component will be called.
   #
-  # [+additional_args+]
-  #   Additional arguments that are passed (after the arguments given in
-  #   #answer) to the +return_callback+
+  # [+args+]
+  #   Arguments that are passed to the +return_callback+ before the 'onanswer'
+  #   arguments.
   #
   # <b>How it works</b>
   # 
-  
   # The component to be called is wrapped with an AnswerDecoration and the
   # +return_callback+ parameter is assigned to it's +on_answer+ attribute (not
   # directly as there are cleanup actions to be taken before the
@@ -317,26 +316,27 @@ class Wee::Component < Wee::Presenter
   # AnswerDecoration. The AnswerDecoration then invokes the +on_answer+
   # callback which cleans up the decorations we added during #call, and finally
   # passes control to the +return_callback+. 
+  #
 
-  def call(component, return_callback=nil, *additional_args)
+  def call(component, return_callback=nil, *args)
     add_decoration(delegate = Wee::Delegate.new(component))
     component.add_decoration(answer = Wee::AnswerDecoration.new)
     answer.on_answer = OnAnswer.new(self, component, delegate, answer, 
-                                    return_callback, additional_args)
+                                    return_callback, args)
     throw :wee_back_to_session
   end
 
   class OnAnswer < Struct.new(:calling_component, :called_component, :delegate, 
-                              :answer, :return_callback, :additional_args)
+                              :answer, :return_callback, :args)
 
-    def call(*args)
+    def call(*answer_args)
       calling_component.remove_decoration(delegate)
       called_component.remove_decoration(answer)
       return if return_callback.nil?
       if return_callback.respond_to?(:call)
-        return_callback.call(*(args + additional_args))
+        return_callback.call(*(args + answer_args))
       else
-        calling_component.send(return_callback, *(args + additional_args))
+        calling_component.send(return_callback, *(args + answer_args))
       end
     end
   end

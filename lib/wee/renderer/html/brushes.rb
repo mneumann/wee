@@ -47,45 +47,36 @@ class Brush::GenericEncodedTextBrush < Brush
   end
 end
 
-module Brush::ToCallback
-  private
-
-  def to_callback(symbol, args, block)
-    raise ArgumentError if symbol and block
-    if symbol
-      Wee::LiteralMethodCallback.new(@canvas.current_component, symbol, *args)
-    else
-      raise ArgumentError if not args.empty?
-      block
-    end
-  end
-end
-
 class Brush::GenericTagBrush < Brush
 
-  def self.bool_attr(*attrs)
-    attrs.each { |a|
-      class_eval " 
-        def #{ a }(bool=true)
-          if bool
-            @attributes['#{ a }'] = nil
-          else
-            @attributes.delete('#{ a }')
-          end
-          self
-        end
-      "
-    }
-  end
+  class << self
+    private
 
-  def self.html_attr(*attrs)
-    attrs.each { |a|
-      class_eval " 
-        def #{ a }(value)
-          html_attr('#{ a }', value)
-        end
-      "
-    }
+    def bool_attr(*attrs)
+      attrs.each { |a|
+        class_eval " 
+          def #{ a }(bool=true)
+            if bool
+              @attributes['#{ a }'] = nil
+            else
+              @attributes.delete('#{ a }')
+            end
+            self
+          end
+        "
+      }
+    end
+
+    def html_attr(*attrs)
+      attrs.each { |a|
+        class_eval " 
+          def #{ a }(value)
+            html_attr('#{ a }', value)
+          end
+        "
+      }
+    end
+
   end
 
   private
@@ -97,6 +88,43 @@ class Brush::GenericTagBrush < Brush
       @attributes[attr] = value.to_s
     end
     self
+  end
+
+  # Converts the arguments into a callable object.
+  #
+  def to_callback(symbol, args, block)
+    raise ArgumentError if symbol and block
+    if symbol.nil?
+      raise ArgumentError if not args.empty?
+      block
+    else
+      if symbol.is_a?(Symbol) or symbol.is_a?(String)
+        Wee::LiteralMethodCallback.new(@canvas.current_component, symbol, *args)
+      else
+        raise ArgumentError if not args.empty?
+        symbol
+      end
+    end
+  end
+
+  def __input_callback(symbol=nil, *args, &block)
+    name(@canvas.register_callback(:input, to_callback(symbol, args, block)))
+  end
+
+  def __action_callback(symbol=nil, *args, &block)
+    name(@canvas.register_callback(:action, to_callback(symbol, args, block)))
+  end
+
+  # The callback id is listed in the URL (not as a form-data field)
+
+  def __actionurl_callback(symbol=nil, *args, &block)
+    __set_url(@canvas.url_for_callback(to_callback(symbol, args, block)))
+  end
+
+  # The callback id is listed in the URL (not as a form-data field)
+
+  def __actionurl_named_callback(name, symbol=nil, *args, &block)
+    __set_url(@canvas.url_for_named_callback(name, to_callback(symbol, args, block)))
   end
 
   public
@@ -117,8 +145,6 @@ class Brush::GenericTagBrush < Brush
     html_attr("class", c)
   end
 
-  include Brush::ToCallback
-
   def onclick_callback(symbol=nil, *args, &block)
     raise ArgumentError if symbol and block
     url = @canvas.url_for_callback(to_callback(symbol, args, block))
@@ -128,8 +154,7 @@ class Brush::GenericTagBrush < Brush
   # This method construct the css-class attribute by looking up the property
   # from the current component.
 
-  def css_class_for(c)
-    prop = 'css.' + c
+  def css_class_for(prop)
     val = @canvas.current_component.lookup_property(prop)
     raise "no property found for: <#{ prop }>" if val.nil?
     css_class(val)
@@ -167,8 +192,7 @@ class Brush::ImageTag < Brush::GenericSingleTagBrush
   # This method construct the src attribute by looking up the property from the
   # current component.
 
-  def src_for(s)
-    prop = "img." + s
+  def src_for(prop)
     val = @canvas.current_component.lookup_property(prop)
     raise "no property found for: <#{ prop }>" if val.nil?
     src(val)
@@ -248,7 +272,6 @@ class Brush::TableRowTag < Brush::GenericTagBrush
   end
 end
 
-
 class Brush::InputTag < Brush::GenericSingleTagBrush
   def initialize
     super('input')
@@ -262,47 +285,12 @@ class Brush::InputTag < Brush::GenericSingleTagBrush
   end
 end
 
-
-module Brush::InputCallbackMixin
-  public
-
-  def callback(symbol=nil, *args, &block)
-    raise ArgumentError if symbol and block
-    name(@canvas.register_callback(:input, to_callback(symbol, args, block)))
-  end
-
-  include Brush::ToCallback 
-end
-
-module Brush::ActionCallbackMixin
-  public
-
-  def callback(symbol=nil, *args, &block)
-    raise ArgumentError if symbol and block
-    name(@canvas.register_callback(:action, to_callback(symbol, args, block)))
-  end
-
-  include Brush::ToCallback
-end
-
-# The callback id is listed in the URL (not as a form-data field)
-module Brush::ActionURLCallbackMixin
-  public
-
-  def callback(symbol=nil, *args, &block)
-    raise ArgumentError if symbol and block
-    __set_url(@canvas.url_for_callback(to_callback(symbol, args, block)))
-  end
-
-  include Brush::ToCallback
-end
-
 class Brush::TextAreaTag < Brush::GenericTagBrush
-  include Brush::InputCallbackMixin
-
   def initialize
     super('textarea')
   end
+
+  alias callback __input_callback
 
   html_attr :name, :rows, :cols, :tabindex, :accesskey, :onfocus, :onblur, :onselect, :onchange
   bool_attr :disabled, :readonly
@@ -321,8 +309,6 @@ class Brush::SelectOptionTag < Brush::GenericTagBrush
 end
 
 class Brush::SelectListTag < Brush::GenericTagBrush
-  include Brush::InputCallbackMixin
-
   def initialize(items)
     super('select')
     @items = items
@@ -339,14 +325,30 @@ class Brush::SelectListTag < Brush::GenericTagBrush
 
   bool_attr :multiple
 
-  alias __old_callback callback
-  private :__old_callback
-  def callback(symbol=nil, &block)
-    raise ArgumentError if symbol and block
-    block = Wee::LiteralMethodCallback.new(@canvas.current_component, symbol) unless block
+  # TODO
+  # InputCallback
+  #alias callback __input_callback
 
-    @callback = block
+  #  alias __old_callback callback
+  #private :__old_callback
+
+  def callback(symbol=nil, *args, &block)
+    @callback = to_callback(symbol, args, block)
     self
+  end
+
+  class SelectListCallback < Struct.new(:callback, :items, :is_multiple)
+    def call(input)
+      choosen = input.list.map {|idx| 
+        idx = Integer(idx)
+        raise "invalid index in select list" if idx < 0 or idx > items.size
+        items[idx]
+      }
+      if choosen.size > 1 and not is_multiple
+        raise "choosen more than one element from a non-multiple select list" 
+      end
+      callback.call(choosen)
+    end
   end
 
   def with
@@ -354,17 +356,10 @@ class Brush::SelectListTag < Brush::GenericTagBrush
     @selected ||= Array.new
 
     if @callback
-      __old_callback {|input|
-        choosen = input.list.map {|idx| 
-          idx = Integer(idx)
-          raise "invalid index in select list" if idx < 0 or idx > @items.size
-          @items[idx]
-        }
-        if choosen.size > 1 and not @attributes.has_key?('multiple')
-          raise "choosen more than one element from a non-multiple select list" 
-        end
-        @callback.call(choosen)
-      }
+      # A callback was specified. We have to wrap it inside a
+      # SelectListCallback object as we want to perform some 
+      # additional actions.
+      __input_callback(SelectListCallback.new(@callback, @items, @attributes.has_key?('multiple')))
     end
 
     super do
@@ -376,32 +371,30 @@ class Brush::SelectListTag < Brush::GenericTagBrush
 end
 
 class Brush::TextInputTag < Brush::InputTag
-  include Brush::InputCallbackMixin
-
   def initialize
     super
     type('text')
   end
+
+  alias callback __input_callback
 end
 
 class Brush::FileUploadTag < Brush::InputTag
-  include Brush::InputCallbackMixin
-
   def initialize
     super
     type('file')
   end
+
+  alias callback __input_callback
 end
 
-
-
 class Brush::SubmitButtonTag < Brush::InputTag
-  include Brush::ActionCallbackMixin
-
   def initialize
     super
     type('submit')
   end
+
+  alias callback __action_callback
 end
 
 # NOTE: The form-fields returned by a image-button-tag is browser-specific.
@@ -412,18 +405,17 @@ end
 # generate a "name" fields in the request, to make this image-button work. 
 
 class Brush::ImageButtonTag < Brush::InputTag
-  include Brush::ActionCallbackMixin
-
   def initialize
     super
     type('image')
   end
 
+  alias callback __action_callback
+
   def value(v)
     raise "specified value will not be used in the request"
   end
 end
-
 
 class Brush::TableDataTag < Brush::GenericTagBrush
   def initialize
@@ -441,10 +433,7 @@ class Brush::TableHeaderTag < Brush::GenericTagBrush
   end
 end
 
-
 class Brush::FormTag < Brush::GenericTagBrush
-  include Brush::ActionURLCallbackMixin
-
   def initialize
     super('form')
     @attributes['method'] = 'POST'
@@ -453,11 +442,14 @@ class Brush::FormTag < Brush::GenericTagBrush
   html_attr :action, :enctype
 
   alias __set_url action
+  alias callback __actionurl_callback
+  alias named_callback __actionurl_named_callback
 
   def with(*args, &block)
     # If no action was specified, use a dummy one.
     unless @attributes.has_key?('action')
       req = @canvas.rendering_context.request
+      # TODO?
       @attributes['action'] = req.build_url(req.request_handler_id, req.page_id) 
     end
     super
@@ -465,8 +457,6 @@ class Brush::FormTag < Brush::GenericTagBrush
 end
 
 class Brush::AnchorTag < Brush::GenericTagBrush
-  include Brush::ActionURLCallbackMixin
-
   def initialize
     super('a')
   end
@@ -474,9 +464,11 @@ class Brush::AnchorTag < Brush::GenericTagBrush
   html_attr :href, :title
   alias url href
   alias tooltip title
-  alias __set_url url
-end
 
+  alias __set_url url
+  alias callback __actionurl_callback
+  alias named_callback __actionurl_named_callback
+end
 
 class Brush::Page < Brush
   def title(t)

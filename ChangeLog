@@ -1,3 +1,28 @@
+Sat Jan 29 17:08:54 CET 2005	Michael Neumann	<mneumann@ntecs.de>
+
+	* Wee::LiteralMethodCallback and Component#call: Additional arguments
+	  are now prepended instead of appended. Example:
+
+	    call MessageBox.new('msg'), :confirm, 1
+
+	    def confirm(one, msgbox_result) 
+	    end
+
+	* Added named callbacks. Example:
+
+	    r.anchor.named_callback('test') { ... }
+
+	  will use 'test' as callback_id instead of a generic one.
+
+	* Methods ImageTag#src_for and GenericTagBrush#css_class_for no more
+	  prepend 'img.' or 'css.' in front of the property name. 
+
+	* Refactored wee/renderer/html/brushes.rb. Removed InputCallbackMixin,
+	  ActionCallbackMixin and ActionURLCallbackMixin modules. Instead the
+	  GenericTagBrush has methods __input_callback, __action_callback etc.
+	  which are aliased in the corresponding Brush classes. Also made the 
+	  SelectList callback marshallable.
+
 Fri Jan 28 02:42:53 CET 2005	Michael Neumann	<mneumann@ntecs.de>
 
 	* Method Wee::WEBrickAdaptor.request_class added. This allows you to

@@ -66,14 +66,27 @@ class HtmlCanvas < Canvas
   generic_single_tag :link
 
   def url_for_callback(callback)
+    url_for_callback_id(register_callback(:action, callback))
+  end
+
+  def url_for_named_callback(name, callback)
+    url_for_callback_id(register_named_callback(name, :action, callback))
+  end
+
+  def url_for_callback_id(callback_id)
     req = self.rendering_context.request
-    url = req.build_url(req.request_handler_id, req.page_id, register_callback(:action, callback))
+    url = req.build_url(req.request_handler_id, req.page_id, callback_id)
     return url
   end
 
   def register_callback(type, callback)
     self.rendering_context.callbacks.register_for(self.current_component, type, callback)
   end
+
+  def register_named_callback(name, type, callback)
+    self.rendering_context.callbacks.register_named_for(self.current_component, type, callback, name)
+  end
+
 
   def table(*args, &block)
     handle(Brush::TableTag.new, *args, &block)
