@@ -54,6 +54,16 @@ class Brush::GenericTagBrush < Brush
     @attributes = Hash.new
   end
 
+  def type(t)
+    @attributes["type"] = t
+    self
+  end
+
+  def css_class(c)
+    @attributes["class"] = c
+    self
+  end
+
   def id(x)
     @attributes["id"] = x
     self
