@@ -81,17 +81,28 @@ class Brush::GenericTagBrush < Brush
   def self.html_attr(*attrs)
     attrs.each { |a|
       class_eval " 
-        def #{ a }(str)
-          @attributes['#{ a }'] = str.to_s
-          self
+        def #{ a }(value)
+          html_attr('#{ a }', value)
         end
       "
     }
   end
 
-  def method_missing(id, attr)
-    @attributes[id.to_s] = attr
+  private
+
+  def html_attr(attr, value)
+    if value.nil?
+      @attributes.delete(attr)
+    else
+      @attributes[attr] = value.to_s
+    end
     self
+  end
+
+  public
+
+  def method_missing(id, attr)
+    html_attr(id.to_s, attr)
   end
 
   def initialize(tag, is_single_tag=false)
@@ -103,8 +114,7 @@ class Brush::GenericTagBrush < Brush
   html_attr :type, :id
 
   def css_class(c)
-    @attributes["class"] = c
-    self
+    html_attr("class", c)
   end
 
   include Brush::ToCallback
@@ -173,6 +183,15 @@ class Brush::ImageTag < Brush::GenericSingleTagBrush
   end
 end
 
+class Brush::JavascriptTag < Brush::GenericTagBrush
+  html_attr :src, :type
+
+  def initialize
+    super("script")
+    type("text/javascript")
+  end
+end
+
 class Brush::TableTag < Brush::GenericTagBrush
   def initialize
     super('table')
@@ -185,8 +204,7 @@ class Brush::TableRowTag < Brush::GenericTagBrush
   end
 
   def align_top
-    @attributes['align'] = 'top'
-    self
+    html_attr('align', 'top')
   end
 
   def columns(*cols, &block)
@@ -413,8 +431,7 @@ class Brush::TableDataTag < Brush::GenericTagBrush
   end
 
   def align_top
-    @attributes['align'] = 'top'
-    self
+    html_attr('align', 'top')
   end
 end
 

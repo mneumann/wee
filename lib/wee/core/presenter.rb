@@ -191,4 +191,10 @@ class Wee::Presenter
     return nil
   end
 
+  # This is currently only used for describing which properties are required by
+  # the underlying component.
+
+  def self.uses_property(*args)
+  end
+
 end

@@ -143,6 +143,10 @@ class HtmlCanvas < Canvas
     handle(Brush::GenericTagBrush.new("b"), *args, &block)
   end
 
+  def javascript(*args, &block)
+    handle(Brush::JavascriptTag.new, *args, &block)
+  end
+
   def paragraph
     set_brush(Brush::GenericSingleTagBrush.new("p"))
   end

@@ -1,3 +1,25 @@
+Wed Jan 26 13:51:22 CET 2005	Michael Neumann	<mneumann@ntecs.de>
+
+	* If you pass nil to an attribute method of a Brush, e.g.
+
+	    r.table_data.width(nil)
+
+	  This will remove the 'width' attribute from the tag.
+	
+	* Method HtmlCanvas#javascript added:
+
+	    # external javascript resource
+	    r.javascript.src('/test.js') 
+
+	    # internal javascript 
+	    r.javascript.with('function js() { ... }')
+
+	* Method Presenter.uses_property added. Used to declare required
+	  properties. This has actually no effect. It's sole purpose is to 
+	  describe the dependencies.
+
+NO DATE AVAILABLE		Michael Neumann <mneumann@ntecs.de>
+
 	* Enable Socket.do_not_reverse_lookup in WEBrickAdaptor by default, as
 	  this has been the reason for much slowliness
 
