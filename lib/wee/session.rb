@@ -1,6 +1,6 @@
 require 'wee/page'
 require 'wee/state_registry'
-require 'wee/handler_registry'
+require 'wee/callback'
 require 'thread'
 
 class Wee::Session
@@ -56,19 +56,9 @@ class Wee::Session
 
       # A valid page_id was specified and the corresponding page exists.
 
-      page.snapshot.apply unless context.resource_id
+      page.snapshot.apply
 
-      raise "invalid request URL! both request_id and handler_id given!" if context.resource_id and context.handler_id
-
-      if context.resource_id
-        # This is a resource request
-        res = page.handler_registry.get_resource(context.resource_id)
-
-        context.response.status = 200
-        context.response['Content-Type'] = res.content_type
-        context.response.body = res.content
-
-      elsif context.handler_id.nil?
+      if context.handler_id.nil?
 
         # No action/inputs were specified -> render page
         #
@@ -78,8 +68,8 @@ class Wee::Session
         # 3. Store the page back into the store (only neccessary if page is not
         #    stored in memory).
 
-        page = Wee::Page.new(page.snapshot, Wee::HandlerRegistry.new)  # remove all action/input handlers
-        context.handler_registry = page.handler_registry
+        page = Wee::Page.new(page.snapshot, Wee::CallbackRegistry.new)  # remove all action/input handlers
+        context.callback_registry = page.callback_registry
         respond(context.freeze)                     # render
         @page_store[context.page_id] = page         # store
 
@@ -90,10 +80,11 @@ class Wee::Session
         # We process the request and invoke actions/inputs. Then we generate a
         # new page view. 
 
-        context.handler_registry = page.handler_registry
-        @root_component.decoration.process_request(context.freeze)
-        handle_new_page_view(context)
+        s = context.request.query.dup.update({context.handler_id => nil})
+        callback_stream = page.callback_registry.create_callback_stream(s)
 
+        @root_component.process_callback_chain(callback_stream)
+        handle_new_page_view(context.freeze)
       end
 
     else
@@ -119,7 +110,7 @@ class Wee::Session
 
   def handle_new_page_view(context, snapshot=nil)
     new_page_id = create_new_page_id() 
-    new_page = Wee::Page.new(snapshot || @state_registry.snapshot, Wee::HandlerRegistry.new)
+    new_page = Wee::Page.new(snapshot || @state_registry.snapshot, Wee::CallbackRegistry.new)
     @page_store[new_page_id] = new_page
 
     redirect_url = "#{ context.application.path }/s:#{ context.session_id }/p:#{ new_page_id }"
@@ -131,9 +122,7 @@ class Wee::Session
     context.response['Content-Type'] = 'text/html'
 
     rctx = Wee::RenderingContext.new(context, Wee::HtmlWriter.new(context.response.body))
-    renderer = Wee::HtmlCanvas.new(rctx)
-    @root_component.render_on(renderer)
-    renderer.close
+    @root_component.render_chain(rctx)
   end
 
   def create_new_page_id

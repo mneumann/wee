@@ -42,7 +42,6 @@ class Wee::Application
     context.session = session
     context.page_id = hash['p']
     context.handler_id = hash['h']
-    context.resource_id = hash['r']
     session.handle_request(context)
   end
 
@@ -53,15 +52,6 @@ class Wee::Application
       ['s', session_id].join(':'), 
       ['p', page_id].join(':'),
       ['h', handler_id].join(':')
-    ].join('/')
-  end
-
-  def gen_resource_url(session_id, page_id, resource_id)
-    [
-      self.path, 
-      ['s', session_id].join(':'), 
-      ['p', page_id].join(':'),
-      ['r', resource_id].join(':')
     ].join('/')
   end
 

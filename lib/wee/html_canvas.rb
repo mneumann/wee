@@ -111,7 +111,8 @@ class HtmlCanvas < Canvas
   end
 
   def render(obj)
-    obj.render_on(self)
+    self.close
+    obj.render_chain(self.context)
     nil
   end
 
@@ -275,7 +276,7 @@ class Brush::TextInputTag < Brush::InputTag
     ctx = @canvas.context.context
     obj ||= @canvas.current_component
 
-    name(ctx.handler_registry.handler_id_for_input(obj, act))
+    name(ctx.callback_registry.register(Wee::MethodCallback[obj, act], :input))
   end
 end
 
@@ -290,7 +291,7 @@ class Brush::SubmitButtonTag < Brush::InputTag
     ctx = @canvas.context.context
     obj = @canvas.current_component
 
-    name(ctx.handler_registry.handler_id_for_action(Wee::ActionHandler[obj, act, *args]))
+    name(ctx.callback_registry.register(Wee::MethodCallback[obj, act, *args], :action))
   end
 end
 
@@ -317,7 +318,7 @@ module Brush::ActionMixin
     ctx = @canvas.context.context
     obj = @canvas.current_component
     href = ctx.application.gen_handler_url(ctx.session_id, ctx.page_id, 
-           act ? ctx.handler_registry.handler_id_for_action(Wee::ActionHandler[obj, act, *args]) : '')
+           act ? ctx.callback_registry.register(Wee::MethodCallback[obj, act, *args], :action) : '')
     __action(href)
   end
 end
