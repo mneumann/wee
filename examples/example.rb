@@ -137,7 +137,6 @@ class MainPage < Wee::Component
     @arr = []
     session.register_object_for_backtracking(@arr)
     session.register_object_for_backtracking(@text)
-    session.register_object_for_backtracking(@decoration)
   end
 
   attr_accessor :text

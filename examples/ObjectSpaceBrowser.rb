@@ -75,7 +75,6 @@ module ObjectSpaceBrowser
     def initialize(instance)
       super()
       @instance = instance
-      session.register_object_for_backtracking(@decoration)
     end
 
     def choose(instance)
