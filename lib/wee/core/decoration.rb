@@ -33,6 +33,15 @@ class Wee::Decoration < Wee::Presenter
 
   attr_accessor :owner   
 
+  # Is this decoration a global or a local one? By default all decorations are
+  # local unless this method is overwritten.
+  #
+  # A global decoration is added in front of the decoration chain, a local
+  # decoration is added in front of all other local decorations but after all
+  # global decorations.
+
+  def global?() false end
+
   # Forwards method call to the next decoration in the chain.
 
   def process_callbacks(callback_stream)

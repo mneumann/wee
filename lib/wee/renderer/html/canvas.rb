@@ -42,12 +42,21 @@ class HtmlCanvas < Canvas
     @document = rendering_context.document
   end
 
-  def bold(*args, &block)
-    handle(Brush::GenericTagBrush.new("b"), *args, &block)
-  end
-
   def method_missing(id, *args, &block)
     handle(Brush::GenericTagBrush.new(id.to_s), *args, &block)
+  end
+
+  def url_for_callback(symbol=nil, &block)
+    raise ArgumentError if symbol and block
+    block = self.current_component.method(symbol) unless block
+    req = self.rendering_context.request
+    url = req.build_url(req.request_handler_id, req.page_id, register_callback(:action, &block))
+    return url
+  end
+
+  def register_callback(type, &block)
+    raise ArgumentError, "no callback block given" if block.nil?
+    self.rendering_context.callbacks.register_for(self.current_component, type, &block)
   end
 
   def table(*args, &block)
@@ -98,6 +107,10 @@ class HtmlCanvas < Canvas
     handle(Wee::Brush::ImageButtonTag.new, *args, &block)
   end
 
+  def file_upload(*args, &block)
+    handle(Wee::Brush::FileUploadTag.new, *args, &block)
+  end
+
   def page(*args, &block)
     handle(Brush::Page.new, *args, &block)
   end 
@@ -108,6 +121,14 @@ class HtmlCanvas < Canvas
 
   def space(n=1)
     set_brush(Brush::GenericTextBrush.new("&nbsp;"*n))
+  end
+
+  def bold(*args, &block)
+    handle(Brush::GenericTagBrush.new("b"), *args, &block)
+  end
+
+  def paragraph
+    set_brush(Brush::GenericTagBrush.new("p"))
   end
 
   def break

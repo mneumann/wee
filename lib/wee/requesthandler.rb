@@ -70,6 +70,7 @@ class Wee::RequestHandler
  
   def initialize
     @last_access = @creation_time = Time.now 
+    @expire_after = 30*60                  # The default is 30 minutes of inactivity
     @request_count = 0
     @running = true
   end

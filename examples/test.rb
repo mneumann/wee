@@ -1,14 +1,16 @@
 $LOAD_PATH.unshift << "../lib"
 require 'wee'
-require 'wee/webrick'
 require 'wee/utils/cache'
-
 
 class Counter < Wee::Component
   def initialize(cnt)
     super()
     @cnt = cnt 
-    session.register_object_for_backtracking(self)
+  end
+
+  def backtrack_state(snap)
+    super
+    snap.add(self)
   end
 
   def dec
@@ -20,9 +22,9 @@ class Counter < Wee::Component
   end
 
   def render
-    r.anchor.action(:dec).with("--")
+    r.anchor.callback(:dec).with("--")
     r.space; r.text(@cnt.to_s); r.space 
-    r.anchor.action(:inc).with("++")
+    r.anchor.callback(:inc).with("++")
   end
 end
 
@@ -45,22 +47,17 @@ class MySession < Wee::Session
     super do
       self.root_component = MainPage.new
       self.page_store = Wee::Utils::LRUCache.new(10) # backtrack up to 10 pages
+      self.expire_after = 60
     end
   end
 end
 
 if __FILE__ == $0
-  DUMP = 'dump'
-
-  if File.exists?(DUMP)
-    Wee::Application.load_from_disk(DUMP)
-  else
-    Wee::Application.new {|app|
-      app.name = 'Counter'
-      app.path = '/app'
-      app.session_class = MySession
-      app.session_store = Wee::Utils::LRUCache.new(1000) # handle up to 1000 sessions
-      app.dumpfile = DUMP
-    }
-  end.start
+  app = Wee::Application.new {|app|
+    app.default_request_handler { MySession.new }
+    app.id_generator = Wee::SimpleIdGenerator.new(rand(1_000_000))
+    app.max_request_handlers = 2
+  }
+  require 'wee/adaptors/webrick'
+  Wee::WEBrickAdaptor.register('/app' => app).start
 end

@@ -1,6 +1,5 @@
 $LOAD_PATH.unshift << "../lib"
 require 'wee'
-require 'wee/utils/cache'
 require 'window'
 
 class Counter < Wee::Component
@@ -203,21 +202,8 @@ class MainPage < Wee::Component
   end
 end
 
-class MySession < Wee::Session
-  def initialize
-    super do
-      self.root_component = MainPage.new
-      self.page_store = Wee::Utils::LRUCache.new(10) # backtrack up to 10 pages
-    end
-  end
-end
-
 if __FILE__ == $0
-  app = Wee::Application.new {|app|
-    app.default_request_handler { MySession.new }
-    app.id_generator = Wee::SimpleIdGenerator.new(rand(1_000_000))
-  }
-  
   require 'wee/adaptors/webrick' 
-  Wee::WEBrickAdaptor.register('/app' => app).start 
+  require 'wee/utils/helper'
+  Wee::WEBrickAdaptor.register('/app' => Wee::Helper.app_for(MainPage)).start 
 end

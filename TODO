@@ -1,3 +1,9 @@
+* req-handler gc interval
+
+* use LiteralMethod object instead of block if callback(:method_name) is given
+
+* log requests
+
 * call method #backtrack from backtrack_state. you don't need to call super for #backtrack (at least for direct subclasses of Component).
 * call method #setup from initialize. same reason as for #backtrack.  
 

@@ -15,6 +15,7 @@ require 'webrick'
 #   Wee::WEBrickAdaptor.
 #     register('/app' => application).
 #     register('/cnt' => application2).
+#     mount('/', WEBrick::HTTPServlet::FileHandler, '.').
 #     start(:Port => 2000)
 #
 
@@ -48,7 +49,8 @@ class Wee::WEBrickAdaptor < WEBrick::HTTPServlet::AbstractServlet
     self
   end
 
-  def mount(*args, &block)
+  # Convenience method
+  def self.mount(*args, &block)
     @mounts ||= []
     @mounts << [args, block]
     self

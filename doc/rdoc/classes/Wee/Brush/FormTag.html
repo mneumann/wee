@@ -86,10 +86,11 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000080">__set_url</a>&nbsp;&nbsp;
-      <a href="#M000079">action</a>&nbsp;&nbsp;
-      <a href="#M000078">new</a>&nbsp;&nbsp;
-      <a href="#M000081">with</a>&nbsp;&nbsp;
+      <a href="#M000086">__set_url</a>&nbsp;&nbsp;
+      <a href="#M000084">action</a>&nbsp;&nbsp;
+      <a href="#M000085">enctype</a>&nbsp;&nbsp;
+      <a href="#M000083">new</a>&nbsp;&nbsp;
+      <a href="#M000087">with</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -118,21 +119,21 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000078" class="method-detail">
-        <a name="M000078"></a>
+      <div id="method-M000083" class="method-detail">
+        <a name="M000083"></a>
 
         <div class="method-heading">
-          <a href="#M000078" class="method-signature">
+          <a href="#M000083" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000078-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000078-source">
+            onclick="toggleCode('M000083-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000083-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 363</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 356</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
     <span class="ruby-keyword kw">super</span>(<span class="ruby-value str">'form'</span>)
     <span class="ruby-ivar">@attributes</span>[<span class="ruby-value str">'method'</span>] = <span class="ruby-value str">'POST'</span>
@@ -144,8 +145,8 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000080" class="method-detail">
-        <a name="M000080"></a>
+      <div id="method-M000086" class="method-detail">
+        <a name="M000086"></a>
 
         <div class="method-heading">
           <span class="method-name">__set_url</span><span class="method-args">(href)</span>
@@ -153,26 +154,26 @@
       
         <div class="method-description">
           <p>
-Alias for <a href="FormTag.html#M000079">action</a>
+Alias for <a href="FormTag.html#M000084">action</a>
 </p>
         </div>
       </div>
 
-      <div id="method-M000079" class="method-detail">
-        <a name="M000079"></a>
+      <div id="method-M000084" class="method-detail">
+        <a name="M000084"></a>
 
         <div class="method-heading">
-          <a href="#M000079" class="method-signature">
+          <a href="#M000084" class="method-signature">
           <span class="method-name">action</span><span class="method-args">(href)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000079-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000079-source">
+            onclick="toggleCode('M000084-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000084-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 368</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 361</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">action</span>(<span class="ruby-identifier">href</span>)
     <span class="ruby-ivar">@attributes</span>[<span class="ruby-value str">'action'</span>] = <span class="ruby-identifier">href</span> 
     <span class="ruby-keyword kw">self</span>
@@ -182,21 +183,45 @@ Alias for <a href="FormTag.html#M000079">action</a>
         </div>
       </div>
 
-      <div id="method-M000081" class="method-detail">
-        <a name="M000081"></a>
+      <div id="method-M000085" class="method-detail">
+        <a name="M000085"></a>
 
         <div class="method-heading">
-          <a href="#M000081" class="method-signature">
+          <a href="#M000085" class="method-signature">
+          <span class="method-name">enctype</span><span class="method-args">(typ)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000085-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000085-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 366</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">enctype</span>(<span class="ruby-identifier">typ</span>)
+    <span class="ruby-ivar">@attributes</span>[<span class="ruby-value str">'enctype'</span>] = <span class="ruby-identifier">typ</span>
+    <span class="ruby-keyword kw">self</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000087" class="method-detail">
+        <a name="M000087"></a>
+
+        <div class="method-heading">
+          <a href="#M000087" class="method-signature">
           <span class="method-name">with</span><span class="method-args">(*args, &amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000081-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000081-source">
+            onclick="toggleCode('M000087-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000087-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 375</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 373</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-comment cmt"># If no action was specified, use a dummy one.</span>
     <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@attributes</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value str">'action'</span>)

@@ -146,11 +146,35 @@ class Wee::Component < Wee::Presenter
     end
   end
   
-  # Adds decoration +d+ in front of the decoration chain.
+  # Adds decoration +d+ to the decoration chain.
+  #
+  # A global decoration is added in front of the decoration chain, a local
+  # decoration is added in front of all other local decorations but after all
+  # global decorations.
 
   def add_decoration(d)
-    d.owner = self.decoration
-    self.decoration = d
+    if d.global?
+      d.owner = self.decoration
+      self.decoration = d
+    else
+      last_global = nil
+      each_decoration {|i| 
+        if i.global?
+          last_global = i
+        else
+          break
+        end
+      }
+      if last_global.nil?
+        # no global decorations specified -> add in front
+        d.owner = self.decoration
+        self.decoration = d
+      else
+        # add after last_global
+        d.owner = last_global.owner
+        last_global.owner = d 
+      end
+    end
   end
 
   # Remove decoration +d+ from the decoration chain. 

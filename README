@@ -16,7 +16,6 @@ things.
 Known Bugs:
 
 * Continuations leak memory!
-* Sessions get never reclaimed (easy to fix). 
 
 == Introduction
 

@@ -1,5 +1,6 @@
 require 'wee/page'
 require 'thread'
+require 'timeout'
 
 class Wee::Session < Wee::RequestHandler
   attr_accessor :root_component, :page_store
@@ -51,7 +52,25 @@ class Wee::Session < Wee::RequestHandler
     Thread.new {
       Thread.current[:wee_session] = self
       loop {
-        @context = @in_queue.pop
+        @context = nil
+
+        # get a request, check whether this session is alive after every 5
+        # seconds.
+        while @context.nil?
+          begin
+            Timeout.timeout(5) {
+              @context = @in_queue.pop
+            }
+          rescue Timeout::Error
+            break unless alive?
+          end
+        end
+
+        # abort thread if no longer alive
+        break if not alive?
+
+        raise "invalid request" if @context.nil?
+
         begin
           process_request
         rescue Exception => exn
@@ -59,6 +78,7 @@ class Wee::Session < Wee::RequestHandler
         end
         @out_queue.push(@context)
       }
+      p "session loop terminated" if $DEBUG
     }
   end
 

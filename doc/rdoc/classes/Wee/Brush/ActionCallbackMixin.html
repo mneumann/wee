@@ -80,7 +80,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000075">callback</a>&nbsp;&nbsp;
+      <a href="#M000081">callback</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -88,13 +88,6 @@
 
 
     <!-- if includes -->
-    <div id="includes">
-      <h3 class="section-bar">Included Modules</h3>
-
-      <div id="includes-list">
-        <span class="include-name"><a href="CallbackMixin.html">Brush::CallbackMixin</a></span>
-      </div>
-    </div>
 
     <div id="section">
 
@@ -109,25 +102,25 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000075" class="method-detail">
-        <a name="M000075"></a>
+      <div id="method-M000081" class="method-detail">
+        <a name="M000081"></a>
 
         <div class="method-heading">
-          <a href="#M000075" class="method-signature">
+          <a href="#M000081" class="method-signature">
           <span class="method-name">callback</span><span class="method-args">(symbol=nil, &amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000075-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000075-source">
+            onclick="toggleCode('M000081-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000081-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 178</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 165</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">callback</span>(<span class="ruby-identifier">symbol</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">symbol</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">block</span>
     <span class="ruby-identifier">block</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">current_component</span>.<span class="ruby-identifier">method</span>(<span class="ruby-identifier">symbol</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block</span>
-    <span class="ruby-identifier">name</span>(<span class="ruby-identifier">register_callback</span>(<span class="ruby-identifier">:action</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>))
+    <span class="ruby-identifier">name</span>(<span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">register_callback</span>(<span class="ruby-identifier">:action</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>))
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>

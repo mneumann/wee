@@ -149,51 +149,32 @@ class Brush::InputTag < Brush::GenericTagBrush
   end
 end
 
-module Brush::CallbackMixin
-  private 
-
-  def register_callback(type, &block)
-    raise ArgumentError, "no callback block given" if block.nil?
-    @canvas.rendering_context.callbacks.register_for(@canvas.current_component, type, &block)
-  end
-end
-
 module Brush::InputCallbackMixin
-  include Brush::CallbackMixin
-
   public
 
   def callback(symbol=nil, &block)
     raise ArgumentError if symbol and block
     block = @canvas.current_component.method(symbol) unless block
-    name(register_callback(:input, &block))
+    name(@canvas.register_callback(:input, &block))
   end
 end
 
 module Brush::ActionCallbackMixin
-  include Brush::CallbackMixin
-
   public
 
   def callback(symbol=nil, &block)
     raise ArgumentError if symbol and block
     block = @canvas.current_component.method(symbol) unless block
-    name(register_callback(:action, &block))
+    name(@canvas.register_callback(:action, &block))
   end
 end
 
 # The callback id is listed in the URL (not as a form-data field)
 module Brush::ActionURLCallbackMixin
-  include Brush::CallbackMixin
-
   public
 
   def callback(symbol=nil, &block)
-    raise ArgumentError if symbol and block
-    block = @canvas.current_component.method(symbol) unless block
-    req = @canvas.rendering_context.request
-    url = req.build_url(req.request_handler_id, req.page_id, register_callback(:action, &block))
-    __set_url(url)
+    __set_url(@canvas.url_for_callback(symbol, &block))
   end
 end
 
@@ -310,6 +291,17 @@ class Brush::TextInputTag < Brush::InputTag
   end
 end
 
+class Wee::Brush::FileUploadTag < Wee::Brush::InputTag
+  include Brush::InputCallbackMixin
+
+  def initialize
+    super
+    type('file')
+  end
+end
+
+
+
 class Brush::SubmitButtonTag < Brush::InputTag
   include Brush::ActionCallbackMixin
 
@@ -327,7 +319,7 @@ end
 # generate a "name" fields in the request, to make this image-button work. 
 
 class Wee::Brush::ImageButtonTag < Wee::Brush::InputTag
-  include Wee::Brush::ActionCallbackMixin
+  include Brush::ActionCallbackMixin
 
   def initialize
     super
@@ -338,6 +330,7 @@ class Wee::Brush::ImageButtonTag < Wee::Brush::InputTag
     raise "specified value will not be used in the request"
   end
 end
+
 
 class Brush::TableDataTag < Brush::GenericTagBrush
   def initialize
@@ -367,6 +360,11 @@ class Brush::FormTag < Brush::GenericTagBrush
 
   def action(href)
     @attributes['action'] = href 
+    self
+  end
+
+  def enctype(typ)
+    @attributes['enctype'] = typ
     self
   end
 

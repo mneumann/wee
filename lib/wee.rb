@@ -1,5 +1,5 @@
 module Wee
-  Version = "0.3.1"
+  Version = "0.4.0"
 end
 
 require 'wee/core'
@@ -11,6 +11,7 @@ require 'wee/request'
 require 'wee/response'
 require 'wee/session'
 
+require 'wee/components'
 require 'wee/snapshot_ext'
 
 require 'wee/renderer/html/writer'
