@@ -51,7 +51,6 @@ class Wee::RequestHandler
   end
 
   def handle_request(context)
-  ensure
     @request_count += 1
     @last_access = Time.now
   end

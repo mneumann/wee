@@ -138,7 +138,7 @@ class Wee::Session < Wee::RequestHandler
   def respond(context)
     context.response = Wee::GenericResponse.new('text/html', '')
 
-    rctx = Wee::RenderingContext.new(context, Wee::HtmlWriter.new(context.response.content))
+    rctx = Wee::RenderingContext.new(context.callbacks, Wee::HtmlWriter.new(context.response.content))
     @root_component.render_chain(rctx)
   end
 

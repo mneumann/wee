@@ -9,4 +9,4 @@ class Wee::Context
   end
 end
 
-class Wee::RenderingContext < Struct.new(:context, :document); end
+class Wee::RenderingContext < Struct.new(:callbacks, :document); end

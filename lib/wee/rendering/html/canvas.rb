@@ -32,12 +32,12 @@ class Canvas
 end
 
 class HtmlCanvas < Canvas
-  attr_reader :context  # the current Wee::RenderingContext
+  attr_reader :rendering_context  # the current Wee::RenderingContext
   attr_reader :document
   attr_accessor :current_component
 
   def initialize(rendering_context)
-    @context = rendering_context
+    @rendering_context = rendering_context
     @document = rendering_context.document
   end
 
@@ -124,7 +124,7 @@ class HtmlCanvas < Canvas
 
   def render(obj)
     self.close
-    obj.render_chain(@context)
+    obj.render_chain(@rendering_context)
     nil
   end
 
@@ -274,10 +274,8 @@ end
 
 module Brush::AssignMixin
   def assign(act, obj=nil)
-    ctx = @canvas.context.context
     obj ||= @canvas.current_component
-
-    name( ctx.callbacks.register_for(obj, :input) {|val| obj.send(act, val)} )
+    name( @canvas.rendering_context.callbacks.register_for(obj, :input) {|val| obj.send(act, val)} )
   end
 end
 
@@ -378,10 +376,8 @@ class Brush::SubmitButtonTag < Brush::InputTag
 
   # TODO: action for another object
   def action(act, *args)
-    ctx = @canvas.context.context
     obj = @canvas.current_component
-
-    name( ctx.callbacks.register_for(obj, :action) { obj.send(act, *args) } )
+    name( @canvas.rendering_context.callbacks.register_for(obj, :action) { obj.send(act, *args) } )
   end
 end
 
@@ -405,9 +401,8 @@ end
 module Brush::ActionMixin
   # TODO: action for another object
   def action(act, *args)
-    ctx = @canvas.context.context
     obj = @canvas.current_component
-    href = ctx.application.gen_handler_url(ctx.session_id, ctx.page_id, 
+    href = @canvas.rendering_context.application.gen_handler_url(ctx.session_id, ctx.page_id, 
            act ? ( ctx.callbacks.register_for(obj, :action) { obj.send(act, *args) }) : '' )
     __action(href)
   end

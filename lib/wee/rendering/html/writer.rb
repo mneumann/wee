@@ -1,5 +1,22 @@
 require 'cgi'
 
+# A class used to write out HTML documents easily.
+#
+# Usage:
+#
+#   w = Wee::HtmlWriter.new(doc='')
+#   w.start_tag('html')
+#   w.start_tag('body')
+#   w.start_tag('a', 'href' => 'http://...')
+#   w.text('link')
+#   w.end_tag('a')
+#   w.end_tag('body')
+#   w.end_tag('html')
+#
+#   p w.valid?   # => true
+#   p doc        # => '<html><body><a href="http://...">link</a></body></html>'
+#
+
 class Wee::HtmlWriter
   attr_accessor :port
 
@@ -52,32 +69,10 @@ class Wee::HtmlWriter
   alias << text
 
   def encode_text(str)
-    if @open_start_tag
-      @port << ">"
-      @open_start_tag = false
-    end
-
-    @port << CGI.escapeHTML(str.to_s)
-
-    self
+    text(CGI.escapeHTML(str.to_s))
   end
 
   def valid?
     @tag_stack.empty?
   end
-
-end
-
-if __FILE__ == $0
-  doc = ''
-  w = Wee::HtmlWriter.new(doc)
-
-  w.start_tag('html')
-
-  w.start_tag('blah')
-  w.end_tag('blah')
-
-  w.end_tag('html')
-  p w.valid?
-  p doc 
 end
