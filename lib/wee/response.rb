@@ -63,10 +63,15 @@ end
 class Wee::ErrorResponse < Wee::Response
   def initialize(exception)
     super('text/html', '')
-    @content << "<html><head><title>Error occured</title></head><body>"
-    @content << "<p>#{ exception }"
-    @content << exception.backtrace.join("<br/>")
-    @content << "</p>"
-    @content << "</body></html>"
+    @exception = exception
+    render(@content)
+  end
+
+  def render(c)
+    c << "<html><head><title>Error occured</title></head><body>"
+    c << "<p>#{ @exception }"
+    c << @exception.backtrace.join("<br/>")
+    c << "</p>"
+    c << "</body></html>"
   end
 end

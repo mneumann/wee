@@ -48,10 +48,13 @@ class Wee::Session < Wee::RequestHandler
     Thread.abort_on_exception = true
     Thread.new {
       Thread.current[:wee_session] = self
-
       loop {
         @context = @in_queue.pop
-        process_request
+        begin
+          process_request
+        rescue Exception => exn
+          @context.response = Wee::ErrorResponse.new(exn) 
+        end
         @out_queue.push(@context)
       }
     }
