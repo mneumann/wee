@@ -48,15 +48,15 @@ class Wee::PagelessSession < Wee::Session
         # We process the request and invoke actions/inputs. Then we generate a
         # new page view. 
 
-        callback_stream = Wee::CallbackStream.new(self.callbacks, @context.request.fields) 
+        @callback_stream = Wee::CallbackStream.new(self.callbacks, @context.request.fields) 
 
-        if callback_stream.all_of_type(:action).size > 1 
+        if @callback_stream.all_of_type(:action).size > 1 
           raise "Not allowed to specify more than one action callback"
         end
 
         live_update_response = catch(:wee_live_update) {
           catch(:wee_back_to_session) {
-            @root_component.process_callbacks_chain(callback_stream)
+            @root_component.process_callbacks_chain(@callback_stream)
           }
           nil
         }

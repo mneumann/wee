@@ -1,3 +1,9 @@
+Thu Mar  3 12:31:15 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* wee/session.rb, wee/pageless/session.rb: new methods 
+	  pre_respond_hook, post_callbacks_hook, especially to make pretty-URLs
+	  as suggested by Joao Pedrosa working.
+
 Thu Mar  3 12:11:05 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* wee/response.rb (Wee::Response): Use the passed mime_type as

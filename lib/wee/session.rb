@@ -107,18 +107,20 @@ class Wee::Session < Wee::RequestHandler
         # We process the request and invoke actions/inputs. Then we generate a
         # new page view. 
 
-        callback_stream = Wee::CallbackStream.new(@page.callbacks, @context.request.fields) 
+        @callback_stream = Wee::CallbackStream.new(@page.callbacks, @context.request.fields) 
 
-        if callback_stream.all_of_type(:action).size > 1 
+        if @callback_stream.all_of_type(:action).size > 1 
           raise "Not allowed to specify more than one action callback"
         end
 
         live_update_response = catch(:wee_live_update) {
           catch(:wee_back_to_session) {
-            @root_component.process_callbacks_chain(callback_stream)
+            @root_component.process_callbacks_chain(@callback_stream)
           }
           nil
         }
+
+        post_callbacks_hook
 
         if live_update_response
           # replace existing page with new snapshot
@@ -187,10 +189,19 @@ class Wee::Session < Wee::RequestHandler
   end
 
   def respond(context, callbacks)
+    pre_respond_hook
     set_response(context, Wee::GenericResponse.new('text/html', ''))
 
     rctx = Wee::RenderingContext.new(context.request, context.response, callbacks, Wee::HtmlWriter.new(context.response.content))
     @root_component.do_render_chain(rctx)
+  end
+
+  private
+
+  def pre_respond_hook
+  end
+
+  def post_callbacks_hook
   end
 
 end
