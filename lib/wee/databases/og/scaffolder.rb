@@ -77,7 +77,7 @@ class OgScaffolder < Wee::Component
       :confirm_destroy, obj
   end
 
-  def confirm_destroy(confirmed, obj)
+  def confirm_destroy(obj, confirmed)
     obj.delete! if confirmed
   end
 
@@ -133,7 +133,7 @@ class OgScaffolder::Editor < Wee::Component
   def render_bool(prop)
     selected = [ get_value_of(prop) ? true : false ]
     r.select_list([true, false]).labels(["Yes", "No"]).selected(selected).
-      callback {|choosen| set_value_of(choosen.first, prop) }
+      callback {|choosen| set_value_of(prop, choosen.first) }
   end
 
   def render_buttons
@@ -159,7 +159,7 @@ class OgScaffolder::Editor < Wee::Component
     @domain_object.send(prop.symbol)
   end
 
-  def set_value_of(value, prop)
+  def set_value_of(prop, value)
     @domain_object.send(prop.symbol.to_s + "=", value)
   end
 

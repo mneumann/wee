@@ -1,5 +1,6 @@
 module Wee
-  Version = "0.5.0"
+  Version = "0.6.0"
+  LibPath = File.dirname(__FILE__)
 end
 
 require 'wee/core'

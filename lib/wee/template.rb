@@ -12,10 +12,8 @@ class Wee::Component
         basename = caller_path[0, caller_path.rindex(".rb")]
         ext = '.tpl'
 
-        if method == 'render'
-          basename + ext
-        elsif method =~ /^render_(.*)$/
-          basename + ext + "-" + $1
+        if method =~ /^render(.*)$/
+          basename + ext + $1.tr('_', '-')
         else
           raise ArgumentError
         end.inspect

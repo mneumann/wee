@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require 'wee'
 
 def usage
   puts <<-USAGE
@@ -8,12 +9,19 @@ NAME
 
 SYNOPSIS
      wee create [full path]
+     wee create-simple [full path]
+     wee create-og [full path]
 
 DESCRIPTION
      This will create a suggested directory structure as well as some
      files to get you quickly started running a simple Wee application.
      For further information have a look at the README file in the
      created directory.
+
+     "create-simple" is an alias for "create". "create-og" creates a
+     simple Wee application that uses a database and the 
+     Og (ObjectGraph) OR mapper.
+
 
 EXAMPLE
 
@@ -25,9 +33,13 @@ USAGE
   exit 1
 end
 
+require 'ftools'
+
+SKEL_DIR = File.join(Wee::LibPath, 'wee', 'skeleton')
+
 def run
   case command = ARGV[0] || usage()
-  when 'create'
+  when 'create', 'create-simple'
     path = ARGV[1] || usage()
     path = File.expand_path(path)
 
@@ -36,95 +48,53 @@ def run
       exit 1
     end
 
-    Dir.mkdir(path)
-    Dir.chdir(path) do
-      Dir.mkdir('components')
-      File.open('components/main.rb', 'w+') {|f| f << MAIN_COMPONENT }
-      File.open('run.rb', 'w+') {|f| f << RUN }
-      File.open('README', 'w+') {|f| f << README }
+    src = File.join(SKEL_DIR, 'simple')
+
+    File.makedirs path
+    File.makedirs File.join(path, 'components')
+
+    File.copy File.join(src, 'run.rb'), path, true
+    File.copy File.join(src, 'README'), path, true
+    File.copy File.join(src, 'components', 'main.rb'), File.join(path, 'components'), true
+
+  when 'create-og'
+
+    path = ARGV[1] || usage()
+    path = File.expand_path(path)
+
+    if File.exists?(path)
+      STDERR.puts "ERROR: Path #{ path } already exists! Aborting!"
+      exit 1
     end
+
+    src = File.join(SKEL_DIR, 'og')
+
+    File.makedirs path
+    File.makedirs File.join(path, 'components')
+    File.makedirs File.join(path, 'models')
+    File.makedirs File.join(path, 'conf')
+
+    File.copy File.join(src, 'run.rb'), path, true
+    File.copy File.join(src, 'README'), path, true
+    File.copy File.join(src, 'components', 'main.rb'), File.join(path, 'components'), true
+    File.copy File.join(src, 'models', 'recipe.rb'), File.join(path, 'models'), true
+
+    cfg = File.read(File.join(src, 'conf', 'db.rb'))
+    cfg = cfg.gsub('%%db%%', get_username).gsub('%%user%%', get_username)
+    File.open(File.join(path, 'conf', 'db.rb'), 'w+') {|f| f << cfg }
 
   else
     usage()
   end
 end
 
-########################################################
-
-MAIN_COMPONENT = <<EOS.strip + "\n"
-class Main < Wee::Component
-
-  def initialize
-    super()
-    # Put your own initialization code below...
+def get_username
+  begin
+    require 'etc'
+    Etc.getlogin
+  rescue LoadError
+    'xxx'
   end
-
-  # --------------------------------------------
-  # Rendering 
-  # --------------------------------------------
-
-  def render
-    r.anchor.callback(:click).with { r.h1("Welcome to Wee!") }
-    r.text "\#{ @clicks || 'No' } clicks"
-  end
-
-  # --------------------------------------------
-  # Actions 
-  # --------------------------------------------
-
-  def click
-    @clicks = (@clicks || 0) + 1
-  end
-
 end
-EOS
-
-RUN = <<EOS.strip + "\n"
-require 'wee'
-require 'wee/utils'
-require 'wee/adaptors/webrick'
-require 'components/main'
-
-app = Wee::Utils.app_for {
-  Main.new.add_decoration(Wee::PageDecoration.new('Wee'))
-}
-Wee::Utils::autoreload_glob('components/**/*.rb')
-Wee::WEBrickAdaptor.register('/app' => app).start
-EOS
-
-README = <<EOS.strip + "\n"
-= How to start this application
-
-If you have installed Wee via Rubygems, then:
-
-  ruby -rubygems run.rb
-
-Otherwise you can omit the -rubygems option:
-
-  ruby run.rb
-
-Now point your browser to http://127.0.0.1/app
-
-= Where do I get more information?
-
-* Read the documentation here:
-
-    http://ntecs.de/viewcvs/viewcvs/*checkout*/Wee/trunk/doc/rdoc/index.html
-
-* Have a look at the examples in the examples/ directory. If you've installed
-  Wee via Rubygems, then you'll find the examples this way:
-
-    cd `gem environment gemdir`
-    cd gems/wee-VERSION
-    cd examples
-
-* Post your questions on ruby-talk
-
-* Post your questions to wee-talk:
-
-    http://rubyforge.org/mailman/listinfo/wee-talk
-
-* Ask me personally (mneumann@ntecs.de).
-EOS
 
 run()
