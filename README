@@ -1,6 +1,136 @@
 = Wee Web Framework
 
-Copyright (c) 2004 by Michael Neumann (mneumann@ntecs.de)
+== Copyright and License
+
+Copyright (c) 2004 by Michael Neumann (mneumann@ntecs.de).
+
+Released under the same terms of license as Ruby. Some files under directory
+<tt>examples/</tt> might be copyrighted by third parties and licensed under
+differen terms.
+
+== Introduction
+
+Wee is a light-weight, very high-level and modern web-framework that makes
+<b>W</b>eb <b>e</b>ngineering <b>e</b>asy. It mainly inherits many ideas and
+features from Seaside2[http://beta4.com/seaside2], but was written from scratch
+without ever looking at the Seaside (or any other) sources. All code was
+developed from ideas and lots of discussions with Avi Bryant. 
+
+== Features
+
+=== Reusable components
+
+Wee has _real_ components, which are like widgets in a GUI. Once written, you
+can use them everywhere. They are completely independent and do not interfere
+with other components. Components encapsulate state, a view and actions. Of
+course you can use an external model or use templates for rendering.
+
+=== Continuation based
+
+This is also known as _modal_. You can write code like the one shown below
+(taken from one of Avi's emails) where each method displays a new page:
+
+  def checkout
+    billing = getAddress("Billing Address")
+    if useSeparateShippingAddress()
+      shipping = getAddress("Shipping Address")
+    else
+      shipping = billing
+    end
+    payment = getPaymentInfo()
+    showConfirmation(billing, shipping, payment)
+  end 
+
+Try to implement the same in a non-continuation based framework and show me
+your code... ;-)
+
+=== Backtracking
+
+See the <i>What is backtracking?</i> section below. In short, backtracking lets
+the browser's back and forward-button play well together with your application.
+
+=== Clean and concise
+
+Wee is well thought out, is written in *and* supports clean and concise code.
+Furthermore I think most parts are now very well documented.
+
+=== Abstract core
+
+The core of Wee is completely independent of both HTTP and HTML. That means,
+with little effort, you should be able to render other formats than HTML and
+use other communication protocols like SOAP, XML-RPC, Email, GUI or Console.
+
+=== Templating-independent 
+
+Wee does not depend on a special templating-engine. You can use a different
+templating engine for each component if you want. 
+
+=== Powerful programmatic HTML generation 
+
+Wee ships with an easy to use and very powerful programmatic html-generation
+library. For example you can create a select list easily with this piece of
+code:
+
+   # select an object from these items
+   items = [1, 2, 3, 4]
+
+   # the labels shown to the user
+   labels = items.map {|i| i.to_s}
+
+   # render it
+   r.select_list(items).labels(labels).callback {|choosen| p choosen}
+
+   # render a multi-select list, with objects 2 and 4 selected
+   r.select_list(items).multi.labels(labels).selected([2,4])
+
+The callback is called with the selected objects from the _items_ array.  Items
+can be any object, e.g. whole components:
+
+   labels = ["msg1", "msg2"]
+   items = labels.collect {|m| MessageBox.new(m)}
+   r.select_list(items).labels(labels).callback {|choosen| call choosen.first} 
+
+== Observations and Limitations
+
+* Due to using continuations for cross-component calls, it's impossible to
+  store a session to disk (at least in Ruby). This problem is partly addressed
+  by checkpointing provided by operating systems like
+  DragonFly[www.dragonflybsd.org]. But with this approach it's still impossible
+  to store sessions _selectively_ to disk. 
+
+* Each session runs in it's own (light-weigth) thread.
+
+== What is backtracking?
+
+If you want, you can make the back-button of your browser work correctly
+together with your web-application. Imagine you have a simple counter
+application, which shows the current count and two links _inc_ and _dec_ with
+which you can increase or decrease the current count. Starting with an inital
+count of 0, you increase the counter up to 8, then click three times the back
+button of your browser (now displays 5) and finally decrease by one, then the
+counter really shows the expected 4, instead of 7 (as clicking the back button
+does usually not send a HTTP request, and the last state of your application
+was 8).
+
+Only individual objects are backtracked, those of which you explicitly take a
+snapshot, not the whole component. That's the easiest (from an application
+programmers perspective) and most flexible way. And its fast and uses less
+memory.
+
+You can decide yourself whether you want infinite backtracking or only
+backtracking up to n pages, with whatever replacement strategy you want, least
+recently used (LRU), least frequently used (LFU) etc. 
+
+== Decorations
+
+Decorations are used to modify the look and behaviour of a component, without
+modifying the components tree. A component can have more than one decoration.
+This is implemented as a linked list of decorations (Wee::Decoration#owner
+points to the next decoration). Wee::Component#decoration points to the first
+decoration in the chain or to the component itself, if no decorations were
+specified. We actually use a Wee::ValueHolder for the <tt>@decoration</tt>
+instance variable of class Wee::Component to be able to easily backtrack it
+(required if you want to "undo" component calls).
 
 == The anatomy of a request/response cycle
 
@@ -105,15 +235,4 @@ In this order:
 * Wee::Decoration
 * Wee::Delegate
 * Wee::AnswerDecoration
-
-== Decorations
-
-Decorations are used to modify the look and behaviour of a component, without
-modifying the components tree. A component can have more than one decoration.
-This is implemented as a linked list of decorations (Wee::Decoration#owner
-points to the next decoration), where Wee::Component#decoration points to the
-first decoration in the chain or to the component itself, if no decorations
-were specified. We actually use a Wee::ValueHolder for the <tt>@decoration</tt>
-instance variable of class Component to be able to easily backtrack it
-(required if you want to "undo" component calls).
 
