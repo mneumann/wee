@@ -119,6 +119,29 @@ class Wee::Presenter
     throw :wee_send_response, response
   end
 
+  # Call the block inside a rendering environment, then send the response prematurely.
+
+  def send_render_response(&block)
+    # Generate a response
+    response = Wee::GenericResponse.new('text/html', '')
+
+    # Get the current context we are in
+    context = session.current_context
+
+    # A rendering context is needed to use 'r' (if you want, you can simply
+    # omit this and just return the response with some html/xml filled in.
+    rendering_context = Wee::RenderingContext.new(
+      context.request, 
+      context.response, 
+      session.current_callbacks, 
+      Wee::HtmlWriter.new(response.content))
+
+    with_renderer_for(rendering_context, &block)
+
+    send_response(response)
+  end
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # :section: Properties
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

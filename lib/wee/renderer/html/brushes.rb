@@ -151,6 +151,12 @@ class Brush::GenericTagBrush < Brush
     onclick("javascript: document.location.href='#{ url }';")          
   end
 
+  def onclick_update(update_id, symbol=nil, *args, &block)
+    raise ArgumentError if symbol and block
+    url = @canvas.url_for_callback(to_callback(symbol, args, block))
+    onclick("javascript: new Ajax.Updater('#{ update_id }', '#{ url }', {method:'get'});")
+  end
+
   # This method construct the css-class attribute by looking up the property
   # from the current component.
 

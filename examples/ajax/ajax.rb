@@ -13,35 +13,15 @@ class AjaxTest < Wee::Component
       }
       r.body {
         r.h1 "Hello World from Wee!"
-        r.anchor.id('blah').onclick_update('blah') { do_live_update }.with('Halllllllooooo')
+        r.anchor.id('tag').onclick_update('tag', :update).with('Halllllllooooo')
       }
     }
   end
 
-  def render_live_update
-    r.text "Live-updates works! This is no. #{ @live_updates }"
-  end
-
-  def do_live_update
-    # generate a response
-    response = Wee::GenericResponse.new('text/plain', '')
-
-    # get the current context we are in
-    context = session.current_context
-
-    # a rendering context is needed to use 'r' (if you want, you can
-    # simply omit this and just return the response with some html/xml filled
-    # in.
-    rendering_context = Wee::RenderingContext.new(context.request, 
-      context.response, session.current_callbacks, 
-      Wee::HtmlWriter.new(response.content))
-
-    with_renderer_for(rendering_context) do 
-      # call your own render method for the live-update
-      render_live_update
-    end
-
-    send_response(response)
+  def update
+    send_render_response {
+      r.text "Live-updates works! This is no. #{ @live_updates += 1}" 
+    }
   end
 end
 

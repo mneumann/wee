@@ -3,6 +3,8 @@
  *
  *  Prototype is freely distributable under the terms of an MIT-style license. 
  *  For details, see http://prototype.conio.net/
+ *
+ *  Changes by Michael Neumann.
  */
 
 var Prototype = {
@@ -141,8 +143,8 @@ Ajax.Request.prototype = (new Ajax.Base()).extend({
     this.setOptions(options);
   
     try {
-      if (this.options.method == 'get')
-        url += '?' + this.options.parameters + '&_=';
+      /*if (this.options.method == 'get')
+        url += '?' + this.options.parameters; */
     
       this.transport.open(this.options.method, url, true);
       
@@ -158,7 +160,7 @@ Ajax.Request.prototype = (new Ajax.Base()).extend({
       }
       
       this.transport.send(this.options.method == 'post' ? 
-        this.options.parameters + '&_=' : null);
+        this.options.parameters : null);
                       
     } catch (e) {
     }    

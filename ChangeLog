@@ -1,3 +1,9 @@
+Mon Apr  4 18:45:28 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* examples/ajax/ajax.rb, examples/ajax/ajax.js,
+	lib/wee/core/presenter.rb, lib/wee/renderer/html/brushes.rb: Added minimal
+	Ajax update support.
+
 Mon Apr  4 14:32:34 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* lib/wee/abstractsession.rb, lib/wee/session.rb,
