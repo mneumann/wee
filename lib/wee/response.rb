@@ -6,6 +6,14 @@ class Wee::Response
   attr_accessor :status, :content
   attr_reader :header
 
+  def cookies?
+    @cookies
+  end
+
+  def cookies
+    @cookies ||= []   
+  end
+
   def initialize(mime_type = 'text/html', content='')
     @status = 200
     @header = DEFAULT_HEADER.dup
@@ -23,7 +31,6 @@ class Wee::Response
   def <<(str)
     @content << str
   end
-
 end
 
 class Wee::GenericResponse < Wee::Response

@@ -1,3 +1,14 @@
+Fri Jan 28 02:42:53 CET 2005	Michael Neumann	<mneumann@ntecs.de>
+
+	* Method Wee::WEBrickAdaptor.request_class added. This allows you to
+	  use a custom request class for your application or even a different
+	  one for each registered application. Also added cookie support.
+
+	* Added method Wee::Utils.autoreload_glob which is faster than
+	  #autoreload as it does not traverse the whole LOAD_PATH.
+
+	* Wee::Response: added cookies
+
 Fri Jan 28 02:32:30 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* Removed method Wee::Session#current_page and replaced it by
