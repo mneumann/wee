@@ -87,7 +87,7 @@ class Wee::Session < Wee::RequestHandler
 
       p @context.request.fields if $DEBUG
 
-      if @context.request.fields.empty?
+      if @context.request.render?
 
         # No action/inputs were specified -> render page
         #
@@ -178,7 +178,7 @@ class Wee::Session < Wee::RequestHandler
     new_page = create_page(snapshot || self.snapshot())
     @page_store[new_page_id] = new_page
     @snapshot_page_id = new_page_id 
-    redirect_url = context.request.build_url(context.request.request_handler_id, new_page_id)
+    redirect_url = context.request.build_url(:page_id => new_page_id)
     set_response(context, Wee::RedirectResponse.new(redirect_url))
   end
 

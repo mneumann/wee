@@ -1,3 +1,21 @@
+Sat Feb 26 17:12:35 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* wee/request.rb, test/test_request.rb, wee/pageless/request.rb,
+	  wee/session.rb, wee/pageless/session.rb,
+	  wee/renderer/html/canvas.rb, wee/renderer/html/brushes.rb:
+
+	  - request delimeter changed to /___/ (looks nicer)
+
+	  - refactored Request#build_url, which now takes a hash and
+	    remembers already specified values
+
+	  - A Request knows now itself whether it's a action or a render 
+	    request.
+
+	  - added Request#info attribute. This is a part of the URL that you
+	    can use for your own purposes. It is remembered across requests
+	    unless you overwrite its value.
+
 Sat Feb 26 14:22:34 CET 2005	Michael Neumann	<mneumann@ntecs.de>
 
 	* wee/core/presenter.rb, wee/session.rb, wee/application.rb: renamed @properties to @__properties

@@ -74,7 +74,7 @@ class Wee::PagelessSession < Wee::Session
   private
 
   def handle_new_page_view(context)
-    redirect_url = context.request.build_url(context.request.request_handler_id, nil)
+    redirect_url = context.request.build_url
     set_response(context, Wee::RedirectResponse.new(redirect_url))
   end
 

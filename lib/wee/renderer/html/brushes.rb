@@ -455,7 +455,7 @@ class Brush::FormTag < Brush::GenericTagBrush
     unless @attributes.has_key?('action')
       req = @canvas.rendering_context.request
       # TODO?
-      @attributes['action'] = req.build_url(req.request_handler_id, req.page_id) 
+      @attributes['action'] = req.build_url
     end
     super
   end
