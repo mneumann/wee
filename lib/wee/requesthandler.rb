@@ -30,6 +30,9 @@ class Wee::RequestHandler
 
 
   # Terminates the handler. 
+  #
+  # This will usually not immediatly terminate the handler from running, but
+  # further requests will not be answered.
 
   def teminate
     @running = false
@@ -39,14 +42,14 @@ class Wee::RequestHandler
 
   def alive?
     return false if not @running
-    return false if @max_requests and @request_count >= @max_requests
+    return @running = false if @max_requests and @request_count >= @max_requests
 
     now = Time.now
     inactivity = now - @last_access 
     lifetime = now - @creation_time
 
-    return false if @expire_after and inactivity > @expire_after 
-    return false if @max_lifetime and lifetime > @max_lifetime 
+    return @running = false if @expire_after and inactivity > @expire_after 
+    return @running = false if @max_lifetime and lifetime > @max_lifetime 
     return true
   end
 

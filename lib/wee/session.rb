@@ -87,6 +87,16 @@ class Wee::Session < Wee::RequestHandler
     page = Wee::Page.new(snapshot, Wee::CallbackRegistry.new(idgen))
   end
 
+  # Is called before process_request is invoked
+  # Can be used to setup e.g. a database connection.
+  def awake
+  end
+
+  # Is called after process_request is run
+  # Can be used to release e.g. a database connection.
+  def sleep
+  end
+
   def process_request
     if @context.request.page_id.nil?
 
