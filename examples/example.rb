@@ -143,6 +143,7 @@ class MainPage < Wee::Component
     children << (@val_inp = RegexpValidatedInput.new('Michael Neumann', /^\w+\s+\w+$/))
 
     @arr = []
+    @text = ""
   end
 
   def backtrack_state(snap)
@@ -171,7 +172,7 @@ class MainPage < Wee::Component
       end
 
       r.form do
-        r.text_input.assign(:text=)
+        r.text_input.value(@text).assign(:text=)
         r.submit_button.action(:add).value('add')
       end
 
@@ -179,17 +180,10 @@ class MainPage < Wee::Component
   end
 
   def add
-    call MessageBox.new("Do you really want to add '" + @text + "'?"), :add_confirm
+    if call(MessageBox.new("Do you really want to add '" + @text + "'?"))
+      @arr << @text if call(MessageBox.new("Do you really really really want to add '" + @text + "'?"))
+    end
   end
-
-  def add_confirm(res)
-    call MessageBox.new("Do you really really really want to add '" + @text + "'?"), :add_confirm2 if res
-  end
-
-  def add_confirm2(res)
-    @arr << @text if res
-  end
-
 end
 
 class MySession < Wee::Session

@@ -27,6 +27,8 @@ class Wee::Application
 
       session = @session_class.new
       session_id = gen_unique_session_id
+      session.id = session_id
+      session.application = self
       @session_store[session_id] = session
     end
 
@@ -42,6 +44,11 @@ class Wee::Application
     context.page_id = hash['p']
     context.handler_id = hash['h']
     session.handle_request(context)
+
+    # TODO: move into RequestHandler (Session)
+    res.status = context.response.status
+    res.body = context.response.content
+    context.response.header.each { |k,v| res.header[k] = v }
   end
 
   # TODO: UrlModel, which knows how to create and parse URLs

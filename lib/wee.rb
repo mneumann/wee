@@ -1,10 +1,13 @@
 module Wee; end
 
-require 'wee/context'
-require 'wee/application'
-require 'wee/session'
 
 require 'wee/core'
+
+require 'wee/context'
+require 'wee/application'
+require 'wee/requesthandler'
+require 'wee/response'
+require 'wee/session'
 
 require 'wee/snapshot_ext'
 

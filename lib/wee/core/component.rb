@@ -273,7 +273,7 @@ class Wee::Component < Wee::Presenter
 
     remove_decoration(delegate)
     component.remove_decoration(answer)
-    answer.on_answer = nil  # TODO
+    #answer.on_answer = nil  # TODO: is this a memory leak?
 
     return result
   end

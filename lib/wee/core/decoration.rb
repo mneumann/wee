@@ -49,7 +49,27 @@ class Wee::Decoration < Wee::Presenter
 
   def backtrack_state(snapshot)
     @owner.backtrack_state(snapshot)
+    snapshot.add(self)
   end
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # :section: Snapshot
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  # We have to save the @owner attribute to be able to correctly backtrack
+  # calls, as method Wee::Component#call modifies it in the call to
+  # <tt>component.remove_decoration(answer)</tt>. Removing the
+  # answer-decoration has the advantage to be able to call a component more
+  # than once!
+
+  def take_snapshot
+    @owner
+  end
+
+  def restore_snapshot(snap)
+    @owner = snap
+  end
+
 end
 
 # A Wee::Delegate breaks the decoration chain and forwards the methods
@@ -76,9 +96,11 @@ class Wee::Delegate < Wee::Decoration
   end
 
   # Forwards method to the corresponding *chain* method of the _delegate_
-  # component.
+  # component. We also take snapshots of all non-visible components, thus we
+  # follow the @owner (via super). 
 
   def backtrack_state(snapshot)
+    super
     @delegate.backtrack_state_chain(snapshot)
   end
 end
@@ -92,6 +114,8 @@ class Wee::AnswerDecoration < Wee::Decoration
 
   # When a component answers, <tt>on_answer.call(args)</tt> will be executed
   # (unless nil), where +args+ are the arguments passed to Component#answer.
+  # Note that no snapshot of on_answer is taken, so you should avoid modifying
+  # it!
 
   attr_accessor :on_answer
 

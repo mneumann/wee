@@ -1,7 +1,7 @@
 require 'wee/page'
 require 'thread'
 
-class Wee::Session
+class Wee::Session < Wee::RequestHandler
   attr_accessor :root_component, :page_store
 
   def self.current
@@ -11,11 +11,8 @@ class Wee::Session
   end
 
   def initialize(&block)
-    Thread.current['Wee::Session'] = self
-
     @idgen = Wee::SimpleIdGenerator.new
     @in_queue, @out_queue = SizedQueue.new(1), SizedQueue.new(1)
-
     @continuation_stack = []
 
     block.call(self)
@@ -26,8 +23,7 @@ class Wee::Session
     @initial_snapshot = snapshot()
 
     start_request_response_loop
-  ensure
-    Thread.current['Wee::Session'] = nil
+    super()
   end
 
   def snapshot
@@ -39,18 +35,14 @@ class Wee::Session
 
   # called by application to send the session a request
   def handle_request(context)
+    super
 
     # Send a request to the session. If the session is currently busy
     # processing another request, this will block. 
     @in_queue.push(context)
 
     # Wait for the response.
-    context = @out_queue.pop
-
-    # TODO: can't move into session?
-    if context.redirect
-      context.response.set_redirect(WEBrick::HTTPStatus::MovedPermanently, context.redirect)
-    end
+    return @out_queue.pop
   end
 
   def start_request_response_loop
@@ -140,14 +132,13 @@ class Wee::Session
     @page_store[new_page_id] = new_page
 
     redirect_url = "#{ context.application.path }/s:#{ context.session_id }/p:#{ new_page_id }"
-    context.redirect = redirect_url
+    context.response = Wee::RedirectResponse.new(redirect_url)
   end
 
   def respond(context)
-    context.response.status = 200
-    context.response['Content-Type'] = 'text/html'
+    context.response = Wee::GenericResponse.new('text/html', '')
 
-    rctx = Wee::RenderingContext.new(context, Wee::HtmlWriter.new(context.response.body))
+    rctx = Wee::RenderingContext.new(context, Wee::HtmlWriter.new(context.response.content))
     @root_component.render_chain(rctx)
   end
 
