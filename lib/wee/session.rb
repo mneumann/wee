@@ -72,7 +72,9 @@ class Wee::Session < Wee::RequestHandler
         raise "invalid request" if @context.nil?
 
         begin
+          awake
           process_request
+          sleep
         rescue Exception => exn
           @context.response = Wee::ErrorResponse.new(exn) 
         end

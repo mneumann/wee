@@ -1,5 +1,5 @@
 module Wee::Utils; end
 
-require 'utils/autoreload'
-require 'utils/cache'
-require 'utils/helper' 
+require 'wee/utils/autoreload'
+require 'wee/utils/cache'
+require 'wee/utils/helper' 

@@ -1,0 +1,9 @@
+	* added wee/databases/og.rb, which defines OgApplication and
+	  OgSession, as well as a generic (but still very limited)
+	  OgScaffolder. 
+
+	* Methods Wee::Session#sleep and #awake added, which are called before and
+	  after the request is handled. They can be used for example to setup
+	  and release a database connection.
+
+	* require 'wee/utils' will load all utility methods.

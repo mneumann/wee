@@ -302,7 +302,7 @@ class Wee::Component < Wee::Presenter
   # limitation without problems, but then there would be a difference between
   # those action callbacks that call other components and those that do not.  
 
-  def call(component, return_callback=:use_continuation)
+  def call(component, return_callback=:use_continuation, *additional_args)
     add_decoration(delegate = Wee::Delegate.new(component))
     component.add_decoration(answer = Wee::AnswerDecoration.new)
 
@@ -319,7 +319,7 @@ class Wee::Component < Wee::Presenter
       answer.on_answer = proc {|*args|
         remove_decoration(delegate)
         component.remove_decoration(answer)
-        return_callback.call(*args)
+        self.send(return_callback, *(args+additional_args))
       }
       throw :wee_back_to_session
     end

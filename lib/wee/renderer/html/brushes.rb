@@ -104,15 +104,31 @@ class Brush::TableRowTag < Brush::GenericTagBrush
     self
   end
 
-  def columns(*cols)
+  def columns(*cols, &block)
     with {
-      cols.each {|col| @canvas.table_data(col) }
+      cols.each {|col|
+        @canvas.table_data.with {
+          if block
+            block.call(col)
+          else
+            @canvas.text(col)
+          end
+        }
+      }
     } 
   end
 
-  def headings(*headers)
+  def headings(*headers, &block)
     with {
-      headers.each {|head| @canvas.table_heading(head) }
+      headers.each {|header|
+        @canvas.table_header.with {
+          if block
+            block.call(header)
+          else
+            @canvas.text(header)
+          end
+        }
+      }
     } 
   end
 

@@ -1,3 +1,17 @@
+* Session.new(application)
+
+* live updates
+
+* transactions
+
+* use it with databases 
+
+* diverting html-renderer
+
+* Add unit-tests for new global/local decorations
+
+* MessageBox: Buttons: OK_Cancel, YES_NO, Confirm  
+
 * req-handler gc interval
 
 * use LiteralMethod object instead of block if callback(:method_name) is given

@@ -204,6 +204,6 @@ end
 
 if __FILE__ == $0
   require 'wee/adaptors/webrick' 
-  require 'wee/utils/helper'
+  require 'wee/utils'
   Wee::WEBrickAdaptor.register('/app' => Wee::Helper.app_for(MainPage)).start 
 end
