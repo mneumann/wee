@@ -145,7 +145,7 @@
             onclick="toggleCode('M000086-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000086-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 226</span>
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 232</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">items</span>)
     <span class="ruby-keyword kw">super</span>(<span class="ruby-value str">'select'</span>)
     <span class="ruby-ivar">@items</span> = <span class="ruby-identifier">items</span>
@@ -162,7 +162,7 @@
 
         <div class="method-heading">
           <a href="#M000088" class="method-signature">
-          <span class="method-name">callback</span><span class="method-args">(&amp;block)</span>
+          <span class="method-name">callback</span><span class="method-args">(symbol=nil, &amp;block)</span>
           </a>
         </div>
       
@@ -171,8 +171,11 @@
             onclick="toggleCode('M000088-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000088-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 248</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">callback</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 254</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">callback</span>(<span class="ruby-identifier">symbol</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">symbol</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">block</span>
+    <span class="ruby-identifier">block</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">current_component</span>.<span class="ruby-identifier">method</span>(<span class="ruby-identifier">symbol</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block</span>
+
     <span class="ruby-ivar">@callback</span> = <span class="ruby-identifier">block</span>
     <span class="ruby-keyword kw">self</span>
   <span class="ruby-keyword kw">end</span>
@@ -195,7 +198,7 @@
             onclick="toggleCode('M000087-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000087-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 240</span>
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 246</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">multiple</span>
     <span class="ruby-ivar">@multiple</span> = <span class="ruby-keyword kw">true</span>
     <span class="ruby-ivar">@attributes</span>[<span class="ruby-value str">'multiple'</span>] = <span class="ruby-keyword kw">nil</span>
@@ -220,7 +223,7 @@
             onclick="toggleCode('M000089-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000089-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 253</span>
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 262</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with</span>
     <span class="ruby-ivar">@labels</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@items</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">i</span>.<span class="ruby-identifier">to_s</span> }
     <span class="ruby-ivar">@selected</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>

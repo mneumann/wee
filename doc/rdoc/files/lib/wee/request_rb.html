@@ -5,10 +5,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>File: decoration.rb</title>
+  <title>File: request.rb</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
   // <![CDATA[
 
@@ -47,16 +47,16 @@
 
 
   <div id="fileHeader">
-    <h1>decoration.rb</h1>
+    <h1>request.rb</h1>
     <table class="header-table">
     <tr class="top-aligned-row">
       <td><strong>Path:</strong></td>
-      <td>lib/wee/core/decoration.rb
+      <td>lib/wee/request.rb
       </td>
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Thu Dec 16 00:21:24 CET 2004</td>
+      <td>Wed Dec 15 18:20:53 CET 2004</td>
     </tr>
     </table>
   </div>
@@ -68,38 +68,6 @@
 
   <div id="contextContent">
 
-    <div id="description">
-      <p>
-Abstract base class of all decorations. Forwards the methods
-process_callbacks, render and backtrack_state to the next decoration in the
-chain. Subclasses should provide special behaviour in these methods,
-otherwise the decoration does not make sense.
-</p>
-<p>
-For example, a HeaderFooterDecoration class could draw a header and footer
-around the decorations or components below itself:
-</p>
-<pre>
-  class HeaderFooterDecoration &lt; Wee::Decoration
-    def render(rendering_context)
-      with_renderer_for(rendering_context) do |r|
-        render_header_on(r)
-        super(rendering_context)
-        render_footer_on(r)
-      end
-    end
-
-    def render_header_on(r)
-      r.text &quot;header
-    end
-
-    def render_footer_on(r)
-      ...
-    end
-  end
-</pre>
-
-    </div>
 
 
    </div>
