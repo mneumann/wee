@@ -17,6 +17,10 @@ Rake::TestTask.new do |t|
   t.verbose = true
 end
 
+task :package do
+  sh 'gem build wee.gemspec' 
+end
+
 task :clean => [:clobber_rdoc]
 
 task :default => [:test, :rdoc, :clean]
