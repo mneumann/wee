@@ -1,3 +1,8 @@
+Fri Jan 28 00:07:52 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* renamed wee/idgen.rb to wee/idgen/simple.rb and
+	  wee/md5_idgen.rb to wee/idgen/md5.rb
+
 Fri Jan 28 00:04:46 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* added Md5IdGenerator, removed method #current from SimpleIdGenerator

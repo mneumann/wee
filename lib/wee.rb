@@ -19,5 +19,5 @@ require 'wee/renderer/html/brushes'
 require 'wee/renderer/html/canvas'
 Wee::DefaultRenderer = Wee::HtmlCanvas
 
-require 'wee/idgen'
-require 'wee/md5_idgen'
+require 'wee/idgen/simple'
+require 'wee/idgen/md5'
