@@ -68,7 +68,7 @@ class Brush::GenericTagBrush < Brush
     attrs.each { |a|
       class_eval " 
         def #{ a }(str)
-          @attributes['#{ a }'] = str
+          @attributes['#{ a }'] = str.to_s
           self
         end
       "
@@ -96,7 +96,9 @@ class Brush::GenericTagBrush < Brush
   def with(text=nil, &block)
     doc = @canvas.document
     if @is_single_tag
+      raise ArgumentError if text or block
       doc.single_tag(@tag, @attributes) 
+      @closed = true
     else
       doc.start_tag(@tag, @attributes)
       if text
@@ -284,8 +286,6 @@ class Brush::SelectListTag < Brush::GenericTagBrush
       @items.each_index do |i|
         @canvas.option.value(i).selected(@selected.include?(@items[i])).with(@labels[i])
       end
-      # TODO?
-      @canvas.text("")
     end
   end
 end

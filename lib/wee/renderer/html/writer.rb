@@ -24,9 +24,7 @@ class Wee::HtmlWriter
   end
 
   def start_tag(tag, attributes=nil)
-    unless attributes
-      @port << "<#{ tag }>"
-    else
+    if attributes
       @port << "<#{ tag }"
       attributes.each {|k, v| 
         if v
@@ -36,15 +34,15 @@ class Wee::HtmlWriter
         end
       }
       @port << ">"
+    else
+      @port << "<#{ tag }>"
     end
 
     self
   end
 
   def single_tag(tag, attributes=nil)
-    unless attributes
-      @port << "<#{ tag }/>"
-    else
+    if attributes
       @port << "<#{ tag }"
       attributes.each {|k, v| 
         if v
@@ -53,7 +51,9 @@ class Wee::HtmlWriter
           @port << %[ #{ k }] 
         end
       }
-      @port << "/>"
+      @port << " />"
+    else
+      @port << "<#{ tag } />"
     end
 
     self
