@@ -15,14 +15,14 @@ require 'webrick'
 #   Wee::WEBrickAdaptor.
 #     register('/app', application).
 #     register('/cnt', application2).
-#     start(2000)
+#     start(:Port => 2000)
 #
 
 class Wee::WEBrickAdaptor < WEBrick::HTTPServlet::AbstractServlet
 
   # Convenience method
-  def self.start(port=2000)
-    server = WEBrick::HTTPServer.new(:Port => port)
+  def self.start(options)
+    server = WEBrick::HTTPServer.new({:Port => 2000}.update(options))
     trap("INT") { server.shutdown }
 
     @apps.each do |path, app|
@@ -30,6 +30,7 @@ class Wee::WEBrickAdaptor < WEBrick::HTTPServlet::AbstractServlet
     end
 
     server.start
+    server
   end
 
   # Convenience method
