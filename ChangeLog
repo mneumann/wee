@@ -1,3 +1,17 @@
+Tue Feb  1 19:58:08 CET 2005	Michael Neumann	<mneumann@ntecs.de>
+
+	* SelectListTag (r.select_list): NON-backwards-compatible change!!!
+	  If it's NOT a multiple select list, then the callback is called
+	  with the choosen value (instead of an array of one element). Method
+	  #selected requires a single value in the same way. No changes if it's
+	  a multiple-select list!
+
+	* minor refactoring of OgScaffolder (added support for Date type).
+
+--------------------------------------------------------------------
+TAGGED 0.6.0
+--------------------------------------------------------------------
+
 Sat Jan 29 19:06:12 CET 2005	Michael Neumann	<mneumann@ntecs.de>
 
 	* Added ERB-templating. Example:

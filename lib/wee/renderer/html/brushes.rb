@@ -340,24 +340,36 @@ class Brush::SelectListTag < Brush::GenericTagBrush
       if choosen.size > 1 and not is_multiple
         raise "choosen more than one element from a non-multiple select list" 
       end
-      callback.call(choosen)
+      if is_multiple
+        callback.call(choosen)
+      else
+        callback.call(choosen.first)
+      end
     end
   end
 
   def with
     @labels ||= @items.collect { |i| i.to_s }
-    @selected ||= Array.new
+
+    is_multiple = @attributes.has_key?('multiple')
 
     if @callback
       # A callback was specified. We have to wrap it inside a
       # SelectListCallback object as we want to perform some 
       # additional actions.
-      __input_callback(SelectListCallback.new(@callback, @items, @attributes.has_key?('multiple')))
+      __input_callback(SelectListCallback.new(@callback, @items, is_multiple))
     end
 
     super do
-      @items.each_index do |i|
-        @canvas.option.value(i).selected(@selected.include?(@items[i])).with(@labels[i])
+      if is_multiple
+        @selected ||= Array.new
+        @items.each_index {|i|
+          @canvas.option.value(i).selected(@selected.include?(@items[i])).with(@labels[i])
+        }
+      else
+        @items.each_index {|i|
+          @canvas.option.value(i).selected(@selected == @items[i]).with(@labels[i])
+        }
       end
     end
   end

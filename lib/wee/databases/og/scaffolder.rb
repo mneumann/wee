@@ -64,12 +64,11 @@ class OgScaffolder < Wee::Component
   end
 
   def edit(obj)
-    call Editor.new(obj).add_decoration(Wee::FormDecoration.new)
+    call editor_for(obj)
   end
 
   def add
-    call Editor.new(@domain_class.new, "Create").
-      add_decoration(Wee::FormDecoration.new)
+    call editor_for(@domain_class.new)
   end
 
   def destroy(obj)
@@ -84,37 +83,54 @@ class OgScaffolder < Wee::Component
   def domain_objects
     @domain_class.all || []
   end
+
+  def editor_class
+    Editor
+  end
+
+  def editor_for(obj)
+    editor_class.new(obj).add_decoration(Wee::FormDecoration.new)
+  end
 end
 
 class OgScaffolder::Editor < Wee::Component
 
-  def initialize(domain_object, action="Edit")
+  def initialize(domain_object)
     super()
     @domain_object = domain_object
-    @action = action
   end
 
   def render
     render_header
     each_property {|prop| 
-      render_property(prop) unless prop.name == 'oid'
+      unless prop.name == 'oid'
+        render_label(prop)
+        render_property(prop) 
+      end
     }
     render_buttons
   end
 
   def render_header
-    r.h1 "#{ @action } #{ @domain_object.class }"
+    action =
+      if @domain_object.oid.nil?
+        "Create"
+      else
+        "Edit"
+      end
+
+    r.h1 "#{ action } #{ @domain_object.class }"
   end
 
   def render_property(prop)
-    render_label(prop)
-
     if prop.klass.ancestors.include?(Numeric)
       render_numeric(prop)
     elsif prop.klass.ancestors.include?(String)
       render_string(prop)
     elsif prop.klass.ancestors.include?(TrueClass)
       render_bool(prop)
+    elsif prop.klass.ancestors.include?(Date)
+      render_date(prop)
     end
   end
 
@@ -131,10 +147,24 @@ class OgScaffolder::Editor < Wee::Component
   end
 
   def render_bool(prop)
-    selected = [ get_value_of(prop) ? true : false ]
+    selected = get_value_of(prop) ? true : false
     r.select_list([true, false]).labels(["Yes", "No"]).selected(selected).
-      callback {|choosen| set_value_of(prop, choosen.first) }
+      callback {|choosen| set_value_of(prop, choosen) }
   end
+
+  require 'date'
+  def render_date(prop)
+    t = get_value_of(prop) || Time.now
+    
+    m = Date::MONTHS.invert
+    months = (1..12).map {|i| m[i].capitalize}
+    r.select_list((t.year-10 .. t.year+10).to_a).selected(t.year).callback {|year| set_date_of(prop, year, :year) }
+    r.space
+    r.select_list((1..12).to_a).labels(months).selected(t.month).callback {|month| set_date_of(prop, month, :month) }
+    r.space
+    r.select_list((1..31).to_a).selected(t.day).callback {|day| set_date_of(prop, day, :day) }
+  end
+
 
   def render_buttons
     r.paragraph
@@ -155,14 +185,6 @@ class OgScaffolder::Editor < Wee::Component
     @domain_object.class.__props.each(&block)
   end
 
-  def get_value_of(prop)
-    @domain_object.send(prop.symbol)
-  end
-
-  def set_value_of(prop, value)
-    @domain_object.send(prop.symbol.to_s + "=", value)
-  end
-
   def save
     @domain_object.save!
     answer @domain_object
@@ -171,4 +193,27 @@ class OgScaffolder::Editor < Wee::Component
   def cancel
     answer nil
   end
+
+  def get_value_of(prop)
+    @domain_object.send(prop.symbol)
+  end
+
+  def set_value_of(prop, value)
+    @domain_object.send(prop.symbol.to_s + "=", value)
+  end
+
+  def set_date_of(prop, val, pos)
+    v = get_value_of(prop) || Date.new
+    new_date = [v.year, v.month, v.day]
+    pos = 
+      case pos
+      when :year then 0
+      when :month then 1
+      when :day then 2
+      else raise
+      end
+    new_date[pos] = val
+    set_value_of(prop, Date.new(*new_date))
+  end
+
 end
