@@ -102,6 +102,22 @@ class Wee::Application
     context.response = Wee::ErrorResponse.new(exn) 
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # :section: Properties
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  attr_accessor :properties
+
+  # Returns an "owned" property for the given +klass+.
+
+  def get_property(prop, klass)
+    if @properties
+      @properties.fetch(klass, {})[prop]
+    else
+      nil
+    end
+  end
+
   private
 
   # MUST be called while holding @mutex

@@ -181,6 +181,22 @@ class Wee::Session < Wee::RequestHandler
     @page
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # :section: Properties
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  attr_accessor :properties
+
+  # Returns an "owned" property for the given +klass+.
+
+  def get_property(prop, klass)
+    if @properties
+      @properties.fetch(klass, {})[prop]
+    else
+      nil
+    end
+  end
+
   private
 
   def handle_new_page_view(context, snapshot=nil)

@@ -98,11 +98,16 @@ end
 
 # A serializable callback. 
 class Wee::LiteralMethodCallback
-  def initialize(obj, method_id=:call)
+  def initialize(obj, method_id=:call, *additional_args)
     @obj, @method_id = obj, method_id
+    @additional_args = additional_args unless additional_args.empty?
   end
 
   def call(*args)
-    @obj.send(@method_id, *args)
+    if @additional_args
+      @obj.send(@method_id, *(args+@additional_args))
+    else
+      @obj.send(@method_id, *args)
+    end
   end
 end

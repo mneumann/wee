@@ -36,26 +36,42 @@ class HtmlCanvas < Canvas
   attr_reader :document
   attr_accessor :current_component
 
+  def self.generic_tag(*attrs)
+    attrs.each { |a|
+      class_eval " 
+        def #{ a }(*args, &block)
+          handle(Brush::GenericTagBrush.new('#{ a }'), *args, &block)
+        end
+      "
+    }
+  end
+
+  def self.generic_single_tag(*attrs)
+    attrs.each { |a|
+      class_eval " 
+        def #{ a }(*args, &block)
+          handle(Brush::GenericSingleTagBrush.new('#{ a }'), *args, &block)
+        end
+      "
+    }
+  end
+
   def initialize(rendering_context)
     super()
     @rendering_context = rendering_context
     @document = rendering_context.document
   end
 
-  def method_missing(id, *args, &block)
-    handle(Brush::GenericTagBrush.new(id.to_s), *args, &block)
-  end
+  generic_tag :html, :head, :body, :title, :style, :h1, :h2, :h3, :h4, :h5, :div
+  generic_single_tag :link
 
-  def url_for_callback(symbol_or_block)
+  def url_for_callback(callback)
     req = self.rendering_context.request
-    url = req.build_url(req.request_handler_id, req.page_id, register_callback(:action, symbol_or_block))
+    url = req.build_url(req.request_handler_id, req.page_id, register_callback(:action, callback))
     return url
   end
 
   def register_callback(type, callback)
-    if callback.is_a?(Symbol)
-      callback = Wee::LiteralMethodCallback.new(self.current_component, callback)
-    end
     self.rendering_context.callbacks.register_for(self.current_component, type, callback)
   end
 
@@ -128,15 +144,19 @@ class HtmlCanvas < Canvas
   end
 
   def paragraph
-    set_brush(Brush::GenericTagBrush.new("p"))
+    set_brush(Brush::GenericSingleTagBrush.new("p"))
   end
 
   def break
-    set_brush(Brush::GenericTagBrush.new("br"))
+    set_brush(Brush::GenericSingleTagBrush.new("br"))
   end
 
   def image
-    set_brush(Brush::GenericTagBrush.new("img"))
+    handle(Brush::ImageTag.new)
+  end
+
+  def link_css(url)
+    link.type('text/css').rel('stylesheet').href(url)
   end
 
   def text(str)

@@ -1,3 +1,16 @@
+	* Enable Socket.do_not_reverse_lookup in WEBrickAdaptor by default, as
+	  this has been the reason for much slowliness
+
+	* Method Component#add_child returns the child so that the following
+	  code becomes possible:
+
+	    @pager = add_child Pager.new(...)
+
+	* Added experimental property system.
+
+	* Added methods GenericTagBrush#onclick_callback, HtmlCanvas#link_css,
+	  lots of refactoring
+
 	* New examples: hw.rb, live-update.rb, calculator.rb  
 
 	* Wee::Brush::InputTag: methods #disabled and #readonly added

@@ -1,3 +1,9 @@
+* OgScaffolder: cache fields
+
+* LiteralMethodCallback: use a simple symbol instead?
+
+* brushes.rb: tags as constants
+
 * Session.new(application)
 
 * live updates

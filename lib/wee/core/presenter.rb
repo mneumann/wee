@@ -129,4 +129,66 @@ class Wee::Presenter
     Wee::Session.current
   end
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # :section: Properties
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  attr_accessor :properties
+
+  # Returns an "owned" property.
+
+  def get_property(prop)
+    if @properties
+      @properties[prop]
+    else
+      nil
+    end
+  end
+
+  # Tries to lookup a property from different places. +nil+ as property value
+  # is not allowed!
+  # 
+  # Search order:
+  #
+  # 1. self.get_property(prop) 
+  #
+  # 2. session.get_property(prop, self.class) 
+  #
+  # 3. application.get_property(prop, self.class)
+  # 
+  # 4. session.get_property(prop, nil) 
+  #
+  # 5. application.get_property(prop, nil) 
+  #
+  # 6. @@properties[prop] 
+  # 
+
+  def lookup_property(prop)
+    val = get_property(prop)
+    return val if val != nil
+
+    sess = session()
+    app = sess.application
+    klass = self.class
+
+    val = sess.get_property(prop, klass)
+    return val if val != nil
+
+    val = app.get_property(prop, klass)
+    return val if val != nil
+
+    val = sess.get_property(prop, nil)
+    return val if val != nil
+
+    val = app.get_property(prop, nil)
+    return val if val != nil
+
+    if defined?(@@properties)
+      val = @@properties[prop]
+      return val if val != nil
+    end
+
+    return nil
+  end
+
 end

@@ -47,6 +47,20 @@ class Brush::GenericEncodedTextBrush < Brush
   end
 end
 
+module Brush::ToCallback
+  private
+
+  def to_callback(symbol, args, block)
+    raise ArgumentError if symbol and block
+    if symbol
+      Wee::LiteralMethodCallback.new(@canvas.current_component, symbol, *args)
+    else
+      raise ArgumentError if not args.empty?
+      block
+    end
+  end
+end
+
 class Brush::GenericTagBrush < Brush
 
   def self.bool_attr(*attrs)
@@ -75,6 +89,11 @@ class Brush::GenericTagBrush < Brush
     }
   end
 
+  def method_missing(id, attr)
+    @attributes[id.to_s] = attr
+    self
+  end
+
   def initialize(tag, is_single_tag=false)
     super()
     @tag, @is_single_tag = tag, is_single_tag
@@ -88,9 +107,22 @@ class Brush::GenericTagBrush < Brush
     self
   end
 
-  def method_missing(m, arg)
-    @attributes[m.to_s] = arg.to_s
-    self
+  include Brush::ToCallback
+
+  def onclick_callback(symbol=nil, *args, &block)
+    raise ArgumentError if symbol and block
+    url = @canvas.url_for_callback(to_callback(symbol, args, block))
+    onclick("javascript: document.location.href='#{ url }';")          
+  end
+
+  # This method construct the css-class attribute by looking up the property
+  # from the current component.
+
+  def css_class_for(c)
+    prop = 'css.' + c
+    val = @canvas.current_component.lookup_property(prop)
+    raise "no property found for: <#{ prop }>" if val.nil?
+    css_class(val)
   end
 
   def with(text=nil, &block)
@@ -110,6 +142,34 @@ class Brush::GenericTagBrush < Brush
       doc.end_tag(@tag)
     end
     nil
+  end
+end
+
+class Brush::GenericSingleTagBrush < Brush::GenericTagBrush
+  def initialize(tag)
+    super(tag, true)
+  end
+end
+
+class Brush::ImageTag < Brush::GenericSingleTagBrush
+  html_attr :src
+
+  # This method construct the src attribute by looking up the property from the
+  # current component.
+
+  def src_for(s)
+    prop = "img." + s
+    val = @canvas.current_component.lookup_property(prop)
+    raise "no property found for: <#{ prop }>" if val.nil?
+    src(val)
+  end
+
+  def initialize
+    super("img")
+  end
+
+  def with
+    super
   end
 end
 
@@ -171,9 +231,9 @@ class Brush::TableRowTag < Brush::GenericTagBrush
 end
 
 
-class Brush::InputTag < Brush::GenericTagBrush
+class Brush::InputTag < Brush::GenericSingleTagBrush
   def initialize
-    super('input', true)
+    super('input')
   end
 
   html_attr :type, :name, :value, :size, :maxlength, :src
@@ -184,32 +244,39 @@ class Brush::InputTag < Brush::GenericTagBrush
   end
 end
 
+
 module Brush::InputCallbackMixin
   public
 
-  def callback(symbol=nil, &block)
+  def callback(symbol=nil, *args, &block)
     raise ArgumentError if symbol and block
-    name(@canvas.register_callback(:input, symbol || block))
+    name(@canvas.register_callback(:input, to_callback(symbol, args, block)))
   end
+
+  include Brush::ToCallback 
 end
 
 module Brush::ActionCallbackMixin
   public
 
-  def callback(symbol=nil, &block)
+  def callback(symbol=nil, *args, &block)
     raise ArgumentError if symbol and block
-    name(@canvas.register_callback(:action, symbol || block))
+    name(@canvas.register_callback(:action, to_callback(symbol, args, block)))
   end
+
+  include Brush::ToCallback
 end
 
 # The callback id is listed in the URL (not as a form-data field)
 module Brush::ActionURLCallbackMixin
   public
 
-  def callback(symbol=nil, &block)
+  def callback(symbol=nil, *args, &block)
     raise ArgumentError if symbol and block
-    __set_url(@canvas.url_for_callback(symbol || block))
+    __set_url(@canvas.url_for_callback(to_callback(symbol, args, block)))
   end
+
+  include Brush::ToCallback
 end
 
 class Brush::TextAreaTag < Brush::GenericTagBrush
@@ -258,7 +325,7 @@ class Brush::SelectListTag < Brush::GenericTagBrush
   private :__old_callback
   def callback(symbol=nil, &block)
     raise ArgumentError if symbol and block
-    block = @canvas.current_component.method(symbol) unless block
+    block = Wee::LiteralMethodCallback.new(@canvas.current_component, symbol) unless block
 
     @callback = block
     self
@@ -387,8 +454,9 @@ class Brush::AnchorTag < Brush::GenericTagBrush
     super('a')
   end
 
-  html_attr :href
+  html_attr :href, :title
   alias url href
+  alias tooltip title
   alias __set_url url
 end
 

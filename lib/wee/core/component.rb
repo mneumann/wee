@@ -114,6 +114,7 @@ class Wee::Component < Wee::Presenter
 
   def add_child(child)
     self.children << child
+    child
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

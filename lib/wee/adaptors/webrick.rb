@@ -19,6 +19,8 @@ require 'webrick'
 #     start(:Port => 2000)
 #
 
+Socket.do_not_reverse_lookup = true
+
 class Wee::WEBrickAdaptor < WEBrick::HTTPServlet::AbstractServlet
 
   # Convenience method
