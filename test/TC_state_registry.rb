@@ -1,7 +1,7 @@
 require 'test/unit'
-$LOAD_PATH.unshift "../lib/wee"
+$LOAD_PATH.unshift "../lib"
 module Wee; end
-require 'state_registry'
+require 'wee/state_registry'
 
 class TC_StateRegistry < Test::Unit::TestCase
   def test_finalizer
@@ -18,24 +18,24 @@ class TC_StateRegistry < Test::Unit::TestCase
     s = Wee::StateRegistry.new
     snaps = []
 
-    obj = Set[1,2,3]
+    obj = [1,2,3]
     s.register(obj)
 
-    assert_equal Set[1,2,3], obj
-    snaps << s.take_snapshot
+    assert_equal [1,2,3], obj
+    snaps << s.snapshot
 
-    obj.add(10)
-    assert_equal Set[1,2,3,10], obj
-    snaps << s.take_snapshot
+    obj.push(10)
+    assert_equal [1,2,3,10], obj
+    snaps << s.snapshot
 
-    s.apply_snapshot(snaps[0])
-    assert_equal Set[1,2,3], obj
+    snaps[0].apply
+    assert_equal [1,2,3], obj
 
-    s.apply_snapshot(snaps[1])
-    assert_equal Set[1,2,3,10], obj
+    snaps[1].apply
+    assert_equal [1,2,3,10], obj
 
-    s.apply_snapshot(snaps[0])
-    assert_equal Set[1,2,3], obj
+    snaps[0].apply
+    assert_equal [1,2,3], obj
 
     # marshal ----------------------------
 
@@ -43,15 +43,15 @@ class TC_StateRegistry < Test::Unit::TestCase
     s, obj, snaps = nil, nil, nil
     s, obj, snaps = Marshal.load(str)
 
-    assert_equal Set[1,2,3], obj
+    assert_equal [1,2,3], obj
 
-    s.apply_snapshot(snaps[0])
-    assert_equal Set[1,2,3], obj
+    snaps[0].apply
+    assert_equal [1,2,3], obj
 
-    s.apply_snapshot(snaps[1])
-    assert_equal Set[1,2,3,10], obj
+    snaps[1].apply
+    assert_equal [1,2,3,10], obj
 
-    s.apply_snapshot(snaps[0])
-    assert_equal Set[1,2,3], obj
+    snaps[0].apply
+    assert_equal [1,2,3], obj
   end
 end
