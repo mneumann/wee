@@ -1,18 +1,21 @@
-module Wee; end
-
+module Wee
+  Version = "0.2-dev"
+end
 
 require 'wee/core'
 
 require 'wee/context'
 require 'wee/application'
 require 'wee/requesthandler'
+require 'wee/request'
 require 'wee/response'
 require 'wee/session'
 
 require 'wee/snapshot_ext'
 
 require 'wee/rendering/html/writer'
+require 'wee/rendering/html/brushes'
 require 'wee/rendering/html/canvas'
+Wee::DefaultRenderer = Wee::HtmlCanvas
 
-require 'wee/stuff'
 require 'wee/idgen'

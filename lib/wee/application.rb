@@ -1,75 +1,87 @@
+# A Wee::Application manages all Wee::RequestHandler's of a single application,
+# where most of the time the request handlers are Wee::Session objects. It
+# dispatches the request to the correct handler by examining the request.
+
 class Wee::Application
-  attr_accessor :name, :path
-  attr_accessor :session_store, :session_class
+
+  # The generator used for creating unique request handler id's.
+
+  attr_accessor :id_generator
+
+  # The maximum number of request handlers
+
+  attr_accessor :max_request_handlers
+
+  # Get or set the default request handler. The default request handler is used
+  # if no request handler id is given in a request. 
+
+  def default_request_handler(&block)
+    if block.nil?
+      @default_request_handler
+    else
+      @default_request_handler = block
+    end
+  end
+
+  # Creates a new application. The block is used to initialize the attributes:
+  #
+  #   Wee::Application.new {|app|
+  #     app.default_request_handler { MySession.new } 
+  #     app.id_generator = Wee::SimpleIdGenerator.new
+  #     app.max_request_handlers = 1000 
+  #   }
 
   def initialize(&block)
-    setup_session_id_generator
-
+    @request_handlers = Hash.new
     block.call(self)
-
-    if [@name, @path, @session_class, @session_store].any? {|i| i.nil?}
-      raise ArgumentError, "missing name, path, session_class or session_store" 
+    @id_generator ||= Wee::SimpleIdGenerator.new(rand(1_000_000))
+    if @default_request_handler.nil?
+      raise ArgumentError, "No default request handler specified"
     end
   end
+  
+  # TODO: we have to use mutexes here 
+  # NOTE that id_generator must be thread-safe!
+  # TODO: test for max_request_handlers
 
-  def setup_session_id_generator
-    @session_cnt = rand(1000_000)
-  end
+  def handle_request(context)
+    request_handler_id = context.request.request_handler_id
+    request_handler = @request_handlers[request_handler_id]
 
-  def handle_request(req, res)
-    hash = parse_url(req)
+    if request_handler_id.nil?
+      # No id was given -> create new id and handler
+      request_handler_id = unique_request_handler_id()
+      request_handler = @default_request_handler.call  
+      request_handler.id = request_handler_id
+      request_handler.application = self
+      @request_handlers[request_handler_id] = request_handler
 
-    session_id = hash['s']
-    if session_id.nil? 
-      # TODO:
-      # gen session, or assign default session (by default, do not show).
-      # but for a default session, we have to have thread-safe components (without @context=... hack)
+      context.response = Wee::RedirectResponse.new(context.request.build_url(request_handler_id))
+      return
 
-      session = @session_class.new
-      session_id = gen_unique_session_id
-      session.id = session_id
-      session.application = self
-      @session_store[session_id] = session
+    elsif request_handler.nil?
+      # A false request handler id was given. This might indicate that a
+      # request handler has expired. 
+      request_handler_expired(context)
+      return
     end
 
-    session = @session_store[session_id]
-    if session.nil?
-      # TODO: redirect to session-less page, or do whatever
-      error_invalid_session(req, res); return
-    end
+    request_handler.handle_request(context)
 
-    context = Wee::Context.new(req, res, session, session_id)
-    context.application = self
-    context.session = session
-    context.page_id = hash['p']
-    context.handler_id = hash['h']
-    session.handle_request(context)
-
-    # TODO: move into RequestHandler (Session)
-    res.status = context.response.status
-    res.body = context.response.content
-    context.response.header.each { |k,v| res.header[k] = v }
-  end
-
-  # TODO: UrlModel, which knows how to create and parse URLs
-  def gen_handler_url(session_id, page_id, handler_id)
-    [
-      self.path, 
-      ['s', session_id].join(':'), 
-      ['p', page_id].join(':'),
-      ['h', handler_id].join(':')
-    ].join('/')
-  end
-
-  def error_invalid_session(req, res)
-    Wee::ErrorPage.new('Invalid Session').respond(Wee::Context.new(req,res,nil,nil))
+  rescue => exn
+    context.response = Wee::ErrorResponse.new(exn) 
   end
 
   private
 
-  # TODO: that's insecure. it's just for development!
-  def gen_unique_session_id
-    (@session_cnt += 1).to_s
+  def unique_request_handler_id
+    id = @id_generator.next.to_s
+    raise "failed to create unique request handler id" if @request_handlers.include?(id)
+    return id
+  end
+
+  def request_handler_expired(context)
+    context.response = Wee::RefreshResponse.new("Invalid or expired request handler!", context.request.application_path)
   end
 
 end

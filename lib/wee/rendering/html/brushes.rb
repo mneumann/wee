@@ -19,7 +19,7 @@ class Brush::GenericTextBrush < Brush
   def initialize(text)
     @text = text
   end
-
+  
   def with
     doc = @canvas.document
     doc << @text
@@ -169,7 +169,7 @@ module Brush::ActionURLCallbackMixin
 
   def callback(&block)
     req = @canvas.rendering_context.request
-    url = req.build_url(req.session_id, req.page_id, register_callback(:action, &block))
+    url = req.build_url(nil, nil, register_callback(:action, &block))
     __set_url(url)
   end
 end
@@ -205,17 +205,30 @@ class Brush::TextAreaTag < Brush::GenericTagBrush
   end
 end
 
+class Brush::SelectOptionTag < Brush::GenericTagBrush
+  def initialize
+    super('option')
+  end
+
+  def selected(bool=true)
+    if bool
+      @attributes['selected'] = nil
+    else
+      @attributes.delete('selected')
+    end
+    self
+  end
+end
+
 class Brush::SelectListTag < Brush::GenericTagBrush
   include Brush::InputCallbackMixin
 
   def initialize(items)
     super('select')
     @items = items
-    @default = nil
-    @labels = @items.collect { |i| i.to_s }
   end
 
-  %w(default items labels).each do |meth|
+  %w(selected items labels).each do |meth|
     eval %[
     def #{ meth }(arg)
       @#{ meth } = arg
@@ -224,27 +237,41 @@ class Brush::SelectListTag < Brush::GenericTagBrush
     ]
   end
 
-  def with(*args, &block)
-    super
-    @items.each_index do |i|
-      @canvas.option.value(@items[i]).selected(@default).with(@labels[i])
-    end
-  end
-end
-
-class Brush::SelectOptionTag < Brush::GenericTagBrush
-
-  def initialize
-    super('option')
-  end
-
-  def selected(*args)
-    if args.size == 0
-      @attributes['selected'] = 'selected'
-    else
-      @attributes['selected'] = 'selected' if args.first.to_s == @attributes['value']
-    end
+  def multiple
+    @multiple = true
+    @attributes['multiple'] = nil
     self
+  end
+
+  alias __old_callback callback
+  private :__old_callback
+  def callback(&block)
+    @callback = block
+    self
+  end
+
+  def with
+    @labels ||= @items.collect { |i| i.to_s }
+    @selected ||= Array.new
+
+    if @callback
+      __old_callback {|input|
+        choosen = input.list.map {|idx| 
+          idx = Integer(idx)
+          raise "invalid index in select list" if idx < 0 or idx > @items.size
+          @items[idx]
+        }
+        raise "choosen more than one element from a non-multiple select list" if not @multiple and choosen.size > 1
+        @callback.call(choosen)
+      }
+    end
+
+    super do
+      @items.each_index do |i|
+        @canvas.option.value(i).selected(@selected.include?(@items[i])).with(@labels[i])
+      end
+      @canvas.text("")
+    end
   end
 end
 
@@ -300,11 +327,10 @@ class Brush::FormTag < Brush::GenericTagBrush
   alias __set_url action
 
   def with(*args, &block)
-
-    # If no action or callback was specified, use a dummy callback.  This is
-    # required that other form-elements are handled correctly. 
-    callback{} unless @attributes.has_key?('action')
-
+    # If no action was specified, use a dummy one.
+    unless @attributes.has_key?('action')
+      @attributes['action'] = @canvas.rendering_context.request.build_url(nil, nil) 
+    end
     super
   end
 end

@@ -5,7 +5,7 @@ class Wee::Session < Wee::RequestHandler
   attr_accessor :root_component, :page_store
 
   def self.current
-    sess = Thread.current['Wee::Session']
+    sess = Thread.current[:wee_session]
     raise "not in session" if sess.nil?
     return sess
   end
@@ -32,7 +32,6 @@ class Wee::Session < Wee::RequestHandler
     return snap.freeze
   end
 
-
   # called by application to send the session a request
   def handle_request(context)
     super
@@ -48,7 +47,7 @@ class Wee::Session < Wee::RequestHandler
   def start_request_response_loop
     Thread.abort_on_exception = true
     Thread.new {
-      Thread.current['Wee::Session'] = self
+      Thread.current[:wee_session] = self
 
       loop {
         @context = @in_queue.pop
@@ -66,20 +65,20 @@ class Wee::Session < Wee::RequestHandler
   end
 
   def process_request
-    if @context.page_id.nil?
+    if @context.request.page_id.nil?
 
       # No page_id was specified in the URL. This means that we start with a
       # fresh component and a fresh page_id, then redirect to render itself.
 
       handle_new_page_view(@context, @initial_snapshot)
 
-    elsif page = @page_store.fetch(@context.page_id, false)
+    elsif page = @page_store.fetch(@context.request.page_id, false)
 
       # A valid page_id was specified and the corresponding page exists.
 
       page.snapshot.restore
 
-      if @context.handler_id.nil?
+      if @context.request.fields.empty?
 
         # No action/inputs were specified -> render page
         #
@@ -89,9 +88,8 @@ class Wee::Session < Wee::RequestHandler
         # 3. Store the page back into the store
 
         page = create_page(page.snapshot)  # remove all action/input handlers
-        @context.callbacks = page.callbacks
-        respond(@context)                            # render
-        @page_store[@context.page_id] = page         # store
+        respond(@context, page.callbacks)                    # render
+        @page_store[@context.request.page_id] = page         # store
 
       else
 
@@ -100,8 +98,7 @@ class Wee::Session < Wee::RequestHandler
         # We process the request and invoke actions/inputs. Then we generate a
         # new page view. 
 
-        s = {@context.handler_id => nil}.update(@context.request.query)
-        callback_stream = Wee::CallbackStream.new(page.callbacks, s) 
+        callback_stream = Wee::CallbackStream.new(page.callbacks, @context.request.fields) 
 
         catch(:wee_back_to_session) {
           @root_component.process_callback_chain(callback_stream)
@@ -130,15 +127,14 @@ class Wee::Session < Wee::RequestHandler
     new_page_id = @idgen.next.to_s
     new_page = create_page(snapshot || self.snapshot())
     @page_store[new_page_id] = new_page
-
-    redirect_url = "#{ context.application.path }/s:#{ context.session_id }/p:#{ new_page_id }"
+    redirect_url = context.request.build_url(nil, new_page_id)
     context.response = Wee::RedirectResponse.new(redirect_url)
   end
 
-  def respond(context)
+  def respond(context, callbacks)
     context.response = Wee::GenericResponse.new('text/html', '')
 
-    rctx = Wee::RenderingContext.new(context.callbacks, Wee::HtmlWriter.new(context.response.content))
+    rctx = Wee::RenderingContext.new(context.request, context.response, callbacks, Wee::HtmlWriter.new(context.response.content))
     @root_component.render_chain(rctx)
   end
 

@@ -50,6 +50,8 @@ class Wee::RequestHandler
     return true
   end
 
+  # Extend #handle_request in your own subclass.
+
   def handle_request(context)
     @request_count += 1
     @last_access = Time.now
