@@ -21,7 +21,10 @@ class Wee::Request
 
     url = ""
     url << @app_path
-    url << ('@' + arr.join('/')) unless arr.empty?
+    unless arr.empty?
+      url << '/' if url[-1,1] != '/'  # /app@ -> /app/@
+      url << ('@' + arr.join('/'))
+    end
     url << ('?' + callback_id) if callback_id
 
     return url

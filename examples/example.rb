@@ -1,6 +1,5 @@
 $LOAD_PATH.unshift << "../lib"
 require 'wee'
-require 'wee/webrick'
 require 'wee/utils/cache'
 require 'window'
 
@@ -213,14 +212,12 @@ class MySession < Wee::Session
   end
 end
 
-#Wee::Application.register '/app', MySession 
-
-#Wee::Application.new('/app', MySession
-
-
 if __FILE__ == $0
-  Wee::Application.new {|app|
+  app = Wee::Application.new {|app|
     app.default_request_handler { MySession.new }
     app.id_generator = Wee::SimpleIdGenerator.new(rand(1_000_000))
-  }.start(:mount_path => '/app')
+  }
+  
+  require 'wee/adaptors/webrick' 
+  Wee::WEBrickAdaptor.register('/app', app).start 
 end
