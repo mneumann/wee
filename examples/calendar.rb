@@ -3,7 +3,7 @@
 $LOAD_PATH.unshift << "../lib"
 require 'wee'
 require 'wee/adaptors/webrick'
-require 'wee/utils/cache'
+require 'wee/utils'
 require 'date'
 
 class Date
@@ -184,7 +184,7 @@ class MiniCalendar < Wee::Component
   #
   def render_header
     r.table_row do
-      r.table_header.colspan(4).with { r.encoded_text(month_heading) }
+      r.table_header.colspan(4).with { r.encode_text(month_heading) }
       r.table_header { r.anchor.callback { go_prev }.with(prev_month_abbr) }
       r.table_header { r.anchor.callback { go_next }.with(next_month_abbr) }
       r.table_header { browse? ? r.space : r.anchor.callback { back }.style('color: black').with('X') }
@@ -194,7 +194,7 @@ class MiniCalendar < Wee::Component
   # Render Calendar footer
   #
   def render_footer
-    r.table_row { r.table_header.colspan(7).with { r.encoded_text(today_string) } }
+    r.table_row { r.table_header.colspan(7).with { r.encode_text(today_string) } }
   end
   
   # Render Calendar
@@ -316,7 +316,7 @@ if __FILE__ == $0
     #
     def render_icon
       icon = 'http://www.softcomplex.com/products/tigra_calendar/img/cal.gif'
-      r.img.src(icon).width(16).height(16).border(0).alt('Calendar')
+      r.image.src(icon).width(16).height(16).border(0).alt('Calendar')
     end
     
     # Render Calendar demo
@@ -349,18 +349,6 @@ if __FILE__ == $0
     end
   end
 
-  class MySession < Wee::Session
-    def initialize
-      super do
-        self.root_component = CustomCalendarDemo.new
-        self.page_store = Wee::Utils::LRUCache.new(10) # backtrack up to 10 pages
-      end
-    end
-  end
-  
-  app = Wee::Application.new {|app|
-    app.default_request_handler { MySession.new }
-    app.id_generator = Wee::SimpleIdGenerator.new(rand(1_000_000))
-  }
+  app = Wee::Utils.app_for(CustomCalendarDemo)
   Wee::WEBrickAdaptor.register('/app' => app).start
 end
