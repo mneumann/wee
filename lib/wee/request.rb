@@ -2,8 +2,8 @@ class Wee::Request
 
   attr_reader :request_handler_id, :page_id, :fields
 
-  def initialize(app_path, path, header, fields)
-    @app_path, @path, @header, @fields = app_path, path, header, fields
+  def initialize(app_path, path, headers, fields)
+    @app_path, @path, @headers, @fields = app_path, path, headers, fields
 
     full_app_path, req_path = @path.split('@', 2)
     @request_handler_id = @page_id = nil
