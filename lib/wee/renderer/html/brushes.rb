@@ -390,6 +390,56 @@ class Brush::TextInputTag < Brush::InputTag
   alias callback __input_callback
 end
 
+class Brush::RadioButtonTag < Brush::InputTag
+  def initialize
+    super
+    type('radio')
+  end
+
+  class RadioGroup
+    def initialize(canvas)
+      @name = canvas.register_callback(:input, self)
+      @callbacks = {} 
+      @ids = Wee::SimpleIdGenerator.new 
+    end
+
+    def add_callback(callback)
+      value = @ids.next.to_s
+      @callbacks[value] = callback
+      return [@name, value]
+    end
+
+    def call(value)
+      if @callbacks.has_key?(value)
+        cb = @callbacks[value]
+        cb.call(value) if cb
+      else
+        raise "invalid radio button/group value"
+      end
+    end
+  end
+
+  def group(radio_group)
+    @group = radio_group
+    self
+  end
+
+  def callback(symbol=nil, *args, &block)
+    @callback = to_callback(symbol, args, block)
+    self
+  end
+
+  def with
+    if @group
+      n, v = @group.add_callback(@callback)
+      name(n)
+      value(v)
+    end
+    super
+  end
+
+end
+
 class Brush::FileUploadTag < Brush::InputTag
   def initialize
     super

@@ -1,3 +1,13 @@
+Tue Apr  5 21:53:55 CET 2005	Michael Neumann <mneumann@ntecs.>
+
+	* lib/wee/renderer/html/canvas.rb, lib/wee/renderer/html/brushes.rb,
+	  examples/radio.rb: Added support for radio buttons.
+	  (methods r.new_radio_group and r.radio_button)
+
+--------------------------------------------------------------------
+TAGGED 0.8.0
+--------------------------------------------------------------------
+
 Mon Apr  4 18:45:28 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* examples/ajax/ajax.rb, examples/ajax/ajax.js,

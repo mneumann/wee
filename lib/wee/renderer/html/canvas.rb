@@ -116,6 +116,14 @@ class HtmlCanvas < Canvas
     handle(Brush::TextInputTag.new, *args, &block)
   end
 
+  def new_radio_group
+    Wee::Brush::RadioButtonTag::RadioGroup.new(self)
+  end
+
+  def radio_button(*args, &block)
+    handle(Brush::RadioButtonTag.new, *args, &block)
+  end
+
   def text_area(*args, &block)
     handle(Brush::TextAreaTag.new, *args, &block)
   end
