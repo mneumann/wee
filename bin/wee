@@ -1,0 +1,129 @@
+#!/usr/bin/env ruby
+
+def usage
+  puts <<-USAGE
+
+NAME
+     wee - creates a new Wee installation
+
+SYNOPSIS
+     wee create [full path]
+
+DESCRIPTION
+     This will create a suggested directory structure as well as some
+     files to get you quickly started running a simple Wee application.
+     For further information have a look at the README file in the
+     created directory.
+
+EXAMPLE
+
+     wee create ~/my-wee-project
+
+     This will generate a new Wee installation in the ~/my-wee-project
+     folder.
+USAGE
+  exit 1
+end
+
+def run
+  case command = ARGV[0] || usage()
+  when 'create'
+    path = ARGV[1] || usage()
+    path = File.expand_path(path)
+
+    if File.exists?(path)
+      STDERR.puts "ERROR: Path #{ path } already exists! Aborting!"
+      exit 1
+    end
+
+    Dir.mkdir(path)
+    Dir.chdir(path) do
+      Dir.mkdir('components')
+      File.open('components/main.rb', 'w+') {|f| f << MAIN_COMPONENT }
+      File.open('run.rb', 'w+') {|f| f << RUN }
+      File.open('README', 'w+') {|f| f << README }
+    end
+
+  else
+    usage()
+  end
+end
+
+########################################################
+
+MAIN_COMPONENT = <<EOS.strip + "\n"
+class Main < Wee::Component
+
+  def initialize
+    super()
+    # Put your own initialization code below...
+  end
+
+  # --------------------------------------------
+  # Rendering 
+  # --------------------------------------------
+
+  def render
+    r.anchor.callback(:click).with { r.h1("Welcome to Wee!") }
+    r.text "\#{ @clicks || 'No' } clicks"
+  end
+
+  # --------------------------------------------
+  # Actions 
+  # --------------------------------------------
+
+  def click
+    @clicks = (@clicks || 0) + 1
+  end
+
+end
+EOS
+
+RUN = <<EOS.strip + "\n"
+require 'wee'
+require 'wee/utils'
+require 'wee/adaptors/webrick'
+require 'components/main'
+
+app = Wee::Utils.app_for {
+  Main.new.add_decoration(Wee::PageDecoration.new('Wee'))
+}
+Wee::WEBrickAdaptor.register('/app' => app).start
+EOS
+
+README = <<EOS.strip + "\n"
+= How to start this application
+
+If you have installed Wee via Rubygems, then:
+
+  ruby -rubygems run.rb
+
+Otherwise you can omit the -rubygems option:
+
+  ruby run.rb
+
+Now point your browser to http://127.0.0.1/app
+
+= Where do I get more information?
+
+* Read the documentation here:
+
+    http://ntecs.de/viewcvs/viewcvs/*checkout*/Wee/trunk/doc/rdoc/index.html
+
+* Have a look at the examples in the examples/ directory. If you've installed
+  Wee via Rubygems, then you'll find the examples this way:
+
+    cd `gem environment gemdir`
+    cd gems/wee-VERSION
+    cd examples
+
+* Post your questions on ruby-talk
+
+* Post your questions to wee-talk:
+
+    http://rubyforge.org/mailman/listinfo/wee-talk
+
+* Ask me personally (mneumann@ntecs.de).
+EOS
+
+run()

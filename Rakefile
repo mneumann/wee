@@ -21,9 +21,13 @@ task :package do
   sh 'gem build wee.gemspec' 
 end
 
-task :local_install => [:package] do
+task :gem_install => [:package] do
   sh '(yes | gem uninstall wee) || true'
   sh 'gem install --no-rdoc wee-*.gem'
+end
+
+task :install do
+  ruby 'install.rb'
 end
 
 task :clean => [:clobber_rdoc]

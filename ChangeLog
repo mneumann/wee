@@ -1,3 +1,8 @@
+Fri Jan 28 02:10:31 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* added 'wee' binary which generates a sample application and
+	  recommended directory structure for you (similar to the 'rails' command).
+
 Fri Jan 28 00:22:21 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* Method Wee::Utils.app_for: Removed the id_seed option. Use id_gen

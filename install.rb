@@ -1,6 +1,7 @@
 require 'rbconfig'
 require 'ftools'
 
+# Install lib
 dst_dir = Config::CONFIG['sitelibdir']
 Dir.chdir('lib') { 
   Dir['**/*.rb'].each {|file|
@@ -8,3 +9,6 @@ Dir.chdir('lib') {
     File.install file, File.join(dst_dir, file), 0644, true
   }
 }
+
+# Install bin
+File.install 'bin/wee', File.join(Config::CONFIG['bindir'], 'wee'), 0755, true
