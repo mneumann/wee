@@ -107,6 +107,8 @@ class Brush::GenericTagBrush < Brush
     end
   end
 
+  public
+
   def __input_callback(symbol=nil, *args, &block)
     name(@canvas.register_callback(:input, to_callback(symbol, args, block)))
   end
@@ -126,8 +128,6 @@ class Brush::GenericTagBrush < Brush
   def __actionurl_named_callback(name, symbol=nil, *args, &block)
     __set_url(@canvas.url_for_named_callback(name, to_callback(symbol, args, block)))
   end
-
-  public
 
   def method_missing(id, attr)
     html_attr(id.to_s, attr)
@@ -324,13 +324,6 @@ class Brush::SelectListTag < Brush::GenericTagBrush
   end
 
   bool_attr :multiple
-
-  # TODO
-  # InputCallback
-  #alias callback __input_callback
-
-  #  alias __old_callback callback
-  #private :__old_callback
 
   def callback(symbol=nil, *args, &block)
     @callback = to_callback(symbol, args, block)
