@@ -13,7 +13,6 @@ require 'cgi'
 #   w.end_tag('body')
 #   w.end_tag('html')
 #
-#   p w.valid?   # => true
 #   p doc        # => '<html><body><a href="http://...">link</a></body></html>'
 #
 
@@ -22,17 +21,13 @@ class Wee::HtmlWriter
 
   def initialize(port)
     @port = port 
-    @open_start_tag = false
-    @tag_stack = []
   end
 
   def start_tag(tag, attributes=nil)
-    @port << ">" if @open_start_tag
-    @open_start_tag = true
-    @tag_stack.push(tag)
-
-    @port << "<#{ tag }"
-    if attributes
+    unless attributes
+      @port << "<#{ tag }>"
+    else
+      @port << "<#{ tag }"
       attributes.each {|k, v| 
         if v
           @port << %[ #{ k }="#{ v }"] 
@@ -40,35 +35,37 @@ class Wee::HtmlWriter
           @port << %[ #{ k }] 
         end
       }
+      @port << ">"
     end
 
     self
   end
 
   def single_tag(tag, attributes=nil)
-    start_tag(tag, attributes)
-    end_tag(tag)
-  end
-
-  def end_tag(tag)
-    raise "unbalanced html" if @tag_stack.pop != tag
-
-    if @open_start_tag
-      @port << "/>"
-      @open_start_tag = false
+    unless attributes
+      @port << "<#{ tag }/>"
     else
-      @port << "</#{ tag }>"
+      @port << "<#{ tag }"
+      attributes.each {|k, v| 
+        if v
+          @port << %[ #{ k }="#{ v }"] 
+        else
+          @port << %[ #{ k }] 
+        end
+      }
+      @port << "/>"
     end
 
     self
   end
 
-  def text(str)
-    if @open_start_tag
-      @port << ">"
-      @open_start_tag = false
-    end
+  def end_tag(tag)
+    @port << "</#{ tag }>"
 
+    self
+  end
+
+  def text(str)
     @port << str.to_s
 
     self
@@ -76,10 +73,8 @@ class Wee::HtmlWriter
   alias << text
 
   def encode_text(str)
-    text(CGI.escapeHTML(str.to_s))
-  end
+    @port << CGI.escapeHTML(str.to_s)
 
-  def valid?
-    @tag_stack.empty?
+    self
   end
 end
