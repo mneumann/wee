@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Fri Dec 10 13:06:21 CET 2004</td>
+      <td>Fri Dec 10 14:38:20 CET 2004</td>
     </tr>
     </table>
   </div>
@@ -73,7 +73,7 @@
 <p>
 Copyright &#169; 2004 by Michael Neumann (mneumann@ntecs.de)
 </p>
-<h1>The anatomy of a request/response cycle</h1>
+<h2>The anatomy of a request/response cycle</h2>
 <p>
 The request/response cycle in <a href="../classes/Wee.html">Wee</a> is
 actually split into two separate phases or steps. Depending on the
@@ -122,9 +122,18 @@ them, is briefly listed below:
 
 </li>
 </ol>
-<h3>Invoking Callbacks</h3>
 <p>
-Possible sources for callbacks are links (anchors) and all kind of
+For each session there is at most one request handled at the same time.
+That means, that there is either one action request or one render request
+handled. Why? Because we have only one components tree, which we update on
+action requests. As <a href="../classes/Wee.html">Wee</a> allows to go back
+in time, we have to restore this components tree to a certain point in time
+before we can handle an action or render request. This disallows to handle
+e.g. two render requests simultaneous.
+</p>
+<h3>Action Phase (Invoking Callbacks)</h3>
+<p>
+Possible sources for callbacks are links (anchors) and all kinds of
 form-elements like submit buttons, input-fields etc. There are two
 different kinds of callbacks:
 </p>
@@ -147,16 +156,20 @@ any action callback is triggered.
 There are two methods related to callback processing:
 </p>
 <ul>
-<li><em>Component#process_callback_chain</em>
+<li><a
+href="../classes/Wee/Component.html#M000141">Wee::Component#process_callback_chain</a>
 
 </li>
-<li><em>Presenter#process_callbacks</em>
+<li><a
+href="../classes/Wee/Presenter.html#M000161">Wee::Presenter#process_callbacks</a>
 
 </li>
 </ul>
 <p>
-Note that each Component is also a Presenter, but a Decoration is not a
-Component!
+Note that each <a href="../classes/Wee/Component.html">Wee::Component</a>
+is also a <a href="../classes/Wee/Presenter.html">Wee::Presenter</a>,
+whereas a <a href="../classes/Wee/Decoration.html">Wee::Decoration</a> is
+not a Component (but a Presenter)!
 </p>
 <p>
 Method <em>process_callback_chain</em> invokes <em>process_callbacks</em>
@@ -184,10 +197,11 @@ Similar as in the callback-step, there are two methods related to rendering
 a page:
 </p>
 <ul>
-<li><em>Component#render_chain</em>
+<li><a
+href="../classes/Wee/Component.html#M000140">Wee::Component#render_chain</a>
 
 </li>
-<li><em>Presenter#render</em>
+<li><a href="../classes/Wee/Presenter.html#M000158">Wee::Presenter#render</a>
 
 </li>
 </ul>
