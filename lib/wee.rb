@@ -7,6 +7,8 @@ require 'wee/session'
 require 'wee/core'
 
 require 'wee/snapshot_ext'
-require 'wee/html_writer'
-require 'wee/html_canvas'
+
+require 'wee/rendering/html/writer'
+require 'wee/rendering/html/canvas'
+
 require 'wee/stuff'

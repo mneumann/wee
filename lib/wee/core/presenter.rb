@@ -74,28 +74,23 @@ class Wee::Presenter
   #    An object of class CallbackStream
 
   def process_callbacks(callback_stream) # :yields:
-
     # invoke input callbacks
-    for callback in callback_stream.get_callbacks_for(self, :input)
-      callback.invoke
-    end
+    callback_stream.with_callbacks_for(self, :input) { |callback, value|
+      callback.call(value)
+    }
 
     # enable subclasses to add behaviour, e.g. a Component class will invoke
     # process_callback_chain for each child in the block.
     yield if block_given?
 
     # invoke action callbacks
-    for callback in callback_stream.get_callbacks_for(self, :action)
-
-      catch(:wee_back_to_process_callbacks) { callback.invoke }
-
+    callback_stream.with_callbacks_for(self, :action) { |callback, value|
+      catch(:wee_back_to_process_callbacks) { callback.call }
       if cont = session.continuation_stack.pop
         cont.call
         raise "FATAL! Please inform the developer!"
       end
-
-    end
-
+    }
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

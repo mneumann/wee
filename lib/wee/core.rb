@@ -7,6 +7,7 @@
 # independent files
 require 'wee/core/valueholder'
 require 'wee/core/snapshot'
+require 'wee/core/callback'
 
 # dependent files
 require 'wee/core/presenter'
