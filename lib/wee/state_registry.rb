@@ -1,34 +1,75 @@
-require 'thread'
 require 'set'
 require 'wee/snapshot'
+require 'thread'
+
+# StateRegistry is not thread-safe! This doesn't matter, as each Wee::Session
+# has it's own registry, and each session run's in it's own thread. 
 
 class Wee::StateRegistry
+
   def initialize
     @registered_objects = Hash.new  # { oid => Set:{snap_oid1, snap_oid2}
     @snap_to_oid_map = Hash.new     # { snap_oid => Set:{oid1, oid2} }
 
     @finalizer_snap = proc {|snap_oid|
-      Thread.exclusive do
-        @snap_to_oid_map[snap_oid].each do |oid|
-          if r = @registered_objects[oid]
-            r.delete(snap_oid)
-          end
+      @snap_to_oid_map[snap_oid].each do |oid|
+        if r = @registered_objects[oid]
+          r.delete(snap_oid)
         end
-        @snap_to_oid_map.delete(snap_oid)
       end
+      @snap_to_oid_map.delete(snap_oid)
     }
 
     @finalizer_obj = proc {|oid|
-      Thread.exclusive do
-        (@registered_objects.delete(oid) || []).each do |snap_oid|
+      if r = @registered_objects.delete(oid)
+        r.each do |snap_oid|
           with_object(snap_oid) { |snap|
-            snap.delete(oid)
+            snap.data.delete(oid)
             @snap_to_oid_map[snap_oid].delete(oid)
           }
         end
       end
     }
   end
+
+  # Register object +obj+. If you call #snapshot, a snapshot of all registered
+  # objects is taken.
+
+  def register(obj)
+    raise "multi-register" if @registered_objects.include?(obj.object_id)
+    @registered_objects[obj.object_id] ||= Set.new 
+    ObjectSpace.define_finalizer(obj, @finalizer_obj)
+  end
+  alias << register
+
+  # Take a snapshot of all registered objects. Returns a
+  # StateRegistry::Snapshot data structure.
+
+  def snapshot
+    snap = Snapshot.new
+    snap_oid = snap.object_id
+    set = (@snap_to_oid_map[snap.object_id] ||= Set.new)
+
+    each_object(@registered_objects) do |obj, oid|
+      snap.add_object(obj)
+      set.add(oid)
+      @registered_objects[oid].add(snap_oid)
+    end
+
+    ObjectSpace.define_finalizer(snap, @finalizer_snap)
+    return snap
+  end
+
+  # Returns the current number of registered objects and snapshots.
+
+  def statistics
+    {:registered_objects => @registered_objects.size, 
+     :snapshots => @snap_to_oid_map.size}
+  end
+
+  # ----------------------------------------------------------------------
+  # Marshalling
+  # ----------------------------------------------------------------------
 
   def marshal_load(dump)
     initialize
@@ -41,7 +82,7 @@ class Wee::StateRegistry
     snaps.each do |snap|
       set = (@snap_to_oid_map[snap.object_id] ||= Set.new)
 
-      snap.each do |oid, hash| 
+      snap.data.each do |oid, hash| 
         set.add(oid)
         @registered_objects[oid].add(snap.object_id)
       end
@@ -50,81 +91,74 @@ class Wee::StateRegistry
     end
   end
 
-  # TODO: should do a GC before marshalling?! 
-  # NOTE: we have to marshal the @registered_objects too, as we might have not
-  # yet taken any snapshot
+  # Notice: We have to marshal the @registered_objects too, as we might have
+  # not yet taken any snapshot
+  #
+  # TODO: Should we do a GC before marshalling? Otherwise we marshal possibly
+  # unused objects.
+
   def marshal_dump
     objs = []
     snaps = []
 
-    each_object {|obj| objs << obj}
-    each_snapshot { |snap| snaps << snap }
+    each_object(@registered_objects) {|obj, oid| objs << obj}
+    each_object(@snap_to_oid_map) { |snap, soid| snaps << snap }
 
     [objs, snaps]
   end
 
-  def snapshot
-    snap = Snapshot.new
-    set = (@snap_to_oid_map[snap.object_id] ||= Set.new)
-
-    each_object do |obj|
-      snap.add_object(obj)
-      set.add(obj.object_id)
-      @registered_objects[obj.object_id].add(snap.object_id)
-    end
-
-    ObjectSpace.define_finalizer(snap, @finalizer_snap)
-
-    return snap
-  end
-
-  def register(obj)
-    @registered_objects[obj.object_id] ||= Set.new 
-    ObjectSpace.define_finalizer(obj, @finalizer_obj)
-  end
-
-  alias << register
-
-  def each_object(&block)
-    Thread.exclusive do
-      @registered_objects.each_key do |oid|
-        with_object(oid, &block)
-      end
-    end
-  end
-
-  def each_snapshot(&block)
-    Thread.exclusive do
-      @snap_to_oid_map.each_key do |oid|
-        with_object(oid, &block)
-      end
-    end
-  end
+  # ----------------------------------------------------------------------
+  # Private and other stuff
+  # ----------------------------------------------------------------------
 
   private
 
-  def with_object(oid, &block)
-    begin
-      obj = ObjectSpace._id2ref(oid)
-    rescue RangeError
-      return
+  # Iterate over all live objects in +hash+ where +hash+ may be either
+  # @registered_objects or @snap_to_oid_map.
+
+  def each_object(hash, &block) #:yields: object, object_id
+    hash.each_key do |oid|
+      with_object(oid) {|obj| 
+
+        # At this point, @registered_objects[oid] will not be modified, i.e. no
+        # finalizer for oid will be called as we're holding a reference to it.
+        # But we might hold a reference to a non-registered object (the
+        # "original" registered object was garbage-collected and a new with the
+        # same object_id sprang into existence). If it's a different object
+        # than the registered one, then a finalizer was called during iterating
+        # over @registered_objects (and has been removed from there in the
+        # meanwhile).
+
+        block.call(obj, oid) if hash.include?(oid)
+      }
     end
-    block.call(obj) if block
   end
 
-  class Snapshot
-    def initialize
-      @data = Hash.new
-    end
+  # Mixin that is used in both StateRegistry and StateRegistry::Snapshot 
 
-    def delete(key)
-      @data.delete(key)
-    end
-
-    def each(&block)
-      Thread.exclusive do
-        @data.each(&block)
+  module WithObject
+    private
+    def with_object(oid, &block)
+      begin
+        obj = ObjectSpace._id2ref(oid)
+      rescue RangeError
+        return
       end
+      block.call(obj) if block
+    end
+  end
+
+  include WithObject
+
+  # Snapshot is a private data structure used by StateRegistry. You SHOULD NOT
+  # use it directly! 
+
+  class Snapshot
+    # DO NOT access +data+ directly!
+    attr_reader :data
+
+    def initialize
+      @data = Hash.new    # { oid => snapshot, ... }
     end
 
     def add_object(obj)
@@ -132,10 +166,8 @@ class Wee::StateRegistry
     end
 
     def apply
-      each do |oid, snap|
-        with_object(oid) {|obj|
-          obj.apply_snapshot(snap)
-        }
+      each_object_snapshot do |obj, snap|
+        obj.apply_snapshot(snap)
       end
     end
 
@@ -143,8 +175,8 @@ class Wee::StateRegistry
       # generates a { obj => {instance variables} } hash
       dump = Hash.new
 
-      each do |oid, hash|
-        with_object(oid) {|obj| dump[obj] = hash }
+      each_object_snapshot do |obj, snap|
+        dump[obj] = snap
       end
 
       dump
@@ -159,13 +191,15 @@ class Wee::StateRegistry
 
     private
 
-    def with_object(oid, &block)
-      begin
-        obj = ObjectSpace._id2ref(oid)
-      rescue RangeError
-        return
+    include WithObject
+
+    def each_object_snapshot(&block)
+      @data.each do |oid, snap|
+        with_object(oid) {|obj| 
+          # same is true as for StateRegistry#each_object
+          block.call(obj, snap) if @data.include?(oid)
+        }
       end
-      block.call(obj) if block
     end
 
   end # class Snapshot
