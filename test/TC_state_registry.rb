@@ -4,14 +4,18 @@ module Wee; end
 require 'wee/state_registry'
 
 class TC_StateRegistry < Test::Unit::TestCase
+  class MyStateRegistry < Wee::StateRegistry
+    def each_obj(&block) each_object(@registered_objects, &block) end
+  end
+
   def test_finalizer
-    s = Wee::StateRegistry.new
+    s = MyStateRegistry.new
     10_000.times do 
       s.register("abc")
     end
-    s.each_object {|o| assert_equal("abc", o)} 
+    s.each_obj {|o, _| assert_equal("abc", o)} 
     ObjectSpace.garbage_collect
-    s.each_object {|o| assert_equal("abc", o)} 
+    s.each_obj {|o, _| assert_equal("abc", o)} 
   end
 
   def test_snapshot_marshal
