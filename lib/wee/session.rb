@@ -13,7 +13,6 @@ class Wee::Session < Wee::RequestHandler
   def initialize(&block)
     @idgen = Wee::SimpleIdGenerator.new
     @in_queue, @out_queue = SizedQueue.new(1), SizedQueue.new(1)
-    @continuation_stack = []
 
     block.call(self)
 
@@ -28,7 +27,6 @@ class Wee::Session < Wee::RequestHandler
 
   def snapshot
     @root_component.backtrack_state_chain(snap = Wee::Snapshot.new)
-    snap.add(@continuation_stack)
     return snap.freeze
   end
 
@@ -59,8 +57,6 @@ class Wee::Session < Wee::RequestHandler
       }
     }
   end
-
-  attr_reader :continuation_stack
 
   def create_page(snapshot)
     idgen = Wee::SimpleIdGenerator.new
@@ -103,6 +99,10 @@ class Wee::Session < Wee::RequestHandler
 
         callback_stream = Wee::CallbackStream.new(page.callbacks, @context.request.fields) 
 
+        if callback_stream.all_of_type(:action).size > 1 
+          raise "Not allowed to specify more than oneaction callback"
+        end
+
         catch(:wee_back_to_session) {
           @root_component.process_callback_chain(callback_stream)
         }
@@ -130,7 +130,7 @@ class Wee::Session < Wee::RequestHandler
     new_page_id = @idgen.next.to_s
     new_page = create_page(snapshot || self.snapshot())
     @page_store[new_page_id] = new_page
-    redirect_url = context.request.build_url(nil, new_page_id)
+    redirect_url = context.request.build_url(context.request.request_handler_id, new_page_id)
     context.response = Wee::RedirectResponse.new(redirect_url)
   end
 

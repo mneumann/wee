@@ -59,10 +59,6 @@
                 lib/wee/application.rb
                 </a>
         <br />
-                <a href="../../files/lib/wee/webrick_rb.html">
-                lib/wee/webrick.rb
-                </a>
-        <br />
             </td>
         </tr>
 
@@ -102,12 +98,11 @@ the correct handler by examining the request.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000125">default_request_handler</a>&nbsp;&nbsp;
-      <a href="#M000127">handle_request</a>&nbsp;&nbsp;
-      <a href="#M000126">new</a>&nbsp;&nbsp;
-      <a href="#M000129">request_handler_expired</a>&nbsp;&nbsp;
-      <a href="#M000130">start</a>&nbsp;&nbsp;
-      <a href="#M000128">unique_request_handler_id</a>&nbsp;&nbsp;
+      <a href="#M000132">default_request_handler</a>&nbsp;&nbsp;
+      <a href="#M000134">handle_request</a>&nbsp;&nbsp;
+      <a href="#M000133">new</a>&nbsp;&nbsp;
+      <a href="#M000136">request_handler_expired</a>&nbsp;&nbsp;
+      <a href="#M000135">unique_request_handler_id</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -153,11 +148,11 @@ The maximum number of request handlers
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000126" class="method-detail">
-        <a name="M000126"></a>
+      <div id="method-M000133" class="method-detail">
+        <a name="M000133"></a>
 
         <div class="method-heading">
-          <a href="#M000126" class="method-signature">
+          <a href="#M000133" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
@@ -174,8 +169,8 @@ Creates a new application. The block is used to initialize the attributes:
   }
 </pre>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000126-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000126-source">
+            onclick="toggleCode('M000133-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000133-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/application.rb, line 34</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
@@ -193,11 +188,11 @@ Creates a new application. The block is used to initialize the attributes:
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000125" class="method-detail">
-        <a name="M000125"></a>
+      <div id="method-M000132" class="method-detail">
+        <a name="M000132"></a>
 
         <div class="method-heading">
-          <a href="#M000125" class="method-signature">
+          <a href="#M000132" class="method-signature">
           <span class="method-name">default_request_handler</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
@@ -208,8 +203,8 @@ Get or set the default request handler. The default request handler is used
 if no request handler id is given in a request.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000125-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000125-source">
+            onclick="toggleCode('M000132-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000132-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/application.rb, line 18</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default_request_handler</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
@@ -224,11 +219,11 @@ if no request handler id is given in a request.
         </div>
       </div>
 
-      <div id="method-M000127" class="method-detail">
-        <a name="M000127"></a>
+      <div id="method-M000134" class="method-detail">
+        <a name="M000134"></a>
 
         <div class="method-heading">
-          <a href="#M000127" class="method-signature">
+          <a href="#M000134" class="method-signature">
           <span class="method-name">handle_request</span><span class="method-args">(context)</span>
           </a>
         </div>
@@ -239,8 +234,8 @@ TODO: we have to use mutexes here NOTE that id_generator must be
 thread-safe! TODO: test for max_request_handlers
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000127-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000127-source">
+            onclick="toggleCode('M000134-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000134-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/application.rb, line 47</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_request</span>(<span class="ruby-identifier">context</span>)
@@ -275,59 +270,21 @@ thread-safe! TODO: test for max_request_handlers
         </div>
       </div>
 
-      <div id="method-M000130" class="method-detail">
-        <a name="M000130"></a>
-
-        <div class="method-heading">
-          <a href="#M000130" class="method-signature">
-          <span class="method-name">start</span><span class="method-args">(hash=nil)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000130-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000130-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/webrick.rb, line 3</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start</span>(<span class="ruby-identifier">hash</span>=<span class="ruby-keyword kw">nil</span>)
-    <span class="ruby-identifier">hash</span> = {<span class="ruby-identifier">:Port</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">2000</span>}.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">hash</span><span class="ruby-operator">||</span>{})
-    <span class="ruby-identifier">server</span> = <span class="ruby-constant">WEBrick</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTPServer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">hash</span>)
-    <span class="ruby-identifier">server</span>.<span class="ruby-identifier">mount_proc</span>(<span class="ruby-identifier">hash</span>[<span class="ruby-identifier">:mount_path</span>]) {<span class="ruby-operator">|</span><span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span><span class="ruby-operator">|</span> 
-      <span class="ruby-identifier">context</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Context</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Request</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">req</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">req</span>.<span class="ruby-identifier">header</span>, <span class="ruby-identifier">req</span>.<span class="ruby-identifier">query</span>))
-      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">handle_request</span>(<span class="ruby-identifier">context</span>)
-
-      <span class="ruby-identifier">res</span>.<span class="ruby-identifier">status</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span>.<span class="ruby-identifier">status</span>
-      <span class="ruby-identifier">res</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span>.<span class="ruby-identifier">content</span>
-      <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span>.<span class="ruby-identifier">header</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">header</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">v</span> }
-    }
-    <span class="ruby-identifier">trap</span>(<span class="ruby-value str">&quot;INT&quot;</span>) { 
-      <span class="ruby-identifier">trap</span>(<span class="ruby-value str">&quot;INT&quot;</span>, <span class="ruby-value str">&quot;IGNORE&quot;</span>)
-      <span class="ruby-identifier">server</span>.<span class="ruby-identifier">shutdown</span>
-      <span class="ruby-identifier">exit</span>
-    }
-    <span class="ruby-identifier">server</span>.<span class="ruby-identifier">start</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
       <h3 class="section-bar">Private Instance methods</h3>
 
-      <div id="method-M000129" class="method-detail">
-        <a name="M000129"></a>
+      <div id="method-M000136" class="method-detail">
+        <a name="M000136"></a>
 
         <div class="method-heading">
-          <a href="#M000129" class="method-signature">
+          <a href="#M000136" class="method-signature">
           <span class="method-name">request_handler_expired</span><span class="method-args">(context)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000129-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000129-source">
+            onclick="toggleCode('M000136-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000136-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/application.rb, line 83</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">request_handler_expired</span>(<span class="ruby-identifier">context</span>)
@@ -338,19 +295,19 @@ thread-safe! TODO: test for max_request_handlers
         </div>
       </div>
 
-      <div id="method-M000128" class="method-detail">
-        <a name="M000128"></a>
+      <div id="method-M000135" class="method-detail">
+        <a name="M000135"></a>
 
         <div class="method-heading">
-          <a href="#M000128" class="method-signature">
+          <a href="#M000135" class="method-signature">
           <span class="method-name">unique_request_handler_id</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000128-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000128-source">
+            onclick="toggleCode('M000135-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000135-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/application.rb, line 77</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unique_request_handler_id</span>

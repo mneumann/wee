@@ -37,6 +37,7 @@ class HtmlCanvas < Canvas
   attr_accessor :current_component
 
   def initialize(rendering_context)
+    super()
     @rendering_context = rendering_context
     @document = rendering_context.document
   end

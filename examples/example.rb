@@ -219,5 +219,5 @@ if __FILE__ == $0
   }
   
   require 'wee/adaptors/webrick' 
-  Wee::WEBrickAdaptor.register('/app', app).start 
+  Wee::WEBrickAdaptor.register('/app' => app).start 
 end

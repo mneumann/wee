@@ -3,6 +3,10 @@ module Wee
 class Brush
   attr_accessor :parent, :canvas
 
+  def initialize
+    @parent = @canvas = @closed = nil
+  end
+
   def with(*args, &block)
     raise "either args or block, but not both" if block and not args.empty?
 
@@ -17,6 +21,7 @@ end
 
 class Brush::GenericTextBrush < Brush
   def initialize(text)
+    super()
     @text = text
   end
   
@@ -30,6 +35,7 @@ end
 
 class Brush::GenericEncodedTextBrush < Brush
   def initialize(text)
+    super()
     @text = text
   end
 
@@ -43,6 +49,7 @@ end
 
 class Brush::GenericTagBrush < Brush
   def initialize(tag)
+    super()
     @tag = tag
     @attributes = Hash.new
   end
@@ -175,7 +182,7 @@ module Brush::ActionURLCallbackMixin
     raise ArgumentError if symbol and block
     block = @canvas.current_component.method(symbol) unless block
     req = @canvas.rendering_context.request
-    url = req.build_url(nil, nil, register_callback(:action, &block))
+    url = req.build_url(req.request_handler_id, req.page_id, register_callback(:action, &block))
     __set_url(url)
   end
 end
@@ -338,7 +345,8 @@ class Brush::FormTag < Brush::GenericTagBrush
   def with(*args, &block)
     # If no action was specified, use a dummy one.
     unless @attributes.has_key?('action')
-      @attributes['action'] = @canvas.rendering_context.request.build_url(nil, nil) 
+      req = @canvas.rendering_context.request
+      @attributes['action'] = req.build_url(req.request_handler_id, req.page_id) 
     end
     super
   end

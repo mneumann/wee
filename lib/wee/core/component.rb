@@ -265,26 +265,19 @@ class Wee::Component < Wee::Presenter
   # wrapped with an AnswerDecoration and the continuation is assigned to it's
   # +on_answer+ attribute. Then a Delegate decoration is added to the calling
   # component (self), which delegates to the component to be called
-  # (+component+). Then we unwind the calling stack back to
-  # Presenter#process_callbacks by throwing
-  # <i>:wee_back_to_process_callbacks</i>.  When at a later point in time the
-  # called component invokes #answer, this will throw a <i>:wee_answer</i> exception
-  # which is catched in the AnswerDecoration.  The AnswerDecoration then jumps
-  # back to the continuation we created at the beginning, and finally method
-  # #call returns. 
+  # (+component+). Then we unwind the calling stack back to the Session by
+  # throwing <i>:wee_back_to_session</i>. This means, that there is only ever
+  # one action callback invoked per request.  When at a later point in time the
+  # called component invokes #answer, this will throw a <i>:wee_answer</i>
+  # exception which is catched in the AnswerDecoration.  The AnswerDecoration
+  # then jumps back to the continuation we created at the beginning, and
+  # finally method #call returns. 
   #
   # Note that #call returns to an "old" stack-frame from a previous request.
-  # Therefore, method #answer creates another continuation and pushes this onto
-  # the sessions +continuation_stack+. In Presenter#process_callbacks we try to
-  # pop from this stack every time after invoking a callback, and if there was
-  # a continuation on the stack, we jump to it (and never return). This then
-  # jumps back to the #answer method and returns to the current
-  # Presenter#process_callbacks method, quite after the invokation of the
-  # callback that caused method #answer to be called. From thereon, everything
-  # proceeds as usual.
-  #
-  # This complicated procedure allows multiple action callbacks to be followed
-  # in the same request and even multiple answer's.
+  # That is why we throw <i>:wee_back_to_session</i> after invoking an action
+  # callback, and that's why only ever one is invoked. We could remove this
+  # limitation without problems, but then there would be a difference between
+  # those action callbacks that call other components and those that do not.  
 
   def call(component)
     add_decoration(delegate = Wee::Delegate.new(component))
@@ -292,29 +285,23 @@ class Wee::Component < Wee::Presenter
 
     result = callcc {|cc|
       answer.on_answer = cc
-      throw :wee_back_to_process_callbacks
+      throw :wee_back_to_session
     }
 
     remove_decoration(delegate)
     component.remove_decoration(answer)
-    #answer.on_answer = nil  # TODO: is this a memory leak?
 
     return result
   end
 
   # Return from a called component.
-  #
-  # After answering, the component that calls #answer should no further be
-  # used or reused.
+  # 
+  # NOTE that #answer never returns.
   #
   # See #call for a detailed description of the call/answer mechanism.
 
   def answer(*args)
-    callcc {|cc|
-      session.continuation_stack.push cc 
-      throw :wee_answer, args 
-    }
-    throw :wee_back_to_process_callbacks
+    throw :wee_answer, args 
   end
 
 end

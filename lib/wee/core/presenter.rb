@@ -67,8 +67,10 @@ class Wee::Presenter
   # Process all callbacks specified for this presenter. 
   #
   # At first, this method invokes all input callbacks of this presenter, then
-  # it calls the block if one was given (used by subclasses). Finally, all
-  # action callbacks are invoked.
+  # it calls the block if one was given (used by subclasses). Finally, the
+  # action callback is invoked (there's only one per request).
+  #
+  # NOTE: Input callbacks should never call other components!
   #
   # [+callback_stream+]
   #    An object of class CallbackStream
@@ -83,13 +85,10 @@ class Wee::Presenter
     # process_callback_chain for each child in the block.
     yield if block_given?
 
-    # invoke action callbacks
+    # invoke action callback. only the first action callback is invoked.
     callback_stream.with_callbacks_for(self, :action) { |callback, value|
-      catch(:wee_back_to_process_callbacks) { callback.call }
-      if cont = session.continuation_stack.pop
-        cont.call
-        raise "FATAL! Please inform the developer!"
-      end
+      callback.call
+      throw :wee_back_to_session
     }
   end
 

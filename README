@@ -6,7 +6,7 @@ Copyright (c) 2004 by Michael Neumann (mneumann@ntecs.de).
 
 Released under the same terms of license as Ruby. Some files under directory
 <tt>examples/</tt> might be copyrighted by third parties and licensed under
-differen terms.
+different terms.
 
 == Introduction
 
@@ -99,6 +99,8 @@ can be any object, e.g. whole components:
   to store sessions _selectively_ to disk. 
 
 * Each session runs in it's own (light-weigth) thread.
+
+* Only one action callback can be invoked per request.
 
 == What is backtracking?
 

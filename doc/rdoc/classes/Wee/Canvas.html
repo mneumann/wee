@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../files/lib/wee/rendering/html/canvas_rb.html">
-                lib/wee/rendering/html/canvas.rb
+                <a href="../../files/lib/wee/renderer/html/canvas_rb.html">
+                lib/wee/renderer/html/canvas.rb
                 </a>
         <br />
             </td>
@@ -88,10 +88,10 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000136">close</a>&nbsp;&nbsp;
-      <a href="#M000138">nest</a>&nbsp;&nbsp;
-      <a href="#M000135">new</a>&nbsp;&nbsp;
-      <a href="#M000137">set_brush</a>&nbsp;&nbsp;
+      <a href="#M000150">close</a>&nbsp;&nbsp;
+      <a href="#M000152">nest</a>&nbsp;&nbsp;
+      <a href="#M000149">new</a>&nbsp;&nbsp;
+      <a href="#M000151">set_brush</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -113,21 +113,21 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000135" class="method-detail">
-        <a name="M000135"></a>
+      <div id="method-M000149" class="method-detail">
+        <a name="M000149"></a>
 
         <div class="method-heading">
-          <a href="#M000135" class="method-signature">
+          <a href="#M000149" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000135-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000135-source">
+            onclick="toggleCode('M000149-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000149-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/canvas.rb, line 4</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 4</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
     <span class="ruby-ivar">@parent_brush</span> = <span class="ruby-keyword kw">nil</span>
     <span class="ruby-ivar">@current_brush</span> = <span class="ruby-keyword kw">nil</span>
@@ -139,21 +139,21 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000136" class="method-detail">
-        <a name="M000136"></a>
+      <div id="method-M000150" class="method-detail">
+        <a name="M000150"></a>
 
         <div class="method-heading">
-          <a href="#M000136" class="method-signature">
+          <a href="#M000150" class="method-signature">
           <span class="method-name">close</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000136-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000136-source">
+            onclick="toggleCode('M000150-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000150-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/canvas.rb, line 9</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 9</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
     <span class="ruby-ivar">@current_brush</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@current_brush</span>
     <span class="ruby-ivar">@current_brush</span> = <span class="ruby-keyword kw">nil</span>
@@ -163,21 +163,21 @@
         </div>
       </div>
 
-      <div id="method-M000138" class="method-detail">
-        <a name="M000138"></a>
+      <div id="method-M000152" class="method-detail">
+        <a name="M000152"></a>
 
         <div class="method-heading">
-          <a href="#M000138" class="method-signature">
+          <a href="#M000152" class="method-signature">
           <span class="method-name">nest</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000138-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000138-source">
+            onclick="toggleCode('M000152-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000152-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/canvas.rb, line 25</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 25</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">nest</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-ivar">@parent_brush</span> = <span class="ruby-ivar">@current_brush</span>
     <span class="ruby-ivar">@current_brush</span> = <span class="ruby-keyword kw">nil</span>
@@ -190,21 +190,21 @@
         </div>
       </div>
 
-      <div id="method-M000137" class="method-detail">
-        <a name="M000137"></a>
+      <div id="method-M000151" class="method-detail">
+        <a name="M000151"></a>
 
         <div class="method-heading">
-          <a href="#M000137" class="method-signature">
+          <a href="#M000151" class="method-signature">
           <span class="method-name">set_brush</span><span class="method-args">(brush)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000137-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000137-source">
+            onclick="toggleCode('M000151-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000151-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/canvas.rb, line 14</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 14</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_brush</span>(<span class="ruby-identifier">brush</span>)
     <span class="ruby-comment cmt"># tell previous brush to finish</span>
     <span class="ruby-ivar">@current_brush</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@current_brush</span>

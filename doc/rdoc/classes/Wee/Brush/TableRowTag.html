@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../../files/lib/wee/rendering/html/brushes_rb.html">
-                lib/wee/rendering/html/brushes.rb
+                <a href="../../../files/lib/wee/renderer/html/brushes_rb.html">
+                lib/wee/renderer/html/brushes.rb
                 </a>
         <br />
             </td>
@@ -86,12 +86,12 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000081">align_top</a>&nbsp;&nbsp;
-      <a href="#M000082">columns</a>&nbsp;&nbsp;
-      <a href="#M000083">headings</a>&nbsp;&nbsp;
-      <a href="#M000080">new</a>&nbsp;&nbsp;
-      <a href="#M000085">spacer</a>&nbsp;&nbsp;
-      <a href="#M000084">spanning_column</a>&nbsp;&nbsp;
+      <a href="#M000100">align_top</a>&nbsp;&nbsp;
+      <a href="#M000101">columns</a>&nbsp;&nbsp;
+      <a href="#M000102">headings</a>&nbsp;&nbsp;
+      <a href="#M000099">new</a>&nbsp;&nbsp;
+      <a href="#M000104">spacer</a>&nbsp;&nbsp;
+      <a href="#M000103">spanning_column</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -113,21 +113,21 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000080" class="method-detail">
-        <a name="M000080"></a>
+      <div id="method-M000099" class="method-detail">
+        <a name="M000099"></a>
 
         <div class="method-heading">
-          <a href="#M000080" class="method-signature">
+          <a href="#M000099" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000080-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000080-source">
+            onclick="toggleCode('M000099-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000099-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 81</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 88</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
     <span class="ruby-keyword kw">super</span>(<span class="ruby-value str">'tr'</span>)
   <span class="ruby-keyword kw">end</span>
@@ -138,21 +138,21 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000081" class="method-detail">
-        <a name="M000081"></a>
+      <div id="method-M000100" class="method-detail">
+        <a name="M000100"></a>
 
         <div class="method-heading">
-          <a href="#M000081" class="method-signature">
+          <a href="#M000100" class="method-signature">
           <span class="method-name">align_top</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000081-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000081-source">
+            onclick="toggleCode('M000100-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000100-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 85</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 92</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">align_top</span>
     <span class="ruby-ivar">@attributes</span>[<span class="ruby-value str">'align'</span>] = <span class="ruby-value str">'top'</span>
     <span class="ruby-keyword kw">self</span>
@@ -162,21 +162,21 @@
         </div>
       </div>
 
-      <div id="method-M000082" class="method-detail">
-        <a name="M000082"></a>
+      <div id="method-M000101" class="method-detail">
+        <a name="M000101"></a>
 
         <div class="method-heading">
-          <a href="#M000082" class="method-signature">
+          <a href="#M000101" class="method-signature">
           <span class="method-name">columns</span><span class="method-args">(*cols)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000082-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000082-source">
+            onclick="toggleCode('M000101-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000101-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 90</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 97</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">columns</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">cols</span>)
     <span class="ruby-identifier">with</span> {
       <span class="ruby-identifier">cols</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">table_data</span>(<span class="ruby-identifier">col</span>) }
@@ -187,21 +187,21 @@
         </div>
       </div>
 
-      <div id="method-M000083" class="method-detail">
-        <a name="M000083"></a>
+      <div id="method-M000102" class="method-detail">
+        <a name="M000102"></a>
 
         <div class="method-heading">
-          <a href="#M000083" class="method-signature">
+          <a href="#M000102" class="method-signature">
           <span class="method-name">headings</span><span class="method-args">(*headers)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000083-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000083-source">
+            onclick="toggleCode('M000102-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000102-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 96</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 103</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">headings</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">headers</span>)
     <span class="ruby-identifier">with</span> {
       <span class="ruby-identifier">headers</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">head</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">table_heading</span>(<span class="ruby-identifier">head</span>) }
@@ -212,21 +212,21 @@
         </div>
       </div>
 
-      <div id="method-M000085" class="method-detail">
-        <a name="M000085"></a>
+      <div id="method-M000104" class="method-detail">
+        <a name="M000104"></a>
 
         <div class="method-heading">
-          <a href="#M000085" class="method-signature">
+          <a href="#M000104" class="method-signature">
           <span class="method-name">spacer</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000085-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000085-source">
+            onclick="toggleCode('M000104-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000104-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 108</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 115</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">spacer</span>
     <span class="ruby-identifier">with</span> {
       <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">table_data</span> { <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">space</span> }
@@ -237,21 +237,21 @@
         </div>
       </div>
 
-      <div id="method-M000084" class="method-detail">
-        <a name="M000084"></a>
+      <div id="method-M000103" class="method-detail">
+        <a name="M000103"></a>
 
         <div class="method-heading">
-          <a href="#M000084" class="method-signature">
+          <a href="#M000103" class="method-signature">
           <span class="method-name">spanning_column</span><span class="method-args">(str, colspan)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000084-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000084-source">
+            onclick="toggleCode('M000103-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000103-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 102</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 109</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">spanning_column</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">colspan</span>)
     <span class="ruby-identifier">with</span> {
       <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">table_data</span>.<span class="ruby-identifier">col_span</span>(<span class="ruby-identifier">colspan</span>).<span class="ruby-identifier">with</span>(<span class="ruby-identifier">str</span>)

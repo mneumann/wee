@@ -95,10 +95,10 @@ important subclasses.
     <div id="contents-list">
       <h3 class="section-bar">Contents</h3>
       <ul>
-      <li><a href="#SEC00041">Render</a></li>
-      <li><a href="#SEC00042">Callback</a></li>
-      <li><a href="#SEC00043">Backtrack</a></li>
-      <li><a href="#SEC00044">Session</a></li>
+      <li><a href="#SEC00065">Render</a></li>
+      <li><a href="#SEC00066">Callback</a></li>
+      <li><a href="#SEC00067">Backtrack</a></li>
+      <li><a href="#SEC00068">Session</a></li>
      </ul>
    </div>
 
@@ -106,13 +106,13 @@ important subclasses.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000181">backtrack_state</a>&nbsp;&nbsp;
-      <a href="#M000180">process_callbacks</a>&nbsp;&nbsp;
-      <a href="#M000177">render</a>&nbsp;&nbsp;
-      <a href="#M000176">render_content_on</a>&nbsp;&nbsp;
-      <a href="#M000179">renderer_class</a>&nbsp;&nbsp;
-      <a href="#M000182">session</a>&nbsp;&nbsp;
-      <a href="#M000178">with_renderer_for</a>&nbsp;&nbsp;
+      <a href="#M000183">backtrack_state</a>&nbsp;&nbsp;
+      <a href="#M000182">process_callbacks</a>&nbsp;&nbsp;
+      <a href="#M000179">render</a>&nbsp;&nbsp;
+      <a href="#M000178">render_content_on</a>&nbsp;&nbsp;
+      <a href="#M000181">renderer_class</a>&nbsp;&nbsp;
+      <a href="#M000184">session</a>&nbsp;&nbsp;
+      <a href="#M000180">with_renderer_for</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -132,9 +132,15 @@ important subclasses.
 
     <!-- if method_list -->
     <div id="section">
-      <h2 class="section-title"><a name="SEC00041">Render</a></h2>
+      <h2 class="section-title"><a name="SEC00065">Render</a></h2>
       <div class="section-comment">
-        
+        <pre>
+ Render
+</pre>
+<p>
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+</p>
+
       </div>      
 
 
@@ -148,11 +154,11 @@ important subclasses.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000177" class="method-detail">
-        <a name="M000177"></a>
+      <div id="method-M000179" class="method-detail">
+        <a name="M000179"></a>
 
         <div class="method-heading">
-          <a href="#M000177" class="method-signature">
+          <a href="#M000179" class="method-signature">
           <span class="method-name">render</span><span class="method-args">(rendering_context)</span>
           </a>
         </div>
@@ -164,8 +170,8 @@ overwrite this method, unless you know exactly what you&#8217;re doing!
 </p>
 <p>
 Creates a new renderer object of the class returned by method <a
-href="Presenter.html#M000179">renderer_class</a>, then invokes <a
-href="Presenter.html#M000176">render_content_on</a> with the new renderer.
+href="Presenter.html#M000181">renderer_class</a>, then invokes <a
+href="Presenter.html#M000178">render_content_on</a> with the new renderer.
 </p>
 <dl>
 <dt><tt>rendering_context</tt></dt><dd>An object of class <a href="RenderingContext.html">RenderingContext</a>
@@ -173,8 +179,8 @@ href="Presenter.html#M000176">render_content_on</a> with the new renderer.
 </dd>
 </dl>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000177-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000177-source">
+            onclick="toggleCode('M000179-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000179-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/presenter.rb, line 34</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">rendering_context</span>)
@@ -185,11 +191,11 @@ href="Presenter.html#M000176">render_content_on</a> with the new renderer.
         </div>
       </div>
 
-      <div id="method-M000176" class="method-detail">
-        <a name="M000176"></a>
+      <div id="method-M000178" class="method-detail">
+        <a name="M000178"></a>
 
         <div class="method-heading">
-          <a href="#M000176" class="method-signature">
+          <a href="#M000178" class="method-signature">
           <span class="method-name">render_content_on</span><span class="method-args">(renderer)</span>
           </a>
         </div>
@@ -208,8 +214,8 @@ view. By default this method does nothing!
 </dd>
 </dl>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000176-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000176-source">
+            onclick="toggleCode('M000178-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000178-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/presenter.rb, line 21</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_content_on</span>(<span class="ruby-identifier">renderer</span>)
@@ -221,11 +227,11 @@ view. By default this method does nothing!
 
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000179" class="method-detail">
-        <a name="M000179"></a>
+      <div id="method-M000181" class="method-detail">
+        <a name="M000181"></a>
 
         <div class="method-heading">
-          <a href="#M000179" class="method-signature">
+          <a href="#M000181" class="method-signature">
           <span class="method-name">renderer_class</span><span class="method-args">()</span>
           </a>
         </div>
@@ -236,8 +242,8 @@ Returns the class used as renderer for this presenter. Overwrite this
 method if you want to use a different renderer.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000179-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000179-source">
+            onclick="toggleCode('M000181-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000181-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/presenter.rb, line 57</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">renderer_class</span>
@@ -248,11 +254,11 @@ method if you want to use a different renderer.
         </div>
       </div>
 
-      <div id="method-M000178" class="method-detail">
-        <a name="M000178"></a>
+      <div id="method-M000180" class="method-detail">
+        <a name="M000180"></a>
 
         <div class="method-heading">
-          <a href="#M000178" class="method-signature">
+          <a href="#M000180" class="method-signature">
           <span class="method-name">with_renderer_for</span><span class="method-args">(rendering_context) {|renderer| ...}</span>
           </a>
         </div>
@@ -260,12 +266,12 @@ method if you want to use a different renderer.
         <div class="method-description">
           <p>
 Creates a new renderer object of the class returned by method <a
-href="Presenter.html#M000179">renderer_class</a>, then yields it to the
+href="Presenter.html#M000181">renderer_class</a>, then yields it to the
 block and finally closes the renderer.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000178-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000178-source">
+            onclick="toggleCode('M000180-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000180-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/presenter.rb, line 44</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with_renderer_for</span>(<span class="ruby-identifier">rendering_context</span>) 
@@ -285,131 +291,15 @@ block and finally closes the renderer.
 
     </div>
     <div id="section">
-      <h2 class="section-title"><a name="SEC00042">Callback</a></h2>
+      <h2 class="section-title"><a name="SEC00066">Callback</a></h2>
       <div class="section-comment">
-        
-      </div>      
-
-
-
-
-
-      
-
-
-    <!-- if method_list -->
-    <div id="methods">
-      <h3 class="section-bar">Public Instance methods</h3>
-
-      <div id="method-M000180" class="method-detail">
-        <a name="M000180"></a>
-
-        <div class="method-heading">
-          <a href="#M000180" class="method-signature">
-          <span class="method-name">process_callbacks</span><span class="method-args">(callback_stream) {|| ...}</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Process all callbacks specified for this presenter.
-</p>
+        <pre>
+ Callback
+</pre>
 <p>
-At first, this method invokes all input callbacks of this presenter, then
-it calls the block if one was given (used by subclasses). Finally, all
-action callbacks are invoked.
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 </p>
-<dl>
-<dt><tt>callback_stream</tt></dt><dd>An object of class <a href="CallbackStream.html">CallbackStream</a>
 
-</dd>
-</dl>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000180-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000180-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/core/presenter.rb, line 76</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callbacks</span>(<span class="ruby-identifier">callback_stream</span>) <span class="ruby-comment cmt"># :yields:</span>
-    <span class="ruby-comment cmt"># invoke input callbacks</span>
-    <span class="ruby-identifier">callback_stream</span>.<span class="ruby-identifier">with_callbacks_for</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">:input</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">callback</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">value</span>)
-    }
-
-    <span class="ruby-comment cmt"># enable subclasses to add behaviour, e.g. a Component class will invoke</span>
-    <span class="ruby-comment cmt"># process_callback_chain for each child in the block.</span>
-    <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
-
-    <span class="ruby-comment cmt"># invoke action callbacks</span>
-    <span class="ruby-identifier">callback_stream</span>.<span class="ruby-identifier">with_callbacks_for</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">:action</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">callback</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">catch</span>(<span class="ruby-identifier">:wee_back_to_process_callbacks</span>) { <span class="ruby-identifier">callback</span>.<span class="ruby-identifier">call</span> }
-      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cont</span> = <span class="ruby-identifier">session</span>.<span class="ruby-identifier">continuation_stack</span>.<span class="ruby-identifier">pop</span>
-        <span class="ruby-identifier">cont</span>.<span class="ruby-identifier">call</span>
-        <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;FATAL! Please inform the developer!&quot;</span>
-      <span class="ruby-keyword kw">end</span>
-    }
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
-    <div id="section">
-      <h2 class="section-title"><a name="SEC00043">Backtrack</a></h2>
-      <div class="section-comment">
-        
-      </div>      
-
-
-
-
-
-      
-
-
-    <!-- if method_list -->
-    <div id="methods">
-      <h3 class="section-bar">Public Instance methods</h3>
-
-      <div id="method-M000181" class="method-detail">
-        <a name="M000181"></a>
-
-        <div class="method-heading">
-          <a href="#M000181" class="method-signature">
-          <span class="method-name">backtrack_state</span><span class="method-args">(snapshot)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Dummy implementation. See <a
-href="Component.html#M000162">Component#backtrack_state</a> for more
-information.
-</p>
-<dl>
-<dt><tt>snapshot</tt></dt><dd>An object of class <a href="Snapshot.html">Snapshot</a>
-
-</dd>
-</dl>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000181-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000181-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/core/presenter.rb, line 107</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backtrack_state</span>(<span class="ruby-identifier">snapshot</span>)
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
-    <div id="section">
-      <h2 class="section-title"><a name="SEC00044">Session</a></h2>
-      <div class="section-comment">
-        
       </div>      
 
 
@@ -428,6 +318,140 @@ information.
 
         <div class="method-heading">
           <a href="#M000182" class="method-signature">
+          <span class="method-name">process_callbacks</span><span class="method-args">(callback_stream) {|| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Process all callbacks specified for this presenter.
+</p>
+<p>
+At first, this method invokes all input callbacks of this presenter, then
+it calls the block if one was given (used by subclasses). Finally, the
+action callback is invoked (there&#8217;s only one per request).
+</p>
+<p>
+NOTE: Input callbacks should never call other components!
+</p>
+<dl>
+<dt><tt>callback_stream</tt></dt><dd>An object of class <a href="CallbackStream.html">CallbackStream</a>
+
+</dd>
+</dl>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000182-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000182-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/core/presenter.rb, line 78</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callbacks</span>(<span class="ruby-identifier">callback_stream</span>) <span class="ruby-comment cmt"># :yields:</span>
+    <span class="ruby-comment cmt"># invoke input callbacks</span>
+    <span class="ruby-identifier">callback_stream</span>.<span class="ruby-identifier">with_callbacks_for</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">:input</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">callback</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">value</span>)
+    }
+
+    <span class="ruby-comment cmt"># enable subclasses to add behaviour, e.g. a Component class will invoke</span>
+    <span class="ruby-comment cmt"># process_callback_chain for each child in the block.</span>
+    <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span>
+
+    <span class="ruby-comment cmt"># invoke action callback. only the first action callback is invoked.</span>
+    <span class="ruby-identifier">callback_stream</span>.<span class="ruby-identifier">with_callbacks_for</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">:action</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">callback</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">callback</span>.<span class="ruby-identifier">call</span>
+      <span class="ruby-identifier">throw</span> <span class="ruby-identifier">:wee_back_to_session</span>
+    }
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div id="section">
+      <h2 class="section-title"><a name="SEC00067">Backtrack</a></h2>
+      <div class="section-comment">
+        <pre>
+ Backtrack
+</pre>
+<p>
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+</p>
+
+      </div>      
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000183" class="method-detail">
+        <a name="M000183"></a>
+
+        <div class="method-heading">
+          <a href="#M000183" class="method-signature">
+          <span class="method-name">backtrack_state</span><span class="method-args">(snapshot)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Dummy implementation. See <a
+href="Component.html#M000171">Component#backtrack_state</a> for more
+information.
+</p>
+<dl>
+<dt><tt>snapshot</tt></dt><dd>An object of class <a href="Snapshot.html">Snapshot</a>
+
+</dd>
+</dl>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000183-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000183-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/core/presenter.rb, line 106</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backtrack_state</span>(<span class="ruby-identifier">snapshot</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div id="section">
+      <h2 class="section-title"><a name="SEC00068">Session</a></h2>
+      <div class="section-comment">
+        <pre>
+ Session
+</pre>
+<p>
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+</p>
+
+      </div>      
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000184" class="method-detail">
+        <a name="M000184"></a>
+
+        <div class="method-heading">
+          <a href="#M000184" class="method-signature">
           <span class="method-name">session</span><span class="method-args">()</span>
           </a>
         </div>
@@ -439,10 +463,10 @@ associated session. The returned object is of class <a
 href="Session.html">Wee::Session</a> or a subclass thereof.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000182-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000182-source">
+            onclick="toggleCode('M000184-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000184-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/presenter.rb, line 120</span>
+<span class="ruby-comment cmt"># File lib/wee/core/presenter.rb, line 119</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">session</span>
     <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Session</span>.<span class="ruby-identifier">current</span>
   <span class="ruby-keyword kw">end</span>

@@ -13,20 +13,20 @@ require 'webrick'
 #
 #   require 'wee/adaptors/webrick'
 #   Wee::WEBrickAdaptor.
-#     register('/app', application).
-#     register('/cnt', application2).
+#     register('/app' => application).
+#     register('/cnt' => application2).
 #     start(:Port => 2000)
 #
 
 class Wee::WEBrickAdaptor < WEBrick::HTTPServlet::AbstractServlet
 
   # Convenience method
-  def self.start(options)
+  def self.start(options={})
     server = WEBrick::HTTPServer.new({:Port => 2000}.update(options))
     trap("INT") { server.shutdown }
 
     @apps.each do |path, app|
-      server.mount(path, self, app)
+      server.mount(path, self, path, app)
     end
 
     server.start
@@ -34,19 +34,22 @@ class Wee::WEBrickAdaptor < WEBrick::HTTPServlet::AbstractServlet
   end
 
   # Convenience method
-  def self.register(path, application)
+  def self.register(hash)
     @apps ||= []
-    @apps << [path, application]
+    hash.each do |path, application|
+      @apps << [path, application]
+    end
     self
   end
 
-  def initialize(server, application)
+  def initialize(server, mount_path, application)
     super(server)
+    @mount_path = mount_path
     @application = application
   end
 
   def handle_request(req, res)
-    context = Wee::Context.new(Wee::Request.new(req.path, req.header, req.query))
+    context = Wee::Context.new(Wee::Request.new(@mount_path, req.path, req.header, req.query))
     @application.handle_request(context)
     res.status = context.response.status
     res.body = context.response.content

@@ -46,6 +46,14 @@ class Wee::CallbackRegistry
     end
   end
 
+  def all_of_type(type=nil)
+    if c = @callbacks[type]
+      c
+    else
+      raise
+    end
+  end
+
 end
 
 
@@ -73,6 +81,17 @@ class Wee::CallbackStream
       yield @callbacks.get_callback_for(id, type), @ids_and_values[id] 
     end
     @ids -= matching_ids
+  end
+
+  # Returns a [callback, value] array of all callbacks of +type+ for which an
+  # id was given. 
+
+  def all_of_type(type)
+    a = [] 
+    @callbacks.all_of_type(type).each {|id, callback|
+      a << [callback, @ids_and_values[id]]  if @ids_and_values.include?(id)
+    }
+    return a
   end
 
 end

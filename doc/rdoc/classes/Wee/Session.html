@@ -88,15 +88,15 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000116">create_page</a>&nbsp;&nbsp;
-      <a href="#M000111">current</a>&nbsp;&nbsp;
-      <a href="#M000118">handle_new_page_view</a>&nbsp;&nbsp;
-      <a href="#M000114">handle_request</a>&nbsp;&nbsp;
-      <a href="#M000112">new</a>&nbsp;&nbsp;
-      <a href="#M000117">process_request</a>&nbsp;&nbsp;
-      <a href="#M000119">respond</a>&nbsp;&nbsp;
-      <a href="#M000113">snapshot</a>&nbsp;&nbsp;
-      <a href="#M000115">start_request_response_loop</a>&nbsp;&nbsp;
+      <a href="#M000074">create_page</a>&nbsp;&nbsp;
+      <a href="#M000069">current</a>&nbsp;&nbsp;
+      <a href="#M000076">handle_new_page_view</a>&nbsp;&nbsp;
+      <a href="#M000072">handle_request</a>&nbsp;&nbsp;
+      <a href="#M000070">new</a>&nbsp;&nbsp;
+      <a href="#M000075">process_request</a>&nbsp;&nbsp;
+      <a href="#M000077">respond</a>&nbsp;&nbsp;
+      <a href="#M000071">snapshot</a>&nbsp;&nbsp;
+      <a href="#M000073">start_request_response_loop</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -117,11 +117,6 @@
       <div class="name-list">
         <table>
         <tr class="top-aligned-row context-row">
-          <td class="context-item-name">continuation_stack</td>
-          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        <tr class="top-aligned-row context-row">
           <td class="context-item-name">page_store</td>
           <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
           <td class="context-item-desc"></td>
@@ -141,19 +136,19 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000111" class="method-detail">
-        <a name="M000111"></a>
+      <div id="method-M000069" class="method-detail">
+        <a name="M000069"></a>
 
         <div class="method-heading">
-          <a href="#M000111" class="method-signature">
+          <a href="#M000069" class="method-signature">
           <span class="method-name">current</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000111-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000111-source">
+            onclick="toggleCode('M000069-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000069-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/session.rb, line 7</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">current</span>
@@ -166,25 +161,24 @@
         </div>
       </div>
 
-      <div id="method-M000112" class="method-detail">
-        <a name="M000112"></a>
+      <div id="method-M000070" class="method-detail">
+        <a name="M000070"></a>
 
         <div class="method-heading">
-          <a href="#M000112" class="method-signature">
+          <a href="#M000070" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000112-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000112-source">
+            onclick="toggleCode('M000070-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000070-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/session.rb, line 13</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-ivar">@idgen</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">SimpleIdGenerator</span>.<span class="ruby-identifier">new</span>
     <span class="ruby-ivar">@in_queue</span>, <span class="ruby-ivar">@out_queue</span> = <span class="ruby-constant">SizedQueue</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">1</span>), <span class="ruby-constant">SizedQueue</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">1</span>)
-    <span class="ruby-ivar">@continuation_stack</span> = []
 
     <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-keyword kw">self</span>)
 
@@ -203,21 +197,21 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000116" class="method-detail">
-        <a name="M000116"></a>
+      <div id="method-M000074" class="method-detail">
+        <a name="M000074"></a>
 
         <div class="method-heading">
-          <a href="#M000116" class="method-signature">
+          <a href="#M000074" class="method-signature">
           <span class="method-name">create_page</span><span class="method-args">(snapshot)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000116-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000116-source">
+            onclick="toggleCode('M000074-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000074-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/session.rb, line 62</span>
+<span class="ruby-comment cmt"># File lib/wee/session.rb, line 61</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_page</span>(<span class="ruby-identifier">snapshot</span>)
     <span class="ruby-identifier">idgen</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">SimpleIdGenerator</span>.<span class="ruby-identifier">new</span>
     <span class="ruby-identifier">page</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Page</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">snapshot</span>, <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">CallbackRegistry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">idgen</span>))
@@ -227,11 +221,11 @@
         </div>
       </div>
 
-      <div id="method-M000114" class="method-detail">
-        <a name="M000114"></a>
+      <div id="method-M000072" class="method-detail">
+        <a name="M000072"></a>
 
         <div class="method-heading">
-          <a href="#M000114" class="method-signature">
+          <a href="#M000072" class="method-signature">
           <span class="method-name">handle_request</span><span class="method-args">(context)</span>
           </a>
         </div>
@@ -241,10 +235,10 @@
 called by application to send the session a request
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000114-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000114-source">
+            onclick="toggleCode('M000072-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000072-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/session.rb, line 36</span>
+<span class="ruby-comment cmt"># File lib/wee/session.rb, line 34</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_request</span>(<span class="ruby-identifier">context</span>)
     <span class="ruby-keyword kw">super</span>
 
@@ -260,21 +254,21 @@ called by application to send the session a request
         </div>
       </div>
 
-      <div id="method-M000117" class="method-detail">
-        <a name="M000117"></a>
+      <div id="method-M000075" class="method-detail">
+        <a name="M000075"></a>
 
         <div class="method-heading">
-          <a href="#M000117" class="method-signature">
+          <a href="#M000075" class="method-signature">
           <span class="method-name">process_request</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000117-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000117-source">
+            onclick="toggleCode('M000075-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000075-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/session.rb, line 67</span>
+<span class="ruby-comment cmt"># File lib/wee/session.rb, line 66</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_request</span>
     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">page_id</span>.<span class="ruby-identifier">nil?</span>
 
@@ -311,6 +305,10 @@ called by application to send the session a request
 
         <span class="ruby-identifier">callback_stream</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">CallbackStream</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">page</span>.<span class="ruby-identifier">callbacks</span>, <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">fields</span>) 
 
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">callback_stream</span>.<span class="ruby-identifier">all_of_type</span>(<span class="ruby-identifier">:action</span>).<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> 
+          <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Not allowed to specify more than oneaction callback&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+
         <span class="ruby-identifier">catch</span>(<span class="ruby-identifier">:wee_back_to_session</span>) {
           <span class="ruby-ivar">@root_component</span>.<span class="ruby-identifier">process_callback_chain</span>(<span class="ruby-identifier">callback_stream</span>)
         }
@@ -336,24 +334,23 @@ called by application to send the session a request
         </div>
       </div>
 
-      <div id="method-M000113" class="method-detail">
-        <a name="M000113"></a>
+      <div id="method-M000071" class="method-detail">
+        <a name="M000071"></a>
 
         <div class="method-heading">
-          <a href="#M000113" class="method-signature">
+          <a href="#M000071" class="method-signature">
           <span class="method-name">snapshot</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000113-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000113-source">
+            onclick="toggleCode('M000071-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000071-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/session.rb, line 29</span>
+<span class="ruby-comment cmt"># File lib/wee/session.rb, line 28</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">snapshot</span>
     <span class="ruby-ivar">@root_component</span>.<span class="ruby-identifier">backtrack_state_chain</span>(<span class="ruby-identifier">snap</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Snapshot</span>.<span class="ruby-identifier">new</span>)
-    <span class="ruby-identifier">snap</span>.<span class="ruby-identifier">add</span>(<span class="ruby-ivar">@continuation_stack</span>)
     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">snap</span>.<span class="ruby-identifier">freeze</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
@@ -361,29 +358,32 @@ called by application to send the session a request
         </div>
       </div>
 
-      <div id="method-M000115" class="method-detail">
-        <a name="M000115"></a>
+      <div id="method-M000073" class="method-detail">
+        <a name="M000073"></a>
 
         <div class="method-heading">
-          <a href="#M000115" class="method-signature">
+          <a href="#M000073" class="method-signature">
           <span class="method-name">start_request_response_loop</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000115-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000115-source">
+            onclick="toggleCode('M000073-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000073-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/session.rb, line 47</span>
+<span class="ruby-comment cmt"># File lib/wee/session.rb, line 45</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_request_response_loop</span>
     <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">abort_on_exception</span> = <span class="ruby-keyword kw">true</span>
     <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> {
       <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-identifier">:wee_session</span>] = <span class="ruby-keyword kw">self</span>
-
       <span class="ruby-identifier">loop</span> {
         <span class="ruby-ivar">@context</span> = <span class="ruby-ivar">@in_queue</span>.<span class="ruby-identifier">pop</span>
-        <span class="ruby-identifier">process_request</span>
+        <span class="ruby-keyword kw">begin</span>
+          <span class="ruby-identifier">process_request</span>
+        <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exn</span>
+          <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">response</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">ErrorResponse</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">exn</span>) 
+        <span class="ruby-keyword kw">end</span>
         <span class="ruby-ivar">@out_queue</span>.<span class="ruby-identifier">push</span>(<span class="ruby-ivar">@context</span>)
       }
     }
@@ -395,26 +395,26 @@ called by application to send the session a request
 
       <h3 class="section-bar">Private Instance methods</h3>
 
-      <div id="method-M000118" class="method-detail">
-        <a name="M000118"></a>
+      <div id="method-M000076" class="method-detail">
+        <a name="M000076"></a>
 
         <div class="method-heading">
-          <a href="#M000118" class="method-signature">
+          <a href="#M000076" class="method-signature">
           <span class="method-name">handle_new_page_view</span><span class="method-args">(context, snapshot=nil)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000118-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000118-source">
+            onclick="toggleCode('M000076-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000076-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/session.rb, line 126</span>
+<span class="ruby-comment cmt"># File lib/wee/session.rb, line 129</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_new_page_view</span>(<span class="ruby-identifier">context</span>, <span class="ruby-identifier">snapshot</span>=<span class="ruby-keyword kw">nil</span>)
     <span class="ruby-identifier">new_page_id</span> = <span class="ruby-ivar">@idgen</span>.<span class="ruby-identifier">next</span>.<span class="ruby-identifier">to_s</span>
     <span class="ruby-identifier">new_page</span> = <span class="ruby-identifier">create_page</span>(<span class="ruby-identifier">snapshot</span> <span class="ruby-operator">||</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">snapshot</span>())
     <span class="ruby-ivar">@page_store</span>[<span class="ruby-identifier">new_page_id</span>] = <span class="ruby-identifier">new_page</span>
-    <span class="ruby-identifier">redirect_url</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">build_url</span>(<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">new_page_id</span>)
+    <span class="ruby-identifier">redirect_url</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">build_url</span>(<span class="ruby-identifier">context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">request_handler_id</span>, <span class="ruby-identifier">new_page_id</span>)
     <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">RedirectResponse</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">redirect_url</span>)
   <span class="ruby-keyword kw">end</span>
 </pre>
@@ -422,21 +422,21 @@ called by application to send the session a request
         </div>
       </div>
 
-      <div id="method-M000119" class="method-detail">
-        <a name="M000119"></a>
+      <div id="method-M000077" class="method-detail">
+        <a name="M000077"></a>
 
         <div class="method-heading">
-          <a href="#M000119" class="method-signature">
+          <a href="#M000077" class="method-signature">
           <span class="method-name">respond</span><span class="method-args">(context, callbacks)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000119-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000119-source">
+            onclick="toggleCode('M000077-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000077-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/session.rb, line 134</span>
+<span class="ruby-comment cmt"># File lib/wee/session.rb, line 137</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">respond</span>(<span class="ruby-identifier">context</span>, <span class="ruby-identifier">callbacks</span>)
     <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">GenericResponse</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'text/html'</span>, <span class="ruby-value str">''</span>)
 

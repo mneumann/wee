@@ -88,9 +88,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000167">application_path</a>&nbsp;&nbsp;
-      <a href="#M000168">build_url</a>&nbsp;&nbsp;
-      <a href="#M000166">new</a>&nbsp;&nbsp;
+      <a href="#M000176">application_path</a>&nbsp;&nbsp;
+      <a href="#M000177">build_url</a>&nbsp;&nbsp;
+      <a href="#M000175">new</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -135,24 +135,26 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000166" class="method-detail">
-        <a name="M000166"></a>
+      <div id="method-M000175" class="method-detail">
+        <a name="M000175"></a>
 
         <div class="method-heading">
-          <a href="#M000166" class="method-signature">
-          <span class="method-name">new</span><span class="method-args">(path, header, fields)</span>
+          <a href="#M000175" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(app_path, path, header, fields)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000166-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000166-source">
+            onclick="toggleCode('M000175-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000175-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/request.rb, line 5</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">path</span>, <span class="ruby-identifier">header</span>, <span class="ruby-identifier">fields</span>)
-    <span class="ruby-ivar">@path</span>, <span class="ruby-ivar">@header</span>, <span class="ruby-ivar">@fields</span> = <span class="ruby-identifier">path</span>, <span class="ruby-identifier">header</span>, <span class="ruby-identifier">fields</span>
-    <span class="ruby-ivar">@app_path</span>, <span class="ruby-identifier">req_path</span> = <span class="ruby-ivar">@path</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'@'</span>, <span class="ruby-value">2</span>)
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">app_path</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">header</span>, <span class="ruby-identifier">fields</span>)
+    <span class="ruby-ivar">@app_path</span>, <span class="ruby-ivar">@path</span>, <span class="ruby-ivar">@header</span>, <span class="ruby-ivar">@fields</span> = <span class="ruby-identifier">app_path</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">header</span>, <span class="ruby-identifier">fields</span>
+
+    <span class="ruby-identifier">full_app_path</span>, <span class="ruby-identifier">req_path</span> = <span class="ruby-ivar">@path</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'@'</span>, <span class="ruby-value">2</span>)
+    <span class="ruby-ivar">@request_handler_id</span> = <span class="ruby-ivar">@page_id</span> = <span class="ruby-keyword kw">nil</span>
     <span class="ruby-ivar">@request_handler_id</span>, <span class="ruby-ivar">@page_id</span> = <span class="ruby-identifier">req_path</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'/'</span>, <span class="ruby-value">2</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">req_path</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
@@ -162,21 +164,21 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000167" class="method-detail">
-        <a name="M000167"></a>
+      <div id="method-M000176" class="method-detail">
+        <a name="M000176"></a>
 
         <div class="method-heading">
-          <a href="#M000167" class="method-signature">
+          <a href="#M000176" class="method-signature">
           <span class="method-name">application_path</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000167-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000167-source">
+            onclick="toggleCode('M000176-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000176-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/request.rb, line 11</span>
+<span class="ruby-comment cmt"># File lib/wee/request.rb, line 13</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">application_path</span>
     <span class="ruby-ivar">@app_path</span>
   <span class="ruby-keyword kw">end</span>
@@ -185,31 +187,32 @@
         </div>
       </div>
 
-      <div id="method-M000168" class="method-detail">
-        <a name="M000168"></a>
+      <div id="method-M000177" class="method-detail">
+        <a name="M000177"></a>
 
         <div class="method-heading">
-          <a href="#M000168" class="method-signature">
+          <a href="#M000177" class="method-signature">
           <span class="method-name">build_url</span><span class="method-args">(request_handler_id=nil, page_id=nil, callback_id=nil)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000168-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000168-source">
+            onclick="toggleCode('M000177-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000177-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/request.rb, line 15</span>
+<span class="ruby-comment cmt"># File lib/wee/request.rb, line 17</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_url</span>(<span class="ruby-identifier">request_handler_id</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">page_id</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">callback_id</span>=<span class="ruby-keyword kw">nil</span>)
-    <span class="ruby-identifier">request_handler_id</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@request_handler_id</span>
-    <span class="ruby-identifier">page_id</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@page_id</span>
-
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">request_handler_id</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">page_id</span>.<span class="ruby-identifier">nil?</span>
+
     <span class="ruby-identifier">arr</span> = [<span class="ruby-identifier">request_handler_id</span>, <span class="ruby-identifier">page_id</span>].<span class="ruby-identifier">compact</span>
 
-    <span class="ruby-identifier">url</span> = <span class="ruby-value str">&quot;&quot;</span>
+    <span class="ruby-identifier">url</span> = <span class="ruby-value str">&quot;&quot;</span> 
     <span class="ruby-identifier">url</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@app_path</span>
-    <span class="ruby-identifier">url</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-value str">'@'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">arr</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">'/'</span>)) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">arr</span>.<span class="ruby-identifier">empty?</span>
+    <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">arr</span>.<span class="ruby-identifier">empty?</span>
+      <span class="ruby-identifier">url</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">'/'</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">url</span>[<span class="ruby-value">-1</span>,<span class="ruby-value">1</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">'/'</span>  <span class="ruby-comment cmt"># /app@ -&gt; /app/@</span>
+      <span class="ruby-identifier">url</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-value str">'@'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">arr</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">'/'</span>))
+    <span class="ruby-keyword kw">end</span>
     <span class="ruby-identifier">url</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-value str">'?'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">callback_id</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">callback_id</span>
 
     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">url</span>

@@ -2,9 +2,11 @@ class Wee::Request
 
   attr_reader :request_handler_id, :page_id, :fields
 
-  def initialize(path, header, fields)
-    @path, @header, @fields = path, header, fields
-    @app_path, req_path = @path.split('@', 2)
+  def initialize(app_path, path, header, fields)
+    @app_path, @path, @header, @fields = app_path, path, header, fields
+
+    full_app_path, req_path = @path.split('@', 2)
+    @request_handler_id = @page_id = nil
     @request_handler_id, @page_id = req_path.split('/', 2) if req_path
   end
 
@@ -13,13 +15,11 @@ class Wee::Request
   end
 
   def build_url(request_handler_id=nil, page_id=nil, callback_id=nil)
-    request_handler_id ||= @request_handler_id
-    page_id ||= @page_id
-
     raise ArgumentError if request_handler_id.nil? and not page_id.nil?
+
     arr = [request_handler_id, page_id].compact
 
-    url = ""
+    url = "" 
     url << @app_path
     unless arr.empty?
       url << '/' if url[-1,1] != '/'  # /app@ -> /app/@
