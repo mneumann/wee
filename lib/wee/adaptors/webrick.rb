@@ -4,7 +4,7 @@ require 'webrick'
 #
 #   require 'wee/adaptors/webrick'
 #   s = WEBrick::HTTPServer.new(:Port => 2000) 
-#   s.mount '/app', Wee::WEBrickAdaptor, application
+#   s.mount '/app', Wee::WEBrickAdaptor, '/app', application
 #
 #   trap("INT") { s.shutdown; exit }
 #   s.start

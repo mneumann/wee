@@ -1,3 +1,7 @@
+Sun Apr  3 13:24:04 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* lib/wee/adaptors/webrick.rb: doc fix
+
 Sun Apr  3 13:11:07 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* lib/wee/core/presenter.rb, lib/wee/core/component.rb, 
