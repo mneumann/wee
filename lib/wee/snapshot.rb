@@ -7,7 +7,7 @@ class Object
     snap
   end
 
-  def apply_snapshot(snap)
+  def restore_snapshot(snap)
     instance_variables.each do |iv|
       instance_variable_set(iv, snap[iv])
     end
@@ -19,7 +19,7 @@ class Array
     ObjectSpace.undefine_finalizer(dup)
   end
 
-  def apply_snapshot(snap)
+  def restore_snapshot(snap)
     replace(snap)
   end
 end
@@ -29,7 +29,7 @@ class String
     ObjectSpace.undefine_finalizer(dup)
   end
 
-  def apply_snapshot(snap)
+  def restore_snapshot(snap)
     replace(snap)
   end
 end
@@ -41,7 +41,7 @@ class Struct
     snap
   end
 
-  def apply_snapshot(snap)
+  def restore_snapshot(snap)
     snap.each_pair {|k,v| send(k.to_s + "=", v)} 
   end
 end
