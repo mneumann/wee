@@ -8,6 +8,16 @@ Released under the same terms of license as Ruby. Some files under directory
 <tt>examples/</tt> might be copyrighted by third parties and licensed under
 different terms.
 
+== Status and Bugs
+
+Wee is not considered production ready! It should only be used for small
+things. 
+
+Known Bugs:
+
+* Continuations leak memory!
+* Sessions get never reclaimed (easy to fix). 
+
 == Introduction
 
 Wee is a light-weight, very high-level and modern web-framework that makes
@@ -118,6 +128,9 @@ yet fully marshallable (it was in the past), but it can be made, if required.
   components at the same time, but this was removed, due to the unreliability of
   continuations in Ruby).  
 
+* Components are thread-safe, as a fresh components-tree is created for each
+  session and requests inside a session are serialized.
+
 == What is backtracking?
 
 If you want, you can make the back-button of your browser work correctly
@@ -204,22 +217,22 @@ callbacks before any action callback is triggered.
 
 There are two methods related to callback processing:
 
-* Wee::Component#process_callback_chain
+* Wee::Component#process_callbacks_chain
 
 * Wee::Presenter#process_callbacks
 
 Note that each Wee::Component is also a Wee::Presenter, whereas a
 Wee::Decoration is not a Component (but a Presenter)! 
 
-Method <i>process_callback_chain</i> invokes <i>process_callbacks</i> for
+Method <i>process_callbacks_chain</i> invokes <i>process_callbacks</i> for
 it's first decoration, or if the component has no decorations, the method is
-called for the component itself.  As such, <i>process_callback_chain</i> is
-important to avoid entering an infinite loop (a method calling itself). What
+called for the component itself.  As such, <i>process_callbacks_chain</i>
+is important to avoid entering an infinite loop (a method calling itself). What
 decorations are, is discussed elsewhere.
 
 Method <i>process_callbacks</i> of class Component first invokes all input
 callbacks specified for this component, then calls
-<i>process_callback_chain</i> for all of it's child components. This ensures,
+<i>process_callbacks_chain</i> for all of it's child components. This ensures,
 that all input callbacks are triggered before the first action callback is
 run. Finally, it invokes all of it's action callbacks.
 
@@ -231,16 +244,16 @@ programmer should take care to meet this assumption.
 Similar as in the callback-step, there are two methods related to rendering a
 page:
 
-* Wee::Component#render_chain
+* Wee::Component#do_render_chain
 
-* Wee::Presenter#render
+* Wee::Presenter#do_render
 
-Method <i>Component#render_chain</i> starts rendering the decoration chain by
-calling <i>Presenter#render</i> for the first decoration of the component or
+Method <i>Component#do_render_chain</i> starts rendering the decoration chain by
+calling <i>Presenter#do_render</i> for the first decoration of the component or
 for the component itself if no decorations were specified.  Method
-<i>Presenter#render</i> then generates the desired output which gets sent to
-the user. Note that method <i>render</i> might call other components
-<i>render_chain</i> methods to display those components "inside" itself
+<i>Presenter#do_render</i> then generates the desired output which gets sent to
+the user. Note that method <i>do_render</i> might call other components'
+<i>do_render_chain</i> methods to display those components "inside" itself
 (usually a component does this for it's child components, but this has to be
 implemented by the programmer). 
 
@@ -253,4 +266,3 @@ In this order:
 * Wee::Decoration
 * Wee::Delegate
 * Wee::AnswerDecoration
-

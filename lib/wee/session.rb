@@ -11,6 +11,8 @@ class Wee::Session < Wee::RequestHandler
   end
 
   def initialize(&block)
+    Thread.current[:wee_session] = self
+
     @idgen = Wee::SimpleIdGenerator.new
     @in_queue, @out_queue = SizedQueue.new(1), SizedQueue.new(1)
 
@@ -23,6 +25,8 @@ class Wee::Session < Wee::RequestHandler
 
     start_request_response_loop
     super()
+  ensure
+    Thread.current[:wee_session] = nil
   end
 
   def snapshot
@@ -104,7 +108,7 @@ class Wee::Session < Wee::RequestHandler
         end
 
         catch(:wee_back_to_session) {
-          @root_component.process_callback_chain(callback_stream)
+          @root_component.process_callbacks_chain(callback_stream)
         }
         handle_new_page_view(@context)
 
@@ -138,7 +142,7 @@ class Wee::Session < Wee::RequestHandler
     context.response = Wee::GenericResponse.new('text/html', '')
 
     rctx = Wee::RenderingContext.new(context.request, context.response, callbacks, Wee::HtmlWriter.new(context.response.content))
-    @root_component.render_chain(rctx)
+    @root_component.do_render_chain(rctx)
   end
 
 end

@@ -26,7 +26,7 @@ class Wee::Window < Wee::Component
     @status = :closed
   end
 
-  def render_content_on(r)
+  def render
     return if @status == :closed
 
     r.table.cellspacing(0).style("border:solid 1px grey; position: relative; top: #{@pos}; left: #{200+@pos.to_i}").with do

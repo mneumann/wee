@@ -9,7 +9,7 @@ class Counter < Wee::Component
     snap.add(@cnt)
   end
 
-  def render_content_on(r)
+  def render
     r.h1(@cnt.value.to_s)
     r.anchor.callback { @cnt.value -= 1 }.with("--")
     r.anchor.callback { @cnt.value += 1 }.with("++")

@@ -125,7 +125,7 @@ class HtmlCanvas < Canvas
 
   def render(obj)
     self.close
-    obj.render_chain(@rendering_context)
+    obj.do_render_chain(@rendering_context)
     nil
   end
 

@@ -177,6 +177,8 @@
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/session.rb, line 13</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-identifier">:wee_session</span>] = <span class="ruby-keyword kw">self</span>
+
     <span class="ruby-ivar">@idgen</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">SimpleIdGenerator</span>.<span class="ruby-identifier">new</span>
     <span class="ruby-ivar">@in_queue</span>, <span class="ruby-ivar">@out_queue</span> = <span class="ruby-constant">SizedQueue</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">1</span>), <span class="ruby-constant">SizedQueue</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">1</span>)
 
@@ -189,6 +191,8 @@
 
     <span class="ruby-identifier">start_request_response_loop</span>
     <span class="ruby-keyword kw">super</span>()
+  <span class="ruby-keyword kw">ensure</span>
+    <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-identifier">:wee_session</span>] = <span class="ruby-keyword kw">nil</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -211,7 +215,7 @@
             onclick="toggleCode('M000123-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000123-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/session.rb, line 61</span>
+<span class="ruby-comment cmt"># File lib/wee/session.rb, line 65</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_page</span>(<span class="ruby-identifier">snapshot</span>)
     <span class="ruby-identifier">idgen</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">SimpleIdGenerator</span>.<span class="ruby-identifier">new</span>
     <span class="ruby-identifier">page</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Page</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">snapshot</span>, <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">CallbackRegistry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">idgen</span>))
@@ -238,7 +242,7 @@ called by application to send the session a request
             onclick="toggleCode('M000121-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000121-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/session.rb, line 34</span>
+<span class="ruby-comment cmt"># File lib/wee/session.rb, line 38</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_request</span>(<span class="ruby-identifier">context</span>)
     <span class="ruby-keyword kw">super</span>
 
@@ -268,7 +272,7 @@ called by application to send the session a request
             onclick="toggleCode('M000124-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000124-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/session.rb, line 66</span>
+<span class="ruby-comment cmt"># File lib/wee/session.rb, line 70</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_request</span>
     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">page_id</span>.<span class="ruby-identifier">nil?</span>
 
@@ -310,7 +314,7 @@ called by application to send the session a request
         <span class="ruby-keyword kw">end</span>
 
         <span class="ruby-identifier">catch</span>(<span class="ruby-identifier">:wee_back_to_session</span>) {
-          <span class="ruby-ivar">@root_component</span>.<span class="ruby-identifier">process_callback_chain</span>(<span class="ruby-identifier">callback_stream</span>)
+          <span class="ruby-ivar">@root_component</span>.<span class="ruby-identifier">process_callbacks_chain</span>(<span class="ruby-identifier">callback_stream</span>)
         }
         <span class="ruby-identifier">handle_new_page_view</span>(<span class="ruby-ivar">@context</span>)
 
@@ -348,7 +352,7 @@ called by application to send the session a request
             onclick="toggleCode('M000120-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000120-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/session.rb, line 28</span>
+<span class="ruby-comment cmt"># File lib/wee/session.rb, line 32</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">snapshot</span>
     <span class="ruby-ivar">@root_component</span>.<span class="ruby-identifier">backtrack_state_chain</span>(<span class="ruby-identifier">snap</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Snapshot</span>.<span class="ruby-identifier">new</span>)
     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">snap</span>.<span class="ruby-identifier">freeze</span>
@@ -372,7 +376,7 @@ called by application to send the session a request
             onclick="toggleCode('M000122-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000122-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/session.rb, line 45</span>
+<span class="ruby-comment cmt"># File lib/wee/session.rb, line 49</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_request_response_loop</span>
     <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">abort_on_exception</span> = <span class="ruby-keyword kw">true</span>
     <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> {
@@ -409,7 +413,7 @@ called by application to send the session a request
             onclick="toggleCode('M000125-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000125-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/session.rb, line 129</span>
+<span class="ruby-comment cmt"># File lib/wee/session.rb, line 133</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_new_page_view</span>(<span class="ruby-identifier">context</span>, <span class="ruby-identifier">snapshot</span>=<span class="ruby-keyword kw">nil</span>)
     <span class="ruby-identifier">new_page_id</span> = <span class="ruby-ivar">@idgen</span>.<span class="ruby-identifier">next</span>.<span class="ruby-identifier">to_s</span>
     <span class="ruby-identifier">new_page</span> = <span class="ruby-identifier">create_page</span>(<span class="ruby-identifier">snapshot</span> <span class="ruby-operator">||</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">snapshot</span>())
@@ -436,12 +440,12 @@ called by application to send the session a request
             onclick="toggleCode('M000126-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000126-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/session.rb, line 137</span>
+<span class="ruby-comment cmt"># File lib/wee/session.rb, line 141</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">respond</span>(<span class="ruby-identifier">context</span>, <span class="ruby-identifier">callbacks</span>)
     <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">GenericResponse</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'text/html'</span>, <span class="ruby-value str">''</span>)
 
     <span class="ruby-identifier">rctx</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">RenderingContext</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">context</span>.<span class="ruby-identifier">request</span>, <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span>, <span class="ruby-identifier">callbacks</span>, <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">HtmlWriter</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span>.<span class="ruby-identifier">content</span>))
-    <span class="ruby-ivar">@root_component</span>.<span class="ruby-identifier">render_chain</span>(<span class="ruby-identifier">rctx</span>)
+    <span class="ruby-ivar">@root_component</span>.<span class="ruby-identifier">do_render_chain</span>(<span class="ruby-identifier">rctx</span>)
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>

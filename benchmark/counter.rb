@@ -23,7 +23,7 @@ class Counter < Wee::Component
     @cnt += 1
   end
 
-  def render_content_on(r)
+  def render
     r.form.action(:submit).with do
       r.anchor.action(:dec).with("--")
       r.space
@@ -61,7 +61,7 @@ class Main < Wee::Component
     children.push(*@counters)
   end
 
-  def render_content_on(r)
+  def render
     r.page.title("Counter Test").with do 
       @counters.each { |cnt| r.render(cnt) }
     end 

@@ -1,5 +1,5 @@
 # Abstract base class of all decorations. Forwards the methods
-# #process_callbacks, #render and #backtrack_state to the next decoration in
+# #process_callbacks, #do_render and #backtrack_state to the next decoration in
 # the chain. Subclasses should provide special behaviour in these methods,
 # otherwise the decoration does not make sense.
 #
@@ -7,19 +7,19 @@
 # around the decorations or components below itself:
 #
 #   class HeaderFooterDecoration < Wee::Decoration
-#     def render(rendering_context)
-#       with_renderer_for(rendering_context) do |r|
-#         render_header_on(r)
+#     def do_render(rendering_context)
+#       with_renderer_for(rendering_context) do
+#         render_header
 #         super(rendering_context)
-#         render_footer_on(r)
+#         render_footer
 #       end
 #     end
 #
-#     def render_header_on(r)
+#     def render_header
 #       r.text "header
 #     end
 #
-#     def render_footer_on(r)
+#     def render_footer
 #       ...
 #     end
 #   end
@@ -41,8 +41,8 @@ class Wee::Decoration < Wee::Presenter
 
   # Forwards method call to the next decoration in the chain.
 
-  def render(rendering_context)
-    @owner.render(rendering_context)
+  def do_render(rendering_context)
+    @owner.do_render(rendering_context)
   end
 
   # Forwards method call to the next decoration in the chain.
@@ -73,31 +73,31 @@ class Wee::Decoration < Wee::Presenter
 end
 
 # A Wee::Delegate breaks the decoration chain and forwards the methods
-# #process_callbacks, #render and #backtrack_state to the corresponding *chain*
-# method of it's _delegate_ component (a Wee::Component).
+# #process_callbacks, #do_render and #backtrack_state to the corresponding
+# *chain* method of it's _delegate_ component (a Wee::Component).
 
 class Wee::Delegate < Wee::Decoration
   def initialize(delegate)
     @delegate = delegate
   end
 
-  # Forwards method to the corresponding *chain* method of the _delegate_
-  # component.
+  # Forwards method to the corresponding top-level *chain* method of the
+  # _delegate_ component.
 
   def process_callbacks(callback_stream)
-    @delegate.process_callback_chain(callback_stream)
+    @delegate.process_callbacks_chain(callback_stream)
   end
 
-  # Forwards method to the corresponding *chain* method of the _delegate_
-  # component.
+  # Forwards method to the corresponding top-level *chain* method of the
+  # _delegate_ component.
 
-  def render(rendering_context)
-    @delegate.render_chain(rendering_context)
+  def do_render(rendering_context)
+    @delegate.do_render_chain(rendering_context)
   end
 
-  # Forwards method to the corresponding *chain* method of the _delegate_
-  # component. We also take snapshots of all non-visible components, thus we
-  # follow the @owner (via super). 
+  # Forwards method to the corresponding top-level *chain* method of the
+  # _delegate_ component. We also take snapshots of all non-visible components,
+  # thus we follow the @owner (via super). 
 
   def backtrack_state(snapshot)
     super

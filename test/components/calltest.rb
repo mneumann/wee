@@ -3,7 +3,7 @@ class CallTest < Wee::Component
     call MessageBox.new(msg)
   end
 
-  def render_content_on(r)
+  def render
     r.anchor.callback {
       if msgbox('A')
         msgbox('B')

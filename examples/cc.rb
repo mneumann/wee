@@ -10,7 +10,7 @@ class MessageBox < Wee::Component
     @text = text 
   end
 
-  def render_content_on(r)
+  def render
     r.break
     r.text(@text)
     r.form do 
@@ -28,7 +28,7 @@ class MessageBox2 < Wee::Component
     @text = text 
   end
 
-  def render_content_on(r)
+  def render
     r.break
     r.text(@text)
     r.form do 
@@ -57,7 +57,7 @@ class MainPage < Wee::Component
     end
   end
 
-  def render_content_on(r)
+  def render
     r.page.title("Draw Test").with do 
 
       r.break

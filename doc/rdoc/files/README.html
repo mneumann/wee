@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Sun Jan 02 21:16:57 CET 2005</td>
+      <td>Wed Jan 05 14:36:24 CET 2005</td>
     </tr>
     </table>
   </div>
@@ -79,6 +79,22 @@ Released under the same terms of license as Ruby. Some files under
 directory <tt>examples/</tt> might be copyrighted by third parties and
 licensed under different terms.
 </p>
+<h2>Status and Bugs</h2>
+<p>
+<a href="../classes/Wee.html">Wee</a> is not considered production ready!
+It should only be used for small things.
+</p>
+<p>
+Known Bugs:
+</p>
+<ul>
+<li>Continuations leak memory!
+
+</li>
+<li>Sessions get never reclaimed (easy to fix).
+
+</li>
+</ul>
 <h2>Introduction</h2>
 <p>
 <a href="../classes/Wee.html">Wee</a> is a light-weight, very high-level
@@ -207,6 +223,10 @@ and answer even from multiple components at the same time, but this was
 removed, due to the unreliability of continuations in Ruby).
 
 </li>
+<li>Components are thread-safe, as a fresh components-tree is created for each
+session and requests inside a session are serialized.
+
+</li>
 </ul>
 <h2>What is backtracking?</h2>
 <p>
@@ -330,11 +350,11 @@ There are two methods related to callback processing:
 </p>
 <ul>
 <li><a
-href="../classes/Wee/Component.html#M000159">Wee::Component#process_callback_chain</a>
+href="../classes/Wee/Component.html#M000159">Wee::Component#process_callbacks_chain</a>
 
 </li>
 <li><a
-href="../classes/Wee/Presenter.html#M000179">Wee::Presenter#process_callbacks</a>
+href="../classes/Wee/Presenter.html#M000181">Wee::Presenter#process_callbacks</a>
 
 </li>
 </ul>
@@ -345,17 +365,17 @@ whereas a <a href="../classes/Wee/Decoration.html">Wee::Decoration</a> is
 not a Component (but a Presenter)!
 </p>
 <p>
-Method <em>process_callback_chain</em> invokes <em>process_callbacks</em>
+Method <em>process_callbacks_chain</em> invokes <em>process_callbacks</em>
 for it&#8217;s first decoration, or if the component has no decorations,
 the method is called for the component itself. As such,
-<em>process_callback_chain</em> is important to avoid entering an infinite
+<em>process_callbacks_chain</em> is important to avoid entering an infinite
 loop (a method calling itself). What decorations are, is discussed
 elsewhere.
 </p>
 <p>
 Method <em>process_callbacks</em> of class Component first invokes all
 input callbacks specified for this component, then calls
-<em>process_callback_chain</em> for all of it&#8217;s child components.
+<em>process_callbacks_chain</em> for all of it&#8217;s child components.
 This ensures, that all input callbacks are triggered before the first
 action callback is run. Finally, it invokes all of it&#8217;s action
 callbacks.
@@ -371,22 +391,24 @@ a page:
 </p>
 <ul>
 <li><a
-href="../classes/Wee/Component.html#M000157">Wee::Component#render_chain</a>
+href="../classes/Wee/Component.html#M000157">Wee::Component#do_render_chain</a>
 
 </li>
-<li><a href="../classes/Wee/Presenter.html#M000176">Wee::Presenter#render</a>
+<li><a
+href="../classes/Wee/Presenter.html#M000176">Wee::Presenter#do_render</a>
 
 </li>
 </ul>
 <p>
-Method <em>Component#render_chain</em> starts rendering the decoration
-chain by calling <em>Presenter#render</em> for the first decoration of the
-component or for the component itself if no decorations were specified.
-Method <em>Presenter#render</em> then generates the desired output which
-gets sent to the user. Note that method <em>render</em> might call other
-components <em>render_chain</em> methods to display those components
-&quot;inside&quot; itself (usually a component does this for it&#8217;s
-child components, but this has to be implemented by the programmer).
+Method <em>Component#do_render_chain</em> starts rendering the decoration
+chain by calling <em>Presenter#do_render</em> for the first decoration of
+the component or for the component itself if no decorations were specified.
+Method <em>Presenter#do_render</em> then generates the desired output which
+gets sent to the user. Note that method <em>do_render</em> might call other
+components&#8217; <em>do_render_chain</em> methods to display those
+components &quot;inside&quot; itself (usually a component does this for
+it&#8217;s child components, but this has to be implemented by the
+programmer).
 </p>
 <h3>Further Reads</h3>
 <p>

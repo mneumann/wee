@@ -4,7 +4,7 @@ class Page < Wee::Component
     self.children.push(*children)
   end
 
-  def render_content_on(r)
+  def render
     r.page.title('').with {
       self.children.each do |child|
         r.render(child)

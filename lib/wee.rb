@@ -1,5 +1,5 @@
 module Wee
-  Version = "0.2-dev"
+  Version = "0.3"
 end
 
 require 'wee/core'

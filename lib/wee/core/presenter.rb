@@ -10,43 +10,52 @@ class Wee::Presenter
 
   public
 
-  # This method renders the content of the presenter with the given renderer.
+  # This method renders the content of the presenter.
   #
   # *OVERWRITE* this method in your own presenter classes to implement the
-  # view.  By default this method does nothing!
+  # view. By default this method does nothing!
   #
-  # [+renderer+]
-  #    A renderer object.
+  # Use the current renderer as returned by #renderer or it's short-cut #r.
 
-  def render_content_on(renderer)
+  def render
   end
 
   # Render the presenter in the given rendering context. <b>DO NOT</b>
   # overwrite this method, unless you know exactly what you're doing!
   #
   # Creates a new renderer object of the class returned by method
-  # #renderer_class, then invokes #render_content_on with the new
-  # renderer.
+  # #renderer_class, makes this the current renderer, then invokes method
+  # #render.
   #
   # [+rendering_context+]
   #    An object of class RenderingContext
 
-  def render(rendering_context)
-    with_renderer_for(rendering_context) do |r| render_content_on(r) end 
+  def do_render(rendering_context)
+    with_renderer_for(rendering_context) do render() end 
   end
 
   protected
 
+  # Returns the current renderer object for use by the render methods.
+  def renderer() @renderer end
+
+  # Short cut for #renderer.
+  def r() @renderer end
+
   # Creates a new renderer object of the class returned by method
-  # #renderer_class, then yields it to the block and finally closes the
-  # renderer.
+  # #renderer_class, then makes this the current renderer for the time the
+  # block it yields to executes. Finally, it restores the current renderer to
+  # the former one and closes the newly created renderer. 
 
   def with_renderer_for(rendering_context) 
     renderer = renderer_class.new(rendering_context)
     renderer.current_component = self
+    old_renderer = @renderer 
     begin
-      yield renderer
+      @renderer = renderer
+      yield
     ensure
+      @renderer = old_renderer
       renderer.close # write outstanding brushes to the document
     end
   end
@@ -82,7 +91,7 @@ class Wee::Presenter
     }
 
     # enable subclasses to add behaviour, e.g. a Component class will invoke
-    # process_callback_chain for each child in the block.
+    # process_callbacks_chain for each child in the block.
     yield if block_given?
 
     # invoke action callback. only the first action callback is invoked.

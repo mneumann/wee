@@ -45,7 +45,7 @@ class MainPage < Wee::Component
     @points << [@x, @y]
   end
 
-  def render_content_on(r)
+  def render
     r.page.title("Draw Test").with do 
 
       ctx = r.context.context

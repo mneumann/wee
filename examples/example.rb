@@ -22,7 +22,7 @@ class Counter < Wee::Component
     @cnt += 1
   end
 
-  def render_content_on(r)
+  def render
     r.anchor.callback { dec }.with("--")
     r.space; r.text(@cnt.to_s); r.space 
     r.anchor.callback { inc }.with("++")
@@ -35,7 +35,7 @@ class MessageBox < Wee::Component
     @text = text 
   end
 
-  def render_content_on(r)
+  def render
     r.break
     r.text(@text)
     r.form do 
@@ -70,7 +70,7 @@ class RegexpValidatedInput < Wee::Component
     @input = @value = new_value
   end
 
-  def render_content_on(r)
+  def render
     r.form do
       r.text_input.value(@input).callback(:input=)
       r.text %(<div style="color: red">Invalid input</div>) if @error
@@ -101,7 +101,7 @@ class EditableCounter < Counter
     @show_edit_field = false
   end
 
-  def render_content_on(r)
+  def render
     #r.form.callback{submit}.with do
       r.anchor.callback { dec }.with("--")
       r.space
@@ -163,7 +163,7 @@ class MainPage < Wee::Component
 
   attr_accessor :text
 
-  def render_content_on(r)
+  def render
     r.page.title("Counter Test").with do 
 
       r.form do

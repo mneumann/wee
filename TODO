@@ -1,3 +1,13 @@
+* call method #backtrack from backtrack_state. you don't need to call super for #backtrack (at least for direct subclasses of Component).
+* call method #setup from initialize. same reason as for #backtrack.  
+
+* initialize the component inside the handler thread, not from within Session#initialize
+ 
+* renamexxx_chain methods to: component_xxx, e.g. 
+  - process_callbacks/process_callback_chain to process_callbacks/component_process_callbacks
+  - ... to backtrack_state/component_backtrack_state
+  - render/render_chain to render/component_render  
+
 * callback -> core, how is the callback registry best done?
 
 * Context.... reduce

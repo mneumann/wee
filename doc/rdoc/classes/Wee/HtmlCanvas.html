@@ -444,7 +444,7 @@ Alias for <a href="HtmlCanvas.html#M000061">text</a>
 <span class="ruby-comment cmt"># File lib/wee/renderer/html/canvas.rb, line 126</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">obj</span>)
     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">close</span>
-    <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">render_chain</span>(<span class="ruby-ivar">@rendering_context</span>)
+    <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">do_render_chain</span>(<span class="ruby-ivar">@rendering_context</span>)
     <span class="ruby-keyword kw">nil</span>
   <span class="ruby-keyword kw">end</span>
 </pre>

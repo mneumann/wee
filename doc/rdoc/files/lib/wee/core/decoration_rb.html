@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Tue Dec 21 00:26:36 CET 2004</td>
+      <td>Wed Jan 05 14:21:37 CET 2005</td>
     </tr>
     </table>
   </div>
@@ -71,8 +71,8 @@
     <div id="description">
       <p>
 Abstract base class of all decorations. Forwards the methods
-process_callbacks, render and backtrack_state to the next decoration in the
-chain. Subclasses should provide special behaviour in these methods,
+process_callbacks, do_render and backtrack_state to the next decoration in
+the chain. Subclasses should provide special behaviour in these methods,
 otherwise the decoration does not make sense.
 </p>
 <p>
@@ -81,19 +81,19 @@ around the decorations or components below itself:
 </p>
 <pre>
   class HeaderFooterDecoration &lt; Wee::Decoration
-    def render(rendering_context)
-      with_renderer_for(rendering_context) do |r|
-        render_header_on(r)
+    def do_render(rendering_context)
+      with_renderer_for(rendering_context) do
+        render_header
         super(rendering_context)
-        render_footer_on(r)
+        render_footer
       end
     end
 
-    def render_header_on(r)
+    def render_header
       r.text &quot;header
     end
 
-    def render_footer_on(r)
+    def render_footer
       ...
     end
   end

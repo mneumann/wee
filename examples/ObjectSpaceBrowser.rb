@@ -18,7 +18,7 @@ module ObjectSpaceBrowser
       call(Klass.new(klass))
     end
 
-    def render_content_on(r)
+    def render
       r.h1 "Classes"
 
       r.ul {
@@ -54,7 +54,7 @@ module ObjectSpaceBrowser
         end
     end
 
-    def render_content_on(r)
+    def render
       instances = @instances
       r.h1 "Class #{@klass.name}"
       r.h2 "#{@instances.length} Instances"
@@ -85,7 +85,7 @@ module ObjectSpaceBrowser
       answer
     end
 
-    def render_content_on(r)
+    def render
       r.anchor.action(:back).with("back")
 
       r.break

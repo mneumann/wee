@@ -1,5 +1,5 @@
 # The base class of all components. You should at least overwrite method
-# #render_content_on in your own subclasses.
+# #render in your own subclasses.
 
 class Wee::Component < Wee::Presenter
 
@@ -9,26 +9,25 @@ class Wee::Component < Wee::Presenter
 
   public
 
-  # Starts rendering the decoration chain by calling method Presenter#render
-  # for the first decoration of the component, or calling <i>render</i> for the
-  # component itself if no decorations were specified. 
+  # Starts rendering the decoration chain by calling method Presenter#do_render
+  # for the first decoration of the component, or calling <i>do_render</i> for
+  # the component itself if no decorations were specified. 
   # 
   # [+rendering_context+]
   #    An object of class RenderingContext
 
-  def render_chain(rendering_context)
-    decoration.render(rendering_context)
+  def do_render_chain(rendering_context)
+    decoration.do_render(rendering_context)
   end
 
-  # This method renders the content of this component with the given renderer.
+  # This method renders the content of this component.
   #
   # *OVERWRITE* this method in your own component class to implement the
   # view. By default this method does nothing!
   #
-  # [+renderer+]
-  #    A renderer object.
+  # Use the current renderer as returned by #renderer or it's short-cut #r.
 
-  def render_content_on(renderer)
+  def render
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -44,7 +43,7 @@ class Wee::Component < Wee::Presenter
   # [+callback_stream+]
   #    An object of class CallbackStream
 
-  def process_callback_chain(callback_stream)
+  def process_callbacks_chain(callback_stream)
     decoration.process_callbacks(callback_stream)
   end
 
@@ -61,7 +60,7 @@ class Wee::Component < Wee::Presenter
     super do
       # process callbacks of all children
       children.each do |child|
-        child.process_callback_chain(callback_stream)
+        child.process_callbacks_chain(callback_stream)
       end
     end
   end

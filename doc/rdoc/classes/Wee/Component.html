@@ -83,7 +83,7 @@
     <div id="description">
       <p>
 The base class of all components. You should at least overwrite method <a
-href="Component.html#M000158">render_content_on</a> in your own subclasses.
+href="Component.html#M000158">render</a> in your own subclasses.
 </p>
 
     </div>
@@ -115,14 +115,14 @@ href="Component.html#M000158">render_content_on</a> in your own subclasses.
       <a href="#M000162">children</a>&nbsp;&nbsp;
       <a href="#M000164">decoration</a>&nbsp;&nbsp;
       <a href="#M000165">decoration=</a>&nbsp;&nbsp;
+      <a href="#M000157">do_render_chain</a>&nbsp;&nbsp;
       <a href="#M000166">each_decoration</a>&nbsp;&nbsp;
       <a href="#M000161">initialize</a>&nbsp;&nbsp;
-      <a href="#M000159">process_callback_chain</a>&nbsp;&nbsp;
       <a href="#M000160">process_callbacks</a>&nbsp;&nbsp;
+      <a href="#M000159">process_callbacks_chain</a>&nbsp;&nbsp;
       <a href="#M000168">remove_decoration</a>&nbsp;&nbsp;
       <a href="#M000169">remove_decoration_if</a>&nbsp;&nbsp;
-      <a href="#M000157">render_chain</a>&nbsp;&nbsp;
-      <a href="#M000158">render_content_on</a>&nbsp;&nbsp;
+      <a href="#M000158">render</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -163,16 +163,16 @@ href="Component.html#M000158">render_content_on</a> in your own subclasses.
 
         <div class="method-heading">
           <a href="#M000157" class="method-signature">
-          <span class="method-name">render_chain</span><span class="method-args">(rendering_context)</span>
+          <span class="method-name">do_render_chain</span><span class="method-args">(rendering_context)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
 Starts rendering the decoration chain by calling method <a
-href="Presenter.html#M000176">Presenter#render</a> for the first decoration
-of the component, or calling <em>render</em> for the component itself if no
-decorations were specified.
+href="Presenter.html#M000176">Presenter#do_render</a> for the first
+decoration of the component, or calling <em>do_render</em> for the
+component itself if no decorations were specified.
 </p>
 <dl>
 <dt><tt>rendering_context</tt></dt><dd>An object of class <a href="RenderingContext.html">RenderingContext</a>
@@ -184,8 +184,8 @@ decorations were specified.
           <div class="method-source-code" id="M000157-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 19</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_chain</span>(<span class="ruby-identifier">rendering_context</span>)
-    <span class="ruby-identifier">decoration</span>.<span class="ruby-identifier">render</span>(<span class="ruby-identifier">rendering_context</span>)
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">do_render_chain</span>(<span class="ruby-identifier">rendering_context</span>)
+    <span class="ruby-identifier">decoration</span>.<span class="ruby-identifier">do_render</span>(<span class="ruby-identifier">rendering_context</span>)
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -197,29 +197,27 @@ decorations were specified.
 
         <div class="method-heading">
           <a href="#M000158" class="method-signature">
-          <span class="method-name">render_content_on</span><span class="method-args">(renderer)</span>
+          <span class="method-name">render</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-This method renders the content of this component with the given renderer.
+This method renders the content of this component.
 </p>
 <p>
 <b>OVERWRITE</b> this method in your own component class to implement the
 view. By default this method does nothing!
 </p>
-<dl>
-<dt><tt>renderer</tt></dt><dd>A renderer object.
-
-</dd>
-</dl>
+<p>
+Use the current renderer as returned by renderer or it&#8217;s short-cut r.
+</p>
           <p><a class="source-toggle" href="#"
             onclick="toggleCode('M000158-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000158-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 31</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_content_on</span>(<span class="ruby-identifier">renderer</span>)
+<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 30</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -244,39 +242,6 @@ view. By default this method does nothing!
     <!-- if method_list -->
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
-
-      <div id="method-M000159" class="method-detail">
-        <a name="M000159"></a>
-
-        <div class="method-heading">
-          <a href="#M000159" class="method-signature">
-          <span class="method-name">process_callback_chain</span><span class="method-args">(callback_stream)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Starts processing the callbacks for the decoration chain by invoking method
-<a href="Component.html#M000160">process_callbacks</a> of the first
-decoration or the component itself if no decorations were specified.
-</p>
-<dl>
-<dt><tt>callback_stream</tt></dt><dd>An object of class <a href="CallbackStream.html">CallbackStream</a>
-
-</dd>
-</dl>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000159-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000159-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 47</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callback_chain</span>(<span class="ruby-identifier">callback_stream</span>)
-    <span class="ruby-identifier">decoration</span>.<span class="ruby-identifier">process_callbacks</span>(<span class="ruby-identifier">callback_stream</span>)
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
 
       <div id="method-M000160" class="method-detail">
         <a name="M000160"></a>
@@ -305,14 +270,47 @@ processed/invoked before any of the action callbacks are processed/invoked.
             onclick="toggleCode('M000160-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000160-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 60</span>
+<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 59</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callbacks</span>(<span class="ruby-identifier">callback_stream</span>)
     <span class="ruby-keyword kw">super</span> <span class="ruby-keyword kw">do</span>
       <span class="ruby-comment cmt"># process callbacks of all children</span>
       <span class="ruby-identifier">children</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">child</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">child</span>.<span class="ruby-identifier">process_callback_chain</span>(<span class="ruby-identifier">callback_stream</span>)
+        <span class="ruby-identifier">child</span>.<span class="ruby-identifier">process_callbacks_chain</span>(<span class="ruby-identifier">callback_stream</span>)
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000159" class="method-detail">
+        <a name="M000159"></a>
+
+        <div class="method-heading">
+          <a href="#M000159" class="method-signature">
+          <span class="method-name">process_callbacks_chain</span><span class="method-args">(callback_stream)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Starts processing the callbacks for the decoration chain by invoking method
+<a href="Component.html#M000160">process_callbacks</a> of the first
+decoration or the component itself if no decorations were specified.
+</p>
+<dl>
+<dt><tt>callback_stream</tt></dt><dd>An object of class <a href="CallbackStream.html">CallbackStream</a>
+
+</dd>
+</dl>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000159-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000159-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 46</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callbacks_chain</span>(<span class="ruby-identifier">callback_stream</span>)
+    <span class="ruby-identifier">decoration</span>.<span class="ruby-identifier">process_callbacks</span>(<span class="ruby-identifier">callback_stream</span>)
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -359,7 +357,7 @@ using <tt>super</tt>, before setting up anything else!
             onclick="toggleCode('M000161-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000161-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 80</span>
+<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 79</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>() <span class="ruby-comment cmt"># :notnew:</span>
     <span class="ruby-ivar">@decoration</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">ValueHolder</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
     <span class="ruby-ivar">@children</span> = []
@@ -424,7 +422,7 @@ course only if you want backtracking at all):
             onclick="toggleCode('M000163-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000163-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 116</span>
+<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 115</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_child</span>(<span class="ruby-identifier">child</span>)
     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">children</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">child</span>
   <span class="ruby-keyword kw">end</span>
@@ -450,7 +448,7 @@ Returns all direct child components collected in an array.
             onclick="toggleCode('M000162-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000162-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 93</span>
+<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 92</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">children</span>
     <span class="ruby-ivar">@children</span>
   <span class="ruby-keyword kw">end</span>
@@ -495,7 +493,7 @@ Adds decoration <tt>d</tt> in front of the decoration chain.
             onclick="toggleCode('M000167-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000167-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 152</span>
+<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 151</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_decoration</span>(<span class="ruby-identifier">d</span>)
     <span class="ruby-identifier">d</span>.<span class="ruby-identifier">owner</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">decoration</span>
     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">decoration</span> = <span class="ruby-identifier">d</span>
@@ -523,7 +521,7 @@ or <tt>self</tt> if no decorations were specified for the component.
             onclick="toggleCode('M000164-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000164-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 129</span>
+<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 128</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">decoration</span>
     <span class="ruby-ivar">@decoration</span>.<span class="ruby-identifier">value</span>
   <span class="ruby-keyword kw">end</span>
@@ -549,7 +547,7 @@ Set the pointer to the first decoration to <tt>d</tt>.
             onclick="toggleCode('M000165-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000165-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 135</span>
+<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 134</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">decoration=</span>(<span class="ruby-identifier">d</span>) 
     <span class="ruby-ivar">@decoration</span>.<span class="ruby-identifier">value</span> = <span class="ruby-identifier">d</span>
   <span class="ruby-keyword kw">end</span>
@@ -575,7 +573,7 @@ Iterates over all decorations (note that the component itself is excluded).
             onclick="toggleCode('M000166-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000166-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 141</span>
+<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 140</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_decoration</span> <span class="ruby-comment cmt"># :yields: decoration</span>
     <span class="ruby-identifier">d</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">decoration</span>
     <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
@@ -610,7 +608,7 @@ decoration chain.
             onclick="toggleCode('M000168-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000168-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 162</span>
+<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 161</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_decoration</span>(<span class="ruby-identifier">d</span>)
     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">d</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">decoration</span>  <span class="ruby-comment cmt"># 'd' is in front</span>
       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">decoration</span> = <span class="ruby-identifier">d</span>.<span class="ruby-identifier">owner</span>
@@ -656,7 +654,7 @@ Example (removes all decorations of class <tt>HaloDecoration</tt>):
             onclick="toggleCode('M000169-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000169-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 187</span>
+<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 186</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_decoration_if</span> <span class="ruby-comment cmt"># :yields: decoration</span>
     <span class="ruby-identifier">to_remove</span> = []
     <span class="ruby-identifier">each_decoration</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">to_remove</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">d</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">d</span>}
@@ -742,7 +740,7 @@ as argument.
             onclick="toggleCode('M000171-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000171-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 244</span>
+<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 243</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backtrack_state</span>(<span class="ruby-identifier">snapshot</span>)
     <span class="ruby-identifier">snapshot</span>.<span class="ruby-identifier">add</span>(<span class="ruby-ivar">@decoration</span>)
     <span class="ruby-identifier">children</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">child</span><span class="ruby-operator">|</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">backtrack_state_chain</span>(<span class="ruby-identifier">snapshot</span>) <span class="ruby-keyword kw">end</span>
@@ -779,7 +777,7 @@ See <a href="Component.html#M000171">backtrack_state</a> for details.
             onclick="toggleCode('M000170-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000170-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 208</span>
+<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 207</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backtrack_state_chain</span>(<span class="ruby-identifier">snapshot</span>)
     <span class="ruby-identifier">decoration</span>.<span class="ruby-identifier">backtrack_state</span>(<span class="ruby-identifier">snapshot</span>)
   <span class="ruby-keyword kw">end</span>
@@ -831,7 +829,7 @@ the call/answer mechanism.
             onclick="toggleCode('M000173-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000173-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 311</span>
+<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 310</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">answer</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
     <span class="ruby-identifier">throw</span> <span class="ruby-identifier">:wee_answer</span>, <span class="ruby-identifier">args</span> 
   <span class="ruby-keyword kw">end</span>
@@ -892,7 +890,7 @@ callbacks that call other components and those that do not.
             onclick="toggleCode('M000172-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000172-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 282</span>
+<span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 281</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">component</span>, <span class="ruby-identifier">return_callback</span>=<span class="ruby-identifier">:use_continuation</span>)
     <span class="ruby-identifier">add_decoration</span>(<span class="ruby-identifier">delegate</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Delegate</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">component</span>))
     <span class="ruby-identifier">component</span>.<span class="ruby-identifier">add_decoration</span>(<span class="ruby-identifier">answer</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">AnswerDecoration</span>.<span class="ruby-identifier">new</span>)

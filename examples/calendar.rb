@@ -155,14 +155,12 @@ class MiniCalendar < Wee::Component
   # Render a day of the currently selected month
   #
   def render_month_day(date)
-    r = @canvas
     r.table_data { r.anchor.callback { save(date) }.with(date.day) }
   end
   
   # Render the currently selected day
   #
   def render_selected_day(date)
-    r = @canvas
     r.table_data.style('border: 1px solid black').with do
       r.anchor.style('font-weight: bold').callback { save(date) }.with(date.day)
     end
@@ -171,7 +169,6 @@ class MiniCalendar < Wee::Component
   # Render days of the previous or next month
   #
   def render_other_day(date)
-    r = @canvas
     r.table_data do
       r.anchor.style('color: silver').callback { save(date) }.with(date.day)
     end
@@ -186,7 +183,6 @@ class MiniCalendar < Wee::Component
   # Render Calender header
   #
   def render_header
-    r = @canvas
     r.table_row do
       r.table_header.colspan(4).with { r.encoded_text(month_heading) }
       r.table_header { r.anchor.callback { go_prev }.with(prev_month_abbr) }
@@ -198,15 +194,12 @@ class MiniCalendar < Wee::Component
   # Render Calendar footer
   #
   def render_footer
-    r = @canvas
     r.table_row { r.table_header.colspan(7).with { r.encoded_text(today_string) } }
   end
   
   # Render Calendar
   #
-  def render_content_on(r)
-    super
-    @canvas = r
+  def render
     r.html do
       r.head { r.title('Calendar'); render_styles }
       r.body do
@@ -260,7 +253,6 @@ if __FILE__ == $0
   #
   module StyleMixin
     def render_styles
-      r = @canvas
       r.style("
         a {
           text-decoration: none;
@@ -323,16 +315,13 @@ if __FILE__ == $0
     # Render calendar icon
     #
     def render_icon
-      r = @canvas
       icon = 'http://www.softcomplex.com/products/tigra_calendar/img/cal.gif'
       r.img.src(icon).width(16).height(16).border(0).alt('Calendar')
     end
     
     # Render Calendar demo
     #
-    def render_content_on(r)
-      super
-      @canvas = r
+    def render
       r.html do
         r.head { r.title('Calendar Demo'); render_styles }
         r.body do

@@ -4,7 +4,7 @@ class MessageBox < Wee::Component
     @text = text 
   end
 
-  def render_content_on(r)
+  def render
     r.bold(@text)
     r.form do 
       r.submit_button.value('OK').callback { answer true }
