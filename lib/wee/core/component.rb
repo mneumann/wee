@@ -279,19 +279,27 @@ class Wee::Component < Wee::Presenter
   # limitation without problems, but then there would be a difference between
   # those action callbacks that call other components and those that do not.  
 
-  def call(component)
+  def call(component, return_callback=:use_continuation)
     add_decoration(delegate = Wee::Delegate.new(component))
     component.add_decoration(answer = Wee::AnswerDecoration.new)
 
-    result = callcc {|cc|
-      answer.on_answer = cc
+    if return_callback == :use_continuation
+      result = callcc {|cc|
+        answer.on_answer = cc
+        throw :wee_back_to_session
+      }
+      remove_decoration(delegate)
+      component.remove_decoration(answer)
+      return result
+    else
+      # TODO: make this marshallable! 
+      answer.on_answer = proc {|*args|
+        remove_decoration(delegate)
+        component.remove_decoration(answer)
+        return_callback.call(*args)
+      }
       throw :wee_back_to_session
-    }
-
-    remove_decoration(delegate)
-    component.remove_decoration(answer)
-
-    return result
+    end
   end
 
   # Return from a called component.

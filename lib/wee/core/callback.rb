@@ -95,3 +95,14 @@ class Wee::CallbackStream
   end
 
 end
+
+# A serializable callback. 
+class Wee::LiteralMethodCallback
+  def initialize(obj, method_id=:call)
+    @obj, @method_id = obj, method_id
+  end
+
+  def call(*args)
+    @obj.send(@method_id, *args)
+  end
+end
