@@ -1,4 +1,4 @@
-class Wee::Component
+class Wee::Presenter
   def self.template(method, hash={}) 
     method = method.to_s
 
