@@ -1,6 +1,5 @@
 # The base class of all components. You should at least overwrite method
-# <i>render_content_on</i> (see Presenter#render_content_on) in your own
-# subclasses.
+# #render_content_on in your own subclasses.
 
 class Wee::Component < Wee::Presenter
 
