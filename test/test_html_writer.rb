@@ -1,5 +1,4 @@
 require 'test/unit'
-$LOAD_PATH.unshift "../lib"
 module Wee; end
 require 'wee/rendering/html/writer'
 
