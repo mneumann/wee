@@ -80,6 +80,28 @@
 
   <div id="contextContent">
 
+    <div id="description">
+      <p>
+A class used to write out HTML documents easily.
+</p>
+<p>
+Usage:
+</p>
+<pre>
+  w = Wee::HtmlWriter.new(doc='')
+  w.start_tag('html')
+  w.start_tag('body')
+  w.start_tag('a', 'href' =&gt; 'http://...')
+  w.text('link')
+  w.end_tag('a')
+  w.end_tag('body')
+  w.end_tag('html')
+
+  p w.valid?   # =&gt; true
+  p doc        # =&gt; '&lt;html&gt;&lt;body&gt;&lt;a href=&quot;http://...&quot;&gt;link&lt;/a&gt;&lt;/body&gt;&lt;/html&gt;'
+</pre>
+
+    </div>
 
 
    </div>
@@ -143,7 +165,7 @@
             onclick="toggleCode('M000165-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000165-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/writer.rb, line 6</span>
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/writer.rb, line 23</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">port</span>)
     <span class="ruby-ivar">@port</span> = <span class="ruby-identifier">port</span> 
     <span class="ruby-ivar">@open_start_tag</span> = <span class="ruby-keyword kw">false</span>
@@ -184,16 +206,9 @@ Alias for <a href="HtmlWriter.html#M000168">text</a>
             onclick="toggleCode('M000170-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000170-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/writer.rb, line 54</span>
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/writer.rb, line 71</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">encode_text</span>(<span class="ruby-identifier">str</span>)
-    <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@open_start_tag</span>
-      <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&gt;&quot;</span>
-      <span class="ruby-ivar">@open_start_tag</span> = <span class="ruby-keyword kw">false</span>
-    <span class="ruby-keyword kw">end</span>
-
-    <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escapeHTML</span>(<span class="ruby-identifier">str</span>.<span class="ruby-identifier">to_s</span>)
-
-    <span class="ruby-keyword kw">self</span>
+    <span class="ruby-identifier">text</span>(<span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escapeHTML</span>(<span class="ruby-identifier">str</span>.<span class="ruby-identifier">to_s</span>))
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -214,7 +229,7 @@ Alias for <a href="HtmlWriter.html#M000168">text</a>
             onclick="toggleCode('M000167-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000167-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/writer.rb, line 29</span>
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/writer.rb, line 46</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">end_tag</span>(<span class="ruby-identifier">tag</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;unbalanced html&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@tag_stack</span>.<span class="ruby-identifier">pop</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">tag</span>
 
@@ -246,7 +261,7 @@ Alias for <a href="HtmlWriter.html#M000168">text</a>
             onclick="toggleCode('M000166-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000166-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/writer.rb, line 12</span>
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/writer.rb, line 29</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">start_tag</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">attributes</span>={})
     <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&gt;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@open_start_tag</span>
     <span class="ruby-ivar">@open_start_tag</span> = <span class="ruby-keyword kw">true</span>
@@ -282,7 +297,7 @@ Alias for <a href="HtmlWriter.html#M000168">text</a>
             onclick="toggleCode('M000168-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000168-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/writer.rb, line 42</span>
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/writer.rb, line 59</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">text</span>(<span class="ruby-identifier">str</span>)
     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@open_start_tag</span>
       <span class="ruby-ivar">@port</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&gt;&quot;</span>
@@ -312,7 +327,7 @@ Alias for <a href="HtmlWriter.html#M000168">text</a>
             onclick="toggleCode('M000171-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000171-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/writer.rb, line 65</span>
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/writer.rb, line 75</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">valid?</span>
     <span class="ruby-ivar">@tag_stack</span>.<span class="ruby-identifier">empty?</span>
   <span class="ruby-keyword kw">end</span>

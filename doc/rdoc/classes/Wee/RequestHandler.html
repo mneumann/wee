@@ -189,7 +189,7 @@ The maximum number of requests this handler should serve. A value of
             onclick="toggleCode('M000183-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000183-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/requesthandler.rb, line 70</span>
+<span class="ruby-comment cmt"># File lib/wee/requesthandler.rb, line 69</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
     <span class="ruby-ivar">@last_access</span> = <span class="ruby-ivar">@creation_time</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> 
     <span class="ruby-ivar">@request_count</span> = <span class="ruby-value">0</span>
@@ -253,7 +253,6 @@ Query whether this handler is still alive.
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/requesthandler.rb, line 53</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_request</span>(<span class="ruby-identifier">context</span>)
-  <span class="ruby-keyword kw">ensure</span>
     <span class="ruby-ivar">@request_count</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
     <span class="ruby-ivar">@last_access</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
   <span class="ruby-keyword kw">end</span>
@@ -276,7 +275,7 @@ Query whether this handler is still alive.
             onclick="toggleCode('M000182-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000182-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/requesthandler.rb, line 59</span>
+<span class="ruby-comment cmt"># File lib/wee/requesthandler.rb, line 58</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">statistics</span>
     <span class="ruby-identifier">now</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
     {

@@ -132,17 +132,17 @@
       <div class="name-list">
         <table>
         <tr class="top-aligned-row context-row">
-          <td class="context-item-name">context</td>
-          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        <tr class="top-aligned-row context-row">
           <td class="context-item-name">current_component</td>
           <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
           <td class="context-item-desc"></td>
         </tr>
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">document</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">rendering_context</td>
           <td class="context-item-value">&nbsp;[R]&nbsp;</td>
           <td class="context-item-desc"></td>
         </tr>
@@ -172,7 +172,7 @@
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/rendering/html/canvas.rb, line 39</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">rendering_context</span>)
-    <span class="ruby-ivar">@context</span> = <span class="ruby-identifier">rendering_context</span>
+    <span class="ruby-ivar">@rendering_context</span> = <span class="ruby-identifier">rendering_context</span>
     <span class="ruby-ivar">@document</span> = <span class="ruby-identifier">rendering_context</span>.<span class="ruby-identifier">document</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
@@ -443,7 +443,7 @@ Alias for <a href="HtmlCanvas.html#M000060">text</a>
 <span class="ruby-comment cmt"># File lib/wee/rendering/html/canvas.rb, line 125</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">obj</span>)
     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">close</span>
-    <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">render_chain</span>(<span class="ruby-ivar">@context</span>)
+    <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">render_chain</span>(<span class="ruby-ivar">@rendering_context</span>)
     <span class="ruby-keyword kw">nil</span>
   <span class="ruby-keyword kw">end</span>
 </pre>

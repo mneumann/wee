@@ -119,11 +119,10 @@ TODO: action for another object
             onclick="toggleCode('M000068-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000068-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/canvas.rb, line 407</span>
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/canvas.rb, line 403</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">action</span>(<span class="ruby-identifier">act</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
-    <span class="ruby-identifier">ctx</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">context</span>.<span class="ruby-identifier">context</span>
     <span class="ruby-identifier">obj</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">current_component</span>
-    <span class="ruby-identifier">href</span> = <span class="ruby-identifier">ctx</span>.<span class="ruby-identifier">application</span>.<span class="ruby-identifier">gen_handler_url</span>(<span class="ruby-identifier">ctx</span>.<span class="ruby-identifier">session_id</span>, <span class="ruby-identifier">ctx</span>.<span class="ruby-identifier">page_id</span>, 
+    <span class="ruby-identifier">href</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">rendering_context</span>.<span class="ruby-identifier">application</span>.<span class="ruby-identifier">gen_handler_url</span>(<span class="ruby-identifier">ctx</span>.<span class="ruby-identifier">session_id</span>, <span class="ruby-identifier">ctx</span>.<span class="ruby-identifier">page_id</span>, 
            <span class="ruby-identifier">act</span> <span class="ruby-value">? </span>( <span class="ruby-identifier">ctx</span>.<span class="ruby-identifier">callbacks</span>.<span class="ruby-identifier">register_for</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">:action</span>) { <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">act</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>) }) <span class="ruby-operator">:</span> <span class="ruby-value str">''</span> )
     <span class="ruby-identifier">__action</span>(<span class="ruby-identifier">href</span>)
   <span class="ruby-keyword kw">end</span>
