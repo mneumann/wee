@@ -5,7 +5,6 @@ class OgScaffolder < Wee::Component
   def initialize(domain_class)
     super()
     @domain_class = domain_class
-    # DON'T use @properties here as it is already used by Wee
     @props = @domain_class.__props.reject {|a| a.name == 'oid'}
   end
 
