@@ -21,8 +21,11 @@ class Wee::Session
     Thread.current['Wee::Session'] = self
 
     @next_page_id = 0
-    @mutex = Mutex.new
     @state_registry = Wee::StateRegistry.new
+    @in_queue, @out_queue = SizedQueue.new(1), SizedQueue.new(1)
+
+    @continuation_stack = []
+    register_object_for_backtracking(@continuation_stack)
 
     block.call(self)
 
@@ -30,47 +33,69 @@ class Wee::Session
     raise ArgumentError, "No page_store specified" if @page_store.nil?
     
     @initial_snapshot = @state_registry.snapshot 
-
+    start_request_response_loop
   ensure
     Thread.current['Wee::Session'] = nil
   end
 
-  def setup(context)
+  # called by application to send the session a request
+  def handle_request(context)
+
+    # Send a request to the session. If the session is currently busy
+    # processing another request, this will block. 
+    @in_queue.push(context)
+
+    # Wait for the response.
+    context = @out_queue.pop
+
+    # TODO: can't move into session?
+    if context.redirect
+      context.response.set_redirect(WEBrick::HTTPStatus::MovedPermanently, context.redirect)
+    end
   end
 
-  def handle_request(context)
-    Thread.current['Wee::Session'] = self
+  def start_request_response_loop
+    Thread.abort_on_exception = true
+    Thread.new {
+      Thread.current['Wee::Session'] = self
 
-    @mutex.synchronize do 
+      loop {
+        @context = @in_queue.pop
+        process_request
+        @out_queue.push(@context)
+      }
+    }
+  end
 
-    setup(context)
+  attr_reader :continuation_stack
 
-    if context.page_id.nil?
+  def process_request
+    if @context.page_id.nil?
 
       # No page_id was specified in the URL. This means that we start with a
       # fresh component and a fresh page_id, then redirect to render itself.
 
-      handle_new_page_view(context, @initial_snapshot)
+      handle_new_page_view(@context, @initial_snapshot)
 
-    elsif page = @page_store.fetch(context.page_id, false)
+    elsif page = @page_store.fetch(@context.page_id, false)
 
       # A valid page_id was specified and the corresponding page exists.
 
       page.snapshot.apply
 
-      if context.handler_id.nil?
+      if @context.handler_id.nil?
 
         # No action/inputs were specified -> render page
         #
         # 1. Reset the action/input fields (as they are regenerated in the
         #    rendering process).
         # 2. Render the page (respond).
-        # 3. Store the page back into the store 
+        # 3. Store the page back into the store
 
         page = Wee::Page.new(page.snapshot, Wee::CallbackRegistry.new)  # remove all action/input handlers
-        context.callback_registry = page.callback_registry
-        respond(context.freeze)                     # render
-        @page_store[context.page_id] = page         # store
+        @context.callback_registry = page.callback_registry
+        respond(@context)                            # render
+        @page_store[@context.page_id] = page         # store
 
       else
 
@@ -79,11 +104,12 @@ class Wee::Session
         # We process the request and invoke actions/inputs. Then we generate a
         # new page view. 
 
-        s = {context.handler_id => nil}.update(context.request.query)
+        s = {@context.handler_id => nil}.update(@context.request.query)
         callback_stream = page.callback_registry.create_callback_stream(s)
 
         @root_component.process_callback_chain(callback_stream)
-        handle_new_page_view(context.freeze)
+        handle_new_page_view(@context)
+
       end
 
     else
@@ -98,11 +124,6 @@ class Wee::Session
       raise "Not yet implemented"
 
     end
-
-    end # mutex
-
-  ensure
-    Thread.current['Wee::Session'] = nil
   end
 
   private
@@ -113,7 +134,7 @@ class Wee::Session
     @page_store[new_page_id] = new_page
 
     redirect_url = "#{ context.application.path }/s:#{ context.session_id }/p:#{ new_page_id }"
-    context.response.set_redirect(WEBrick::HTTPStatus::MovedPermanently, redirect_url)
+    context.redirect = redirect_url
   end
 
   def respond(context)

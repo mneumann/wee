@@ -49,21 +49,21 @@ class Wee::Component < Wee::Presenter
   # Initializes a newly created component.
   #
   # Call this method from your own components' <i>initialize</i> method using
-  # +super+, before setting up anything else. 
+  # +super+, before setting up anything else! 
   #
-  # By default neither <tt>@decoration</tt> nor <tt>@children</tt> are
-  # registered for being backtracked. If your component calls other components,
-  # and if you want to be able to use the browsers back-button, then your
-  # <i>initialize</i> method should look like this one: 
+  # By default, only <tt>@decoration</tt> is registered for being backtracked,
+  # but not <tt>@children</tt>. If you want to register your own objects for
+  # being backtracked, i.e. being able to use the browsers back-button
+  # correctly, then your <i>initialize</i> method should look like this one: 
   #
   #   def initialize
   #     super()      # calls Component#initialize
-  #     session.register_object_for_backtracking(@decoration)
+  #     session.register_object_for_backtracking(your_object)
   #     ...
   #   end
 
   def initialize() # :notnew:
-    @decoration = Wee::ValueHolder.new(self)
+    @decoration = Wee::StateHolder.new(self)
     @children = []
   end
 
@@ -85,47 +85,77 @@ class Wee::Component < Wee::Presenter
   # backtracked (of course only if you want backtracking at all): 
   #   
   #   def initialize
-  #     super
-  #     session.register_object_for_backtracing(@children)
+  #     super()
+  #     session.register_object_for_backtracking(@children)
   #   end
  
   def children
     @children
   end
 
-  # Returns the current session. A component has always an associated session.
-  # The returned object is of class Wee::Session or a subclass thereof.
-
-  def session
-    Wee::Session.current
-  end
-
   # Call another component. The calling component is neither rendered nor are
   # it's callbacks processed until the called component answers using method
-  # _answer_. 
+  # #answer. 
+  #
+  # === How it works
+  # 
+  # At first a continuation is created. The component to be called is then
+  # wrapped with an AnswerDecoration and the continuation is assigned to it's
+  # +on_answer+ attribute. Then a Delegate decoration is added to the calling
+  # component (self), which delegates to the component to be called
+  # (+component+). Then we unwind the calling stack back to
+  # Presenter#process_callbacks by throwing
+  # <i>:wee_back_to_process_callbacks</i>.  When at a later point in time the
+  # called component invokes #answer, this will throw a :wee_answer exception
+  # which is catched in the AnswerDecoration.  The AnswerDecoration then jumps
+  # back to the continuation we created at the beginning, and finally method
+  # #call returns. 
+  #
+  # Note that #call returns to an "old" stack-frame from a previous request.
+  # Therefore, method #answer creates another continuation and pushes this onto
+  # the sessions +continuation_stack+. In Presenter#process_callbacks we try to
+  # pop from this stack every time after invoking a callback, and if there was
+  # a continuation on the stack, we jump to it (and never return). This then
+  # jumps back to the #answer method and returns to the current
+  # Presenter#process_callbacks method, quite after the invokation of the
+  # callback that caused method #answer to be called. From thereon, everything
+  # proceeds as usual.
+  #
+  # This complicated procedure allows multiple action callbacks to be followed
+  # in the same request and even multiple answer's.
   #
   # [+component+]
   #   The component to be called.
   #
-  # [+return_method+]
-  #    If the called component returns, call this method of the calling
-  #    component with the arguments passed to method _answer_. If nil, no
-  #    method will be called.
 
-  def call(component, return_method=nil)
-    answer = Wee::AnswerDecoration.new(self, component)
-    answer.return_method = return_method 
-    add_decoration(answer)
-    nil
+  def call(component)
+    delegate = Wee::Delegate.new(self, component)
+
+    result = callcc {|cc|
+      answer = Wee::AnswerDecoration.new(component)
+      answer.on_answer = cc
+      component.add_decoration(answer)
+      add_decoration(delegate)
+      throw :wee_back_to_process_callbacks
+    }
+
+    remove_decoration(delegate)
+    return result
   end
 
   # Return from a called component.
   #
   # After answering, the component that calls _answer_ should no further be
   # used or reused.
+  #
+  # See #call for a detailed description of the call/answer mechanism.
 
   def answer(*args)
-    throw :wee_answer_call, args 
+    callcc {|cc|
+      session.continuation_stack.push cc 
+      throw :wee_answer, args 
+    }
+    throw :wee_back_to_process_callbacks
   end
 
   # -----------------------------------------------------------------------------
@@ -137,13 +167,15 @@ class Wee::Component < Wee::Presenter
   # Returns the first decoration from the component's decoration chain, or
   # +self+ if no decorations were specified for the component.
   #
-  # DO NOT use <tt>@decoration</tt> directly, as it's a ValueHolder!
+  # DO NOT use <tt>@decoration</tt> directly, as it's a StateHolder!
 
-  def decoration() @decoration.value end
+  def decoration
+    @decoration.value
+  end
 
   # Set the pointer to the first decoration to +d+. 
   #
-  # DO NOT use <tt>@decoration</tt> directly, as it's a ValueHolder!
+  # DO NOT use <tt>@decoration</tt> directly, as it's a StateHolder!
 
   def decoration=(d) 
     @decoration.value = d

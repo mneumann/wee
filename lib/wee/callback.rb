@@ -57,6 +57,7 @@ class Wee::CallbackStream
   def get_callbacks_for(object, type)
     @stream[type][object]
   end
+
 end
 
 

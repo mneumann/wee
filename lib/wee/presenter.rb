@@ -42,6 +42,7 @@ class Wee::Presenter
   #    An object of class CallbackStream
 
   def process_callbacks(callback_stream) # :yields:
+
     # invoke input callbacks
     for callback in callback_stream.get_callbacks_for(self, :input)
       callback.invoke
@@ -53,8 +54,16 @@ class Wee::Presenter
 
     # invoke action callbacks
     for callback in callback_stream.get_callbacks_for(self, :action)
-      callback.invoke
+
+      catch(:wee_back_to_process_callbacks) { callback.invoke }
+
+      if cont = session.continuation_stack.pop
+        cont.call
+        raise "FATAL"
+      end
+
     end
+
   end
 
   protected
@@ -64,6 +73,14 @@ class Wee::Presenter
 
   def renderer_class
     Wee::HtmlCanvas
+  end
+
+  # Returns the current session. A presenter (or component) has always an
+  # associated session. The returned object is of class Wee::Session or a
+  # subclass thereof.
+
+  def session
+    Wee::Session.current
   end
 
 end

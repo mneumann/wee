@@ -14,7 +14,7 @@ class Wee::Decoration < Wee::Presenter
   # Go on with the next decoration in the chain.
 
   def process_callbacks(callback_stream)
-    @owner.process_callback_chain(callback_stream)
+    @owner.process_callbacks(callback_stream)
   end
 
   # Go on with the next decoration in the chain.
@@ -39,29 +39,46 @@ class Wee::Decoration < Wee::Presenter
 end
 
 class Wee::Delegate < Wee::Decoration
-  def initialize(component, delegatee)
+  def initialize(component, delegate)
     super(component)
-    @delegatee = delegatee
+    @delegate = delegate
   end
 
   def process_callbacks(callback_stream)
-    @delegatee.process_callback_chain(callback_stream)
+    @delegate.process_callback_chain(callback_stream)
   end
 
   def render(rendering_context)
-    @delegatee.render_chain(rendering_context)
+    @delegate.render_chain(rendering_context)
   end
 end
 
-class Wee::AnswerDecoration < Wee::Delegate
-  attr_accessor :return_method
+# A serializable Method class, which stores the literal method name instead of
+# an internal tree-node method id.
+
+class LiteralMethod
+  def initialize(object, method_name)
+    @object, @method_name = object, method_name
+  end
+  def call(*args)
+    @object.send(@method_name, *args)
+  end
+  alias [] call
+end
+
+class Wee::AnswerDecoration < Wee::Decoration
+
+  # When a component answers, <tt>on_answer.call(args)</tt> will be executed
+  # (unless nil).
+
+  attr_accessor :on_answer
 
   def process_callbacks(callback_stream)
-    args = catch(:wee_answer_call) { super; nil }
+    args = catch(:wee_answer) { super; nil }
     unless args.nil?
       # return to the calling component 
       self.remove!
-      @component.send(@return_method, *args) if @return_method 
+      @on_answer.call(*args) if @on_answer
     end
   end
 end

@@ -4,6 +4,8 @@ class Wee::Context
   attr_accessor :page_id, :handler_id
   attr_accessor :callback_registry
 
+  attr_accessor :redirect
+
   def initialize(request, response, session, session_id)
     @request, @response, @session, @session_id, @root = request, response, session, session_id
   end
