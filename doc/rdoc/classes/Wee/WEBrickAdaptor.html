@@ -86,13 +86,14 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000052">do_GET</a>&nbsp;&nbsp;
-      <a href="#M000053">do_POST</a>&nbsp;&nbsp;
-      <a href="#M000051">handle_request</a>&nbsp;&nbsp;
-      <a href="#M000049">mount</a>&nbsp;&nbsp;
-      <a href="#M000050">new</a>&nbsp;&nbsp;
-      <a href="#M000048">register</a>&nbsp;&nbsp;
-      <a href="#M000047">start</a>&nbsp;&nbsp;
+      <a href="#M000087">do_GET</a>&nbsp;&nbsp;
+      <a href="#M000088">do_POST</a>&nbsp;&nbsp;
+      <a href="#M000086">handle_request</a>&nbsp;&nbsp;
+      <a href="#M000084">mount</a>&nbsp;&nbsp;
+      <a href="#M000085">new</a>&nbsp;&nbsp;
+      <a href="#M000083">register</a>&nbsp;&nbsp;
+      <a href="#M000082">request_class</a>&nbsp;&nbsp;
+      <a href="#M000081">start</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -114,11 +115,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000049" class="method-detail">
-        <a name="M000049"></a>
+      <div id="method-M000084" class="method-detail">
+        <a name="M000084"></a>
 
         <div class="method-heading">
-          <a href="#M000049" class="method-signature">
+          <a href="#M000084" class="method-signature">
           <span class="method-name">mount</span><span class="method-args">(*args, &amp;block)</span>
           </a>
         </div>
@@ -128,10 +129,10 @@
 Convenience method
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000049-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000049-source">
+            onclick="toggleCode('M000084-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000084-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 55</span>
+<span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 63</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">mount</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-ivar">@mounts</span> <span class="ruby-operator">||=</span> []
     <span class="ruby-ivar">@mounts</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">args</span>, <span class="ruby-identifier">block</span>]
@@ -142,36 +143,37 @@ Convenience method
         </div>
       </div>
 
-      <div id="method-M000050" class="method-detail">
-        <a name="M000050"></a>
+      <div id="method-M000085" class="method-detail">
+        <a name="M000085"></a>
 
         <div class="method-heading">
-          <a href="#M000050" class="method-signature">
-          <span class="method-name">new</span><span class="method-args">(server, mount_path, application)</span>
+          <a href="#M000085" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(server, mount_path, application, request_class=Wee::Request)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000050-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000050-source">
+            onclick="toggleCode('M000085-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000085-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 61</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">server</span>, <span class="ruby-identifier">mount_path</span>, <span class="ruby-identifier">application</span>)
+<span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 69</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">server</span>, <span class="ruby-identifier">mount_path</span>, <span class="ruby-identifier">application</span>, <span class="ruby-identifier">request_class</span>=<span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Request</span>)
     <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">server</span>)
     <span class="ruby-ivar">@mount_path</span> = <span class="ruby-identifier">mount_path</span>
     <span class="ruby-ivar">@application</span> = <span class="ruby-identifier">application</span>
+    <span class="ruby-ivar">@request_class</span> = <span class="ruby-identifier">request_class</span> <span class="ruby-operator">||</span> <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Request</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000048" class="method-detail">
-        <a name="M000048"></a>
+      <div id="method-M000083" class="method-detail">
+        <a name="M000083"></a>
 
         <div class="method-heading">
-          <a href="#M000048" class="method-signature">
+          <a href="#M000083" class="method-signature">
           <span class="method-name">register</span><span class="method-args">(hash)</span>
           </a>
         </div>
@@ -181,14 +183,14 @@ Convenience method
 Convenience method
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000048-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000048-source">
+            onclick="toggleCode('M000083-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000083-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 46</span>
+<span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 54</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">register</span>(<span class="ruby-identifier">hash</span>)
     <span class="ruby-ivar">@apps</span> <span class="ruby-operator">||=</span> []
     <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span>, <span class="ruby-identifier">application</span><span class="ruby-operator">|</span>
-      <span class="ruby-ivar">@apps</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">path</span>, <span class="ruby-identifier">application</span>]
+      <span class="ruby-ivar">@apps</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">path</span>, <span class="ruby-identifier">application</span>, <span class="ruby-ivar">@request_class</span>]
     <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">self</span>
   <span class="ruby-keyword kw">end</span>
@@ -197,11 +199,39 @@ Convenience method
         </div>
       </div>
 
-      <div id="method-M000047" class="method-detail">
-        <a name="M000047"></a>
+      <div id="method-M000082" class="method-detail">
+        <a name="M000082"></a>
 
         <div class="method-heading">
-          <a href="#M000047" class="method-signature">
+          <a href="#M000082" class="method-signature">
+          <span class="method-name">request_class</span><span class="method-args">(request_class)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Sets the used <a href="WEBrickAdaptor.html#M000082">request_class</a> for
+all following calls to <a href="WEBrickAdaptor.html#M000083">register</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000082-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000082-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 48</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">request_class</span>(<span class="ruby-identifier">request_class</span>)
+    <span class="ruby-ivar">@request_class</span> = <span class="ruby-identifier">request_class</span>
+    <span class="ruby-keyword kw">self</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000081" class="method-detail">
+        <a name="M000081"></a>
+
+        <div class="method-heading">
+          <a href="#M000081" class="method-signature">
           <span class="method-name">start</span><span class="method-args">(options={}) {|server if block_given?| ...}</span>
           </a>
         </div>
@@ -211,16 +241,16 @@ Convenience method
 Convenience method
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000047-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000047-source">
+            onclick="toggleCode('M000081-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000081-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 27</span>
+<span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 28</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">start</span>(<span class="ruby-identifier">options</span>={})
     <span class="ruby-identifier">server</span> = <span class="ruby-constant">WEBrick</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTPServer</span>.<span class="ruby-identifier">new</span>({<span class="ruby-identifier">:Port</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">2000</span>}.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">options</span>))
     <span class="ruby-identifier">trap</span>(<span class="ruby-value str">&quot;INT&quot;</span>) { <span class="ruby-identifier">server</span>.<span class="ruby-identifier">shutdown</span> }
 
-    (<span class="ruby-ivar">@apps</span><span class="ruby-operator">||</span>[]).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span>, <span class="ruby-identifier">app</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">server</span>.<span class="ruby-identifier">mount</span>(<span class="ruby-identifier">path</span>, <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">app</span>)
+    (<span class="ruby-ivar">@apps</span><span class="ruby-operator">||</span>[]).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span>, <span class="ruby-identifier">app</span>, <span class="ruby-identifier">request_class</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">server</span>.<span class="ruby-identifier">mount</span>(<span class="ruby-identifier">path</span>, <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">path</span>, <span class="ruby-identifier">app</span>, <span class="ruby-identifier">request_class</span>)
     <span class="ruby-keyword kw">end</span>
 
     (<span class="ruby-ivar">@mounts</span><span class="ruby-operator">||</span>[]).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">args</span>, <span class="ruby-identifier">block</span><span class="ruby-operator">|</span>
@@ -239,8 +269,8 @@ Convenience method
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000052" class="method-detail">
-        <a name="M000052"></a>
+      <div id="method-M000087" class="method-detail">
+        <a name="M000087"></a>
 
         <div class="method-heading">
           <span class="method-name">do_GET</span><span class="method-args">(req, res)</span>
@@ -248,13 +278,13 @@ Convenience method
       
         <div class="method-description">
           <p>
-Alias for <a href="WEBrickAdaptor.html#M000051">handle_request</a>
+Alias for <a href="WEBrickAdaptor.html#M000086">handle_request</a>
 </p>
         </div>
       </div>
 
-      <div id="method-M000053" class="method-detail">
-        <a name="M000053"></a>
+      <div id="method-M000088" class="method-detail">
+        <a name="M000088"></a>
 
         <div class="method-heading">
           <span class="method-name">do_POST</span><span class="method-args">(req, res)</span>
@@ -262,32 +292,35 @@ Alias for <a href="WEBrickAdaptor.html#M000051">handle_request</a>
       
         <div class="method-description">
           <p>
-Alias for <a href="WEBrickAdaptor.html#M000051">handle_request</a>
+Alias for <a href="WEBrickAdaptor.html#M000086">handle_request</a>
 </p>
         </div>
       </div>
 
-      <div id="method-M000051" class="method-detail">
-        <a name="M000051"></a>
+      <div id="method-M000086" class="method-detail">
+        <a name="M000086"></a>
 
         <div class="method-heading">
-          <a href="#M000051" class="method-signature">
+          <a href="#M000086" class="method-signature">
           <span class="method-name">handle_request</span><span class="method-args">(req, res)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000051-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000051-source">
+            onclick="toggleCode('M000086-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000086-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 67</span>
+<span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 76</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_request</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)
-    <span class="ruby-identifier">context</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Context</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Request</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@mount_path</span>, <span class="ruby-identifier">req</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">req</span>.<span class="ruby-identifier">header</span>, <span class="ruby-identifier">req</span>.<span class="ruby-identifier">query</span>))
+    <span class="ruby-identifier">context</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Context</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@request_class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@mount_path</span>, <span class="ruby-identifier">req</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">req</span>.<span class="ruby-identifier">header</span>, <span class="ruby-identifier">req</span>.<span class="ruby-identifier">query</span>, <span class="ruby-identifier">req</span>.<span class="ruby-identifier">cookies</span>))
     <span class="ruby-ivar">@application</span>.<span class="ruby-identifier">handle_request</span>(<span class="ruby-identifier">context</span>)
     <span class="ruby-identifier">res</span>.<span class="ruby-identifier">status</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span>.<span class="ruby-identifier">status</span>
     <span class="ruby-identifier">res</span>.<span class="ruby-identifier">body</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span>.<span class="ruby-identifier">content</span>
     <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span>.<span class="ruby-identifier">header</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">header</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">v</span> }
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span>.<span class="ruby-identifier">cookies?</span>
+      <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span>.<span class="ruby-identifier">cookies</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">cookies</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">c</span> } 
+    <span class="ruby-keyword kw">end</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>

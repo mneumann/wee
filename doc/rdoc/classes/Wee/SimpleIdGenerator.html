@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../files/lib/wee/idgen_rb.html">
-                lib/wee/idgen.rb
+                <a href="../../files/lib/wee/idgen/simple_rb.html">
+                lib/wee/idgen/simple.rb
                 </a>
         <br />
             </td>
@@ -80,6 +80,12 @@
 
   <div id="contextContent">
 
+    <div id="description">
+      <p>
+Returned ids are guaranteed to be unique, but they are easily guessable.
+</p>
+
+    </div>
 
 
    </div>
@@ -88,9 +94,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000202">current</a>&nbsp;&nbsp;
-      <a href="#M000201">new</a>&nbsp;&nbsp;
-      <a href="#M000203">next</a>&nbsp;&nbsp;
+      <a href="#M000231">new</a>&nbsp;&nbsp;
+      <a href="#M000232">next</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -112,21 +117,21 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000201" class="method-detail">
-        <a name="M000201"></a>
+      <div id="method-M000231" class="method-detail">
+        <a name="M000231"></a>
 
         <div class="method-heading">
-          <a href="#M000201" class="method-signature">
+          <a href="#M000231" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(initial_value=0)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000201-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000201-source">
+            onclick="toggleCode('M000231-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000231-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/idgen.rb, line 2</span>
+<span class="ruby-comment cmt"># File lib/wee/idgen/simple.rb, line 4</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">initial_value</span>=<span class="ruby-value">0</span>)
     <span class="ruby-ivar">@value</span> = <span class="ruby-identifier">initial_value</span>
   <span class="ruby-keyword kw">end</span>
@@ -137,44 +142,21 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000202" class="method-detail">
-        <a name="M000202"></a>
+      <div id="method-M000232" class="method-detail">
+        <a name="M000232"></a>
 
         <div class="method-heading">
-          <a href="#M000202" class="method-signature">
-          <span class="method-name">current</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000202-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000202-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/idgen.rb, line 6</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current</span>
-    <span class="ruby-ivar">@value</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000203" class="method-detail">
-        <a name="M000203"></a>
-
-        <div class="method-heading">
-          <a href="#M000203" class="method-signature">
+          <a href="#M000232" class="method-signature">
           <span class="method-name">next</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000203-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000203-source">
+            onclick="toggleCode('M000232-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000232-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/idgen.rb, line 10</span>
+<span class="ruby-comment cmt"># File lib/wee/idgen/simple.rb, line 8</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">next</span>
     <span class="ruby-ivar">@value</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
   <span class="ruby-keyword kw">end</span>

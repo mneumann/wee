@@ -84,9 +84,9 @@
       <p>
 A <a href="AnswerDecoration.html">Wee::AnswerDecoration</a> is wrapped
 around a component that will call <a
-href="Component.html#M000224">Component#answer</a>. This makes it possible
+href="Component.html#M000265">Component#answer</a>. This makes it possible
 to use such components without the need to call them (<a
-href="Component.html#M000223">Component#call</a>), e.g. as child components
+href="Component.html#M000264">Component#call</a>), e.g. as child components
 of other components.
 </p>
 
@@ -99,7 +99,7 @@ of other components.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000057">process_callbacks</a>&nbsp;&nbsp;
+      <a href="#M000096">process_callbacks</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -125,7 +125,7 @@ of other components.
           <td class="context-item-desc">
 When a component answers, <tt>on_answer.call(args)</tt> will be executed
 (unless nil), where <tt>args</tt> are the arguments passed to <a
-href="Component.html#M000224">Component#answer</a>. Note that no snapshot
+href="Component.html#M000265">Component#answer</a>. Note that no snapshot
 of on_answer is taken, so you should avoid modifying it!
 
 </td>
@@ -140,19 +140,19 @@ of on_answer is taken, so you should avoid modifying it!
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000057" class="method-detail">
-        <a name="M000057"></a>
+      <div id="method-M000096" class="method-detail">
+        <a name="M000096"></a>
 
         <div class="method-heading">
-          <a href="#M000057" class="method-signature">
+          <a href="#M000096" class="method-signature">
           <span class="method-name">process_callbacks</span><span class="method-args">(callback_stream)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000057-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000057-source">
+            onclick="toggleCode('M000096-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000096-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/decoration.rb, line 131</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callbacks</span>(<span class="ruby-identifier">callback_stream</span>)

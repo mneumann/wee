@@ -86,8 +86,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000102">new</a>&nbsp;&nbsp;
-      <a href="#M000103">with</a>&nbsp;&nbsp;
+      <a href="#M000143">new</a>&nbsp;&nbsp;
+      <a href="#M000144">with</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -95,13 +95,6 @@
 
 
     <!-- if includes -->
-    <div id="includes">
-      <h3 class="section-bar">Included Modules</h3>
-
-      <div id="includes-list">
-        <span class="include-name"><a href="ActionURLCallbackMixin.html">Brush::ActionURLCallbackMixin</a></span>
-      </div>
-    </div>
 
     <div id="section">
 
@@ -117,6 +110,16 @@
           <td>-></td>
           <td class="context-item-value">__set_url</td>
         </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">__actionurl_callback</td>
+          <td>-></td>
+          <td class="context-item-value">callback</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">__actionurl_named_callback</td>
+          <td>-></td>
+          <td class="context-item-value">named_callback</td>
+        </tr>
                         </table>
       </div>
     </div>
@@ -129,21 +132,21 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000102" class="method-detail">
-        <a name="M000102"></a>
+      <div id="method-M000143" class="method-detail">
+        <a name="M000143"></a>
 
         <div class="method-heading">
-          <a href="#M000102" class="method-signature">
+          <a href="#M000143" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000102-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000102-source">
+            onclick="toggleCode('M000143-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000143-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 448</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 430</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
     <span class="ruby-keyword kw">super</span>(<span class="ruby-value str">'form'</span>)
     <span class="ruby-ivar">@attributes</span>[<span class="ruby-value str">'method'</span>] = <span class="ruby-value str">'POST'</span>
@@ -155,25 +158,26 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000103" class="method-detail">
-        <a name="M000103"></a>
+      <div id="method-M000144" class="method-detail">
+        <a name="M000144"></a>
 
         <div class="method-heading">
-          <a href="#M000103" class="method-signature">
+          <a href="#M000144" class="method-signature">
           <span class="method-name">with</span><span class="method-args">(*args, &amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000103-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000103-source">
+            onclick="toggleCode('M000144-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000144-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 457</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 441</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-comment cmt"># If no action was specified, use a dummy one.</span>
     <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@attributes</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value str">'action'</span>)
       <span class="ruby-identifier">req</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">rendering_context</span>.<span class="ruby-identifier">request</span>
+      <span class="ruby-comment cmt"># TODO?</span>
       <span class="ruby-ivar">@attributes</span>[<span class="ruby-value str">'action'</span>] = <span class="ruby-identifier">req</span>.<span class="ruby-identifier">build_url</span>(<span class="ruby-identifier">req</span>.<span class="ruby-identifier">request_handler_id</span>, <span class="ruby-identifier">req</span>.<span class="ruby-identifier">page_id</span>) 
     <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">super</span>
