@@ -60,9 +60,7 @@ if __FILE__ == $0
   require 'wee/utils'
 
   app = Wee::Utils.app_for { 
-    comp = RpnCalculator.new
-    comp.add_decoration(Wee::PageDecoration.new('RPN Calculator'))
-    comp
+    RpnCalculator.new.add_decoration(Wee::PageDecoration.new('RPN Calculator'))
   }
 
   Wee::WEBrickAdaptor.register('/calc' => app).start 

@@ -1,9 +1,8 @@
 $LOAD_PATH.unshift << "../lib"
 require 'wee'
-require 'wee/webrick'
-require 'wee/utils/cache'
+require 'wee/adaptors/webrick' 
+require 'wee/utils'
 require 'cgi'
-
 require 'enumerator'
 
 module ObjectSpaceBrowser
@@ -15,7 +14,7 @@ module ObjectSpaceBrowser
     end
 
     def choose(klass)
-      call(Klass.new(klass))
+      call Klass.new(klass)
     end
 
     def render
@@ -23,7 +22,7 @@ module ObjectSpaceBrowser
 
       r.ul {
         klasses.each do |klass|
-          r.li { r.anchor.action(:choose, klass).with(klass.name) }
+          r.li { r.anchor.callback(:choose, klass).with(klass.name) }
         end
       }
     end
@@ -63,7 +62,7 @@ module ObjectSpaceBrowser
 
       r.ul {
         @instances.each do |instance|
-          r.li { r.anchor.action(:choose, instance).with("0x%x" % instance.object_id) }
+          r.li { r.anchor.callback(:choose, instance).with("0x%x" % instance.object_id) }
         end
       }
     end
@@ -86,7 +85,7 @@ module ObjectSpaceBrowser
     end
 
     def render
-      r.anchor.action(:back).with("back")
+      r.anchor.callback(:back).with("back")
 
       r.break
       r.h1 "Instance 0x%x of #{@instance.class.name}" % @instance.object_id
@@ -97,7 +96,7 @@ module ObjectSpaceBrowser
         r.break
         r.ul do
           @instance.each do |obj|
-            r.li { render_obj(obj, r) }
+            r.li { render_obj(obj) }
           end
         end
       when Hash
@@ -111,8 +110,8 @@ module ObjectSpaceBrowser
 
           @instance.each_pair do |k, v|
             r.table_row do
-              r.table_data { render_obj(k, r) }
-              r.table_data { render_obj(v, r) }
+              r.table_data { render_obj(k) }
+              r.table_data { render_obj(v) }
             end
           end
         end
@@ -124,31 +123,31 @@ module ObjectSpaceBrowser
       return if @instance.instance_variables.empty?
       r.break
 
-      render_instance_variables(r)
+      render_instance_variables
     end
 
-    def render_instance_variables(r)
+    def render_instance_variables
       r.table.border(1).with do
         r.table_row do
           r.table_data do r.bold("Instance Variable") end
           r.table_data do r.bold("Object") end
         end
-        @instance.instance_variables.each do |var| render_ivar_row(var, r) end
+        @instance.instance_variables.each do |var| render_ivar_row(var) end
       end
     end
 
-    def render_ivar_row(var, r)
+    def render_ivar_row(var)
       r.table_row do 
         r.table_data(var)
         r.table_data do
           v = @instance.instance_variable_get(var)
-          render_obj(v, r)
+          render_obj(v)
         end
       end
     end
 
-    def render_obj(obj, r)
-      r.anchor.action(:choose, obj).with do
+    def render_obj(obj)
+      r.anchor.callback(:choose, obj).with do
         r.bold(obj.class.name)
         r.space
         r.text("(#{ obj.object_id })")
@@ -170,30 +169,13 @@ end # module ObjectSpaceBrowser
 
 if $0 == __FILE__ then
 
-OBJ = {
-  "hello" => { [1,2,3] => [5,6,7], "test" => :super },
-  "other" => %w(a b c d e f)
-}
+  OBJ = {
+    "hello" => { [1,2,3] => [5,6,7], "test" => :super },
+    "other" => %w(a b c d e f)
+  }
 
-class MySession < Wee::Session
-  def initialize
-    super do
-      self.root_component = ObjectSpaceBrowser::Instance.new(OBJ)
-      self.page_store = Wee::Utils::LRUCache.new(10) # backtrack up to 10 pages
-    end
-  end
-end
-
-class MyApplication < Wee::Application
-  def shutdown
-  end
-end
-
-  Wee::Application.new {|app|
-    app.name = 'ObjectBrowser'
-    app.path = '/ob'
-    app.session_class = MySession
-    app.session_store = Wee::Utils::LRUCache.new(10)
-    app.dumpfile = ''
-  }.start
+  app = Wee::Utils.app_for {
+    ObjectSpaceBrowser::Instance.new(OBJ)
+  }
+  Wee::WEBrickAdaptor.register('/ob' => app).start 
 end

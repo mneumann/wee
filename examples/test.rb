@@ -1,6 +1,5 @@
 $LOAD_PATH.unshift << "../lib"
 require 'wee'
-require 'wee/utils/cache'
 
 class Counter < Wee::Component
   def initialize(cnt)
@@ -53,11 +52,12 @@ class MySession < Wee::Session
 end
 
 if __FILE__ == $0
+  require 'wee/utils'
+  require 'wee/adaptors/webrick'
   app = Wee::Application.new {|app|
     app.default_request_handler { MySession.new }
     app.id_generator = Wee::SimpleIdGenerator.new(rand(1_000_000))
     app.max_request_handlers = 2
   }
-  require 'wee/adaptors/webrick'
   Wee::WEBrickAdaptor.register('/app' => app).start
 end
