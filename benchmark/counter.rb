@@ -8,7 +8,11 @@ class Counter < Wee::Component
     super()
     @cnt = cnt 
     @show_edit_field = false
-    session.register_object_for_backtracking(self)
+  end
+
+  def backtrack_state(snap)
+    super
+    snap.add(self)
   end
 
   def dec
@@ -88,6 +92,5 @@ if __FILE__ == $0
     app.path = '/counter'
     app.session_class = MySession
     app.session_store = Wee::Utils::LRUCache.new(100) # handle up to 100 sessions
-    app.dumpfile = 'dump'
   }.start(:Port => PORT) 
 end

@@ -1,11 +1,13 @@
 N=2000
 
+RUBY=ruby
+
 all: bench1 bench2
 	echo "DONE"
 
 start_counter:
 	# start the counter app
-	ruby counter.rb 2000 > /dev/null 2> /dev/null &
+	$(RUBY) counter.rb 2000 > /dev/null 2> /dev/null &
 	sleep 3
 
 stop_counter:
@@ -18,12 +20,12 @@ bench_counter:
 	fetch -o counter.html http://localhost:2000/counter
 
 	# perform benchmark
-	ab -n ${N} http://localhost:2000/counter/s:1/p:0 > result.${N}.counter.render
-	ab -n ${N} http://localhost:2000/counter/s:1/p:0/h:1 > result.${N}.counter.action
+	ab -n ${N} http://localhost:2000/counter/s:1/p:1 > result.${N}.counter.render
+	ab -n ${N} http://localhost:2000/counter/s:1/p:1/h:1 > result.${N}.counter.action
 
 start_filehandler:
 	# start the filehandler app
-	ruby filehandler.rb > /dev/null 2> /dev/null &
+	$(RUBY) filehandler.rb > /dev/null 2> /dev/null &
 	sleep 3
 
 stop_filehandler:
