@@ -65,9 +65,7 @@
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
-                <a href="../Object.html">
-                Object
-               </a>
+                Struct.new(:request, :response);
             </td>
         </tr>
         </table>
@@ -84,13 +82,6 @@
 
    </div>
 
-    <div id="method-list">
-      <h3 class="section-bar">Methods</h3>
-
-      <div class="name-list">
-      <a href="#M000110">new</a>&nbsp;&nbsp;
-      </div>
-    </div>
 
   </div>
 
@@ -103,86 +94,10 @@
 
 
 
-    <div id="attribute-list">
-      <h3 class="section-bar">Attributes</h3>
-
-      <div class="name-list">
-        <table>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">application</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">callbacks</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">handler_id</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">page_id</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">request</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">response</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">session</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">session_id</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        </table>
-      </div>
-    </div>
       
 
 
     <!-- if method_list -->
-    <div id="methods">
-      <h3 class="section-bar">Public Class methods</h3>
-
-      <div id="method-M000110" class="method-detail">
-        <a name="M000110"></a>
-
-        <div class="method-heading">
-          <a href="#M000110" class="method-signature">
-          <span class="method-name">new</span><span class="method-args">(request, response, session, session_id)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000110-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000110-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/context.rb, line 7</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">request</span>, <span class="ruby-identifier">response</span>, <span class="ruby-identifier">session</span>, <span class="ruby-identifier">session_id</span>)
-    <span class="ruby-ivar">@request</span>, <span class="ruby-ivar">@response</span>, <span class="ruby-ivar">@session</span>, <span class="ruby-ivar">@session_id</span>, <span class="ruby-ivar">@root</span> = <span class="ruby-identifier">request</span>, <span class="ruby-identifier">response</span>, <span class="ruby-identifier">session</span>, <span class="ruby-identifier">session_id</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
 
 
   </div>

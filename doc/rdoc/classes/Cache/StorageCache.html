@@ -101,13 +101,13 @@ protocol that the <em>store</em> must understand is:
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000011">[]</a>&nbsp;&nbsp;
-      <a href="#M000012">[]=</a>&nbsp;&nbsp;
-      <a href="#M000008">delete</a>&nbsp;&nbsp;
-      <a href="#M000009">fetch</a>&nbsp;&nbsp;
-      <a href="#M000007">has_key?</a>&nbsp;&nbsp;
-      <a href="#M000006">new</a>&nbsp;&nbsp;
-      <a href="#M000010">store</a>&nbsp;&nbsp;
+      <a href="#M000010">[]</a>&nbsp;&nbsp;
+      <a href="#M000011">[]=</a>&nbsp;&nbsp;
+      <a href="#M000007">delete</a>&nbsp;&nbsp;
+      <a href="#M000008">fetch</a>&nbsp;&nbsp;
+      <a href="#M000006">has_key?</a>&nbsp;&nbsp;
+      <a href="#M000005">new</a>&nbsp;&nbsp;
+      <a href="#M000009">store</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -129,21 +129,21 @@ protocol that the <em>store</em> must understand is:
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000006" class="method-detail">
-        <a name="M000006"></a>
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
 
         <div class="method-heading">
-          <a href="#M000006" class="method-signature">
+          <a href="#M000005" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(strategy, store=Hash.new, store_on_update=false)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000006-source">
+            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000005-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 105</span>
+<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 114</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">strategy</span>, <span class="ruby-identifier">store</span>=<span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>, <span class="ruby-identifier">store_on_update</span>=<span class="ruby-keyword kw">false</span>)
     <span class="ruby-ivar">@strategy</span> = <span class="ruby-identifier">strategy</span>
     <span class="ruby-ivar">@store</span> = <span class="ruby-identifier">store</span>
@@ -156,8 +156,8 @@ protocol that the <em>store</em> must understand is:
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000011" class="method-detail">
-        <a name="M000011"></a>
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
 
         <div class="method-heading">
           <span class="method-name">[]</span><span class="method-args">(key, default_value=nil)</span>
@@ -165,13 +165,13 @@ protocol that the <em>store</em> must understand is:
       
         <div class="method-description">
           <p>
-Alias for <a href="StorageCache.html#M000009">fetch</a>
+Alias for <a href="StorageCache.html#M000008">fetch</a>
 </p>
         </div>
       </div>
 
-      <div id="method-M000012" class="method-detail">
-        <a name="M000012"></a>
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
 
         <div class="method-heading">
           <span class="method-name">[]=</span><span class="method-args">(key, value)</span>
@@ -179,26 +179,26 @@ Alias for <a href="StorageCache.html#M000009">fetch</a>
       
         <div class="method-description">
           <p>
-Alias for <a href="StorageCache.html#M000010">store</a>
+Alias for <a href="StorageCache.html#M000009">store</a>
 </p>
         </div>
       </div>
 
-      <div id="method-M000008" class="method-detail">
-        <a name="M000008"></a>
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
 
         <div class="method-heading">
-          <a href="#M000008" class="method-signature">
+          <a href="#M000007" class="method-signature">
           <span class="method-name">delete</span><span class="method-args">(key)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000008-source">
+            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000007-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 115</span>
+<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 124</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">key</span>)
     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">key</span>)
       <span class="ruby-identifier">item</span> = <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">key</span>)
@@ -213,21 +213,21 @@ Alias for <a href="StorageCache.html#M000010">store</a>
         </div>
       </div>
 
-      <div id="method-M000009" class="method-detail">
-        <a name="M000009"></a>
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
 
         <div class="method-heading">
-          <a href="#M000009" class="method-signature">
+          <a href="#M000008" class="method-signature">
           <span class="method-name">fetch</span><span class="method-args">(key, default_value=nil)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000009-source">
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 125</span>
+<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 134</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">default_value</span>=<span class="ruby-keyword kw">nil</span>)
     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">key</span>)
       <span class="ruby-identifier">item</span> = <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span>)
@@ -243,21 +243,21 @@ Alias for <a href="StorageCache.html#M000010">store</a>
         </div>
       </div>
 
-      <div id="method-M000007" class="method-detail">
-        <a name="M000007"></a>
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
 
         <div class="method-heading">
-          <a href="#M000007" class="method-signature">
+          <a href="#M000006" class="method-signature">
           <span class="method-name">has_key?</span><span class="method-args">(key)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000007-source">
+            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000006-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 111</span>
+<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 120</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">key</span>)
     <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">key</span>)
   <span class="ruby-keyword kw">end</span>
@@ -266,21 +266,21 @@ Alias for <a href="StorageCache.html#M000010">store</a>
         </div>
       </div>
 
-      <div id="method-M000010" class="method-detail">
-        <a name="M000010"></a>
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
 
         <div class="method-heading">
-          <a href="#M000010" class="method-signature">
+          <a href="#M000009" class="method-signature">
           <span class="method-name">store</span><span class="method-args">(key, value)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000010-source">
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 136</span>
+<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 145</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">store</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@store</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">key</span>)
       <span class="ruby-comment cmt"># update only </span>

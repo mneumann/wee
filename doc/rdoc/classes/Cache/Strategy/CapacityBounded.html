@@ -95,11 +95,11 @@ Abstract class for a capacity bounded strategy. Only up to
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000015">dec</a>&nbsp;&nbsp;
-      <a href="#M000017">empty?</a>&nbsp;&nbsp;
-      <a href="#M000016">full?</a>&nbsp;&nbsp;
-      <a href="#M000014">inc</a>&nbsp;&nbsp;
-      <a href="#M000013">new</a>&nbsp;&nbsp;
+      <a href="#M000014">dec</a>&nbsp;&nbsp;
+      <a href="#M000016">empty?</a>&nbsp;&nbsp;
+      <a href="#M000015">full?</a>&nbsp;&nbsp;
+      <a href="#M000013">inc</a>&nbsp;&nbsp;
+      <a href="#M000012">new</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -134,21 +134,21 @@ Abstract class for a capacity bounded strategy. Only up to
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000013" class="method-detail">
-        <a name="M000013"></a>
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
 
         <div class="method-heading">
-          <a href="#M000013" class="method-signature">
+          <a href="#M000012" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(capacity)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000013-source">
+            onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000012-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 22</span>
+<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 31</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">capacity</span>)
     <span class="ruby-ivar">@capacity</span> = <span class="ruby-identifier">capacity</span>
     <span class="ruby-ivar">@n_items</span> = <span class="ruby-value">0</span>  <span class="ruby-comment cmt"># number of items in cache</span>
@@ -160,47 +160,24 @@ Abstract class for a capacity bounded strategy. Only up to
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000015" class="method-detail">
-        <a name="M000015"></a>
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
 
         <div class="method-heading">
-          <a href="#M000015" class="method-signature">
+          <a href="#M000014" class="method-signature">
           <span class="method-name">dec</span><span class="method-args">(item)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000015-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000015-source">
+            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000014-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 32</span>
+<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 41</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dec</span>(<span class="ruby-identifier">item</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">empty?</span>
     <span class="ruby-ivar">@n_items</span> <span class="ruby-operator">-=</span> <span class="ruby-value">1</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000017" class="method-detail">
-        <a name="M000017"></a>
-
-        <div class="method-heading">
-          <a href="#M000017" class="method-signature">
-          <span class="method-name">empty?</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000017-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000017-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 41</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">empty?</span>
-    <span class="ruby-ivar">@n_items</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -212,7 +189,7 @@ Abstract class for a capacity bounded strategy. Only up to
 
         <div class="method-heading">
           <a href="#M000016" class="method-signature">
-          <span class="method-name">full?</span><span class="method-args">()</span>
+          <span class="method-name">empty?</span><span class="method-args">()</span>
           </a>
         </div>
       
@@ -221,7 +198,30 @@ Abstract class for a capacity bounded strategy. Only up to
             onclick="toggleCode('M000016-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000016-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 37</span>
+<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 50</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">empty?</span>
+    <span class="ruby-ivar">@n_items</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="#M000015" class="method-signature">
+          <span class="method-name">full?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000015-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000015-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 46</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">full?</span>
     <span class="ruby-ivar">@n_items</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-ivar">@capacity</span> 
   <span class="ruby-keyword kw">end</span>
@@ -230,21 +230,21 @@ Abstract class for a capacity bounded strategy. Only up to
         </div>
       </div>
 
-      <div id="method-M000014" class="method-detail">
-        <a name="M000014"></a>
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
 
         <div class="method-heading">
-          <a href="#M000014" class="method-signature">
+          <a href="#M000013" class="method-signature">
           <span class="method-name">inc</span><span class="method-args">(item)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000014-source">
+            onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000013-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 27</span>
+<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 36</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inc</span>(<span class="ruby-identifier">item</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">full?</span>
     <span class="ruby-ivar">@n_items</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>

@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../../files/lib/wee/rendering/html/canvas_rb.html">
-                lib/wee/rendering/html/canvas.rb
+                <a href="../../../files/lib/wee/rendering/html/brushes_rb.html">
+                lib/wee/rendering/html/brushes.rb
                 </a>
         <br />
             </td>
@@ -86,8 +86,10 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000089">new</a>&nbsp;&nbsp;
-      <a href="#M000090">with</a>&nbsp;&nbsp;
+      <a href="#M000088">callback</a>&nbsp;&nbsp;
+      <a href="#M000087">multiple</a>&nbsp;&nbsp;
+      <a href="#M000086">new</a>&nbsp;&nbsp;
+      <a href="#M000089">with</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -99,7 +101,7 @@
       <h3 class="section-bar">Included Modules</h3>
 
       <div id="includes-list">
-        <span class="include-name"><a href="AssignMixin.html">Brush::AssignMixin</a></span>
+        <span class="include-name"><a href="InputCallbackMixin.html">Brush::InputCallbackMixin</a></span>
       </div>
     </div>
 
@@ -107,6 +109,19 @@
 
 
 
+    <div id="aliases-list">
+      <h3 class="section-bar">External Aliases</h3>
+
+      <div class="name-list">
+                        <table summary="aliases">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">callback</td>
+          <td>-></td>
+          <td class="context-item-value">__old_callback</td>
+        </tr>
+                        </table>
+      </div>
+    </div>
 
 
       
@@ -116,26 +131,24 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000089" class="method-detail">
-        <a name="M000089"></a>
+      <div id="method-M000086" class="method-detail">
+        <a name="M000086"></a>
 
         <div class="method-heading">
-          <a href="#M000089" class="method-signature">
+          <a href="#M000086" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(items)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000089-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000089-source">
+            onclick="toggleCode('M000086-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000086-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/canvas.rb, line 316</span>
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 226</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">items</span>)
     <span class="ruby-keyword kw">super</span>(<span class="ruby-value str">'select'</span>)
     <span class="ruby-ivar">@items</span> = <span class="ruby-identifier">items</span>
-    <span class="ruby-ivar">@default</span> = <span class="ruby-keyword kw">nil</span>
-    <span class="ruby-ivar">@labels</span> = <span class="ruby-ivar">@items</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">i</span>.<span class="ruby-identifier">to_s</span> }
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -144,25 +157,91 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000090" class="method-detail">
-        <a name="M000090"></a>
+      <div id="method-M000088" class="method-detail">
+        <a name="M000088"></a>
 
         <div class="method-heading">
-          <a href="#M000090" class="method-signature">
-          <span class="method-name">with</span><span class="method-args">(*args, &amp;block)</span>
+          <a href="#M000088" class="method-signature">
+          <span class="method-name">callback</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000090-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000090-source">
+            onclick="toggleCode('M000088-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000088-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/rendering/html/canvas.rb, line 332</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-    <span class="ruby-keyword kw">super</span>
-    <span class="ruby-ivar">@items</span>.<span class="ruby-identifier">each_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
-      <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">option</span>.<span class="ruby-identifier">value</span>(<span class="ruby-ivar">@items</span>[<span class="ruby-identifier">i</span>]).<span class="ruby-identifier">selected</span>(<span class="ruby-ivar">@default</span>).<span class="ruby-identifier">with</span>(<span class="ruby-ivar">@labels</span>[<span class="ruby-identifier">i</span>])
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 248</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">callback</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-ivar">@callback</span> = <span class="ruby-identifier">block</span>
+    <span class="ruby-keyword kw">self</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000087" class="method-detail">
+        <a name="M000087"></a>
+
+        <div class="method-heading">
+          <a href="#M000087" class="method-signature">
+          <span class="method-name">multiple</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000087-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000087-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 240</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">multiple</span>
+    <span class="ruby-ivar">@multiple</span> = <span class="ruby-keyword kw">true</span>
+    <span class="ruby-ivar">@attributes</span>[<span class="ruby-value str">'multiple'</span>] = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-keyword kw">self</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000089" class="method-detail">
+        <a name="M000089"></a>
+
+        <div class="method-heading">
+          <a href="#M000089" class="method-signature">
+          <span class="method-name">with</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000089-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000089-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/rendering/html/brushes.rb, line 253</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with</span>
+    <span class="ruby-ivar">@labels</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@items</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">i</span>.<span class="ruby-identifier">to_s</span> }
+    <span class="ruby-ivar">@selected</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+
+    <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@callback</span>
+      <span class="ruby-identifier">__old_callback</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">input</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">choosen</span> = <span class="ruby-identifier">input</span>.<span class="ruby-identifier">list</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">idx</span><span class="ruby-operator">|</span> 
+          <span class="ruby-identifier">idx</span> = <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">idx</span>)
+          <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;invalid index in select list&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">idx</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">idx</span> <span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@items</span>.<span class="ruby-identifier">size</span>
+          <span class="ruby-ivar">@items</span>[<span class="ruby-identifier">idx</span>]
+        }
+        <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;choosen more than one element from a non-multiple select list&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">not</span> <span class="ruby-ivar">@multiple</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">choosen</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+        <span class="ruby-ivar">@callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">choosen</span>)
+      }
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-keyword kw">super</span> <span class="ruby-keyword kw">do</span>
+      <span class="ruby-ivar">@items</span>.<span class="ruby-identifier">each_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+        <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">option</span>.<span class="ruby-identifier">value</span>(<span class="ruby-identifier">i</span>).<span class="ruby-identifier">selected</span>(<span class="ruby-ivar">@selected</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-ivar">@items</span>[<span class="ruby-identifier">i</span>])).<span class="ruby-identifier">with</span>(<span class="ruby-ivar">@labels</span>[<span class="ruby-identifier">i</span>])
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">text</span>(<span class="ruby-value str">&quot;&quot;</span>)
     <span class="ruby-keyword kw">end</span>
   <span class="ruby-keyword kw">end</span>
 </pre>

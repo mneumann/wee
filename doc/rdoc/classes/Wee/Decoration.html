@@ -83,9 +83,9 @@
     <div id="description">
       <p>
 Abstract base class of all decorations. Forwards the methods <a
-href="Decoration.html#M000123">process_callbacks</a>, <a
-href="Decoration.html#M000124">render</a> and <a
-href="Decoration.html#M000125">backtrack_state</a> to the next decoration
+href="Decoration.html#M000120">process_callbacks</a>, <a
+href="Decoration.html#M000121">render</a> and <a
+href="Decoration.html#M000122">backtrack_state</a> to the next decoration
 in the chain. Subclasses should provide special behaviour in these methods,
 otherwise the decoration does not make sense.
 </p>
@@ -119,7 +119,7 @@ around the decorations or components below itself:
     <div id="contents-list">
       <h3 class="section-bar">Contents</h3>
       <ul>
-      <li><a href="#SEC00034">Snapshot</a></li>
+      <li><a href="#SEC00036">Snapshot</a></li>
      </ul>
    </div>
 
@@ -127,11 +127,11 @@ around the decorations or components below itself:
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000125">backtrack_state</a>&nbsp;&nbsp;
-      <a href="#M000123">process_callbacks</a>&nbsp;&nbsp;
-      <a href="#M000124">render</a>&nbsp;&nbsp;
-      <a href="#M000127">restore_snapshot</a>&nbsp;&nbsp;
-      <a href="#M000126">take_snapshot</a>&nbsp;&nbsp;
+      <a href="#M000122">backtrack_state</a>&nbsp;&nbsp;
+      <a href="#M000120">process_callbacks</a>&nbsp;&nbsp;
+      <a href="#M000121">render</a>&nbsp;&nbsp;
+      <a href="#M000124">restore_snapshot</a>&nbsp;&nbsp;
+      <a href="#M000123">take_snapshot</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -172,11 +172,11 @@ everything &quot;below&quot; itself.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000125" class="method-detail">
-        <a name="M000125"></a>
+      <div id="method-M000122" class="method-detail">
+        <a name="M000122"></a>
 
         <div class="method-heading">
-          <a href="#M000125" class="method-signature">
+          <a href="#M000122" class="method-signature">
           <span class="method-name">backtrack_state</span><span class="method-args">(snapshot)</span>
           </a>
         </div>
@@ -186,8 +186,8 @@ everything &quot;below&quot; itself.
 Forwards method call to the next decoration in the chain.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000125-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000125-source">
+            onclick="toggleCode('M000122-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000122-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/decoration.rb, line 50</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backtrack_state</span>(<span class="ruby-identifier">snapshot</span>)
@@ -199,11 +199,11 @@ Forwards method call to the next decoration in the chain.
         </div>
       </div>
 
-      <div id="method-M000123" class="method-detail">
-        <a name="M000123"></a>
+      <div id="method-M000120" class="method-detail">
+        <a name="M000120"></a>
 
         <div class="method-heading">
-          <a href="#M000123" class="method-signature">
+          <a href="#M000120" class="method-signature">
           <span class="method-name">process_callbacks</span><span class="method-args">(callback_stream)</span>
           </a>
         </div>
@@ -213,8 +213,8 @@ Forwards method call to the next decoration in the chain.
 Forwards method call to the next decoration in the chain.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000123-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000123-source">
+            onclick="toggleCode('M000120-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000120-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/decoration.rb, line 38</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callbacks</span>(<span class="ruby-identifier">callback_stream</span>)
@@ -225,11 +225,11 @@ Forwards method call to the next decoration in the chain.
         </div>
       </div>
 
-      <div id="method-M000124" class="method-detail">
-        <a name="M000124"></a>
+      <div id="method-M000121" class="method-detail">
+        <a name="M000121"></a>
 
         <div class="method-heading">
-          <a href="#M000124" class="method-signature">
+          <a href="#M000121" class="method-signature">
           <span class="method-name">render</span><span class="method-args">(rendering_context)</span>
           </a>
         </div>
@@ -239,8 +239,8 @@ Forwards method call to the next decoration in the chain.
 Forwards method call to the next decoration in the chain.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000124-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000124-source">
+            onclick="toggleCode('M000121-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000121-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/decoration.rb, line 44</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">rendering_context</span>)
@@ -254,7 +254,7 @@ Forwards method call to the next decoration in the chain.
 
     </div>
     <div id="section">
-      <h2 class="section-title"><a name="SEC00034">Snapshot</a></h2>
+      <h2 class="section-title"><a name="SEC00036">Snapshot</a></h2>
       <div class="section-comment">
         
       </div>      
@@ -270,19 +270,19 @@ Forwards method call to the next decoration in the chain.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000127" class="method-detail">
-        <a name="M000127"></a>
+      <div id="method-M000124" class="method-detail">
+        <a name="M000124"></a>
 
         <div class="method-heading">
-          <a href="#M000127" class="method-signature">
+          <a href="#M000124" class="method-signature">
           <span class="method-name">restore_snapshot</span><span class="method-args">(snap)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000127-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000127-source">
+            onclick="toggleCode('M000124-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000124-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/decoration.rb, line 69</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">restore_snapshot</span>(<span class="ruby-identifier">snap</span>)
@@ -293,11 +293,11 @@ Forwards method call to the next decoration in the chain.
         </div>
       </div>
 
-      <div id="method-M000126" class="method-detail">
-        <a name="M000126"></a>
+      <div id="method-M000123" class="method-detail">
+        <a name="M000123"></a>
 
         <div class="method-heading">
-          <a href="#M000126" class="method-signature">
+          <a href="#M000123" class="method-signature">
           <span class="method-name">take_snapshot</span><span class="method-args">()</span>
           </a>
         </div>
@@ -305,14 +305,14 @@ Forwards method call to the next decoration in the chain.
         <div class="method-description">
           <p>
 We have to save the @owner attribute to be able to correctly backtrack
-calls, as method <a href="Component.html#M000162">Wee::Component#call</a>
+calls, as method <a href="Component.html#M000163">Wee::Component#call</a>
 modifies it in the call to <tt>component.remove_decoration(answer)</tt>.
 Removing the answer-decoration has the advantage to be able to call a
 component more than once!
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000126-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000126-source">
+            onclick="toggleCode('M000123-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000123-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/decoration.rb, line 65</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">take_snapshot</span>

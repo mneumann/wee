@@ -83,7 +83,7 @@
     <div id="description">
       <p>
 The base class of all components. You should at least overwrite method <a
-href="Component.html#M000150">render_content_on</a> in your own subclasses.
+href="Component.html#M000151">render_content_on</a> in your own subclasses.
 </p>
 
     </div>
@@ -92,13 +92,13 @@ href="Component.html#M000150">render_content_on</a> in your own subclasses.
     <div id="contents-list">
       <h3 class="section-bar">Contents</h3>
       <ul>
-      <li><a href="#SEC00025">Render</a></li>
-      <li><a href="#SEC00026">Callback</a></li>
-      <li><a href="#SEC00027">Init</a></li>
-      <li><a href="#SEC00028">Children</a></li>
-      <li><a href="#SEC00029">Decoration</a></li>
-      <li><a href="#SEC00030">Backtrack</a></li>
-      <li><a href="#SEC00031">Call/Answer</a></li>
+      <li><a href="#SEC00027">Render</a></li>
+      <li><a href="#SEC00028">Callback</a></li>
+      <li><a href="#SEC00029">Init</a></li>
+      <li><a href="#SEC00030">Children</a></li>
+      <li><a href="#SEC00031">Decoration</a></li>
+      <li><a href="#SEC00032">Backtrack</a></li>
+      <li><a href="#SEC00033">Call/Answer</a></li>
      </ul>
    </div>
 
@@ -106,21 +106,21 @@ href="Component.html#M000150">render_content_on</a> in your own subclasses.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000155">add_child</a>&nbsp;&nbsp;
-      <a href="#M000158">add_decoration</a>&nbsp;&nbsp;
-      <a href="#M000163">answer</a>&nbsp;&nbsp;
-      <a href="#M000161">backtrack_state</a>&nbsp;&nbsp;
-      <a href="#M000160">backtrack_state_chain</a>&nbsp;&nbsp;
-      <a href="#M000162">call</a>&nbsp;&nbsp;
-      <a href="#M000154">children</a>&nbsp;&nbsp;
-      <a href="#M000156">decoration</a>&nbsp;&nbsp;
-      <a href="#M000157">decoration=</a>&nbsp;&nbsp;
-      <a href="#M000153">initialize</a>&nbsp;&nbsp;
-      <a href="#M000151">process_callback_chain</a>&nbsp;&nbsp;
-      <a href="#M000152">process_callbacks</a>&nbsp;&nbsp;
-      <a href="#M000159">remove_decoration</a>&nbsp;&nbsp;
-      <a href="#M000149">render_chain</a>&nbsp;&nbsp;
-      <a href="#M000150">render_content_on</a>&nbsp;&nbsp;
+      <a href="#M000156">add_child</a>&nbsp;&nbsp;
+      <a href="#M000159">add_decoration</a>&nbsp;&nbsp;
+      <a href="#M000164">answer</a>&nbsp;&nbsp;
+      <a href="#M000162">backtrack_state</a>&nbsp;&nbsp;
+      <a href="#M000161">backtrack_state_chain</a>&nbsp;&nbsp;
+      <a href="#M000163">call</a>&nbsp;&nbsp;
+      <a href="#M000155">children</a>&nbsp;&nbsp;
+      <a href="#M000157">decoration</a>&nbsp;&nbsp;
+      <a href="#M000158">decoration=</a>&nbsp;&nbsp;
+      <a href="#M000154">initialize</a>&nbsp;&nbsp;
+      <a href="#M000152">process_callback_chain</a>&nbsp;&nbsp;
+      <a href="#M000153">process_callbacks</a>&nbsp;&nbsp;
+      <a href="#M000160">remove_decoration</a>&nbsp;&nbsp;
+      <a href="#M000150">render_chain</a>&nbsp;&nbsp;
+      <a href="#M000151">render_content_on</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -140,7 +140,7 @@ href="Component.html#M000150">render_content_on</a> in your own subclasses.
 
     <!-- if method_list -->
     <div id="section">
-      <h2 class="section-title"><a name="SEC00025">Render</a></h2>
+      <h2 class="section-title"><a name="SEC00027">Render</a></h2>
       <div class="section-comment">
         
       </div>      
@@ -156,11 +156,11 @@ href="Component.html#M000150">render_content_on</a> in your own subclasses.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000149" class="method-detail">
-        <a name="M000149"></a>
+      <div id="method-M000150" class="method-detail">
+        <a name="M000150"></a>
 
         <div class="method-heading">
-          <a href="#M000149" class="method-signature">
+          <a href="#M000150" class="method-signature">
           <span class="method-name">render_chain</span><span class="method-args">(rendering_context)</span>
           </a>
         </div>
@@ -168,7 +168,7 @@ href="Component.html#M000150">render_content_on</a> in your own subclasses.
         <div class="method-description">
           <p>
 Starts rendering the decoration chain by calling method <a
-href="Presenter.html#M000173">Presenter#render</a> for the first decoration
+href="Presenter.html#M000177">Presenter#render</a> for the first decoration
 of the component, or calling <em>render</em> for the component itself if no
 decorations were specified.
 </p>
@@ -178,8 +178,8 @@ decorations were specified.
 </dd>
 </dl>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000149-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000149-source">
+            onclick="toggleCode('M000150-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000150-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 19</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_chain</span>(<span class="ruby-identifier">rendering_context</span>)
@@ -190,11 +190,11 @@ decorations were specified.
         </div>
       </div>
 
-      <div id="method-M000150" class="method-detail">
-        <a name="M000150"></a>
+      <div id="method-M000151" class="method-detail">
+        <a name="M000151"></a>
 
         <div class="method-heading">
-          <a href="#M000150" class="method-signature">
+          <a href="#M000151" class="method-signature">
           <span class="method-name">render_content_on</span><span class="method-args">(renderer)</span>
           </a>
         </div>
@@ -213,8 +213,8 @@ view. By default this method does nothing!
 </dd>
 </dl>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000150-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000150-source">
+            onclick="toggleCode('M000151-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000151-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 31</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_content_on</span>(<span class="ruby-identifier">renderer</span>)
@@ -227,7 +227,7 @@ view. By default this method does nothing!
 
     </div>
     <div id="section">
-      <h2 class="section-title"><a name="SEC00026">Callback</a></h2>
+      <h2 class="section-title"><a name="SEC00028">Callback</a></h2>
       <div class="section-comment">
         
       </div>      
@@ -243,11 +243,11 @@ view. By default this method does nothing!
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000151" class="method-detail">
-        <a name="M000151"></a>
+      <div id="method-M000152" class="method-detail">
+        <a name="M000152"></a>
 
         <div class="method-heading">
-          <a href="#M000151" class="method-signature">
+          <a href="#M000152" class="method-signature">
           <span class="method-name">process_callback_chain</span><span class="method-args">(callback_stream)</span>
           </a>
         </div>
@@ -255,7 +255,7 @@ view. By default this method does nothing!
         <div class="method-description">
           <p>
 Starts processing the callbacks for the decoration chain by invoking method
-<a href="Component.html#M000152">process_callbacks</a> of the first
+<a href="Component.html#M000153">process_callbacks</a> of the first
 decoration or the component itself if no decorations were specified.
 </p>
 <dl>
@@ -264,8 +264,8 @@ decoration or the component itself if no decorations were specified.
 </dd>
 </dl>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000151-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000151-source">
+            onclick="toggleCode('M000152-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000152-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 47</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callback_chain</span>(<span class="ruby-identifier">callback_stream</span>)
@@ -276,11 +276,11 @@ decoration or the component itself if no decorations were specified.
         </div>
       </div>
 
-      <div id="method-M000152" class="method-detail">
-        <a name="M000152"></a>
+      <div id="method-M000153" class="method-detail">
+        <a name="M000153"></a>
 
         <div class="method-heading">
-          <a href="#M000152" class="method-signature">
+          <a href="#M000153" class="method-signature">
           <span class="method-name">process_callbacks</span><span class="method-args">(callback_stream)</span>
           </a>
         </div>
@@ -300,8 +300,8 @@ processed/invoked before any of the action callbacks are processed/invoked.
 </dd>
 </dl>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000152-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000152-source">
+            onclick="toggleCode('M000153-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000153-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 60</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callbacks</span>(<span class="ruby-identifier">callback_stream</span>)
@@ -320,7 +320,7 @@ processed/invoked before any of the action callbacks are processed/invoked.
 
     </div>
     <div id="section">
-      <h2 class="section-title"><a name="SEC00027">Init</a></h2>
+      <h2 class="section-title"><a name="SEC00029">Init</a></h2>
       <div class="section-comment">
         
       </div>      
@@ -336,11 +336,11 @@ processed/invoked before any of the action callbacks are processed/invoked.
     <div id="methods">
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000153" class="method-detail">
-        <a name="M000153"></a>
+      <div id="method-M000154" class="method-detail">
+        <a name="M000154"></a>
 
         <div class="method-heading">
-          <a href="#M000153" class="method-signature">
+          <a href="#M000154" class="method-signature">
           <span class="method-name">initialize</span><span class="method-args">()</span>
           </a>
         </div>
@@ -354,8 +354,8 @@ Call this method from your own components&#8217; <em>initialize</em> method
 using <tt>super</tt>, before setting up anything else!
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000153-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000153-source">
+            onclick="toggleCode('M000154-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000154-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 80</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>() <span class="ruby-comment cmt"># :notnew:</span>
@@ -370,7 +370,7 @@ using <tt>super</tt>, before setting up anything else!
 
     </div>
     <div id="section">
-      <h2 class="section-title"><a name="SEC00028">Children</a></h2>
+      <h2 class="section-title"><a name="SEC00030">Children</a></h2>
       <div class="section-comment">
         
       </div>      
@@ -386,11 +386,11 @@ using <tt>super</tt>, before setting up anything else!
     <div id="methods">
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000155" class="method-detail">
-        <a name="M000155"></a>
+      <div id="method-M000156" class="method-detail">
+        <a name="M000156"></a>
 
         <div class="method-heading">
-          <a href="#M000155" class="method-signature">
+          <a href="#M000156" class="method-signature">
           <span class="method-name">add_child</span><span class="method-args">(child)</span>
           </a>
         </div>
@@ -419,8 +419,8 @@ course only if you want backtracking at all):
   end
 </pre>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000155-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000155-source">
+            onclick="toggleCode('M000156-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000156-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 116</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_child</span>(<span class="ruby-identifier">child</span>)
@@ -431,11 +431,11 @@ course only if you want backtracking at all):
         </div>
       </div>
 
-      <div id="method-M000154" class="method-detail">
-        <a name="M000154"></a>
+      <div id="method-M000155" class="method-detail">
+        <a name="M000155"></a>
 
         <div class="method-heading">
-          <a href="#M000154" class="method-signature">
+          <a href="#M000155" class="method-signature">
           <span class="method-name">children</span><span class="method-args">()</span>
           </a>
         </div>
@@ -445,8 +445,8 @@ course only if you want backtracking at all):
 Returns all direct child components collected in an array.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000154-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000154-source">
+            onclick="toggleCode('M000155-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000155-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 93</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">children</span>
@@ -460,7 +460,7 @@ Returns all direct child components collected in an array.
 
     </div>
     <div id="section">
-      <h2 class="section-title"><a name="SEC00029">Decoration</a></h2>
+      <h2 class="section-title"><a name="SEC00031">Decoration</a></h2>
       <div class="section-comment">
         
       </div>      
@@ -476,11 +476,11 @@ Returns all direct child components collected in an array.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000158" class="method-detail">
-        <a name="M000158"></a>
+      <div id="method-M000159" class="method-detail">
+        <a name="M000159"></a>
 
         <div class="method-heading">
-          <a href="#M000158" class="method-signature">
+          <a href="#M000159" class="method-signature">
           <span class="method-name">add_decoration</span><span class="method-args">(d)</span>
           </a>
         </div>
@@ -490,8 +490,8 @@ Returns all direct child components collected in an array.
 Adds decoration <tt>d</tt> in front of the decoration chain.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000158-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000158-source">
+            onclick="toggleCode('M000159-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000159-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 141</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_decoration</span>(<span class="ruby-identifier">d</span>)
@@ -503,11 +503,11 @@ Adds decoration <tt>d</tt> in front of the decoration chain.
         </div>
       </div>
 
-      <div id="method-M000156" class="method-detail">
-        <a name="M000156"></a>
+      <div id="method-M000157" class="method-detail">
+        <a name="M000157"></a>
 
         <div class="method-heading">
-          <a href="#M000156" class="method-signature">
+          <a href="#M000157" class="method-signature">
           <span class="method-name">decoration</span><span class="method-args">()</span>
           </a>
         </div>
@@ -518,8 +518,8 @@ Returns the first decoration from the component&#8217;s decoration chain,
 or <tt>self</tt> if no decorations were specified for the component.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000156-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000156-source">
+            onclick="toggleCode('M000157-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000157-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 129</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">decoration</span>
@@ -530,11 +530,11 @@ or <tt>self</tt> if no decorations were specified for the component.
         </div>
       </div>
 
-      <div id="method-M000157" class="method-detail">
-        <a name="M000157"></a>
+      <div id="method-M000158" class="method-detail">
+        <a name="M000158"></a>
 
         <div class="method-heading">
-          <a href="#M000157" class="method-signature">
+          <a href="#M000158" class="method-signature">
           <span class="method-name">decoration=</span><span class="method-args">(d)</span>
           </a>
         </div>
@@ -544,8 +544,8 @@ or <tt>self</tt> if no decorations were specified for the component.
 Set the pointer to the first decoration to <tt>d</tt>.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000157-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000157-source">
+            onclick="toggleCode('M000158-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000158-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 135</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">decoration=</span>(<span class="ruby-identifier">d</span>) 
@@ -556,11 +556,11 @@ Set the pointer to the first decoration to <tt>d</tt>.
         </div>
       </div>
 
-      <div id="method-M000159" class="method-detail">
-        <a name="M000159"></a>
+      <div id="method-M000160" class="method-detail">
+        <a name="M000160"></a>
 
         <div class="method-heading">
-          <a href="#M000159" class="method-signature">
+          <a href="#M000160" class="method-signature">
           <span class="method-name">remove_decoration</span><span class="method-args">(d)</span>
           </a>
         </div>
@@ -574,8 +574,8 @@ Returns the removed decoration or <tt>nil</tt> if it did not exist in the
 decoration chain.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000159-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000159-source">
+            onclick="toggleCode('M000160-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000160-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 151</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_decoration</span>(<span class="ruby-identifier">d</span>)
@@ -603,7 +603,7 @@ decoration chain.
 
     </div>
     <div id="section">
-      <h2 class="section-title"><a name="SEC00030">Backtrack</a></h2>
+      <h2 class="section-title"><a name="SEC00032">Backtrack</a></h2>
       <div class="section-comment">
         
       </div>      
@@ -619,11 +619,11 @@ decoration chain.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000161" class="method-detail">
-        <a name="M000161"></a>
+      <div id="method-M000162" class="method-detail">
+        <a name="M000162"></a>
 
         <div class="method-heading">
-          <a href="#M000161" class="method-signature">
+          <a href="#M000162" class="method-signature">
           <span class="method-name">backtrack_state</span><span class="method-args">(snapshot)</span>
           </a>
         </div>
@@ -650,7 +650,7 @@ the decoration-object itself!).
 <p>
 For example if you dynamically add children to your component, you might
 want to backtrack the children array. Therefore you simply pass it to the
-<a href="Snapshot.html#M000112">Snapshot#add</a> method:
+<a href="Snapshot.html#M000109">Snapshot#add</a> method:
 </p>
 <pre>
   def backtrack_state(snapshot)
@@ -659,11 +659,11 @@ want to backtrack the children array. Therefore you simply pass it to the
   end
 </pre>
 <p>
-This will call <a href="../Array.html#M000004">Array#take_snapshot</a> to
+This will call <a href="../Array.html#M000003">Array#take_snapshot</a> to
 take the snapshot for the children array. If at a later point in time a
 snapshot is restored, <a
-href="../Array.html#M000005">Array#restore_snapshot</a> will be called with
-the return value of <a href="../Array.html#M000004">Array#take_snapshot</a>
+href="../Array.html#M000004">Array#restore_snapshot</a> will be called with
+the return value of <a href="../Array.html#M000003">Array#take_snapshot</a>
 as argument.
 </p>
 <dl>
@@ -672,8 +672,8 @@ as argument.
 </dd>
 </dl>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000161-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000161-source">
+            onclick="toggleCode('M000162-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000162-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 220</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backtrack_state</span>(<span class="ruby-identifier">snapshot</span>)
@@ -685,11 +685,11 @@ as argument.
         </div>
       </div>
 
-      <div id="method-M000160" class="method-detail">
-        <a name="M000160"></a>
+      <div id="method-M000161" class="method-detail">
+        <a name="M000161"></a>
 
         <div class="method-heading">
-          <a href="#M000160" class="method-signature">
+          <a href="#M000161" class="method-signature">
           <span class="method-name">backtrack_state_chain</span><span class="method-args">(snapshot)</span>
           </a>
         </div>
@@ -697,11 +697,11 @@ as argument.
         <div class="method-description">
           <p>
 Starts the backtrack-state phase for the decoration chain, by invoking
-method <a href="Component.html#M000161">backtrack_state</a> of the first
+method <a href="Component.html#M000162">backtrack_state</a> of the first
 decoration or the component itself if no decorations were specified.
 </p>
 <p>
-See <a href="Component.html#M000161">backtrack_state</a> for details.
+See <a href="Component.html#M000162">backtrack_state</a> for details.
 </p>
 <dl>
 <dt><tt>snapshot</tt></dt><dd>An object of class <a href="Snapshot.html">Snapshot</a>
@@ -709,8 +709,8 @@ See <a href="Component.html#M000161">backtrack_state</a> for details.
 </dd>
 </dl>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000160-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000160-source">
+            onclick="toggleCode('M000161-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000161-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 184</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backtrack_state_chain</span>(<span class="ruby-identifier">snapshot</span>)
@@ -724,7 +724,7 @@ See <a href="Component.html#M000161">backtrack_state</a> for details.
 
     </div>
     <div id="section">
-      <h2 class="section-title"><a name="SEC00031">Call/Answer</a></h2>
+      <h2 class="section-title"><a name="SEC00033">Call/Answer</a></h2>
       <div class="section-comment">
         
       </div>      
@@ -740,11 +740,11 @@ See <a href="Component.html#M000161">backtrack_state</a> for details.
     <div id="methods">
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000163" class="method-detail">
-        <a name="M000163"></a>
+      <div id="method-M000164" class="method-detail">
+        <a name="M000164"></a>
 
         <div class="method-heading">
-          <a href="#M000163" class="method-signature">
+          <a href="#M000164" class="method-signature">
           <span class="method-name">answer</span><span class="method-args">(*args)</span>
           </a>
         </div>
@@ -755,16 +755,16 @@ Return from a called component.
 </p>
 <p>
 After answering, the component that calls <a
-href="Component.html#M000163">answer</a> should no further be used or
+href="Component.html#M000164">answer</a> should no further be used or
 reused.
 </p>
 <p>
-See <a href="Component.html#M000162">call</a> for a detailed description of
+See <a href="Component.html#M000163">call</a> for a detailed description of
 the call/answer mechanism.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000163-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000163-source">
+            onclick="toggleCode('M000164-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000164-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 288</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">answer</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
@@ -779,11 +779,11 @@ the call/answer mechanism.
         </div>
       </div>
 
-      <div id="method-M000162" class="method-detail">
-        <a name="M000162"></a>
+      <div id="method-M000163" class="method-detail">
+        <a name="M000163"></a>
 
         <div class="method-heading">
-          <a href="#M000162" class="method-signature">
+          <a href="#M000163" class="method-signature">
           <span class="method-name">call</span><span class="method-args">(component)</span>
           </a>
         </div>
@@ -792,7 +792,7 @@ the call/answer mechanism.
           <p>
 Call another component. The calling component is neither rendered nor are
 it&#8217;s callbacks processed until the called component answers using
-method <a href="Component.html#M000163">answer</a>.
+method <a href="Component.html#M000164">answer</a>.
 </p>
 <dl>
 <dt><tt>component</tt></dt><dd>The component to be called.
@@ -809,28 +809,28 @@ the continuation is assigned to it&#8217;s <tt>on_answer</tt> attribute.
 Then a <a href="Delegate.html">Delegate</a> decoration is added to the
 calling component (self), which delegates to the component to be called
 (<tt>component</tt>). Then we unwind the calling stack back to <a
-href="Presenter.html#M000176">Presenter#process_callbacks</a> by throwing
+href="Presenter.html#M000180">Presenter#process_callbacks</a> by throwing
 <em>:wee_back_to_process_callbacks</em>. When at a later point in time the
-called component invokes <a href="Component.html#M000163">answer</a>, this
+called component invokes <a href="Component.html#M000164">answer</a>, this
 will throw a <em>:wee_answer</em> exception which is catched in the <a
 href="AnswerDecoration.html">AnswerDecoration</a>. The <a
 href="AnswerDecoration.html">AnswerDecoration</a> then jumps back to the
 continuation we created at the beginning, and finally method <a
-href="Component.html#M000162">call</a> returns.
+href="Component.html#M000163">call</a> returns.
 </p>
 <p>
-Note that <a href="Component.html#M000162">call</a> returns to an
+Note that <a href="Component.html#M000163">call</a> returns to an
 &quot;old&quot; stack-frame from a previous request. Therefore, method <a
-href="Component.html#M000163">answer</a> creates another continuation and
+href="Component.html#M000164">answer</a> creates another continuation and
 pushes this onto the sessions <tt>continuation_stack</tt>. In <a
-href="Presenter.html#M000176">Presenter#process_callbacks</a> we try to pop
+href="Presenter.html#M000180">Presenter#process_callbacks</a> we try to pop
 from this stack every time after invoking a callback, and if there was a
 continuation on the stack, we jump to it (and never return). This then
-jumps back to the <a href="Component.html#M000163">answer</a> method and
+jumps back to the <a href="Component.html#M000164">answer</a> method and
 returns to the current <a
-href="Presenter.html#M000176">Presenter#process_callbacks</a> method, quite
+href="Presenter.html#M000180">Presenter#process_callbacks</a> method, quite
 after the invokation of the callback that caused method <a
-href="Component.html#M000163">answer</a> to be called. From thereon,
+href="Component.html#M000164">answer</a> to be called. From thereon,
 everything proceeds as usual.
 </p>
 <p>
@@ -838,8 +838,8 @@ This complicated procedure allows multiple action callbacks to be followed
 in the same request and even multiple answer&#8217;s.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000162-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000162-source">
+            onclick="toggleCode('M000163-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000163-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/component.rb, line 265</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">component</span>)

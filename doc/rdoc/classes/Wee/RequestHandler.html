@@ -88,11 +88,11 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000180">alive?</a>&nbsp;&nbsp;
-      <a href="#M000181">handle_request</a>&nbsp;&nbsp;
-      <a href="#M000183">new</a>&nbsp;&nbsp;
-      <a href="#M000182">statistics</a>&nbsp;&nbsp;
-      <a href="#M000179">teminate</a>&nbsp;&nbsp;
+      <a href="#M000184">alive?</a>&nbsp;&nbsp;
+      <a href="#M000185">handle_request</a>&nbsp;&nbsp;
+      <a href="#M000187">new</a>&nbsp;&nbsp;
+      <a href="#M000186">statistics</a>&nbsp;&nbsp;
+      <a href="#M000183">teminate</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -175,21 +175,21 @@ The maximum number of requests this handler should serve. A value of
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000183" class="method-detail">
-        <a name="M000183"></a>
+      <div id="method-M000187" class="method-detail">
+        <a name="M000187"></a>
 
         <div class="method-heading">
-          <a href="#M000183" class="method-signature">
+          <a href="#M000187" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000183-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000183-source">
+            onclick="toggleCode('M000187-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000187-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/requesthandler.rb, line 69</span>
+<span class="ruby-comment cmt"># File lib/wee/requesthandler.rb, line 71</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
     <span class="ruby-ivar">@last_access</span> = <span class="ruby-ivar">@creation_time</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> 
     <span class="ruby-ivar">@request_count</span> = <span class="ruby-value">0</span>
@@ -202,11 +202,11 @@ The maximum number of requests this handler should serve. A value of
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000180" class="method-detail">
-        <a name="M000180"></a>
+      <div id="method-M000184" class="method-detail">
+        <a name="M000184"></a>
 
         <div class="method-heading">
-          <a href="#M000180" class="method-signature">
+          <a href="#M000184" class="method-signature">
           <span class="method-name">alive?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -216,8 +216,8 @@ The maximum number of requests this handler should serve. A value of
 Query whether this handler is still alive.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000180-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000180-source">
+            onclick="toggleCode('M000184-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000184-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/requesthandler.rb, line 40</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">alive?</span>
@@ -237,21 +237,25 @@ Query whether this handler is still alive.
         </div>
       </div>
 
-      <div id="method-M000181" class="method-detail">
-        <a name="M000181"></a>
+      <div id="method-M000185" class="method-detail">
+        <a name="M000185"></a>
 
         <div class="method-heading">
-          <a href="#M000181" class="method-signature">
+          <a href="#M000185" class="method-signature">
           <span class="method-name">handle_request</span><span class="method-args">(context)</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+Extend <a href="RequestHandler.html#M000185">handle_request</a> in your own
+subclass.
+</p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000181-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000181-source">
+            onclick="toggleCode('M000185-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000185-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/requesthandler.rb, line 53</span>
+<span class="ruby-comment cmt"># File lib/wee/requesthandler.rb, line 55</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_request</span>(<span class="ruby-identifier">context</span>)
     <span class="ruby-ivar">@request_count</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
     <span class="ruby-ivar">@last_access</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
@@ -261,21 +265,21 @@ Query whether this handler is still alive.
         </div>
       </div>
 
-      <div id="method-M000182" class="method-detail">
-        <a name="M000182"></a>
+      <div id="method-M000186" class="method-detail">
+        <a name="M000186"></a>
 
         <div class="method-heading">
-          <a href="#M000182" class="method-signature">
+          <a href="#M000186" class="method-signature">
           <span class="method-name">statistics</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000182-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000182-source">
+            onclick="toggleCode('M000186-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000186-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/requesthandler.rb, line 58</span>
+<span class="ruby-comment cmt"># File lib/wee/requesthandler.rb, line 60</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">statistics</span>
     <span class="ruby-identifier">now</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
     {
@@ -291,11 +295,11 @@ Query whether this handler is still alive.
         </div>
       </div>
 
-      <div id="method-M000179" class="method-detail">
-        <a name="M000179"></a>
+      <div id="method-M000183" class="method-detail">
+        <a name="M000183"></a>
 
         <div class="method-heading">
-          <a href="#M000179" class="method-signature">
+          <a href="#M000183" class="method-signature">
           <span class="method-name">teminate</span><span class="method-args">()</span>
           </a>
         </div>
@@ -305,8 +309,8 @@ Query whether this handler is still alive.
 Terminates the handler.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000179-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000179-source">
+            onclick="toggleCode('M000183-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000183-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/requesthandler.rb, line 34</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">teminate</span>

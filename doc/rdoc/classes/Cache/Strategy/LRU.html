@@ -94,10 +94,10 @@ Implements the least recently used (<a href="LRU.html">LRU</a>) strategy.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000019">access</a>&nbsp;&nbsp;
-      <a href="#M000020">delete</a>&nbsp;&nbsp;
-      <a href="#M000021">insert_or_extrude</a>&nbsp;&nbsp;
-      <a href="#M000018">item_class</a>&nbsp;&nbsp;
+      <a href="#M000018">access</a>&nbsp;&nbsp;
+      <a href="#M000019">delete</a>&nbsp;&nbsp;
+      <a href="#M000020">insert_or_extrude</a>&nbsp;&nbsp;
+      <a href="#M000017">item_class</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -125,12 +125,35 @@ Implements the least recently used (<a href="LRU.html">LRU</a>) strategy.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
+      <div id="method-M000018" class="method-detail">
+        <a name="M000018"></a>
+
+        <div class="method-heading">
+          <a href="#M000018" class="method-signature">
+          <span class="method-name">access</span><span class="method-args">(item)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000018-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000018-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 84</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">access</span>(<span class="ruby-identifier">item</span>)
+    <span class="ruby-identifier">item</span>.<span class="ruby-identifier">time</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
       <div id="method-M000019" class="method-detail">
         <a name="M000019"></a>
 
         <div class="method-heading">
           <a href="#M000019" class="method-signature">
-          <span class="method-name">access</span><span class="method-args">(item)</span>
+          <span class="method-name">delete</span><span class="method-args">(item)</span>
           </a>
         </div>
       
@@ -139,9 +162,9 @@ Implements the least recently used (<a href="LRU.html">LRU</a>) strategy.
             onclick="toggleCode('M000019-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000019-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 75</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">access</span>(<span class="ruby-identifier">item</span>)
-    <span class="ruby-identifier">item</span>.<span class="ruby-identifier">time</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 88</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">item</span>)
+    <span class="ruby-identifier">dec</span>(<span class="ruby-identifier">item</span>)
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -153,29 +176,6 @@ Implements the least recently used (<a href="LRU.html">LRU</a>) strategy.
 
         <div class="method-heading">
           <a href="#M000020" class="method-signature">
-          <span class="method-name">delete</span><span class="method-args">(item)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000020-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000020-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 79</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">item</span>)
-    <span class="ruby-identifier">dec</span>(<span class="ruby-identifier">item</span>)
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000021" class="method-detail">
-        <a name="M000021"></a>
-
-        <div class="method-heading">
-          <a href="#M000021" class="method-signature">
           <span class="method-name">insert_or_extrude</span><span class="method-args">(item, enum) {|enum.min_by {|key, it| it.time| ...}</span>
           </a>
         </div>
@@ -187,10 +187,10 @@ Implements the least recently used (<a href="LRU.html">LRU</a>) strategy.
 </td></tr>
 </table>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000021-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000021-source">
+            onclick="toggleCode('M000020-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000020-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 86</span>
+<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 95</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">insert_or_extrude</span>(<span class="ruby-identifier">item</span>, <span class="ruby-identifier">enum</span>)
     <span class="ruby-comment cmt"># find least recently used key/item and yield</span>
     <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">enum</span>.<span class="ruby-identifier">min_by</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">it</span><span class="ruby-operator">|</span> <span class="ruby-identifier">it</span>.<span class="ruby-identifier">time</span>} <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">full?</span>
@@ -202,21 +202,21 @@ Implements the least recently used (<a href="LRU.html">LRU</a>) strategy.
         </div>
       </div>
 
-      <div id="method-M000018" class="method-detail">
-        <a name="M000018"></a>
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
 
         <div class="method-heading">
-          <a href="#M000018" class="method-signature">
+          <a href="#M000017" class="method-signature">
           <span class="method-name">item_class</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000018-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000018-source">
+            onclick="toggleCode('M000017-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000017-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 73</span>
+<span class="ruby-comment cmt"># File lib/cache/cache.rb, line 82</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">item_class</span>() <span class="ruby-constant">Item</span> <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
