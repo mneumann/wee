@@ -16,9 +16,9 @@ Nevertheless I wouldn't use it yet for mission-critical applications ;-)
 Known Bugs:
 
 * Using continuations might leak memory, at least they did in the past. The
-latest memory stress-test has not showed up any memory problems, but since I
-haven't changed anything at the continuation implementation, I can't say for
-sure whether the problem has been fixed or not. 
+  latest memory stress-test has not showed up any memory problems, but since I
+  haven't changed anything at the continuation implementation, I can't say for
+  sure whether the problem has been fixed or not. 
 
 == Introduction
 
