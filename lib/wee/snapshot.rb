@@ -1,3 +1,4 @@
+    # TODO: ensure that #undefine_finalizer returns the object
 class Object
   def take_snapshot
     snap = Hash.new
@@ -16,7 +17,7 @@ end
 
 class Array
   def take_snapshot
-    dup
+    ObjectSpace.undefine_finalizer(dup)
   end
 
   def apply_snapshot(snap)
@@ -26,7 +27,7 @@ end
 
 class String
   def take_snapshot
-    dup
+    ObjectSpace.undefine_finalizer(dup)
   end
 
   def apply_snapshot(snap)
