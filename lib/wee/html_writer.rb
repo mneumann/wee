@@ -1,3 +1,5 @@
+require 'cgi'
+
 class Wee::HtmlWriter
   attr_accessor :port
 
@@ -36,11 +38,23 @@ class Wee::HtmlWriter
       @port << ">"
       @open_start_tag = false
     end
+
     @port << str.to_s
 
     self
   end
   alias << text
+
+  def encode_text(str)
+    if @open_start_tag
+      @port << ">"
+      @open_start_tag = false
+    end
+
+    @port << CGI.escapeHTML(str.to_s)
+
+    self
+  end
 
   def valid?
     @tag_stack.empty?

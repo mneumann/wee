@@ -6,6 +6,11 @@ class Canvas
     @current_brush = nil
   end
 
+  def close
+    @current_brush.close if @current_brush
+    @current_brush = nil
+  end
+
   def set_brush(brush)
     # tell previous brush to finish
     @current_brush.close if @current_brush
@@ -92,7 +97,6 @@ class HtmlCanvas < Canvas
     set_brush(Brush::GenericTagBrush.new("br"))
   end
 
-
   def image
     set_brush(Brush::GenericTagBrush.new("img"))
   end
@@ -101,6 +105,10 @@ class HtmlCanvas < Canvas
     set_brush(Brush::GenericTextBrush.new(str))
   end
   alias << text
+
+  def encode_text(str)
+    set_brush(Brush::GenericEncodedTextBrush.new(str))
+  end
 
   def render(obj)
     obj.render_on(self)
@@ -142,6 +150,19 @@ class Brush::GenericTextBrush < Brush
   def with
     doc = @canvas.document
     doc << @text
+    super
+    nil
+  end
+end
+
+class Brush::GenericEncodedTextBrush < Brush
+  def initialize(text)
+    @text = text
+  end
+
+  def with
+    doc = @canvas.document
+    doc.encode_text(@text)
     super
     nil
   end
