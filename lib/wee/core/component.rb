@@ -40,28 +40,27 @@ class Wee::Component < Wee::Presenter
   # #process_callbacks of the first decoration or the component itself if no
   # decorations were specified.
   #
-  # [+callback_stream+]
-  #    An object of class CallbackStream
+  # [+block+]
+  #    Specifies the action to be taken (e.g. whether to invoke input or action
+  #    callbacks).
 
-  def process_callbacks_chain(callback_stream)
-    decoration.process_callbacks(callback_stream)
+  def process_callbacks_chain(&block)
+    decoration.process_callbacks(&block)
   end
 
   # Process and invoke all callbacks specified for this component and all of
   # it's child components. 
   #
-  # All input callbacks of this component and it's child components are
-  # processed/invoked before any of the action callbacks are processed/invoked.
-  #
-  # [+callback_stream+]
-  #    An object of class CallbackStream
+  # [+block+]
+  #    Specifies the action to be taken (e.g. whether to invoke input or action
+  #    callbacks).
 
-  def process_callbacks(callback_stream)
-    super do
-      # process callbacks of all children
-      children.each do |child|
-        child.process_callbacks_chain(callback_stream)
-      end
+  def process_callbacks(&block)
+    block.call(self)
+
+    # process callbacks of all children
+    children.each do |child|
+      child.process_callbacks_chain(&block)
     end
   end
 

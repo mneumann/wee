@@ -114,9 +114,7 @@ class Wee::Session < Wee::RequestHandler
         end
 
         live_update_response = catch(:wee_live_update) {
-          catch(:wee_back_to_session) {
-            @root_component.process_callbacks_chain(@callback_stream)
-          }
+          catch(:wee_back_to_session) { invoke_callbacks }
           nil
         }
 
@@ -174,6 +172,30 @@ class Wee::Session < Wee::RequestHandler
   end
 
   private
+
+  # This method triggers two tree traversals of process_callbacks on the root
+  # component.  First, all input callbacks are invoked, then in the second
+  # traversal, the first found action callback is invoked (there's only ever
+  # one per request) and then the traversal is stopped 
+  #
+  # NOTE: Input callbacks should never call other components!
+
+  def invoke_callbacks
+    # invoke input callbacks
+    @root_component.process_callbacks_chain {|this|
+      @callback_stream.with_callbacks_for(this, :input) { |callback, value|
+        callback.call(value)
+      }
+    }
+
+    # invoke first found action callback. only the first action callback is invoked.
+    @root_component.process_callbacks_chain {|this|
+      @callback_stream.with_callbacks_for(this, :action) { |callback, value|
+        callback.call
+        throw :wee_back_to_session
+      }
+    }
+  end
 
   def handle_new_page_view(context, snapshot=nil)
     new_page_id = @idgen.next.to_s

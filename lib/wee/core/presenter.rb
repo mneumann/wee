@@ -75,30 +75,12 @@ class Wee::Presenter
 
   # Process all callbacks specified for this presenter. 
   #
-  # At first, this method invokes all input callbacks of this presenter, then
-  # it calls the block if one was given (used by subclasses). Finally, the
-  # action callback is invoked (there's only one per request).
-  #
-  # NOTE: Input callbacks should never call other components!
-  #
-  # [+callback_stream+]
-  #    An object of class CallbackStream
+  # [+block+]
+  #    Specifies the action to be taken (e.g. whether to invoke input or action
+  #    callbacks).
 
-  def process_callbacks(callback_stream) # :yields:
-    # invoke input callbacks
-    callback_stream.with_callbacks_for(self, :input) { |callback, value|
-      callback.call(value)
-    }
-
-    # enable subclasses to add behaviour, e.g. a Component class will invoke
-    # process_callbacks_chain for each child in the block.
-    yield if block_given?
-
-    # invoke action callback. only the first action callback is invoked.
-    callback_stream.with_callbacks_for(self, :action) { |callback, value|
-      callback.call
-      throw :wee_back_to_session
-    }
+  def process_callbacks(&block)
+    block.call(self)
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

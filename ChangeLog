@@ -1,3 +1,18 @@
+Sun Apr  3 13:11:07 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* lib/wee/core/presenter.rb, lib/wee/core/component.rb, 
+	  lib/wee/core/decoration.rb, lib/wee/session.rb, 
+	  lib/wee/pageless/session.rb, examples/window.rb, README:
+	  Fixed a bug in processing the callbacks. It was not guaranteed that
+	  all input callbacks are invoked before the final action callback.
+	  This is now guaranteed! I've introduced two separate tree traversals
+	  of process_callbacks to make this work. As a side effect, this also
+	  has removed the dependency of Presenter/Component/Decoration classes
+	  from the CallbackStream class. Instead of a CallbackStream, a code
+	  block is now passed through the
+	  process_callbacks/process_callbacks_chain traversal. The Session
+	  class specifies how to invoke the callbacks.
+
 Thu Mar  3 12:31:15 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* wee/session.rb, wee/pageless/session.rb: new methods 

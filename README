@@ -237,11 +237,8 @@ called for the component itself.  As such, <i>process_callbacks_chain</i>
 is important to avoid entering an infinite loop (a method calling itself). What
 decorations are, is discussed elsewhere.
 
-Method <i>process_callbacks</i> of class Component first invokes all input
-callbacks specified for this component, then calls
-<i>process_callbacks_chain</i> for all of it's child components. This ensures,
-that all input callbacks are triggered before the first action callback is
-run. Finally, it invokes all of it's action callbacks.
+There are two "process_callbacks" tree traversals. The first invokes all input
+callbacks, the second the action callback.
 
 === Rendering Phase
 

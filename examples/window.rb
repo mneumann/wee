@@ -9,7 +9,7 @@ class Wee::Window < Wee::Component
     @pos = pos
   end
 
-  def process_callbacks(callback_stream)
+  def process_callbacks(&block)
     return if @status == :closed
     super
   end

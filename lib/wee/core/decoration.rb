@@ -44,8 +44,8 @@ class Wee::Decoration < Wee::Presenter
 
   # Forwards method call to the next decoration in the chain.
 
-  def process_callbacks(callback_stream)
-    @owner.process_callbacks(callback_stream)
+  def process_callbacks(&block)
+    @owner.process_callbacks(&block)
   end
 
   # Forwards method call to the next decoration in the chain.
@@ -93,8 +93,8 @@ class Wee::Delegate < Wee::Decoration
   # Forwards method to the corresponding top-level *chain* method of the
   # _delegate_ component.
 
-  def process_callbacks(callback_stream)
-    @delegate.process_callbacks_chain(callback_stream)
+  def process_callbacks(&block)
+    @delegate.process_callbacks_chain(&block)
   end
 
   # Forwards method to the corresponding top-level *chain* method of the
@@ -128,7 +128,7 @@ class Wee::AnswerDecoration < Wee::Decoration
 
   attr_accessor :on_answer
 
-  def process_callbacks(callback_stream)
+  def process_callbacks(&block)
     args = catch(:wee_answer) { super; nil }
     if args != nil
       # return to the calling component 

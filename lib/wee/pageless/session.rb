@@ -55,9 +55,7 @@ class Wee::PagelessSession < Wee::Session
         end
 
         live_update_response = catch(:wee_live_update) {
-          catch(:wee_back_to_session) {
-            @root_component.process_callbacks_chain(@callback_stream)
-          }
+          catch(:wee_back_to_session) { invoke_callbacks }
           nil
         }
 
