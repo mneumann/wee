@@ -1,3 +1,7 @@
+Thu Jan 27 18:45:44 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* Implemented a new OgScaffolder, which now is more like Rails one.
+
 Thu Jan 27 15:23:59 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* Component#add_decoration returns now self. Example where this is
