@@ -1,27 +1,10 @@
 require 'utils/measure_memory'
-require 'utils/gnuplot'
+require 'utils/generic_plotter'
 
-class MemoryPlotter
-  def initialize(interval=5, *pids)
-    @interval = interval
-    @datasets = pids.map do |pid| 
-      {:pid => pid, :title => "pid: #{ pid }", :params => 'with lines', :data => []}
-    end
-    @gnuplot = GnuPlot.spawn
-  end
-
-  def run
-    Thread.start {
-      t = 0
-      loop do
-        @datasets.each do |s|
-          s[:data] << [t, measure_memory(s[:pid])]
-        end
-
-        @gnuplot.plot(@datasets)
-        sleep @interval
-        t += @interval
-      end
-    }
+class MemoryPlotter < GenericPlotter
+  def initialize(interval, *pids)
+    super(interval, pids.map {|pid| 
+      {:title => "pid: #{ pid }", :proc => proc {|data, time| data << [time, measure_memory(pid)] } }
+    })
   end
 end

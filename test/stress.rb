@@ -4,6 +4,7 @@ require 'wee/utils/cache'
 require 'wee/adaptors/webrick'
 require 'utils/webrick_background'
 require 'utils/memory_plotter'
+require 'utils/object_plotter'
 require 'utils/cross'
 
 require 'rubygems'
@@ -13,6 +14,7 @@ require 'components/messagebox'
 require 'components/calltest'
 require 'components/page'
 
+NUM_SESSIONS = 5
 
 class DummyLog < WEBrick::BasicLog
   def initialize() super(self) end
@@ -33,9 +35,11 @@ app = Wee::Application.new {|app|
   app.id_generator = Wee::SimpleIdGenerator.new(rand(1_000_000))
 }
 
-spid = Wee::WEBrickAdaptor.register('/app' => app).start(:Logger => DummyLog.new, :AccessLog => []).server_pid
-m = MemoryPlotter.new(2, spid).run
-at_exit { m.exit }
+Wee::WEBrickAdaptor.register('/app' => app).start(:Logger => DummyLog.new, :AccessLog => [])
+
+MemoryPlotter.new(5, $$).run
+ObjectPlotter.new(5, Object, Array, String, Bignum).run
+ObjectPlotter.new(5, Thread, Continuation, Proc).run
 
 $URLBASE = 'http://localhost:2000'
 
@@ -54,8 +58,7 @@ class StressSession
   end
 end
 
-sessions = (1..10).map { StressSession.new }
+sessions = (1..NUM_SESSIONS).map { StressSession.new }
 loop do
-  sessions.each {|s| s.step}
-  puts "--------------------------------------------------------"
+  sessions.each {|s| s.step }
 end
