@@ -319,6 +319,26 @@ class Brush::SubmitButtonTag < Brush::InputTag
   end
 end
 
+# NOTE: The form-fields returned by a image-button-tag is browser-specific.
+# Most browsers do not send the "name" key together with the value specified by
+# "value", only "name.x" and "name.y". This conforms to the standard. But
+# Firefox also sends "name"="value". This is why I raise an exception from the
+# #value method. Note that it's neccessary to parse the passed form-fields and
+# generate a "name" fields in the request, to make this image-button work. 
+
+class Wee::Brush::ImageButtonTag < Wee::Brush::InputTag
+  include Wee::Brush::ActionCallbackMixin
+
+  def initialize
+    super
+    type('image')
+  end
+
+  def value(v)
+    raise "specified value will not be used in the request"
+  end
+end
+
 class Brush::TableDataTag < Brush::GenericTagBrush
   def initialize
     super('td')

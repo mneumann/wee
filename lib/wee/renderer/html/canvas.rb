@@ -94,6 +94,10 @@ class HtmlCanvas < Canvas
     handle(Brush::SubmitButtonTag.new, *args, &block)
   end
 
+  def image_button(*args, &block)
+    handle(Wee::Brush::ImageButtonTag.new, *args, &block)
+  end
+
   def page(*args, &block)
     handle(Brush::Page.new, *args, &block)
   end 
