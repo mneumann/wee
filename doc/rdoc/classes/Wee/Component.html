@@ -254,11 +254,22 @@ component itself if no decorations were specified.
         </div>
       
         <div class="method-description">
+          <p>
+Return from a called component.
+</p>
+<p>
+After answering, the component that calls <em>answer</em> should no further
+be used or reused.
+</p>
+<p>
+See <a href="Component.html#M000160">call</a> for a detailed description of
+the call/answer mechanism.
+</p>
           <p><a class="source-toggle" href="#"
             onclick="toggleCode('M000161-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000161-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/component.rb, line 174</span>
+<span class="ruby-comment cmt"># File lib/wee/component.rb, line 175</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">answer</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
     <span class="ruby-identifier">callcc</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">cc</span><span class="ruby-operator">|</span>
       <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">exclusive</span> <span class="ruby-keyword kw">do</span> <span class="ruby-identifier">$cc_count</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span> <span class="ruby-keyword kw">end</span>
@@ -498,7 +509,7 @@ Adds decoration <tt>d</tt> in front of the decoration chain.
             onclick="toggleCode('M000164-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000164-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/component.rb, line 210</span>
+<span class="ruby-comment cmt"># File lib/wee/component.rb, line 211</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_decoration</span>(<span class="ruby-identifier">d</span>)
     <span class="ruby-identifier">d</span>.<span class="ruby-identifier">owner</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">decoration</span>
     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">decoration</span> = <span class="ruby-identifier">d</span>
@@ -530,7 +541,7 @@ href="StateHolder.html">StateHolder</a>!
             onclick="toggleCode('M000162-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000162-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/component.rb, line 196</span>
+<span class="ruby-comment cmt"># File lib/wee/component.rb, line 197</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">decoration</span>
     <span class="ruby-ivar">@decoration</span>.<span class="ruby-identifier">value</span>
   <span class="ruby-keyword kw">end</span>
@@ -560,7 +571,7 @@ href="StateHolder.html">StateHolder</a>!
             onclick="toggleCode('M000163-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000163-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/component.rb, line 204</span>
+<span class="ruby-comment cmt"># File lib/wee/component.rb, line 205</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">decoration=</span>(<span class="ruby-identifier">d</span>) 
     <span class="ruby-ivar">@decoration</span>.<span class="ruby-identifier">value</span> = <span class="ruby-identifier">d</span>
   <span class="ruby-keyword kw">end</span>
@@ -590,7 +601,7 @@ decoration chain.
             onclick="toggleCode('M000165-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000165-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/component.rb, line 220</span>
+<span class="ruby-comment cmt"># File lib/wee/component.rb, line 221</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_decoration</span>(<span class="ruby-identifier">d</span>)
     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">d</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">decoration</span>  <span class="ruby-comment cmt"># 'd' is in front</span>
       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">decoration</span> = <span class="ruby-identifier">d</span>.<span class="ruby-identifier">owner</span>
