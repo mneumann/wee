@@ -1,4 +1,3 @@
-    # TODO: ensure that #undefine_finalizer returns the object
 class Object
   def take_snapshot
     snap = Hash.new
