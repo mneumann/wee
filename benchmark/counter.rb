@@ -2,10 +2,10 @@ $LOAD_PATH.unshift '../lib'
 require 'wee'
 require 'wee/webrick'
 require 'wee/utils/cache'
-#require 'cached_component'
 
 class Counter < Wee::Component 
   def initialize(cnt)
+    super()
     @cnt = cnt 
     @show_edit_field = false
     session.register_object_for_backtracking(self)
@@ -13,20 +13,10 @@ class Counter < Wee::Component
 
   def dec
     @cnt -= 1
-    #uncache
   end
 
   def inc
     @cnt += 1
-    #uncache
-  end
-
-  def actions
-    [:submit, :dec, :inc]
-  end
-
-  def inputs
-    [:cnt=]
   end
 
   def render_content_on(r)
@@ -47,7 +37,6 @@ class Counter < Wee::Component
 
   def submit
     @show_edit_field = !@show_edit_field
-    #uncache
   end
 
   def cnt
@@ -57,20 +46,20 @@ class Counter < Wee::Component
   def cnt=(val)
     if val =~ /^\d+$/
       @cnt = val.to_i 
-      #uncache
     end
   end
 end
 
 class Main < Wee::Component
   def initialize
+    super()
     @counters = (1..20).map {|i| Counter.new(i)}
-    add_children(*@counters)
+    children.push(*@counters)
   end
 
   def render_content_on(r)
     r.page.title("Counter Test").with do 
-      @counters.each { |cnt| r.render(cnt)  }
+      @counters.each { |cnt| r.render(cnt) }
     end 
   end
 end
