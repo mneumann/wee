@@ -1,6 +1,6 @@
 require 'test/unit'
 module Wee; end
-require 'wee/rendering/html/writer'
+require 'wee/renderer/html/writer'
 
 class Test_HtmlWriter < Test::Unit::TestCase
   def test_document
