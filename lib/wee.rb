@@ -1,8 +1,9 @@
 module Wee; end
 
 require 'wee/application'
+require 'wee/presenter'
 require 'wee/component'
-require 'wee/delegate_decoration'
+require 'wee/decoration'
 require 'wee/context'
 require 'wee/session'
 require 'wee/holder'
