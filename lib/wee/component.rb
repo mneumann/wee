@@ -106,7 +106,7 @@ class Wee::Component < Wee::Presenter
   # (+component+). Then we unwind the calling stack back to
   # Presenter#process_callbacks by throwing
   # <i>:wee_back_to_process_callbacks</i>.  When at a later point in time the
-  # called component invokes #answer, this will throw a :wee_answer exception
+  # called component invokes #answer, this will throw a <i>:wee_answer</i> exception
   # which is catched in the AnswerDecoration.  The AnswerDecoration then jumps
   # back to the continuation we created at the beginning, and finally method
   # #call returns. 
@@ -129,17 +129,20 @@ class Wee::Component < Wee::Presenter
   #
 
   def call(component)
-    delegate = Wee::Delegate.new(self, component)
+    delegate = Wee::Delegate.new(component)
+    answer = Wee::AnswerDecoration.new
+    component.add_decoration(answer)
+    add_decoration(delegate)
 
     result = callcc {|cc|
-      answer = Wee::AnswerDecoration.new(component)
       answer.on_answer = cc
-      component.add_decoration(answer)
-      add_decoration(delegate)
       throw :wee_back_to_process_callbacks
     }
 
     remove_decoration(delegate)
+    component.remove_decoration(answer)
+    answer.on_answer = nil
+
     return result
   end
 
@@ -158,9 +161,7 @@ class Wee::Component < Wee::Presenter
     throw :wee_back_to_process_callbacks
   end
 
-  # -----------------------------------------------------------------------------
-  # Decorations
-  # -----------------------------------------------------------------------------
+  # :section: Decoration-related methods
 
   public
 
@@ -207,6 +208,7 @@ class Wee::Component < Wee::Presenter
       end
       last_decoration.owner = d.owner  
     end
+    d.owner = nil  # decoration 'd' no longer is an owner of anything!
     return d
   end
 
