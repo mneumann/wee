@@ -16,8 +16,8 @@ module Wee::Utils
   #   [:page_cache_capacity]
   #     The size of the sessions page_store (default: 10)
   #
-  #   [:id_seed]
-  #     Initial value of the SimpleIdGenerator (default: rand(1_000_000)) 
+  #   [:id_gen]
+  #     The id generator to use for session-ids (default: Md5IdGenerator.new)
   # 
   def self.app_for(component=nil, options={}, &block)
     raise "either component or block must be given" if component.nil? and block.nil?  
@@ -26,7 +26,7 @@ module Wee::Utils
       :application => Wee::Application,
       :session => Wee::Session,
       :page_cache_capacity => 10,
-      :id_seed => rand(1_000_000)
+      :id_gen => Wee::Md5IdGenerator.new
     }
     options = defaults.update(options)
 
@@ -41,7 +41,7 @@ module Wee::Utils
           sess.page_store = Wee::Utils::LRUCache.new(options[:page_cache_capacity])
         }
       }
-      app.id_generator = Wee::SimpleIdGenerator.new(options[:id_seed])
+      app.id_generator = options[:id_gen]
     }
   end
 end

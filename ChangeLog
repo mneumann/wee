@@ -1,3 +1,17 @@
+Fri Jan 28 00:22:21 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* Method Wee::Utils.app_for: Removed the id_seed option. Use id_gen
+	  instead, which expects a IdGenerator object (default is now the much more
+	  secure Md5IdGenerator). 
+
+	* Wee::Request: Refactored a lot. Use =/ instead of @ as delimeter for
+	  the request_handler_id/page_id part ('@' looks ugly in Konqueror, as
+	  it is displayed as '%40')
+
+	* Wee::Application: Don't send a RedirectResponse when no
+	  request_handler_id was given. This wasn't neccessary and would
+	  break when introducing cookies.
+
 Fri Jan 28 00:07:52 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* renamed wee/idgen.rb to wee/idgen/simple.rb and

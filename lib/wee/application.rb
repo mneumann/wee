@@ -76,7 +76,8 @@ class Wee::Application
         @request_handlers[request_handler_id] = request_handler
       }
 
-      context.response = Wee::RedirectResponse.new(context.request.build_url(request_handler_id))
+      context.request.request_handler_id = request_handler_id 
+      handle_request(context)
       return
 
     elsif request_handler.nil?

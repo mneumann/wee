@@ -6,11 +6,40 @@
 
 class Wee::Request
 
-  attr_reader :request_handler_id, :page_id, :fields
+  DELIM = '=/'
 
-  def initialize(app_path, path, headers, fields)
-    @app_path, @path, @headers = app_path, path, headers
+  attr_accessor :request_handler_id
+  attr_reader :page_id, :fields, :cookies
 
+  def initialize(app_path, path, headers, fields, cookies)
+    @app_path, @path, @headers, @cookies = app_path, path, headers, cookies
+    parse_fields(fields)
+    parse_path
+  end
+
+  def application_path
+    @app_path
+  end
+
+  def build_url(request_handler_id=nil, page_id=nil, callback_id=nil)
+    raise ArgumentError if request_handler_id.nil? and not page_id.nil?
+
+    arr = [request_handler_id, page_id].compact
+
+    url = "" 
+    url << @app_path
+    unless arr.empty?
+      url << '/' if url[-1,1] != '/'  # /appXXX -> /app/XXX
+      url << (DELIM + arr.join('/'))
+    end
+    url << ('?' + callback_id) if callback_id
+
+    return url
+  end
+
+  private
+
+  def parse_fields(fields)
     fields ||= Hash.new
     @fields = Hash.new
 
@@ -29,29 +58,12 @@ class Wee::Request
         end
       end
     end
-    
-    full_app_path, req_path = @path.split('@', 2)
+  end
+
+  def parse_path
+    full_app_path, req_path = @path.split(DELIM, 2)
     @request_handler_id = @page_id = nil
     @request_handler_id, @page_id = req_path.split('/', 2) if req_path
   end
 
-  def application_path
-    @app_path
-  end
-
-  def build_url(request_handler_id=nil, page_id=nil, callback_id=nil)
-    raise ArgumentError if request_handler_id.nil? and not page_id.nil?
-
-    arr = [request_handler_id, page_id].compact
-
-    url = "" 
-    url << @app_path
-    unless arr.empty?
-      url << '/' if url[-1,1] != '/'  # /app@ -> /app/@
-      url << ('@' + arr.join('/'))
-    end
-    url << ('?' + callback_id) if callback_id
-
-    return url
-  end
 end
