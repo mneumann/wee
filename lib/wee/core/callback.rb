@@ -17,9 +17,15 @@ class Wee::CallbackRegistry
   # Register +callback+ for +object+ under +type+ and return a unique callback id. 
 
   def register_for(object, type, callback)
+    register_named_for(object, type, callback, @idgen.next)
+  end
+
+  # Register +callback+ for +object+ under +type+ with the id +named_id+.
+
+  def register_named_for(object, type, callback, named_id)
+    cid = named_id.to_s
     c = (@callbacks[type] ||= Hash.new)
     o = (@obj_to_id_map[type] ||= Hash.new) 
-    cid = @idgen.next.to_s
     raise "duplicate callback id" if c.has_key?(cid)
     c[cid] = callback
     (o[object] ||= []) << cid  
