@@ -50,7 +50,7 @@ class Wee::CallbackRegistry
     if c = @callbacks[type]
       c
     else
-      raise
+      []
     end
   end
 
