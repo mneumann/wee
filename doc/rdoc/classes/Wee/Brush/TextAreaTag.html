@@ -86,10 +86,10 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000081">disabled</a>&nbsp;&nbsp;
-      <a href="#M000080">new</a>&nbsp;&nbsp;
-      <a href="#M000082">readonly</a>&nbsp;&nbsp;
-      <a href="#M000083">with</a>&nbsp;&nbsp;
+      <a href="#M000082">disabled</a>&nbsp;&nbsp;
+      <a href="#M000081">new</a>&nbsp;&nbsp;
+      <a href="#M000083">readonly</a>&nbsp;&nbsp;
+      <a href="#M000084">with</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -118,21 +118,21 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000080" class="method-detail">
-        <a name="M000080"></a>
+      <div id="method-M000081" class="method-detail">
+        <a name="M000081"></a>
 
         <div class="method-heading">
-          <a href="#M000080" class="method-signature">
+          <a href="#M000081" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000080-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000080-source">
+            onclick="toggleCode('M000081-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000081-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 193</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 203</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
     <span class="ruby-keyword kw">super</span>(<span class="ruby-value str">'textarea'</span>)
   <span class="ruby-keyword kw">end</span>
@@ -143,36 +143,12 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000081" class="method-detail">
-        <a name="M000081"></a>
-
-        <div class="method-heading">
-          <a href="#M000081" class="method-signature">
-          <span class="method-name">disabled</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000081-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000081-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 206</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">disabled</span>
-    <span class="ruby-ivar">@attributes</span>[<span class="ruby-value str">'disabled'</span>] = <span class="ruby-keyword kw">nil</span> 
-    <span class="ruby-keyword kw">self</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
       <div id="method-M000082" class="method-detail">
         <a name="M000082"></a>
 
         <div class="method-heading">
           <a href="#M000082" class="method-signature">
-          <span class="method-name">readonly</span><span class="method-args">()</span>
+          <span class="method-name">disabled</span><span class="method-args">()</span>
           </a>
         </div>
       
@@ -181,9 +157,9 @@
             onclick="toggleCode('M000082-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000082-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 211</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">readonly</span>
-    <span class="ruby-ivar">@attributes</span>[<span class="ruby-value str">'readonly'</span>] = <span class="ruby-keyword kw">nil</span> 
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 216</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">disabled</span>
+    <span class="ruby-ivar">@attributes</span>[<span class="ruby-value str">'disabled'</span>] = <span class="ruby-keyword kw">nil</span> 
     <span class="ruby-keyword kw">self</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
@@ -196,7 +172,7 @@
 
         <div class="method-heading">
           <a href="#M000083" class="method-signature">
-          <span class="method-name">with</span><span class="method-args">(*args, &amp;block)</span>
+          <span class="method-name">readonly</span><span class="method-args">()</span>
           </a>
         </div>
       
@@ -205,7 +181,31 @@
             onclick="toggleCode('M000083-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000083-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 216</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 221</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">readonly</span>
+    <span class="ruby-ivar">@attributes</span>[<span class="ruby-value str">'readonly'</span>] = <span class="ruby-keyword kw">nil</span> 
+    <span class="ruby-keyword kw">self</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000084" class="method-detail">
+        <a name="M000084"></a>
+
+        <div class="method-heading">
+          <a href="#M000084" class="method-signature">
+          <span class="method-name">with</span><span class="method-args">(*args, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000084-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000084-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 226</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-keyword kw">super</span>
   <span class="ruby-keyword kw">end</span>

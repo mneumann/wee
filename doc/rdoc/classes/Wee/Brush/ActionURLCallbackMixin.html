@@ -86,7 +86,7 @@ The callback id is listed in the URL (not as a form-data field)
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000072">callback</a>&nbsp;&nbsp;
+      <a href="#M000073">callback</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -115,21 +115,21 @@ The callback id is listed in the URL (not as a form-data field)
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000072" class="method-detail">
-        <a name="M000072"></a>
+      <div id="method-M000073" class="method-detail">
+        <a name="M000073"></a>
 
         <div class="method-heading">
-          <a href="#M000072" class="method-signature">
+          <a href="#M000073" class="method-signature">
           <span class="method-name">callback</span><span class="method-args">(symbol=nil, &amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000072-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000072-source">
+            onclick="toggleCode('M000073-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000073-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 181</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 191</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">callback</span>(<span class="ruby-identifier">symbol</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">symbol</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">block</span>
     <span class="ruby-identifier">block</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">current_component</span>.<span class="ruby-identifier">method</span>(<span class="ruby-identifier">symbol</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block</span>

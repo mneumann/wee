@@ -107,11 +107,11 @@ The format of the internal datastructure is:
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000145">all_of_type</a>&nbsp;&nbsp;
-      <a href="#M000144">get_callback_for</a>&nbsp;&nbsp;
-      <a href="#M000143">get_ids_for</a>&nbsp;&nbsp;
-      <a href="#M000141">new</a>&nbsp;&nbsp;
-      <a href="#M000142">register_for</a>&nbsp;&nbsp;
+      <a href="#M000148">all_of_type</a>&nbsp;&nbsp;
+      <a href="#M000147">get_callback_for</a>&nbsp;&nbsp;
+      <a href="#M000146">get_ids_for</a>&nbsp;&nbsp;
+      <a href="#M000144">new</a>&nbsp;&nbsp;
+      <a href="#M000145">register_for</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -133,19 +133,19 @@ The format of the internal datastructure is:
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000141" class="method-detail">
-        <a name="M000141"></a>
+      <div id="method-M000144" class="method-detail">
+        <a name="M000144"></a>
 
         <div class="method-heading">
-          <a href="#M000141" class="method-signature">
+          <a href="#M000144" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(id_generator)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000141-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000141-source">
+            onclick="toggleCode('M000144-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000144-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/callback.rb, line 11</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">id_generator</span>)
@@ -160,11 +160,11 @@ The format of the internal datastructure is:
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000142" class="method-detail">
-        <a name="M000142"></a>
+      <div id="method-M000145" class="method-detail">
+        <a name="M000145"></a>
 
         <div class="method-heading">
-          <a href="#M000142" class="method-signature">
+          <a href="#M000145" class="method-signature">
           <span class="method-name">register_for</span><span class="method-args">(object, type=nil, &amp;callback)</span>
           </a>
         </div>
@@ -175,8 +175,8 @@ Register <tt>callback</tt> for <tt>object</tt> under <tt>type</tt> and
 return a unique callback id.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000142-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000142-source">
+            onclick="toggleCode('M000145-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000145-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/callback.rb, line 19</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">register_for</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback</span>)
@@ -212,19 +212,19 @@ return a unique callback id.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000145" class="method-detail">
-        <a name="M000145"></a>
+      <div id="method-M000148" class="method-detail">
+        <a name="M000148"></a>
 
         <div class="method-heading">
-          <a href="#M000145" class="method-signature">
+          <a href="#M000148" class="method-signature">
           <span class="method-name">all_of_type</span><span class="method-args">(type=nil)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000145-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000145-source">
+            onclick="toggleCode('M000148-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000148-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/callback.rb, line 49</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">all_of_type</span>(<span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>)
@@ -239,19 +239,19 @@ return a unique callback id.
         </div>
       </div>
 
-      <div id="method-M000144" class="method-detail">
-        <a name="M000144"></a>
+      <div id="method-M000147" class="method-detail">
+        <a name="M000147"></a>
 
         <div class="method-heading">
-          <a href="#M000144" class="method-signature">
+          <a href="#M000147" class="method-signature">
           <span class="method-name">get_callback_for</span><span class="method-args">(id, type=nil)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000144-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000144-source">
+            onclick="toggleCode('M000147-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000147-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/callback.rb, line 41</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_callback_for</span>(<span class="ruby-identifier">id</span>, <span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>)
@@ -266,19 +266,19 @@ return a unique callback id.
         </div>
       </div>
 
-      <div id="method-M000143" class="method-detail">
-        <a name="M000143"></a>
+      <div id="method-M000146" class="method-detail">
+        <a name="M000146"></a>
 
         <div class="method-heading">
-          <a href="#M000143" class="method-signature">
+          <a href="#M000146" class="method-signature">
           <span class="method-name">get_ids_for</span><span class="method-args">(object, type=nil)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000143-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000143-source">
+            onclick="toggleCode('M000146-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000146-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/callback.rb, line 33</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_ids_for</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">type</span>=<span class="ruby-keyword kw">nil</span>)
