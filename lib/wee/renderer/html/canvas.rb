@@ -63,7 +63,8 @@ class HtmlCanvas < Canvas
   end
 
   generic_tag :html, :head, :body, :title, :style, :h1, :h2, :h3, :h4, :h5, :div
-  generic_single_tag :link
+  generic_tag :div, :span, :ul, :ol, :li
+  generic_single_tag :link, :hr
 
   def url_for_callback(callback)
     url_for_callback_id(register_callback(:action, callback))
