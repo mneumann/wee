@@ -77,6 +77,18 @@ class HtmlCanvas < Canvas
     handle(Brush::TextInputTag.new, *args, &block)
   end
 
+  def text_area(*args, &block)
+    handle(Brush::TextAreaTag.new, *args, &block)
+  end
+
+  def option(*args, &block)
+    handle(Brush::SelectOptionTag.new, *args, &block)
+  end
+
+  def select_list(items)
+    handle(Brush::SelectListTag.new(items))
+  end
+
   def submit_button(*args, &block)
     handle(Brush::SubmitButtonTag.new, *args, &block)
   end
@@ -260,7 +272,92 @@ class Brush::InputTag < Brush::GenericTagBrush
   end
 end
 
+module Brush::AssignMixin
+  def assign(act, obj=nil)
+    ctx = @canvas.context.context
+    obj ||= @canvas.current_component
+
+    name(ctx.callback_registry.register(Wee::MethodCallback[obj, act], :input))
+  end
+end
+
+class Brush::TextAreaTag < Brush::GenericTagBrush
+  include Brush::AssignMixin
+
+  def initialize
+    super('textarea')
+  end
+
+  %w(name rows cols tabindex accesskey onfocus onblur onselect onchange).each do |meth|
+    eval %[
+      def #{ meth }(arg)
+        @attributes['#{ meth }'] = arg
+        self
+      end
+    ]
+  end
+
+  def disabled
+    @attributes['disabled'] = nil 
+    self
+  end
+
+  def readonly
+    @attributes['readonly'] = nil 
+    self
+  end
+
+  def with(*args, &block)
+    super
+  end
+end
+
+class Brush::SelectListTag < Brush::GenericTagBrush
+  include Brush::AssignMixin
+
+  def initialize(items)
+    super('select')
+    @items = items
+    @default = nil
+    @labels = @items.collect { |i| i.to_s }
+  end
+
+  %w(default items labels).each do |meth|
+    eval %[
+    def #{ meth }(arg)
+      @#{ meth } = arg
+      self
+    end
+    ]
+  end
+
+  def with(*args, &block)
+    super
+    @items.each_index do |i|
+      @canvas.option.value(@items[i]).selected(@default).with(@labels[i])
+    end
+  end
+end
+
+class Brush::SelectOptionTag < Brush::GenericTagBrush
+
+  def initialize
+    super('option')
+  end
+
+  def selected(*args)
+    if args.size == 0
+      @attributes['selected'] = 'selected'
+    else
+      @attributes['selected'] = 'selected' if args.first.to_s == @attributes['value']
+    end
+    self
+  end
+end
+
 class Brush::TextInputTag < Brush::InputTag
+  include Brush::AssignMixin
+
   def initialize
     super
     type('text')
@@ -270,13 +367,6 @@ class Brush::TextInputTag < Brush::InputTag
     assign(attr_name.to_s + "=")
     value(@canvas.current_component.send(attr_name))
     self
-  end
-
-  def assign(act, obj=nil)
-    ctx = @canvas.context.context
-    obj ||= @canvas.current_component
-
-    name(ctx.callback_registry.register(Wee::MethodCallback[obj, act], :input))
   end
 end
 
