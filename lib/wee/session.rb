@@ -1,11 +1,9 @@
 require 'wee/page'
-require 'wee/state_registry'
 require 'wee/callback'
 require 'thread'
 
 class Wee::Session
   attr_accessor :root_component, :page_store
-  attr_reader :state_registry
 
   def self.current
     sess = Thread.current['Wee::Session']
@@ -13,30 +11,32 @@ class Wee::Session
     return sess
   end
 
-  def register_object_for_backtracking(obj)
-    @state_registry << obj
-  end
-
   def initialize(&block)
     Thread.current['Wee::Session'] = self
 
     @next_page_id = 0
-    @state_registry = Wee::StateRegistry.new
     @in_queue, @out_queue = SizedQueue.new(1), SizedQueue.new(1)
 
     @continuation_stack = []
-    register_object_for_backtracking(@continuation_stack)
 
     block.call(self)
 
     raise ArgumentError, "No root component specified" if @root_component.nil?
     raise ArgumentError, "No page_store specified" if @page_store.nil?
     
-    @initial_snapshot = @state_registry.snapshot 
+    @initial_snapshot = snapshot()
+
     start_request_response_loop
   ensure
     Thread.current['Wee::Session'] = nil
   end
+
+  def snapshot
+    @root_component.backtrack_state_chain(snap = Wee::Snapshot.new)
+    snap.add(@continuation_stack)
+    return snap.freeze
+  end
+
 
   # called by application to send the session a request
   def handle_request(context)
@@ -81,7 +81,7 @@ class Wee::Session
 
       # A valid page_id was specified and the corresponding page exists.
 
-      page.snapshot.apply
+      page.snapshot.restore
 
       if @context.handler_id.nil?
 
@@ -132,7 +132,7 @@ class Wee::Session
 
   def handle_new_page_view(context, snapshot=nil)
     new_page_id = create_new_page_id() 
-    new_page = Wee::Page.new(snapshot || @state_registry.snapshot, Wee::CallbackRegistry.new)
+    new_page = Wee::Page.new(snapshot || self.snapshot(), Wee::CallbackRegistry.new)
     @page_store[new_page_id] = new_page
 
     redirect_url = "#{ context.application.path }/s:#{ context.session_id }/p:#{ new_page_id }"

@@ -8,7 +8,11 @@ class Counter < Wee::Component
   def initialize(cnt)
     super()
     @cnt = cnt 
-    session.register_object_for_backtracking(self)
+  end
+
+  def backtrack_state(snap)
+    super
+    snap.add(self)
   end
 
   def dec
@@ -51,7 +55,11 @@ class RegexpValidatedInput < Wee::Component
     @regexp = regexp
     self.value = init_value
     @error = false
-    session.register_object_for_backtracking(self)
+  end
+
+  def backtrack_state(snap)
+    super
+    snap.add(self)
   end
 
   def value
@@ -135,8 +143,12 @@ class MainPage < Wee::Component
     children << (@val_inp = RegexpValidatedInput.new('Michael Neumann', /^\w+\s+\w+$/))
 
     @arr = []
-    session.register_object_for_backtracking(@arr)
-    session.register_object_for_backtracking(@text)
+  end
+
+  def backtrack_state(snap)
+    super
+    snap.add(@arr)
+    snap.add(@text)
   end
 
   attr_accessor :text
