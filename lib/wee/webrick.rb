@@ -7,7 +7,7 @@ class Wee::Application
     trap("INT") { 
       trap("INT", "IGNORE")
       self.shutdown
-      server.shutdown 
+      server.shutdown
       exit
     }
     server.start
