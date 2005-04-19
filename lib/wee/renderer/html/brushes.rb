@@ -343,6 +343,7 @@ class Brush::SelectListTag < Brush::GenericTagBrush
   end
 
   bool_attr :multiple
+  alias multi multiple
 
   def callback(symbol=nil, *args, &block)
     @callback = to_callback(symbol, args, block)
