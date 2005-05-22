@@ -1,26 +1,9 @@
 require 'timeout'
 
-class Wee::Session
-  def initialize(&block)
-    Thread.current[:wee_session] = self
+class Wee::AbstractSession
 
-    @idgen = Wee::SimpleIdGenerator.new
-    @in_queue, @out_queue = SizedQueue.new(1), SizedQueue.new(1)
+  # Called by Wee::Application to send the session a request.
 
-    block.call(self)
-
-    raise ArgumentError, "No root component specified" if @root_component.nil?
-    raise ArgumentError, "No page_store specified" if @page_store.nil?
-    
-    @initial_snapshot = snapshot()
-
-    start_request_response_loop
-    super()
-  ensure
-    Thread.current[:wee_session] = nil
-  end
-
-  # called by application to send the session a request
   def handle_request(context)
     super
 
@@ -30,6 +13,15 @@ class Wee::Session
 
     # Wait for the response.
     return @out_queue.pop
+  end
+end
+
+class Wee::Session
+  def initialize(&block)
+    super()
+    @in_queue, @out_queue = SizedQueue.new(1), SizedQueue.new(1)
+    setup(&block)
+    start_request_response_loop
   end
 
   def start_request_response_loop

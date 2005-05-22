@@ -1,3 +1,11 @@
+Sun May 22 18:10:27 CET 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* lib/wee/continuation/session.rb: Fixed a bug. Callbacks were invoked
+	  twice, due to a super() call was calling the "wrong" super-method,
+	  which did the same as the calling method (the right super-method would
+	  have been super.super(), but this is actually not possible in Ruby
+	  without renaming).
+
 Wed Apr  6 19:17:47 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* lib/wee/session.rb: introduced live_update callbacks, which are special
