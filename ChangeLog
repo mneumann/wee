@@ -1,3 +1,10 @@
+Thu Jun 30 12:53:59 CEST 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* lib/wee/session.rb, lib/wee/context.rb, lib/wee/core/renderingcontext.rb,
+	  lib/wee/core.rb, lib/wee/core_ext.rb, lib/wee.rb: Moved Wee::Context into
+		core. Wee::Context gets an additional field 'session', and
+		Wee::RenderingContext inherits from Wee::Context.
+
 Thu Jun 30 12:38:25 CEST 2005 Michael Neumann <mneumann@ntecs.de>
 
 	* lib/wee/response.rb: require 'cgi'

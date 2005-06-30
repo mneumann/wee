@@ -175,7 +175,7 @@ class Wee::Session < Wee::AbstractSession
     pre_respond_hook
     set_response(context, Wee::GenericResponse.new('text/html', ''))
 
-    rctx = Wee::RenderingContext.new(context.request, context.response, callbacks, Wee::HtmlWriter.new(context.response.content))
+    rctx = Wee::RenderingContext.new(context.request, context.response, self, callbacks, Wee::HtmlWriter.new(context.response.content))
     @root_component.do_render_chain(rctx)
   end
 

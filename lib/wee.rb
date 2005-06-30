@@ -6,7 +6,6 @@ end
 require 'wee/core'
 require 'wee/core_ext'
 
-require 'wee/context'
 require 'wee/application'
 require 'wee/requesthandler'
 require 'wee/request'

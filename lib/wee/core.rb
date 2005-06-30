@@ -6,7 +6,7 @@ require 'wee/core/valueholder'
 require 'wee/core/snapshot'
 require 'wee/core/callback'
 require 'wee/core/page'
-require 'wee/core/renderingcontext'
+require 'wee/core/context'
 require 'wee/core/idgen'
 
 require 'wee/core/presenter'

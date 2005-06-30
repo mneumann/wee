@@ -40,6 +40,7 @@ class Wee::Presenter
     rendering_context = Wee::RenderingContext.new(
       context.request, 
       context.response, 
+      session,
       session.current_callbacks, 
       Wee::HtmlWriter.new(response.content))
 
