@@ -77,8 +77,8 @@ class Wee::ErrorResponse < Wee::Response
 
   def render(c)
     c << "<html><head><title>Error occured</title></head><body>"
-    c << "<p>#{ @exception }"
-    c << @exception.backtrace.join("<br/>")
+    c << "<p>#{ CGI.escapeHTML(@exception.inspect) }<br/>"
+    c << @exception.backtrace.map{|s| CGI.escapeHTML(s)}.join("<br/>") 
     c << "</p>"
     c << "</body></html>"
   end

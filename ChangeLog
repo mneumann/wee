@@ -1,3 +1,8 @@
+Thu Jun 30 12:36:18 CEST 2005 Michael Neumann <mneumann@ntecs.de>
+
+	* lib/wee/response.rb (Wee::ErrorResponse#render): correctly format error
+	  responses (patch by Aleksi Niemela)
+
 Thu Jun 30 12:10:36 CEST 2005 Michael Neumann <mneumann@ntecs.de>
 
 	* lib/wee/core.rb, lib/wee/core/idgen.rb, lib/wee/idgen/md5.rb,
