@@ -1,3 +1,12 @@
+Thu Jun 30 13:23:47 CEST 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* lib/wee/session.rb, lib/wee/core/componentrunner.rb, lib/wee/core.rb,
+	  lib/wee/utils/helper.rb, lib/wee/pageless/session.rb: Refactored component 
+		specific stuff (rendering, snapshots, callback processing) out of session 
+		into core class ComponentRunner. 
+
+	* lib/wee/renderer/html/canvas.rb: fixed bug
+
 Thu Jun 30 12:55:54 CEST 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* lib/wee/core/context.rb: forgot to add this file

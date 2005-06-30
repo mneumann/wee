@@ -2,7 +2,7 @@ require 'wee/abstractsession'
 
 class Wee::Session < Wee::AbstractSession
 
-  attr_accessor :root_component
+  attr_accessor :component_runner
   attr_accessor :page_store
 
   def initialize(&block)
@@ -25,10 +25,10 @@ class Wee::Session < Wee::AbstractSession
 
     with_session do
       block.call(self) if block
-      raise ArgumentError, "No root component specified" if @root_component.nil?
+      raise ArgumentError, "No component runner specified" if @component_runner.nil?
       raise ArgumentError, "No page_store specified" if @page_store.nil?
     
-      @initial_snapshot = snapshot()
+      @initial_snapshot = @component_runner.snapshot
     end
   end
 
@@ -101,7 +101,7 @@ class Wee::Session < Wee::AbstractSession
     # new page view. 
 
     callback_stream = Wee::CallbackStream.new(@page.callbacks, @context.request.fields) 
-    premature_response = process_callbacks(callback_stream)
+    premature_response = @component_runner.process_callbacks(callback_stream)
 
     post_callbacks_hook()
 
@@ -118,50 +118,6 @@ class Wee::Session < Wee::AbstractSession
     end
   end
 
-  # Values are parameters to method #process_callbacks_of
-
-  DEFAULT_CALLBACK_PROCESSING = [
-    # Invokes all specified input callbacks. NOTE: Input callbacks should never
-    # call other components!
-    [:input, callback_stream, true, false],
-
-    # Invokes the first found action callback. NOTE: Only the first action
-    # callback is invoked. Any other action callback is ignored.
-    [:action, callback_stream, false, true],
-    
-    # Invoke live_update callback (NOTE: only the first is invoked).
-    [:live_update, callback_stream, false, true]
-  ]
-
-  # This method triggers several tree traversals to process the callbacks of
-  # the root component.
-  #
-  # Returns nil or a Response object in case of a premature response.
-
-  def process_callbacks(callback_stream)
-    if callback_stream.all_of_type(:action).size > 1 
-      raise "Not allowed to specify more than one action callback"
-    end
-
-    catch(:wee_abort_callback_processing) { 
-      DEFAULT_CALLBACK_PROCESSING.each {|args| process_callbacks_of(*args) }
-      nil
-    }
-  end
-
-  def process_callbacks_of(type, callback_stream, pass_value=true, once=false)
-    @root_component.process_callbacks_chain {|this|
-      callback_stream.with_callbacks_for(this, type) { |callback, value|
-        if pass_value
-          callback.call(value)
-        else
-          callback.call
-        end
-        return if once
-      }
-    }
-  end
-
   def handle_new_page_view(context, snapshot=nil)
     new_page_id = @idgen.next.to_s
     new_page = create_page(snapshot || self.snapshot())
@@ -176,20 +132,13 @@ class Wee::Session < Wee::AbstractSession
     set_response(context, Wee::GenericResponse.new('text/html', ''))
 
     rctx = Wee::RenderingContext.new(context.request, context.response, self, callbacks, Wee::HtmlWriter.new(context.response.content))
-    @root_component.do_render_chain(rctx)
+    @component_runner.render(rctx)
   end
 
   def pre_respond_hook
   end
 
   def post_callbacks_hook
-  end
-
-  # Take a snapshot of the root component and return it.
-
-  def snapshot
-    @root_component.backtrack_state_chain(snap = Wee::Snapshot.new)
-    return snap.freeze
   end
 
   # Return a new Wee::Page object with the given snapshot assigned.

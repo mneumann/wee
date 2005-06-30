@@ -56,12 +56,12 @@ class HtmlCanvasRenderer < Renderer
     }
   end
 
-  def initialize(rendering_context, current_component=nil)
-    super
+  def initialize(rendering_context, current_component=nil, &block)
     # cache the document, to reduce method calls
     @document = rendering_context.document 
 
     initialize_canvas
+    super
   end
 
   generic_tag :html, :head, :body, :title, :style, :h1, :h2, :h3, :h4, :h5, :div

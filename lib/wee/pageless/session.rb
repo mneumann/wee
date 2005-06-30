@@ -5,7 +5,6 @@ require 'cgi'
 # backtrack.
 
 class Wee::PagelessSession < Wee::Session
-  attr_accessor :root_component
   undef page_store
 
   attr_accessor :callbacks
@@ -14,7 +13,7 @@ class Wee::PagelessSession < Wee::Session
   def setup(&block)
     with_session do
       block.call(self) if block
-      raise ArgumentError, "No root component specified" if @root_component.nil?
+      raise ArgumentError, "No component runner specified" if @component_runner.nil?
     end
   end
 
@@ -47,7 +46,7 @@ class Wee::PagelessSession < Wee::Session
     # new page view. 
 
     callback_stream = Wee::CallbackStream.new(self.callbacks, @context.request.fields) 
-    send_response = process_callbacks(callback_stream)
+    send_response = @component_runner.process_callbacks(callback_stream)
 
     post_callbacks_hook()
 

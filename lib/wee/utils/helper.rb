@@ -34,9 +34,9 @@ module Wee::Utils
       app.default_request_handler {
         options[:session].new {|sess|
           if component
-            sess.root_component = component.new
+            sess.component_runner = Wee::ComponentRunner.new(component.new)
           else
-            sess.root_component = block.call
+            sess.component_runner = Wee::ComponentRunner.new(block.call)
           end
           if sess.respond_to?(:page_store=)
             # This is so that you can use a Pageless session, which does not have
