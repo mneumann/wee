@@ -47,7 +47,7 @@ class Wee::PagelessSession < Wee::Session
     # new page view. 
 
     callback_stream = Wee::CallbackStream.new(self.callbacks, @context.request.fields) 
-    send_response = invoke_callbacks(callback_stream)
+    send_response = process_callbacks(callback_stream)
 
     post_callbacks_hook()
 

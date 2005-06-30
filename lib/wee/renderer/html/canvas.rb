@@ -1,7 +1,7 @@
 module Wee
 
-class Canvas
-  def initialize
+module CanvasMixin
+  def initialize_canvas
     @parent_brush = nil
     @current_brush = nil
   end
@@ -31,10 +31,10 @@ class Canvas
   end
 end
 
-class HtmlCanvas < Canvas
-  attr_reader :rendering_context  # the current Wee::RenderingContext
+class HtmlCanvasRenderer < Renderer
+  include CanvasMixin
+
   attr_reader :document
-  attr_accessor :current_component
 
   def self.generic_tag(*attrs)
     attrs.each { |a|
@@ -56,10 +56,12 @@ class HtmlCanvas < Canvas
     }
   end
 
-  def initialize(rendering_context)
-    super()
-    @rendering_context = rendering_context
-    @document = rendering_context.document
+  def initialize(rendering_context, current_component=nil)
+    super
+    # cache the document, to reduce method calls
+    @document = rendering_context.document 
+
+    initialize_canvas
   end
 
   generic_tag :html, :head, :body, :title, :style, :h1, :h2, :h3, :h4, :h5, :div
@@ -124,6 +126,12 @@ class HtmlCanvas < Canvas
     handle(Brush::RadioButtonTag.new, *args, &block)
   end
 
+  def check_box(*args, &block)
+    handle(Wee::Brush::CheckboxTag.new, *args, &block)
+  end
+
+  alias checkbox check_box
+
   def text_area(*args, &block)
     handle(Brush::TextAreaTag.new, *args, &block)
   end
@@ -168,8 +176,8 @@ class HtmlCanvas < Canvas
     handle(Brush::JavascriptTag.new, *args, &block)
   end
 
-  def paragraph
-    set_brush(Brush::GenericSingleTagBrush.new("p"))
+  def paragraph(*args, &block)
+    handle(Brush::GenericTagBrush.new("p"), *args, &block)
   end
 
   def break
@@ -191,6 +199,14 @@ class HtmlCanvas < Canvas
 
   def encode_text(str)
     set_brush(Brush::GenericEncodedTextBrush.new(str))
+  end
+
+  # converts \n into <br/>
+  def multiline_text(text, encode=true)
+    meth = encode ? :encode_text : :text
+    lines = text.split("\n")
+    send(meth, lines.first)
+    lines[1..-1].each { |l| self.break; send(meth, l) }
   end
 
   def render(obj)

@@ -1,15 +1,14 @@
-# The only dependencies of the core classes are:
-#
-# * Wee::Session.current in class Wee::Presenter#session
-# * Wee::DefaultRenderer in Wee::Presenter#renderer_class 
-#
+# There are no dependencies to outer classes!
 
-# independent files
+module Wee; end
+
 require 'wee/core/valueholder'
 require 'wee/core/snapshot'
 require 'wee/core/callback'
+require 'wee/core/page'
+require 'wee/core/renderingcontext'
+require 'wee/core/idgen'
 
-# dependent files
 require 'wee/core/presenter'
 require 'wee/core/decoration'
 require 'wee/core/component'

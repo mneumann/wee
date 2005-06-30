@@ -1,5 +1,4 @@
 require 'wee/abstractsession'
-require 'wee/page'
 
 class Wee::Session < Wee::AbstractSession
 
@@ -102,11 +101,11 @@ class Wee::Session < Wee::AbstractSession
     # new page view. 
 
     callback_stream = Wee::CallbackStream.new(@page.callbacks, @context.request.fields) 
-    send_response = invoke_callbacks(callback_stream)
+    premature_response = process_callbacks(callback_stream)
 
     post_callbacks_hook()
 
-    if send_response
+    if premature_response
       # replace existing page with new snapshot
       @page.snapshot = self.snapshot
       @page_store[@context.request.page_id] = @page
@@ -119,48 +118,47 @@ class Wee::Session < Wee::AbstractSession
     end
   end
 
-  # This method triggers two tree traversals of process_callbacks on the root
-  # component.  First, all input callbacks are invoked, then in the second
-  # traversal, the first found action callback is invoked (there's only ever
-  # one per request) and then the traversal is stopped 
-  #
-  # NOTE: Input callbacks should never call other components!
-  #
-  # Returns nil or send_response in case of a premature response.
+  # Values are parameters to method #process_callbacks_of
 
-  def invoke_callbacks(callback_stream)
+  DEFAULT_CALLBACK_PROCESSING = [
+    # Invokes all specified input callbacks. NOTE: Input callbacks should never
+    # call other components!
+    [:input, callback_stream, true, false],
+
+    # Invokes the first found action callback. NOTE: Only the first action
+    # callback is invoked. Any other action callback is ignored.
+    [:action, callback_stream, false, true],
+    
+    # Invoke live_update callback (NOTE: only the first is invoked).
+    [:live_update, callback_stream, false, true]
+  ]
+
+  # This method triggers several tree traversals to process the callbacks of
+  # the root component.
+  #
+  # Returns nil or a Response object in case of a premature response.
+
+  def process_callbacks(callback_stream)
     if callback_stream.all_of_type(:action).size > 1 
       raise "Not allowed to specify more than one action callback"
     end
 
-    send_response = catch(:wee_send_response) { 
-      catch(:wee_back_to_session) { 
-          # invoke input callbacks
-          @root_component.process_callbacks_chain {|this|
-            callback_stream.with_callbacks_for(this, :input) { |callback, value|
-              callback.call(value)
-            }
-          }
-
-          catch(:wee_outer) {
-            # invoke first found action callback. only the first action callback is invoked.
-            @root_component.process_callbacks_chain {|this|
-              callback_stream.with_callbacks_for(this, :action) { |callback, value|
-                callback.call
-                throw :wee_outer
-              }
-            }
-          }
-
-          # process live_update callbacks (only ever one)
-          @root_component.process_callbacks_chain {|this|
-            callback_stream.with_callbacks_for(this, :live_update) { |callback, value|
-              callback.call
-            }
-          }
-
-      }
+    catch(:wee_abort_callback_processing) { 
+      DEFAULT_CALLBACK_PROCESSING.each {|args| process_callbacks_of(*args) }
       nil
+    }
+  end
+
+  def process_callbacks_of(type, callback_stream, pass_value=true, once=false)
+    @root_component.process_callbacks_chain {|this|
+      callback_stream.with_callbacks_for(this, type) { |callback, value|
+        if pass_value
+          callback.call(value)
+        else
+          callback.call
+        end
+        return if once
+      }
     }
   end
 

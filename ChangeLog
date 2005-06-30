@@ -1,3 +1,82 @@
+Thu Jun 30 12:10:36 CEST 2005 Michael Neumann <mneumann@ntecs.de>
+
+	* lib/wee/core.rb, lib/wee/core/idgen.rb, lib/wee/idgen/md5.rb,
+	  lib/wee/idgen/simple.rb: Introduced abstract class Wee::IdGenerator
+	  and subclass Wee::Md5IdGenerator and Wee::SimpleIdGenerator from it. 
+
+	* lib/wee/core/renderer.rb, lib/wee/core/presenter.rb,
+	  lib/wee/renderer/html/canvas.rb, lib/wee.rb: 
+	  Introduce base class of all renderer classes: Wee::Renderer. 
+	  
+	  Rename Wee::HtmlCanvas to Wee::HtmlCanvasRenderer and inherit from
+	  Wee::Renderer instead of Wee::Canvas. Wee::Canvas is now a mixin
+	  module as has been renamed to Wee::CanvasMixin.
+
+	  Rename @renderer in Wee::Presenter into @__renderer to avoid
+	  possible problems if this variable is accidently used by a
+	  user-defined component.
+
+	* lib/wee/template.rb: Added :local option, with which one can
+	  specify a template file relative to the component file, e.g:
+
+	    class MyComponent < Wee::Component
+	      template :render_this, :local => 'this.tmpl'
+	    end
+
+	  Futhermore, added an :r_as_param option, which generates a render
+	  method that takes a renderer object as parameter 'r'.
+
+	* lib/wee/renderer/html/brushes.rb, lib/wee/renderer/html/canvas.rb:
+	  Method Brush::SelectListTag#selected takes optionally a block. In
+	  this case, only those elements will be selected, for which the block
+	  evaluates to true. This allows us to use some custom compare
+	  functions instead of the default ones '==' or 'include?'.
+
+	  Method Brush::SelectListTag#labels also might be passed a block, in
+	  which case the label is the return value of the block called with
+	  the corresponding item as parameter.
+
+	  Added class Brush::CheckboxTag and corresponding methods
+	  HtmlCanvas#check_box and alias #checkbox.
+
+	  Method HtmlCanvas#paragraph is no longer a single tag. It can now
+	  contain other tags, e.g. like <p><a .../></p>.
+
+	  Added method HtmlCanvas#multiline_text, which replaces newline
+	  characters (\n) in the text with <br/> tags.
+
+	* lib/wee/page.rb, lib/wee/core/page.rb: Page classes moved into core.
+
+	* lib/wee/session.rb: remove require 'wee/page' as this now has been
+	  moved into the core and is automatically required from there.
+
+	* lib/wee/context.rb, lib/wee/core/renderingcontext.rb: Moved
+	  RenderingContext class into core.
+
+	* lib/wee/core/presenter.rb, lib/wee/core_ext.rb: Moved some stuff
+	  from the Presenter class out of the core.
+
+	* lib/wee.rb, lib/wee/core.rb: adapt "require"s to the changed
+	  situation.
+
+	* lib/wee/session.rb lib/wee/pageless/session.rb: renamed method
+	  #invoke_callbacks into #process_callbacks and refactored that method a
+	  lot.
+
+	* lib/wee/core/presenter.rb, lib/wee/session.rb: removed
+	  throwing of :wee_send_response, instead use
+	  :wee_abort_callback_processing
+
+	* lib/wee/core/component.rb, lib/wee/continuation/core/component.rb,
+	  lib/wee/session.rb: renamed :wee_back_to_session into
+	  :wee_abort_callback_processing.
+
+	* lib/wee/core/component.rb: Reverted commit from 
+	  Thu Mar  3 12:11:05 CET 2005. Removed method Component#parent,
+	  modified method #add_child.
+
+	* lib/wee/skeleton/og/conf/db.rb: Upgrade to run under newer Og version.
+
 Sun May 22 18:10:27 CET 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* lib/wee/continuation/session.rb: Fixed a bug. Callbacks were invoked

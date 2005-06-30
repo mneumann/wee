@@ -1,7 +1,7 @@
 DB_CONFIG = {
   :address => 'localhost',
   :database => '%%db%%',
-  :backend => 'psql',
+  :adapter => 'psql',
   :user => '%%user%%',
   :password => '',
   :connection_count => 10

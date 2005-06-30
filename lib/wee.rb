@@ -4,6 +4,7 @@ module Wee
 end
 
 require 'wee/core'
+require 'wee/core_ext'
 
 require 'wee/context'
 require 'wee/application'
@@ -20,7 +21,7 @@ require 'wee/template'
 require 'wee/renderer/html/writer'
 require 'wee/renderer/html/brushes'
 require 'wee/renderer/html/canvas'
-Wee::DefaultRenderer = Wee::HtmlCanvas
+Wee::DefaultRenderer = Wee::HtmlCanvasRenderer
 
 require 'wee/idgen/simple'
 require 'wee/idgen/md5'

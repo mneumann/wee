@@ -3,7 +3,7 @@
 
 require 'digest/md5'
 
-class Wee::Md5IdGenerator
+class Wee::Md5IdGenerator < Wee::IdGenerator
   def initialize(salt='wee')
     @salt = salt
   end

@@ -328,22 +328,36 @@ class Brush::SelectOptionTag < Brush::GenericTagBrush
 end
 
 class Brush::SelectListTag < Brush::GenericTagBrush
+
+  bool_attr :disabled, :readonly, :multiple
+  alias multi multiple
+
   def initialize(items)
     super('select')
     @items = items
   end
 
-  %w(selected items labels).each do |meth|
-    eval %[
-    def #{ meth }(arg)
-      @#{ meth } = arg
-      self
-    end
-    ]
+  def items(arg)
+    @items = arg
+    self
   end
 
-  bool_attr :multiple
-  alias multi multiple
+  def selected(arg=nil, &block)
+    raise if arg and block
+    @selected = arg || block
+    self
+  end
+
+  def labels(arg=nil, &block)
+    raise if arg and block
+
+    if block
+      @labels = proc{|i| block.call(@items[i])}
+    else
+      @labels = arg
+    end
+    self
+  end
 
   def callback(symbol=nil, *args, &block)
     @callback = to_callback(symbol, args, block)
@@ -381,16 +395,17 @@ class Brush::SelectListTag < Brush::GenericTagBrush
     end
 
     super do
-      if is_multiple
+      meth = 
+      if is_multiple 
         @selected ||= Array.new
-        @items.each_index {|i|
-          @canvas.option.value(i).selected(@selected.include?(@items[i])).with(@labels[i])
-        }
+        @selected.kind_of?(Proc) ? (:call) : (:include?)
       else
-        @items.each_index {|i|
-          @canvas.option.value(i).selected(@selected == @items[i]).with(@labels[i])
-        }
+        @selected.kind_of?(Proc) ? (:call) : (:==)
       end
+
+      @items.each_index {|i|
+        @canvas.option.value(i).selected(@selected.send(meth, @items[i])).with(@labels[i])
+      }
     end
   end
 end
@@ -452,6 +467,14 @@ class Brush::RadioButtonTag < Brush::InputTag
     super
   end
 
+end
+
+class Brush::CheckboxTag < Wee::Brush::InputTag
+  def initialize
+    super
+    type('checkbox')
+  end
+  alias callback __input_callback
 end
 
 class Brush::FileUploadTag < Brush::InputTag
