@@ -1,4 +1,5 @@
 require 'time'
+require 'cgi'
 
 class Wee::Response
   DEFAULT_HEADER = {}.freeze
