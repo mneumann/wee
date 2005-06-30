@@ -1,3 +1,7 @@
+Thu Jun 30 12:55:54 CEST 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* lib/wee/core/context.rb: forgot to add this file
+
 Thu Jun 30 12:53:59 CEST 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* lib/wee/session.rb, lib/wee/context.rb, lib/wee/core/renderingcontext.rb,
