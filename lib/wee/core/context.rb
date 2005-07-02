@@ -6,11 +6,22 @@ class Wee::Context
   end
 end
 
-class Wee::RenderingContext < Wee::Context
-  attr_accessor :callbacks, :document
+class Wee::RenderingContext
+  attr_accessor :context, :callbacks, :document
 
-  def initialize(request=nil, response=nil, session=nil, callbacks=nil, document=nil)
-    super(request, response, session)
-    @callbacks, @document = callbacks, document 
+  def initialize(context=nil, callbacks=nil, document=nil)
+    @context, @callbacks, @document = context, callbacks, document 
+  end
+
+  def request
+    @context.request
+  end
+
+  def response
+    @context.response
+  end
+
+  def session
+    @context.session
   end
 end

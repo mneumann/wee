@@ -38,9 +38,7 @@ class Wee::Presenter
     # A rendering context is needed to use 'r' (if you want, you can simply
     # omit this and just return the response with some html/xml filled in.
     rendering_context = Wee::RenderingContext.new(
-      context.request, 
-      context.response, 
-      session,
+      context,
       session.current_callbacks, 
       Wee::HtmlWriter.new(response.content))
 

@@ -552,9 +552,7 @@ class Brush::FormTag < Brush::GenericTagBrush
   def with(*args, &block)
     # If no action was specified, use a dummy one.
     unless @attributes.has_key?('action')
-      req = @canvas.rendering_context.request
-      # TODO?
-      @attributes['action'] = req.build_url
+      @attributes['action'] = @canvas.build_url
     end
     super
   end

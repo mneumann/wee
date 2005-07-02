@@ -1,3 +1,97 @@
+Sat Jul  2 17:48:00 CEST 2005	Michael Neumann	<mneumann@ntecs.de>
+
+	* lib/wee/adaptors/rails.rb: Integrate Wee components into RubyOnRails.
+	  Very simple example:
+
+			##
+		  # In config/environment.rb add:
+
+			require 'wee'
+			require 'wee/adaptors/rails'
+			require 'components/mycomponent'
+
+			##
+			# In components/mycomponent.rb:
+
+			class MyComponent < Wee::Component
+			  # ... your Wee component ...
+		  end
+
+			##
+			# In app/controllers/wee_controller.rb:
+
+			class WeeController < ApplicationController
+			  include Wee::Rails::ControllerMixin
+
+				register_component "my" do
+				  MyComponent.new
+				end
+			end
+
+			##
+			# In app/views/index.rhtml:
+
+			<html><body>
+			<%= show_component 'my' %>
+			</body></html>
+
+	  Of course you can render as many components as you like on one page. 
+		You can create components dynamically at runtime with:
+
+		  make_component component_name, component_object
+
+	  For example instead of using 'register_component' in the WeeController
+		shown above, you could write:
+
+			def index
+	      make_component('my', MyComponent.new) unless has_component?('my')
+				# render the view
+		  end
+
+	  If you don't need the component anymore, drop it:
+
+		  drop_component 'my'
+
+		If you want to map 1:1 a Wee::Component to an ActionController, you can
+		use:
+
+			class WeeController < ApplicationController
+			  include Wee::Rails::ControllerMixin
+
+				scaffold_with_component do
+				  MyComponent.new
+				end
+			end
+
+	  At the moment, only pageless mode is possible, so no backtracking is
+		performed.
+
+		NOTE: Your Wee components must be fully marshallable to work with Rails
+		CGI mode. That means, you are not allowed to use continuations, and no
+		code blocks (callbacks). For example instead of:
+
+		  r.anchor.callback { answer true }
+
+	  You have to write:
+
+		  r.anchor.callback(:answer, true)
+
+	  Or more general:
+
+		  r.anchor.callback(Wee::LiteralMethodCallback.new(self, :answer, true))
+
+	* lib/wee/renderer/html/brushes.rb, lib/wee/renderer/html/canvas.rb: Use
+	  method Canvas#build_url instead of Request#build_url. This makes it
+		independent of the Request class. To use a different URL builder, simply
+		overwrite Canvas#build_url.
+
+	* lib/wee/session.rb, lib/wee/core/context.rb, lib/wee/core_ext.rb:
+	  Wee::RenderingContext now uses #context instead of #request, #response and
+		#session. This makes it easy to reuse the Context class of other
+		frameworks like Nitro or Rails. 
+
+	* lib/wee/components/messagebox.rb: do not use blocks -> fully marshallable
+
 Thu Jun 30 13:23:47 CEST 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* lib/wee/session.rb, lib/wee/core/componentrunner.rb, lib/wee/core.rb,

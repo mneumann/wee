@@ -77,9 +77,11 @@ class HtmlCanvasRenderer < Renderer
   end
 
   def url_for_callback_id(callback_id)
-    req = self.rendering_context.request
-    url = req.build_url(:callback_id => callback_id)
-    return url
+    build_url(:callback_id => callback_id)
+  end
+
+  def build_url(*args)
+    rendering_context.request.build_url(*args)
   end
 
   def register_callback(type, callback)

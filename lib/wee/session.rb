@@ -130,8 +130,7 @@ class Wee::Session < Wee::AbstractSession
   def respond(context, callbacks)
     pre_respond_hook
     set_response(context, Wee::GenericResponse.new('text/html', ''))
-
-    rctx = Wee::RenderingContext.new(context.request, context.response, self, callbacks, Wee::HtmlWriter.new(context.response.content))
+    rctx = Wee::RenderingContext.new(context, callbacks, Wee::HtmlWriter.new(context.response.content))
     @component_runner.render(rctx)
   end
 
