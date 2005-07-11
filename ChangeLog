@@ -1,3 +1,20 @@
+Mon Jul 11 16:06:49 CEST 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* lib/wee/snapshot_ext.rb: refactored. enhanced Hash to be snapshotable.
+
+	* lib/wee/session.rb: fixed two bugs I lately introduced during refactoring
+
+	* lib/wee/renderer/html/canvas.rb: added r.label
+
+	* lib/wee/examples/{pager,counter,editable_counter,calculator}.rb: 
+	  moved components from examples directory into Wee base. 
+
+	* lib/wee.rb: increased version to 0.9.0. Introduced module Wee::Examples.
+
+	* lib/wee/skeleton/og/components/main.rb: Minor cleanup.
+
+	* lib/wee/databases/og/scaffolder.rb: removed whitespace.
+
 Sat Jul  2 17:48:00 CEST 2005	Michael Neumann	<mneumann@ntecs.de>
 
 	* lib/wee/adaptors/rails.rb: Integrate Wee components into RubyOnRails.

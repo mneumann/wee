@@ -164,7 +164,6 @@ class OgScaffolder::Editor < Wee::Component
     r.select_list((1..31).to_a).selected(t.day).callback {|day| set_date_of(prop, day, :day) }
   end
 
-
   def render_buttons
     r.paragraph
     r.submit_button.value('Save').callback(:save)

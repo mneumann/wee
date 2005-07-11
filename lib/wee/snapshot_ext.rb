@@ -14,7 +14,7 @@ class Object
   end
 end
 
-class Array
+module Wee::DupReplaceSnapshotMixin
   def take_snapshot
     dup
   end
@@ -24,15 +24,9 @@ class Array
   end
 end
 
-class String
-  def take_snapshot
-    dup
-  end
-
-  def restore_snapshot(snap)
-    replace(snap)
-  end
-end
+class Array; include Wee::DupReplaceSnapshotMixin end 
+class String; include Wee::DupReplaceSnapshotMixin end 
+class Hash; include Wee::DupReplaceSnapshotMixin end 
 
 class Struct
   def take_snapshot

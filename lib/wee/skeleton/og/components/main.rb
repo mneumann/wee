@@ -2,7 +2,11 @@ class Main < Wee::Component
 
   def initialize
     super()
-    @scaffolder = add_child OgScaffolder.new(Recipe)
+    @scaffolder = OgScaffolder.new(Recipe)
+  end
+
+  def children
+    [@scaffolder]
   end
 
   # --------------------------------------------

@@ -107,12 +107,12 @@ class Wee::Session < Wee::AbstractSession
 
     if premature_response
       # replace existing page with new snapshot
-      @page.snapshot = self.snapshot
+      @page.snapshot = @component_runner.snapshot
       @page_store[@context.request.page_id] = @page
       @snapshot_page_id = @context.request.page_id  
 
       # and send response
-      set_response(@context, send_response) 
+      set_response(@context, premature_response) 
     else
       handle_new_page_view(@context)
     end
@@ -120,7 +120,7 @@ class Wee::Session < Wee::AbstractSession
 
   def handle_new_page_view(context, snapshot=nil)
     new_page_id = @idgen.next.to_s
-    new_page = create_page(snapshot || self.snapshot())
+    new_page = create_page(snapshot || @component_runner.snapshot)
     @page_store[new_page_id] = new_page
     @snapshot_page_id = new_page_id 
     redirect_url = context.request.build_url(:page_id => new_page_id)

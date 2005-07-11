@@ -182,6 +182,10 @@ class HtmlCanvasRenderer < Renderer
     handle(Brush::GenericTagBrush.new("p"), *args, &block)
   end
 
+  def label(*args, &block)
+    handle(Brush::GenericTagBrush.new("label"), *args, &block)
+  end
+
   def break
     set_brush(Brush::GenericSingleTagBrush.new("br"))
   end

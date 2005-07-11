@@ -1,7 +1,9 @@
 module Wee
-  Version = "0.8.0"
+  Version = "0.9.0"
   LibPath = File.dirname(__FILE__)
 end
+
+module Wee::Examples; end
 
 require 'wee/core'
 require 'wee/core_ext'
