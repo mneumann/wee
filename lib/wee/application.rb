@@ -57,26 +57,9 @@ class Wee::Application
       # No id was given -> check whether the maximum number of request-handlers
       # limit is reached. if not, create new id and handler
 
-      @mutex.synchronize {
-        if @max_request_handlers != nil and @request_handlers.size >= @max_request_handlers
-          # limit reached -> remove non-alive handlers...
-          garbage_collect_handlers()
-
-          # ...and test again
-          if @request_handlers.size >= @max_request_handlers
-            # TODO: show a custom error message
-            raise "maximum number of request-handlers reached" 
-          end
-        end
-
-        request_handler_id =  unique_request_handler_id()
-        request_handler = @default_request_handler.call  
-        request_handler.id = request_handler_id
-        request_handler.application = self
-        @request_handlers[request_handler_id] = request_handler
-      }
-
-      context.request.request_handler_id = request_handler_id 
+      request_handler = @default_request_handler.call 
+      insert_new_request_handler(request_handler)
+      context.request.request_handler_id = request_handler.id 
       handle_request(context)
       return
 
@@ -101,6 +84,25 @@ class Wee::Application
 
   rescue => exn
     context.response = Wee::ErrorResponse.new(exn) 
+  end
+
+  def insert_new_request_handler(request_handler)
+    @mutex.synchronize {
+      if @max_request_handlers != nil and @request_handlers.size >= @max_request_handlers
+        # limit reached -> remove non-alive handlers...
+        garbage_collect_handlers()
+
+        # ...and test again
+        if @request_handlers.size >= @max_request_handlers
+          # TODO: show a custom error message
+          raise "maximum number of request-handlers reached" 
+        end
+      end
+
+      request_handler.id = unique_request_handler_id()
+      request_handler.application = self
+      @request_handlers[request_handler.id] = request_handler
+    }
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
