@@ -1,3 +1,11 @@
+Mon Jul 11 19:29:44 CEST 2005	Michael Neumann	<mneumann@ntecs.de>
+
+	* lib/wee/renderer/html/{brushes,canvas}.rb: Added #hidden_input.	
+
+	* lib/wee/adaptors/rails.rb: fixed some bugs. minor refactoring. 
+
+	* lib/wee/adaptors/nitro.rb, examples/nitro/*: initial creation.
+
 Mon Jul 11 17:02:40 CEST 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* lib/wee.rb (Wee.run): Added method for easy startup of components. 

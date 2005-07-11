@@ -116,6 +116,10 @@ class HtmlCanvasRenderer < Renderer
     handle(Brush::InputTag.new, *args, &block)
   end
 
+  def hidden_input(*args, &block)
+    handle(Brush::HiddenInputTag.new, *args, &block)
+  end
+
   def text_input(*args, &block)
     handle(Brush::TextInputTag.new, *args, &block)
   end

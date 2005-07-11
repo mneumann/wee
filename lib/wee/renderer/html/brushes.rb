@@ -410,6 +410,15 @@ class Brush::SelectListTag < Brush::GenericTagBrush
   end
 end
 
+class Brush::HiddenInputTag < Brush::InputTag
+  def initialize
+    super
+    type('hidden')
+  end
+
+  alias callback __input_callback
+end
+
 class Brush::TextInputTag < Brush::InputTag
   def initialize
     super

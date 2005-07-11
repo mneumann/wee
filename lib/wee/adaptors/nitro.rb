@@ -18,7 +18,7 @@ end
 
 class Wee::Presenter
   def renderer_class
-    Wee::Rails::HtmlCanvasRenderer
+    Wee::Nitro::HtmlCanvasRenderer
   end
 end
 
@@ -28,7 +28,8 @@ class Wee::RenderingContext
   attr_accessor :redirect_action
 end
 
-module Wee::Rails
+
+module Wee::Nitro
 
   class FormTag < Wee::Brush::FormTag
     def with(*args, &block)
@@ -45,12 +46,13 @@ module Wee::Rails
 
   class HtmlCanvasRenderer < Wee::HtmlCanvasRenderer
     def form(*args, &block)
-      handle(Wee::Rails::FormTag.new, *args, &block)
+      handle(Wee::Nitro::FormTag.new, *args, &block)
     end
 
     def build_url(hash={})
       cid = hash[:callback_id]
-      url = rendering_context.controller.url_for :action => 'callback'
+      controller = rendering_context.request.path.split('/').first
+      url = "/#{ controller }/callback"
       url << "?__c=#{ rendering_context.component_name }"
       url << "&__a=#{ rendering_context.redirect_action }" if rendering_context.redirect_action 
       url << "&#{ cid }" if cid
@@ -85,11 +87,14 @@ module Wee::Rails
     public
 
     def callback
-      c = components[@params['__c']]
+      c = components[request.params['__c']]
       raise "no component found" if c.nil?
-      callback_stream = Wee::CallbackStream.new(c.callbacks, @params)
+      callback_stream = Wee::CallbackStream.new(c.callbacks, request.params)
       c.process_callbacks(callback_stream)
-      redirect_to :action => (@params['__a'] || "index")
+
+      controller = request.path.split('/').first
+      action = request.params['__a'] || 'index'
+      redirect [controller, action].join("/")
     end
 
     protected
@@ -116,7 +121,7 @@ module Wee::Rails
 
     def _show_component(name, hash={}, out='')
       cb = Wee::CallbackRegistry.new(Wee::SimpleIdGenerator.new)
-      ctx = Wee::Context.new(@request, @response, @session)
+      ctx = Wee::Context.new(request(), response(), session())
       rctx = Wee::RenderingContext.new(ctx, cb, Wee::HtmlWriter.new(out))
       rctx.component_name = name
       rctx.controller = self
@@ -137,18 +142,13 @@ module Wee::Rails
     end
 
     def show_component(name, hash={})
-      render_text(_show_component(name, hash))
+      _show_component(name, hash, @out)
     end
 
     def components
-      @session[:COMPONENTS] ||= Hash.new
+      session[:COMPONENTS] ||= Hash.new
     end
 
   end
 
-end # module Wee::Rails
-
-class ActionView::Base
-  include Wee::Rails::ControllerMixin
-  alias show_component _show_component
-end
+end # module Wee::Nitro
