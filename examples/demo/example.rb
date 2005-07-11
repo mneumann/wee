@@ -118,8 +118,12 @@ class MainPage < Wee::Component
   end
 
   def add
-    if call(Wee::MessageBox.new("Do you really want to add '" + @text + "'?"))
-      @arr << @text if call(Wee::MessageBox.new("Do you really really really want to add '" + @text + "'?"))
-    end
+    call Wee::MessageBox.new("Do you really want to add '" + @text + "'?"), proc {|res|
+      if res
+        call Wee::MessageBox.new("Do you really really really want to add '" + @text + "'?"), proc {|res2| 
+          @arr << @text if res2
+        }
+      end
+    }
   end
 end

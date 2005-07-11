@@ -1,9 +1,5 @@
 # Copyright by Kevin Howe (kh@newclear.ca)
 
-$LOAD_PATH.unshift << "../lib"
-require 'wee'
-require 'wee/adaptors/webrick'
-require 'wee/utils'
 require 'date'
 
 class Date
