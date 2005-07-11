@@ -1,14 +1,17 @@
 $LOAD_PATH.unshift << "../lib"
 require 'wee'
-require 'wee/webrick'
-require 'wee/utils/cache'
+require 'wee/adaptors/webrick' 
+require 'wee/utils'
 require 'GD'
 
 class MainPage < Wee::Component
 
   def initialize
     @points = []
-    session.register_object_for_backtracking(@points)
+  end
+
+  def backtrack_state(snap)
+    snap.add(@points)
   end
 
   def create_image(points)
@@ -33,17 +36,17 @@ class MainPage < Wee::Component
     @points.clear
   end
 
-  def process_request(context)
-    query = context.request.unparsed_uri.split('?').last
-    @x, @y = query.split(",").map {|i| i.to_i} if query
-    super
-  end
+  #def process_request(context)
+  #  query = context.request.unparsed_uri.split('?').last
+  #  @x, @y = query.split(",").map {|i| i.to_i} if query
+  #  super
+  #end
 
   # TODO: move the above into method point (we need the current context,
   # Session.current_context)
-  def draw_point
-    @points << [@x, @y]
-  end
+  #def draw_point
+  #  @points << [@x, @y]
+  #end
 
   def render
     r.page.title("Draw Test").with do 

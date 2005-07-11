@@ -1,50 +1,5 @@
-$LOAD_PATH.unshift << "../lib"
-require 'wee'
-require 'window'
-
-class Counter < Wee::Component
-  def initialize(cnt)
-    super()
-    @cnt = cnt 
-  end
-
-  def backtrack_state(snap)
-    super
-    snap.add(self)
-  end
-
-  def dec
-    @cnt -= 1
-  end
-
-  def inc
-    @cnt += 1
-  end
-
-  def render
-    r.anchor.callback { dec }.with("--")
-    r.space; r.text(@cnt.to_s); r.space 
-    r.anchor.callback { inc }.with("++")
-  end
-end
-
-class MessageBox < Wee::Component
-  def initialize(text)
-    super()
-    @text = text 
-  end
-
-  def render
-    r.break
-    r.text(@text)
-    r.form do 
-      r.submit_button.value('OK').callback { answer true }
-      r.space
-      r.submit_button.value('Cancel').callback { answer false }
-    end
-    r.break
-  end
-end
+require 'wee/examples/window'
+require 'wee/examples/editable_counter'
 
 class RegexpValidatedInput < Wee::Component
 
@@ -93,50 +48,17 @@ class RegexpValidatedInput < Wee::Component
 
 end
 
-class EditableCounter < Counter 
-
-  def initialize(cnt)
-    super
-    @show_edit_field = false
-  end
-
-  def render
-    #r.form.callback{submit}.with do
-      r.anchor.callback { dec }.with("--")
-      r.space
-
-      if @show_edit_field
-        r.text_input.callback{|@cnt|}.value(@cnt).size(6)
-        r.submit_button.callback{submit}.value('S')
-      else
-        r.anchor.callback{submit}.with(@cnt) 
-      end
-
-      r.space
-      r.anchor.callback{inc}.with("++")
-    #end
-  end
-
-  def submit
-    if @cnt.to_s !~ /^\d+$/
-      call MessageBox.new("You entered an invalid counter! Please try again!")
-      @cnt = 0
-    else
-      @show_edit_field = !@show_edit_field
-    end
-    @cnt = @cnt.to_i
-  end
-
-  def cnt=(val)
-    @cnt = val
-  end
-
-end
-
 class MainPage < Wee::Component
   def initialize
     super()
-    @counters = (1..10).map {|i| Wee::Window.new("Cnt #{ i }", "#{i*10}px", EditableCounter.new(i))}
+    @counters = (1..10).map {|i|
+      Wee::Examples::Window.new {|w| 
+        w.title = "Cnt #{ i }"
+        w.pos_x = "200px"
+        w.pos_y = "#{i*50}px"
+        w.child = Wee::Examples::EditableCounter.new(i)
+      }
+    }
     children.push(*@counters)
     children << (@val_inp = RegexpValidatedInput.new('Michael Neumann', /^\w+\s+\w+$/))
 
@@ -196,14 +118,8 @@ class MainPage < Wee::Component
   end
 
   def add
-    if call(MessageBox.new("Do you really want to add '" + @text + "'?"))
-      @arr << @text if call(MessageBox.new("Do you really really really want to add '" + @text + "'?"))
+    if call(Wee::MessageBox.new("Do you really want to add '" + @text + "'?"))
+      @arr << @text if call(Wee::MessageBox.new("Do you really really really want to add '" + @text + "'?"))
     end
   end
-end
-
-if __FILE__ == $0
-  require 'wee/adaptors/webrick' 
-  require 'wee/utils'
-  Wee::WEBrickAdaptor.register('/app' => Wee::Utils.app_for(MainPage)).start 
 end

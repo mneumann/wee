@@ -247,108 +247,104 @@ class MiniCalendar < Wee::Component
   end
 end
 
-if __FILE__ == $0
+# Custom CSS styles
+#
+module StyleMixin
+  def render_styles
+    r.style("
+      a {
+        text-decoration: none;
+      }
+      body {
+        font-size : 11px;
+        font-family : Arial, Helvetica, sans-serif;
+        text-align: center;
+      }
+      td {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        border: 1px solid;
+        background-color: #FFFFFF;
+        vertical-align: top;
+        text-align: center;
+      }
+      th {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        font-style: normal;
+        font-weight: bold;
+        background-color: #BBCCFF;
+        border: 1px solid;
+        vertical-align: top;
+        text-align: center;
+      }
+    ")
+  end
+end
+
+# Calendar with custom CSS styles
+#
+class CustomCalendar < MiniCalendar
+  include StyleMixin
+end
+
+# Calendar demo
+#
+class CustomCalendarDemo < Wee::Component
+  include StyleMixin
+
+  # Holds the current chosen date
+  attr_accessor :date
+
+  # Initialize with a Date object (defaults to today)
+  #
+  def initialize(date=Date.today)
+    super()
+    @date = date
+  end
   
-  # Custom CSS styles
+  # Backtrack state
   #
-  module StyleMixin
-    def render_styles
-      r.style("
-        a {
-          text-decoration: none;
-        }
-        body {
-          font-size : 11px;
-          font-family : Arial, Helvetica, sans-serif;
-          text-align: center;
-        }
-        td {
-          font-family: Arial, Helvetica, sans-serif;
-          font-size: 11px;
-          border: 1px solid;
-          background-color: #FFFFFF;
-          vertical-align: top;
-          text-align: center;
-        }
-        th {
-          font-family: Arial, Helvetica, sans-serif;
-          font-size: 11px;
-          font-style: normal;
-          font-weight: bold;
-          background-color: #BBCCFF;
-          border: 1px solid;
-          vertical-align: top;
-          text-align: center;
-        }
-      ")
-    end
+  def backtrack_state(snap)
+    super
+    snap.add(self)
   end
 
-  # Calendar with custom CSS styles
+  # Render calendar icon
   #
-  class CustomCalendar < MiniCalendar
-    include StyleMixin
+  def render_icon
+    icon = 'http://www.softcomplex.com/products/tigra_calendar/img/cal.gif'
+    r.image.src(icon).width(16).height(16).border(0).alt('Calendar')
   end
-
-  # Calendar demo
+  
+  # Render Calendar demo
   #
-  class CustomCalendarDemo < Wee::Component
-    include StyleMixin
-
-    # Holds the current chosen date
-    attr_accessor :date
-
-    # Initialize with a Date object (defaults to today)
-    #
-    def initialize(date=Date.today)
-      super()
-      @date = date
-    end
-    
-    # Backtrack state
-    #
-    def backtrack_state(snap)
-      super
-      snap.add(self)
-    end
-
-    # Render calendar icon
-    #
-    def render_icon
-      icon = 'http://www.softcomplex.com/products/tigra_calendar/img/cal.gif'
-      r.image.src(icon).width(16).height(16).border(0).alt('Calendar')
-    end
-    
-    # Render Calendar demo
-    #
-    def render
-      r.html do
-        r.head { r.title('Calendar Demo'); render_styles }
-        r.body do
-          r.break
-          r.table { r.table_row { r.table_header {
-            r.table do
-              r.table_row { r.table_header('Calendar Demo') }
-              r.table_row { r.table_data {
-                r.text_input.value(@date).attr(:date)
-                r.space
-                r.anchor.callback { calendar }.with { render_icon }
-              }}
-            end
-          }}}
-        end
-      end
-    end
-    
-    # Call the calendar component
-    #
-    def calendar()
-      if date = call( CustomCalendar.new(@date) )
-        @date = date
+  def render
+    r.html do
+      r.head { r.title('Calendar Demo'); render_styles }
+      r.body do
+        r.break
+        r.table { r.table_row { r.table_header {
+          r.table do
+            r.table_row { r.table_header('Calendar Demo') }
+            r.table_row { r.table_data {
+              r.text_input.value(@date).attr(:date)
+              r.space
+              r.anchor.callback { calendar }.with { render_icon }
+            }}
+          end
+        }}}
       end
     end
   end
+  
+  # Call the calendar component
+  #
+  def calendar()
+    call( CustomCalendar.new(@date), :set_date)
+  end
 
-  app = Wee::Utils.app_for(CustomCalendarDemo)
-  Wee::WEBrickAdaptor.register('/app' => app).start
+  def set_date(date)
+    @date = date if date
+  end
 end

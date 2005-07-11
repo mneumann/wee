@@ -1,36 +1,12 @@
+#!/usr/bin/env ruby
 $LOAD_PATH.unshift << "../lib"
 require 'wee'
-
-class Counter < Wee::Component
-  def initialize(cnt)
-    super()
-    @cnt = cnt 
-  end
-
-  def backtrack_state(snap)
-    super
-    snap.add(self)
-  end
-
-  def dec
-    @cnt -= 1
-  end
-
-  def inc
-    @cnt += 1
-  end
-
-  def render
-    r.anchor.callback(:dec).with("--")
-    r.space; r.text(@cnt.to_s); r.space 
-    r.anchor.callback(:inc).with("++")
-  end
-end
+require 'wee/examples/counter'
 
 class MainPage < Wee::Component
   def initialize
     super
-    @counters = (1..10).map {|i| Counter.new(i)}
+    @counters = (1..10).map {|i| Wee::Examples::Counter.new(i)}
     children.push(*@counters)
   end
 

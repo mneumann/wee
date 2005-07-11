@@ -1,3 +1,7 @@
+Mon Jul 11 23:31:31 CEST 2005	Michael Neumann	<mneumann@ntecs.de>
+
+	* examples/*: Lots of cleanup. New examples added.
+
 Mon Jul 11 23:18:17 CEST 2005	Michael Neumann	<mneumann@ntecs.de>
 
 	* lib/wee/components/pager.rb, lib/wee/examples/pager.rb: Moved from examples 
