@@ -78,6 +78,32 @@
 
   <div id="contextContent">
 
+    <div id="description">
+      <p>
+Example of usage:
+</p>
+<pre>
+  require 'wee/adaptors/webrick'
+  s = WEBrick::HTTPServer.new(:Port =&gt; 2000)
+  s.mount '/app', Wee::WEBrickAdaptor, '/app', application
+
+  trap(&quot;INT&quot;) { s.shutdown; exit }
+  s.start
+</pre>
+<p>
+Or when using the convenience methods:
+</p>
+<pre>
+  require 'wee/adaptors/webrick'
+  Wee::WEBrickAdaptor.
+    request_class(Wee::Request).      # this is the default!
+    register('/app' =&gt; application).
+    register('/cnt' =&gt; application2).
+    mount('/', WEBrick::HTTPServlet::FileHandler, '.').
+    start(:Port =&gt; 2000)
+</pre>
+
+    </div>
 
 
    </div>
@@ -86,14 +112,14 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000091">do_GET</a>&nbsp;&nbsp;
-      <a href="#M000092">do_POST</a>&nbsp;&nbsp;
-      <a href="#M000090">handle_request</a>&nbsp;&nbsp;
-      <a href="#M000088">mount</a>&nbsp;&nbsp;
-      <a href="#M000089">new</a>&nbsp;&nbsp;
-      <a href="#M000087">register</a>&nbsp;&nbsp;
-      <a href="#M000086">request_class</a>&nbsp;&nbsp;
-      <a href="#M000085">start</a>&nbsp;&nbsp;
+      <a href="#M000145">do_GET</a>&nbsp;&nbsp;
+      <a href="#M000146">do_POST</a>&nbsp;&nbsp;
+      <a href="#M000144">handle_request</a>&nbsp;&nbsp;
+      <a href="#M000142">mount</a>&nbsp;&nbsp;
+      <a href="#M000143">new</a>&nbsp;&nbsp;
+      <a href="#M000141">register</a>&nbsp;&nbsp;
+      <a href="#M000140">request_class</a>&nbsp;&nbsp;
+      <a href="#M000139">start</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -115,11 +141,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000088" class="method-detail">
-        <a name="M000088"></a>
+      <div id="method-M000142" class="method-detail">
+        <a name="M000142"></a>
 
         <div class="method-heading">
-          <a href="#M000088" class="method-signature">
+          <a href="#M000142" class="method-signature">
           <span class="method-name">mount</span><span class="method-args">(*args, &amp;block)</span>
           </a>
         </div>
@@ -129,8 +155,8 @@
 Convenience method
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000088-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000088-source">
+            onclick="toggleCode('M000142-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000142-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 63</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">mount</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
@@ -143,19 +169,19 @@ Convenience method
         </div>
       </div>
 
-      <div id="method-M000089" class="method-detail">
-        <a name="M000089"></a>
+      <div id="method-M000143" class="method-detail">
+        <a name="M000143"></a>
 
         <div class="method-heading">
-          <a href="#M000089" class="method-signature">
+          <a href="#M000143" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(server, mount_path, application, request_class=Wee::Request)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000089-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000089-source">
+            onclick="toggleCode('M000143-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000143-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 69</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">server</span>, <span class="ruby-identifier">mount_path</span>, <span class="ruby-identifier">application</span>, <span class="ruby-identifier">request_class</span>=<span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Request</span>)
@@ -169,11 +195,11 @@ Convenience method
         </div>
       </div>
 
-      <div id="method-M000087" class="method-detail">
-        <a name="M000087"></a>
+      <div id="method-M000141" class="method-detail">
+        <a name="M000141"></a>
 
         <div class="method-heading">
-          <a href="#M000087" class="method-signature">
+          <a href="#M000141" class="method-signature">
           <span class="method-name">register</span><span class="method-args">(hash)</span>
           </a>
         </div>
@@ -183,8 +209,8 @@ Convenience method
 Convenience method
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000087-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000087-source">
+            onclick="toggleCode('M000141-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000141-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 54</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">register</span>(<span class="ruby-identifier">hash</span>)
@@ -199,23 +225,23 @@ Convenience method
         </div>
       </div>
 
-      <div id="method-M000086" class="method-detail">
-        <a name="M000086"></a>
+      <div id="method-M000140" class="method-detail">
+        <a name="M000140"></a>
 
         <div class="method-heading">
-          <a href="#M000086" class="method-signature">
+          <a href="#M000140" class="method-signature">
           <span class="method-name">request_class</span><span class="method-args">(request_class)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Sets the used <a href="WEBrickAdaptor.html#M000086">request_class</a> for
-all following calls to <a href="WEBrickAdaptor.html#M000087">register</a>
+Sets the used <a href="WEBrickAdaptor.html#M000140">request_class</a> for
+all following calls to <a href="WEBrickAdaptor.html#M000141">register</a>
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000086-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000086-source">
+            onclick="toggleCode('M000140-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000140-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 48</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">request_class</span>(<span class="ruby-identifier">request_class</span>)
@@ -227,11 +253,11 @@ all following calls to <a href="WEBrickAdaptor.html#M000087">register</a>
         </div>
       </div>
 
-      <div id="method-M000085" class="method-detail">
-        <a name="M000085"></a>
+      <div id="method-M000139" class="method-detail">
+        <a name="M000139"></a>
 
         <div class="method-heading">
-          <a href="#M000085" class="method-signature">
+          <a href="#M000139" class="method-signature">
           <span class="method-name">start</span><span class="method-args">(options={}) {|server if block_given?| ...}</span>
           </a>
         </div>
@@ -241,8 +267,8 @@ all following calls to <a href="WEBrickAdaptor.html#M000087">register</a>
 Convenience method
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000085-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000085-source">
+            onclick="toggleCode('M000139-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000139-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 28</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">start</span>(<span class="ruby-identifier">options</span>={})
@@ -269,8 +295,8 @@ Convenience method
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000091" class="method-detail">
-        <a name="M000091"></a>
+      <div id="method-M000145" class="method-detail">
+        <a name="M000145"></a>
 
         <div class="method-heading">
           <span class="method-name">do_GET</span><span class="method-args">(req, res)</span>
@@ -278,13 +304,13 @@ Convenience method
       
         <div class="method-description">
           <p>
-Alias for <a href="WEBrickAdaptor.html#M000090">handle_request</a>
+Alias for <a href="WEBrickAdaptor.html#M000144">handle_request</a>
 </p>
         </div>
       </div>
 
-      <div id="method-M000092" class="method-detail">
-        <a name="M000092"></a>
+      <div id="method-M000146" class="method-detail">
+        <a name="M000146"></a>
 
         <div class="method-heading">
           <span class="method-name">do_POST</span><span class="method-args">(req, res)</span>
@@ -292,24 +318,24 @@ Alias for <a href="WEBrickAdaptor.html#M000090">handle_request</a>
       
         <div class="method-description">
           <p>
-Alias for <a href="WEBrickAdaptor.html#M000090">handle_request</a>
+Alias for <a href="WEBrickAdaptor.html#M000144">handle_request</a>
 </p>
         </div>
       </div>
 
-      <div id="method-M000090" class="method-detail">
-        <a name="M000090"></a>
+      <div id="method-M000144" class="method-detail">
+        <a name="M000144"></a>
 
         <div class="method-heading">
-          <a href="#M000090" class="method-signature">
+          <a href="#M000144" class="method-signature">
           <span class="method-name">handle_request</span><span class="method-args">(req, res)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000090-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000090-source">
+            onclick="toggleCode('M000144-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000144-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/adaptors/webrick.rb, line 76</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_request</span>(<span class="ruby-identifier">req</span>, <span class="ruby-identifier">res</span>)

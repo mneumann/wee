@@ -95,10 +95,13 @@ backtrack.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000097">handle_new_page_view</a>&nbsp;&nbsp;
-      <a href="#M000095">new</a>&nbsp;&nbsp;
-      <a href="#M000096">process_request</a>&nbsp;&nbsp;
-      <a href="#M000098">set_response</a>&nbsp;&nbsp;
+      <a href="#M000159">handle_callback_phase</a>&nbsp;&nbsp;
+      <a href="#M000157">handle_existing_page</a>&nbsp;&nbsp;
+      <a href="#M000160">handle_new_page_view</a>&nbsp;&nbsp;
+      <a href="#M000158">handle_render_phase</a>&nbsp;&nbsp;
+      <a href="#M000156">process_request</a>&nbsp;&nbsp;
+      <a href="#M000161">set_response</a>&nbsp;&nbsp;
+      <a href="#M000155">setup</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -136,11 +139,6 @@ backtrack.
           <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
           <td class="context-item-desc"></td>
         </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">root_component</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
         </table>
       </div>
     </div>
@@ -149,103 +147,145 @@ backtrack.
 
     <!-- if method_list -->
     <div id="methods">
-      <h3 class="section-bar">Public Class methods</h3>
+      <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000095" class="method-detail">
-        <a name="M000095"></a>
+      <div id="method-M000159" class="method-detail">
+        <a name="M000159"></a>
 
         <div class="method-heading">
-          <a href="#M000095" class="method-signature">
-          <span class="method-name">new</span><span class="method-args">(&amp;block)</span>
+          <a href="#M000159" class="method-signature">
+          <span class="method-name">handle_callback_phase</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000095-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000095-source">
+            onclick="toggleCode('M000159-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000159-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/pageless/session.rb, line 13</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-    <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-identifier">:wee_session</span>] = <span class="ruby-keyword kw">self</span>
+<span class="ruby-comment cmt"># File lib/wee/pageless/session.rb, line 42</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_callback_phase</span>
+    <span class="ruby-comment cmt"># Actions/inputs were specified.</span>
+    <span class="ruby-comment cmt">#</span>
+    <span class="ruby-comment cmt"># We process the request and invoke actions/inputs. Then we generate a</span>
+    <span class="ruby-comment cmt"># new page view. </span>
 
-    <span class="ruby-comment cmt"># to serialize the requests we need a mutex</span>
-    <span class="ruby-ivar">@mutex</span> = <span class="ruby-constant">Mutex</span>.<span class="ruby-identifier">new</span>    
+    <span class="ruby-identifier">callback_stream</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">CallbackStream</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">callbacks</span>, <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">fields</span>) 
+    <span class="ruby-identifier">send_response</span> = <span class="ruby-ivar">@component_runner</span>.<span class="ruby-identifier">process_callbacks</span>(<span class="ruby-identifier">callback_stream</span>)
 
-    <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-keyword kw">self</span>)
+    <span class="ruby-identifier">post_callbacks_hook</span>()
 
-    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;No root component specified&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@root_component</span>.<span class="ruby-identifier">nil?</span>
-    
-    <span class="ruby-keyword kw">super</span>()
-  <span class="ruby-keyword kw">ensure</span>
-    <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">current</span>[<span class="ruby-identifier">:wee_session</span>] = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">send_response</span>
+      <span class="ruby-identifier">set_response</span>(<span class="ruby-ivar">@context</span>, <span class="ruby-identifier">send_response</span>)    <span class="ruby-comment cmt"># @context.response = send_response</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">handle_new_page_view</span>(<span class="ruby-ivar">@context</span>)
+    <span class="ruby-keyword kw">end</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <h3 class="section-bar">Public Instance methods</h3>
-
-      <div id="method-M000096" class="method-detail">
-        <a name="M000096"></a>
+      <div id="method-M000157" class="method-detail">
+        <a name="M000157"></a>
 
         <div class="method-heading">
-          <a href="#M000096" class="method-signature">
-          <span class="method-name">process_request</span><span class="method-args">()</span>
+          <a href="#M000157" class="method-signature">
+          <span class="method-name">handle_existing_page</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000096-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000096-source">
+            onclick="toggleCode('M000157-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000157-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/pageless/session.rb, line 28</span>
+<span class="ruby-comment cmt"># File lib/wee/pageless/session.rb, line 26</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_existing_page</span>
+    <span class="ruby-identifier">p</span> <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">fields</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$DEBUG</span>
+
+    <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">render?</span>
+      <span class="ruby-identifier">handle_render_phase</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">handle_callback_phase</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000158" class="method-detail">
+        <a name="M000158"></a>
+
+        <div class="method-heading">
+          <a href="#M000158" class="method-signature">
+          <span class="method-name">handle_render_phase</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000158-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000158-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/pageless/session.rb, line 36</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_render_phase</span>
+    <span class="ruby-identifier">new_callbacks</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">CallbackRegistry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">SimpleIdGenerator</span>.<span class="ruby-identifier">new</span>)
+    <span class="ruby-identifier">respond</span>(<span class="ruby-ivar">@context</span>, <span class="ruby-identifier">new_callbacks</span>)   <span class="ruby-comment cmt"># render</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">callbacks</span> = <span class="ruby-identifier">new_callbacks</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000156" class="method-detail">
+        <a name="M000156"></a>
+
+        <div class="method-heading">
+          <a href="#M000156" class="method-signature">
+          <span class="method-name">process_request</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+The main routine where the request is processed.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000156-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000156-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/pageless/session.rb, line 22</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_request</span>
-      <span class="ruby-identifier">p</span> <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">fields</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$DEBUG</span>
+    <span class="ruby-identifier">handle_existing_page</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
 
-      <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">fields</span>.<span class="ruby-identifier">empty?</span>
+      <div id="method-M000155" class="method-detail">
+        <a name="M000155"></a>
 
-        <span class="ruby-comment cmt"># No action/inputs were specified -&gt; render page</span>
-        <span class="ruby-comment cmt">#</span>
-        <span class="ruby-comment cmt"># 1. Reset the action/input fields (as they are regenerated in the</span>
-        <span class="ruby-comment cmt">#    rendering process).</span>
-        <span class="ruby-comment cmt"># 2. Render the page (respond).</span>
-        <span class="ruby-comment cmt"># 3. Store the page back into the store</span>
-
-        <span class="ruby-identifier">new_callbacks</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">CallbackRegistry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">SimpleIdGenerator</span>.<span class="ruby-identifier">new</span>)
-        <span class="ruby-identifier">respond</span>(<span class="ruby-ivar">@context</span>, <span class="ruby-identifier">new_callbacks</span>)                    <span class="ruby-comment cmt"># render</span>
-        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">callbacks</span> = <span class="ruby-identifier">new_callbacks</span>
-
-      <span class="ruby-keyword kw">else</span>
-
-        <span class="ruby-comment cmt"># Actions/inputs were specified.</span>
-        <span class="ruby-comment cmt">#</span>
-        <span class="ruby-comment cmt"># We process the request and invoke actions/inputs. Then we generate a</span>
-        <span class="ruby-comment cmt"># new page view. </span>
-
-        <span class="ruby-identifier">callback_stream</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">CallbackStream</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">callbacks</span>, <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">fields</span>) 
-
-        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">callback_stream</span>.<span class="ruby-identifier">all_of_type</span>(<span class="ruby-identifier">:action</span>).<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> 
-          <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Not allowed to specify more than one action callback&quot;</span>
-        <span class="ruby-keyword kw">end</span>
-
-        <span class="ruby-identifier">live_update_response</span> = <span class="ruby-identifier">catch</span>(<span class="ruby-identifier">:wee_live_update</span>) {
-          <span class="ruby-identifier">catch</span>(<span class="ruby-identifier">:wee_back_to_session</span>) {
-            <span class="ruby-ivar">@root_component</span>.<span class="ruby-identifier">process_callbacks_chain</span>(<span class="ruby-identifier">callback_stream</span>)
-          }
-          <span class="ruby-keyword kw">nil</span>
-        }
-
-        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">live_update_response</span>
-          <span class="ruby-ivar">@context</span>.<span class="ruby-identifier">response</span> = <span class="ruby-identifier">live_update_response</span>
-        <span class="ruby-keyword kw">else</span>
-          <span class="ruby-identifier">handle_new_page_view</span>(<span class="ruby-ivar">@context</span>)
-        <span class="ruby-keyword kw">end</span>
-
-      <span class="ruby-keyword kw">end</span>
-
+        <div class="method-heading">
+          <a href="#M000155" class="method-signature">
+          <span class="method-name">setup</span><span class="method-args">(&amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000155-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000155-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/pageless/session.rb, line 13</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-identifier">with_session</span> <span class="ruby-keyword kw">do</span>
+      <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-keyword kw">self</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;No component runner specified&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@component_runner</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-keyword kw">end</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -254,23 +294,23 @@ backtrack.
 
       <h3 class="section-bar">Private Instance methods</h3>
 
-      <div id="method-M000097" class="method-detail">
-        <a name="M000097"></a>
+      <div id="method-M000160" class="method-detail">
+        <a name="M000160"></a>
 
         <div class="method-heading">
-          <a href="#M000097" class="method-signature">
+          <a href="#M000160" class="method-signature">
           <span class="method-name">handle_new_page_view</span><span class="method-args">(context)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000097-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000097-source">
+            onclick="toggleCode('M000160-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000160-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/pageless/session.rb, line 76</span>
+<span class="ruby-comment cmt"># File lib/wee/pageless/session.rb, line 62</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_new_page_view</span>(<span class="ruby-identifier">context</span>)
-    <span class="ruby-identifier">redirect_url</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">build_url</span>(<span class="ruby-identifier">context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">request_handler_id</span>, <span class="ruby-keyword kw">nil</span>)
+    <span class="ruby-identifier">redirect_url</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">build_url</span>
     <span class="ruby-identifier">set_response</span>(<span class="ruby-identifier">context</span>, <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">RedirectResponse</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">redirect_url</span>))
   <span class="ruby-keyword kw">end</span>
 </pre>
@@ -278,24 +318,23 @@ backtrack.
         </div>
       </div>
 
-      <div id="method-M000098" class="method-detail">
-        <a name="M000098"></a>
+      <div id="method-M000161" class="method-detail">
+        <a name="M000161"></a>
 
         <div class="method-heading">
-          <a href="#M000098" class="method-signature">
+          <a href="#M000161" class="method-signature">
           <span class="method-name">set_response</span><span class="method-args">(context, response)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000098-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000098-source">
+            onclick="toggleCode('M000161-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000161-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/pageless/session.rb, line 81</span>
+<span class="ruby-comment cmt"># File lib/wee/pageless/session.rb, line 67</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_response</span>(<span class="ruby-identifier">context</span>, <span class="ruby-identifier">response</span>)
-    <span class="ruby-comment cmt"># TODO: depends on WEBrick!</span>
-    <span class="ruby-identifier">response</span>.<span class="ruby-identifier">cookies</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">WEBrick</span><span class="ruby-operator">::</span><span class="ruby-constant">Cookie</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'SID'</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span>)
+    <span class="ruby-identifier">response</span>.<span class="ruby-identifier">cookies</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">CGI</span><span class="ruby-operator">::</span><span class="ruby-constant">Cookie</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'SID'</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span>)
     <span class="ruby-identifier">response</span>.<span class="ruby-identifier">header</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">'Expire'</span>)
     <span class="ruby-identifier">response</span>.<span class="ruby-identifier">header</span>[<span class="ruby-value str">'Pragma'</span>] = <span class="ruby-value str">'No-Cache'</span>
     <span class="ruby-keyword kw">super</span>

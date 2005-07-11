@@ -55,12 +55,12 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../files/lib/wee/skeleton/simple/components/main_rb.html">
-                lib/wee/skeleton/simple/components/main.rb
-                </a>
-        <br />
                 <a href="../files/lib/wee/skeleton/og/components/main_rb.html">
                 lib/wee/skeleton/og/components/main.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/skeleton/simple/components/main_rb.html">
+                lib/wee/skeleton/simple/components/main.rb
                 </a>
         <br />
             </td>
@@ -92,11 +92,12 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000005">click</a>&nbsp;&nbsp;
-      <a href="#M000003">new</a>&nbsp;&nbsp;
+      <a href="#M000004">children</a>&nbsp;&nbsp;
+      <a href="#M000008">click</a>&nbsp;&nbsp;
       <a href="#M000006">new</a>&nbsp;&nbsp;
-      <a href="#M000004">render</a>&nbsp;&nbsp;
+      <a href="#M000003">new</a>&nbsp;&nbsp;
       <a href="#M000007">render</a>&nbsp;&nbsp;
+      <a href="#M000005">render</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -118,30 +119,6 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000003" class="method-detail">
-        <a name="M000003"></a>
-
-        <div class="method-heading">
-          <a href="#M000003" class="method-signature">
-          <span class="method-name">new</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000003-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/skeleton/simple/components/main.rb, line 3</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
-    <span class="ruby-keyword kw">super</span>()
-    <span class="ruby-comment cmt"># Put your own initialization code below...</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
       <div id="method-M000006" class="method-detail">
         <a name="M000006"></a>
 
@@ -156,10 +133,34 @@
             onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000006-source">
 <pre>
+<span class="ruby-comment cmt"># File lib/wee/skeleton/simple/components/main.rb, line 3</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+    <span class="ruby-keyword kw">super</span>()
+    <span class="ruby-comment cmt"># Put your own initialization code below...</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="#M000003" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000003-source">
+<pre>
 <span class="ruby-comment cmt"># File lib/wee/skeleton/og/components/main.rb, line 3</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
     <span class="ruby-keyword kw">super</span>()
-    <span class="ruby-ivar">@scaffolder</span> = <span class="ruby-identifier">add_child</span> <span class="ruby-constant">OgScaffolder</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Recipe</span>)
+    <span class="ruby-ivar">@scaffolder</span> = <span class="ruby-constant">OgScaffolder</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Recipe</span>)
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -168,11 +169,34 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000005" class="method-detail">
-        <a name="M000005"></a>
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
 
         <div class="method-heading">
-          <a href="#M000005" class="method-signature">
+          <a href="#M000004" class="method-signature">
+          <span class="method-name">children</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000004-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/skeleton/og/components/main.rb, line 8</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">children</span>
+    [<span class="ruby-ivar">@scaffolder</span>]
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="#M000008" class="method-signature">
           <span class="method-name">click</span><span class="method-args">()</span>
           </a>
         </div>
@@ -183,40 +207,12 @@ Actions
 </p>
 <hr size="10"></hr>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000005-source">
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/skeleton/simple/components/main.rb, line 21</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">click</span>
     <span class="ruby-ivar">@clicks</span> = (<span class="ruby-ivar">@clicks</span> <span class="ruby-operator">||</span> <span class="ruby-value">0</span>) <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000004" class="method-detail">
-        <a name="M000004"></a>
-
-        <div class="method-heading">
-          <a href="#M000004" class="method-signature">
-          <span class="method-name">render</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <hr size="10"></hr><p>
-Rendering
-</p>
-<hr size="10"></hr>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000004-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/skeleton/simple/components/main.rb, line 12</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>
-    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">anchor</span>.<span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:click</span>).<span class="ruby-identifier">with</span> { <span class="ruby-identifier">r</span>.<span class="ruby-identifier">h1</span>(<span class="ruby-value str">&quot;Welcome to Wee!&quot;</span>) }
-    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">text</span> <span class="ruby-node">&quot;#{ @clicks || 'No' } clicks&quot;</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -241,7 +237,35 @@ Rendering
             onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000007-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/skeleton/og/components/main.rb, line 12</span>
+<span class="ruby-comment cmt"># File lib/wee/skeleton/simple/components/main.rb, line 12</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">anchor</span>.<span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:click</span>).<span class="ruby-identifier">with</span> { <span class="ruby-identifier">r</span>.<span class="ruby-identifier">h1</span>(<span class="ruby-value str">&quot;Welcome to Wee!&quot;</span>) }
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">text</span> <span class="ruby-node">&quot;#{ @clicks || 'No' } clicks&quot;</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="#M000005" class="method-signature">
+          <span class="method-name">render</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <hr size="10"></hr><p>
+Rendering
+</p>
+<hr size="10"></hr>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000005-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/skeleton/og/components/main.rb, line 16</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>
     <span class="ruby-identifier">r</span>.<span class="ruby-identifier">render</span> <span class="ruby-ivar">@scaffolder</span>
   <span class="ruby-keyword kw">end</span>

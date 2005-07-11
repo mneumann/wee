@@ -59,12 +59,16 @@
                 lib/wee.rb
                 </a>
         <br />
-                <a href="../files/lib/wee/renderer/html/canvas_rb.html">
-                lib/wee/renderer/html/canvas.rb
+                <a href="../files/lib/wee/core_rb.html">
+                lib/wee/core.rb
                 </a>
         <br />
                 <a href="../files/lib/wee/renderer/html/brushes_rb.html">
                 lib/wee/renderer/html/brushes.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/renderer/html/canvas_rb.html">
+                lib/wee/renderer/html/canvas.rb
                 </a>
         <br />
             </td>
@@ -80,10 +84,23 @@
 
   <div id="contextContent">
 
+    <div id="description">
+      <p>
+There are no dependencies to outer classes!
+</p>
+
+    </div>
 
 
    </div>
 
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000078">run</a>&nbsp;&nbsp;
+      </div>
+    </div>
 
   </div>
 
@@ -95,33 +112,46 @@
     <div id="class-list">
       <h3 class="section-bar">Classes and Modules</h3>
 
-      Module <a href="Wee/Utils.html" class="link">Wee::Utils</a><br />
+      Module <a href="Wee/CanvasMixin.html" class="link">Wee::CanvasMixin</a><br />
+Module <a href="Wee/DupReplaceSnapshotMixin.html" class="link">Wee::DupReplaceSnapshotMixin</a><br />
+Module <a href="Wee/Examples.html" class="link">Wee::Examples</a><br />
+Module <a href="Wee/Nitro.html" class="link">Wee::Nitro</a><br />
+Module <a href="Wee/Rails.html" class="link">Wee::Rails</a><br />
+Module <a href="Wee/Utils.html" class="link">Wee::Utils</a><br />
+Class <a href="Wee/AbstractSession.html" class="link">Wee::AbstractSession</a><br />
 Class <a href="Wee/AnswerDecoration.html" class="link">Wee::AnswerDecoration</a><br />
 Class <a href="Wee/Application.html" class="link">Wee::Application</a><br />
 Class <a href="Wee/Brush.html" class="link">Wee::Brush</a><br />
 Class <a href="Wee/CallbackRegistry.html" class="link">Wee::CallbackRegistry</a><br />
 Class <a href="Wee/CallbackStream.html" class="link">Wee::CallbackStream</a><br />
-Class <a href="Wee/Canvas.html" class="link">Wee::Canvas</a><br />
 Class <a href="Wee/Component.html" class="link">Wee::Component</a><br />
+Class <a href="Wee/ComponentDispatcher.html" class="link">Wee::ComponentDispatcher</a><br />
+Class <a href="Wee/ComponentRunner.html" class="link">Wee::ComponentRunner</a><br />
 Class <a href="Wee/Context.html" class="link">Wee::Context</a><br />
 Class <a href="Wee/Decoration.html" class="link">Wee::Decoration</a><br />
 Class <a href="Wee/Delegate.html" class="link">Wee::Delegate</a><br />
 Class <a href="Wee/ErrorResponse.html" class="link">Wee::ErrorResponse</a><br />
+Class <a href="Wee/FastCGIAdaptor.html" class="link">Wee::FastCGIAdaptor</a><br />
 Class <a href="Wee/FormDecoration.html" class="link">Wee::FormDecoration</a><br />
 Class <a href="Wee/GenericResponse.html" class="link">Wee::GenericResponse</a><br />
-Class <a href="Wee/HtmlCanvas.html" class="link">Wee::HtmlCanvas</a><br />
+Class <a href="Wee/HtmlCanvasRenderer.html" class="link">Wee::HtmlCanvasRenderer</a><br />
 Class <a href="Wee/HtmlWriter.html" class="link">Wee::HtmlWriter</a><br />
+Class <a href="Wee/IdGenerator.html" class="link">Wee::IdGenerator</a><br />
 Class <a href="Wee/LiteralMethodCallback.html" class="link">Wee::LiteralMethodCallback</a><br />
+Class <a href="Wee/LoginDecoration.html" class="link">Wee::LoginDecoration</a><br />
 Class <a href="Wee/Md5IdGenerator.html" class="link">Wee::Md5IdGenerator</a><br />
 Class <a href="Wee/MessageBox.html" class="link">Wee::MessageBox</a><br />
 Class <a href="Wee/Page.html" class="link">Wee::Page</a><br />
 Class <a href="Wee/PageDecoration.html" class="link">Wee::PageDecoration</a><br />
 Class <a href="Wee/PagelessApplication.html" class="link">Wee::PagelessApplication</a><br />
+Class <a href="Wee/PagelessComponentDriver.html" class="link">Wee::PagelessComponentDriver</a><br />
 Class <a href="Wee/PagelessRequest.html" class="link">Wee::PagelessRequest</a><br />
 Class <a href="Wee/PagelessSession.html" class="link">Wee::PagelessSession</a><br />
+Class <a href="Wee/Pager.html" class="link">Wee::Pager</a><br />
 Class <a href="Wee/Presenter.html" class="link">Wee::Presenter</a><br />
 Class <a href="Wee/RedirectResponse.html" class="link">Wee::RedirectResponse</a><br />
 Class <a href="Wee/RefreshResponse.html" class="link">Wee::RefreshResponse</a><br />
+Class <a href="Wee/Renderer.html" class="link">Wee::Renderer</a><br />
 Class <a href="Wee/RenderingContext.html" class="link">Wee::RenderingContext</a><br />
 Class <a href="Wee/Request.html" class="link">Wee::Request</a><br />
 Class <a href="Wee/RequestHandler.html" class="link">Wee::RequestHandler</a><br />
@@ -143,7 +173,7 @@ Class <a href="Wee/WrapperDecoration.html" class="link">Wee::WrapperDecoration</
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">Version</td>
           <td>=</td>
-          <td class="context-item-value">&quot;0.6.0&quot;</td>
+          <td class="context-item-value">&quot;0.9.0&quot;</td>
         </tr>
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">LibPath</td>
@@ -160,6 +190,40 @@ Class <a href="Wee/WrapperDecoration.html" class="link">Wee::WrapperDecoration</
 
 
     <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000078" class="method-detail">
+        <a name="M000078"></a>
+
+        <div class="method-heading">
+          <a href="#M000078" class="method-signature">
+          <span class="method-name">run</span><span class="method-args">(component, add_page_decoration=true, mount_path='/app')</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000078-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000078-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee.rb, line 30</span>
+<span class="ruby-keyword kw">def</span> <span class="ruby-constant">Wee</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">component</span>, <span class="ruby-identifier">add_page_decoration</span>=<span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">mount_path</span>=<span class="ruby-value str">'/app'</span>)
+  <span class="ruby-identifier">require</span> <span class="ruby-value str">'wee/utils'</span>
+  <span class="ruby-identifier">require</span> <span class="ruby-value str">'wee/adaptors/webrick'</span>
+
+  <span class="ruby-identifier">component</span> = <span class="ruby-identifier">component</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">component</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Class</span>)
+  <span class="ruby-identifier">component</span>.<span class="ruby-identifier">add_decoration</span>(<span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">PageDecoration</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">'Welcome to Wee!'</span>)) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">add_page_decoration</span>
+  <span class="ruby-identifier">component</span>.<span class="ruby-identifier">add_decoration</span>(<span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">FormDecoration</span>.<span class="ruby-identifier">new</span>)
+  <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">WEBrickAdaptor</span>.<span class="ruby-identifier">register</span>(<span class="ruby-identifier">mount_path</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Utils</span>.<span class="ruby-identifier">app_for</span> { <span class="ruby-identifier">component</span> }).<span class="ruby-identifier">start</span>
+<span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
 
 
   </div>

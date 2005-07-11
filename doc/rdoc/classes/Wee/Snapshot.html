@@ -86,7 +86,7 @@ This class is for backtracking the state of components (or
 decorations/presenters). Components that want an undo-facility to be
 implemented (triggered for example by a browsers back-button), have to
 overwrite the <a
-href="Component.html#M000267">Component#backtrack_state</a> method. Class
+href="Component.html#M000339">Component#backtrack_state</a> method. Class
 <a href="Snapshot.html">Wee::Snapshot</a> simply represents a collection of
 objects from which snapshots were taken via methods take_snapshot.
 </p>
@@ -100,9 +100,9 @@ objects from which snapshots were taken via methods take_snapshot.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000142">add</a>&nbsp;&nbsp;
-      <a href="#M000141">new</a>&nbsp;&nbsp;
-      <a href="#M000143">restore</a>&nbsp;&nbsp;
+      <a href="#M000259">add</a>&nbsp;&nbsp;
+      <a href="#M000258">new</a>&nbsp;&nbsp;
+      <a href="#M000260">restore</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -124,19 +124,19 @@ objects from which snapshots were taken via methods take_snapshot.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000141" class="method-detail">
-        <a name="M000141"></a>
+      <div id="method-M000258" class="method-detail">
+        <a name="M000258"></a>
 
         <div class="method-heading">
-          <a href="#M000141" class="method-signature">
+          <a href="#M000258" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000141-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000141-source">
+            onclick="toggleCode('M000258-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000258-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/snapshot.rb, line 9</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
@@ -149,19 +149,19 @@ objects from which snapshots were taken via methods take_snapshot.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000142" class="method-detail">
-        <a name="M000142"></a>
+      <div id="method-M000259" class="method-detail">
+        <a name="M000259"></a>
 
         <div class="method-heading">
-          <a href="#M000142" class="method-signature">
+          <a href="#M000259" class="method-signature">
           <span class="method-name">add</span><span class="method-args">(object)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000142-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000142-source">
+            onclick="toggleCode('M000259-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000259-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/snapshot.rb, line 13</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">object</span>)
@@ -173,19 +173,19 @@ objects from which snapshots were taken via methods take_snapshot.
         </div>
       </div>
 
-      <div id="method-M000143" class="method-detail">
-        <a name="M000143"></a>
+      <div id="method-M000260" class="method-detail">
+        <a name="M000260"></a>
 
         <div class="method-heading">
-          <a href="#M000143" class="method-signature">
+          <a href="#M000260" class="method-signature">
           <span class="method-name">restore</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000143-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000143-source">
+            onclick="toggleCode('M000260-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000260-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/snapshot.rb, line 18</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">restore</span>

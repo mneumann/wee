@@ -95,7 +95,7 @@ the correct handler by examining the request.
     <div id="contents-list">
       <h3 class="section-bar">Contents</h3>
       <ul>
-      <li><a href="#SEC00019">Properties</a></li>
+      <li><a href="#SEC00022">Properties</a></li>
      </ul>
    </div>
 
@@ -103,13 +103,16 @@ the correct handler by examining the request.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000222">default_request_handler</a>&nbsp;&nbsp;
-      <a href="#M000227">garbage_collect_handlers</a>&nbsp;&nbsp;
-      <a href="#M000225">get_property</a>&nbsp;&nbsp;
-      <a href="#M000224">handle_request</a>&nbsp;&nbsp;
-      <a href="#M000223">new</a>&nbsp;&nbsp;
-      <a href="#M000228">request_handler_expired</a>&nbsp;&nbsp;
-      <a href="#M000226">unique_request_handler_id</a>&nbsp;&nbsp;
+      <a href="#M000293">default_request_handler</a>&nbsp;&nbsp;
+      <a href="#M000301">garbage_collect_handlers</a>&nbsp;&nbsp;
+      <a href="#M000299">get_property</a>&nbsp;&nbsp;
+      <a href="#M000295">handle_request</a>&nbsp;&nbsp;
+      <a href="#M000296">insert_new_request_handler</a>&nbsp;&nbsp;
+      <a href="#M000294">new</a>&nbsp;&nbsp;
+      <a href="#M000297">properties</a>&nbsp;&nbsp;
+      <a href="#M000298">properties=</a>&nbsp;&nbsp;
+      <a href="#M000302">request_handler_expired</a>&nbsp;&nbsp;
+      <a href="#M000300">unique_request_handler_id</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -155,11 +158,11 @@ The maximum number of request handlers
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000223" class="method-detail">
-        <a name="M000223"></a>
+      <div id="method-M000294" class="method-detail">
+        <a name="M000294"></a>
 
         <div class="method-heading">
-          <a href="#M000223" class="method-signature">
+          <a href="#M000294" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
@@ -176,8 +179,8 @@ Creates a new application. The block is used to initialize the attributes:
   }
 </pre>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000223-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000223-source">
+            onclick="toggleCode('M000294-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000294-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/application.rb, line 34</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
@@ -203,11 +206,11 @@ Creates a new application. The block is used to initialize the attributes:
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000222" class="method-detail">
-        <a name="M000222"></a>
+      <div id="method-M000293" class="method-detail">
+        <a name="M000293"></a>
 
         <div class="method-heading">
-          <a href="#M000222" class="method-signature">
+          <a href="#M000293" class="method-signature">
           <span class="method-name">default_request_handler</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
@@ -218,8 +221,8 @@ Get or set the default request handler. The default request handler is used
 if no request handler id is given in a request.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000222-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000222-source">
+            onclick="toggleCode('M000293-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000293-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/application.rb, line 18</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default_request_handler</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
@@ -234,19 +237,19 @@ if no request handler id is given in a request.
         </div>
       </div>
 
-      <div id="method-M000224" class="method-detail">
-        <a name="M000224"></a>
+      <div id="method-M000295" class="method-detail">
+        <a name="M000295"></a>
 
         <div class="method-heading">
-          <a href="#M000224" class="method-signature">
+          <a href="#M000295" class="method-signature">
           <span class="method-name">handle_request</span><span class="method-args">(context)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000224-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000224-source">
+            onclick="toggleCode('M000295-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000295-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/application.rb, line 51</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_request</span>(<span class="ruby-identifier">context</span>)
@@ -258,26 +261,9 @@ if no request handler id is given in a request.
       <span class="ruby-comment cmt"># No id was given -&gt; check whether the maximum number of request-handlers</span>
       <span class="ruby-comment cmt"># limit is reached. if not, create new id and handler</span>
 
-      <span class="ruby-ivar">@mutex</span>.<span class="ruby-identifier">synchronize</span> {
-        <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@max_request_handlers</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@request_handlers</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-ivar">@max_request_handlers</span>
-          <span class="ruby-comment cmt"># limit reached -&gt; remove non-alive handlers...</span>
-          <span class="ruby-identifier">garbage_collect_handlers</span>()
-
-          <span class="ruby-comment cmt"># ...and test again</span>
-          <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@request_handlers</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-ivar">@max_request_handlers</span>
-            <span class="ruby-comment cmt"># TODO: show a custom error message</span>
-            <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;maximum number of request-handlers reached&quot;</span> 
-          <span class="ruby-keyword kw">end</span>
-        <span class="ruby-keyword kw">end</span>
-
-        <span class="ruby-identifier">request_handler_id</span> =  <span class="ruby-identifier">unique_request_handler_id</span>()
-        <span class="ruby-identifier">request_handler</span> = <span class="ruby-ivar">@default_request_handler</span>.<span class="ruby-identifier">call</span>  
-        <span class="ruby-identifier">request_handler</span>.<span class="ruby-identifier">id</span> = <span class="ruby-identifier">request_handler_id</span>
-        <span class="ruby-identifier">request_handler</span>.<span class="ruby-identifier">application</span> = <span class="ruby-keyword kw">self</span>
-        <span class="ruby-ivar">@request_handlers</span>[<span class="ruby-identifier">request_handler_id</span>] = <span class="ruby-identifier">request_handler</span>
-      }
-
-      <span class="ruby-identifier">context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">request_handler_id</span> = <span class="ruby-identifier">request_handler_id</span> 
+      <span class="ruby-identifier">request_handler</span> = <span class="ruby-ivar">@default_request_handler</span>.<span class="ruby-identifier">call</span> 
+      <span class="ruby-identifier">insert_new_request_handler</span>(<span class="ruby-identifier">request_handler</span>)
+      <span class="ruby-identifier">context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">request_handler_id</span> = <span class="ruby-identifier">request_handler</span>.<span class="ruby-identifier">id</span> 
       <span class="ruby-identifier">handle_request</span>(<span class="ruby-identifier">context</span>)
       <span class="ruby-keyword kw">return</span>
 
@@ -308,10 +294,48 @@ if no request handler id is given in a request.
         </div>
       </div>
 
+      <div id="method-M000296" class="method-detail">
+        <a name="M000296"></a>
+
+        <div class="method-heading">
+          <a href="#M000296" class="method-signature">
+          <span class="method-name">insert_new_request_handler</span><span class="method-args">(request_handler)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000296-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000296-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/application.rb, line 89</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">insert_new_request_handler</span>(<span class="ruby-identifier">request_handler</span>)
+    <span class="ruby-ivar">@mutex</span>.<span class="ruby-identifier">synchronize</span> {
+      <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@max_request_handlers</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">and</span> <span class="ruby-ivar">@request_handlers</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-ivar">@max_request_handlers</span>
+        <span class="ruby-comment cmt"># limit reached -&gt; remove non-alive handlers...</span>
+        <span class="ruby-identifier">garbage_collect_handlers</span>()
+
+        <span class="ruby-comment cmt"># ...and test again</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@request_handlers</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-ivar">@max_request_handlers</span>
+          <span class="ruby-comment cmt"># TODO: show a custom error message</span>
+          <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;maximum number of request-handlers reached&quot;</span> 
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-identifier">request_handler</span>.<span class="ruby-identifier">id</span> = <span class="ruby-identifier">unique_request_handler_id</span>()
+      <span class="ruby-identifier">request_handler</span>.<span class="ruby-identifier">application</span> = <span class="ruby-keyword kw">self</span>
+      <span class="ruby-ivar">@request_handlers</span>[<span class="ruby-identifier">request_handler</span>.<span class="ruby-identifier">id</span>] = <span class="ruby-identifier">request_handler</span>
+    }
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
 
     </div>
     <div id="section">
-      <h2 class="section-title"><a name="SEC00019">Properties</a></h2>
+      <h2 class="section-title"><a name="SEC00022">Properties</a></h2>
       <div class="section-comment">
         
       </div>      
@@ -320,19 +344,6 @@ if no request handler id is given in a request.
 
 
 
-    <div id="attribute-list">
-      <h3 class="section-bar">Attributes</h3>
-
-      <div class="name-list">
-        <table>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">properties</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        </table>
-      </div>
-    </div>
       
 
 
@@ -340,11 +351,11 @@ if no request handler id is given in a request.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000225" class="method-detail">
-        <a name="M000225"></a>
+      <div id="method-M000299" class="method-detail">
+        <a name="M000299"></a>
 
         <div class="method-heading">
-          <a href="#M000225" class="method-signature">
+          <a href="#M000299" class="method-signature">
           <span class="method-name">get_property</span><span class="method-args">(prop, klass)</span>
           </a>
         </div>
@@ -354,13 +365,13 @@ if no request handler id is given in a request.
 Returns an &quot;owned&quot; property for the given <tt>klass</tt>.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000225-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000225-source">
+            onclick="toggleCode('M000299-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000299-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/application.rb, line 114</span>
+<span class="ruby-comment cmt"># File lib/wee/application.rb, line 117</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_property</span>(<span class="ruby-identifier">prop</span>, <span class="ruby-identifier">klass</span>)
-    <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@properties</span>
-      <span class="ruby-ivar">@properties</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">klass</span>, {})[<span class="ruby-identifier">prop</span>]
+    <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">properties</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">properties</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">klass</span>, {})[<span class="ruby-identifier">prop</span>]
     <span class="ruby-keyword kw">else</span>
       <span class="ruby-keyword kw">nil</span>
     <span class="ruby-keyword kw">end</span>
@@ -370,13 +381,55 @@ Returns an &quot;owned&quot; property for the given <tt>klass</tt>.
         </div>
       </div>
 
-      <h3 class="section-bar">Private Instance methods</h3>
-
-      <div id="method-M000227" class="method-detail">
-        <a name="M000227"></a>
+      <div id="method-M000297" class="method-detail">
+        <a name="M000297"></a>
 
         <div class="method-heading">
-          <a href="#M000227" class="method-signature">
+          <a href="#M000297" class="method-signature">
+          <span class="method-name">properties</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000297-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000297-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/application.rb, line 112</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">properties</span>() <span class="ruby-ivar">@__properties</span> <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000298" class="method-detail">
+        <a name="M000298"></a>
+
+        <div class="method-heading">
+          <a href="#M000298" class="method-signature">
+          <span class="method-name">properties=</span><span class="method-args">(props)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000298-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000298-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/application.rb, line 113</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">properties=</span>(<span class="ruby-identifier">props</span>) <span class="ruby-ivar">@__properties</span> = <span class="ruby-identifier">props</span> <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Private Instance methods</h3>
+
+      <div id="method-M000301" class="method-detail">
+        <a name="M000301"></a>
+
+        <div class="method-heading">
+          <a href="#M000301" class="method-signature">
           <span class="method-name">garbage_collect_handlers</span><span class="method-args">()</span>
           </a>
         </div>
@@ -386,10 +439,10 @@ Returns an &quot;owned&quot; property for the given <tt>klass</tt>.
 MUST be called while holding @mutex
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000227-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000227-source">
+            onclick="toggleCode('M000301-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000301-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/application.rb, line 134</span>
+<span class="ruby-comment cmt"># File lib/wee/application.rb, line 137</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">garbage_collect_handlers</span>
     <span class="ruby-ivar">@request_handlers</span>.<span class="ruby-identifier">delete_if</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">id</span>,<span class="ruby-identifier">rh</span><span class="ruby-operator">|</span> <span class="ruby-operator">!</span><span class="ruby-identifier">rh</span>.<span class="ruby-identifier">alive?</span> }
   <span class="ruby-keyword kw">end</span>
@@ -398,34 +451,36 @@ MUST be called while holding @mutex
         </div>
       </div>
 
-      <div id="method-M000228" class="method-detail">
-        <a name="M000228"></a>
+      <div id="method-M000302" class="method-detail">
+        <a name="M000302"></a>
 
         <div class="method-heading">
-          <a href="#M000228" class="method-signature">
+          <a href="#M000302" class="method-signature">
           <span class="method-name">request_handler_expired</span><span class="method-args">(context)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000228-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000228-source">
+            onclick="toggleCode('M000302-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000302-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/application.rb, line 138</span>
+<span class="ruby-comment cmt"># File lib/wee/application.rb, line 141</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">request_handler_expired</span>(<span class="ruby-identifier">context</span>)
-    <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">RefreshResponse</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;Invalid or expired request handler!&quot;</span>, <span class="ruby-identifier">context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">application_path</span>)
+    <span class="ruby-identifier">context</span>.<span class="ruby-identifier">response</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">RefreshResponse</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;Invalid or expired request handler!&quot;</span>,
+                       <span class="ruby-identifier">context</span>.<span class="ruby-identifier">request</span>.<span class="ruby-identifier">build_url</span>(<span class="ruby-identifier">:request_handler_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>,
+                                                 <span class="ruby-identifier">:page_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>))
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000226" class="method-detail">
-        <a name="M000226"></a>
+      <div id="method-M000300" class="method-detail">
+        <a name="M000300"></a>
 
         <div class="method-heading">
-          <a href="#M000226" class="method-signature">
+          <a href="#M000300" class="method-signature">
           <span class="method-name">unique_request_handler_id</span><span class="method-args">()</span>
           </a>
         </div>
@@ -435,10 +490,10 @@ MUST be called while holding @mutex
 MUST be called while holding @mutex
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000226-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000226-source">
+            onclick="toggleCode('M000300-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000300-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/application.rb, line 126</span>
+<span class="ruby-comment cmt"># File lib/wee/application.rb, line 129</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unique_request_handler_id</span>
     <span class="ruby-identifier">id</span> = <span class="ruby-ivar">@id_generator</span>.<span class="ruby-identifier">next</span>.<span class="ruby-identifier">to_s</span>
     <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;failed to create unique request handler id&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@request_handlers</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">id</span>)

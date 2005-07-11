@@ -83,9 +83,9 @@
     <div id="description">
       <p>
 A <a href="Delegate.html">Wee::Delegate</a> breaks the decoration chain and
-forwards the methods <a href="Delegate.html#M000306">process_callbacks</a>,
-<a href="Delegate.html#M000307">do_render</a> and <a
-href="Delegate.html#M000308">backtrack_state</a> to the corresponding
+forwards the methods <a href="Delegate.html#M000397">process_callbacks</a>,
+<a href="Delegate.html#M000398">do_render</a> and <a
+href="Delegate.html#M000399">backtrack_state</a> to the corresponding
 <b>chain</b> method of it&#8217;s <em>delegate</em> component (a <a
 href="Component.html">Wee::Component</a>).
 </p>
@@ -99,10 +99,10 @@ href="Component.html">Wee::Component</a>).
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000308">backtrack_state</a>&nbsp;&nbsp;
-      <a href="#M000307">do_render</a>&nbsp;&nbsp;
-      <a href="#M000305">new</a>&nbsp;&nbsp;
-      <a href="#M000306">process_callbacks</a>&nbsp;&nbsp;
+      <a href="#M000399">backtrack_state</a>&nbsp;&nbsp;
+      <a href="#M000398">do_render</a>&nbsp;&nbsp;
+      <a href="#M000396">new</a>&nbsp;&nbsp;
+      <a href="#M000397">process_callbacks</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -124,19 +124,19 @@ href="Component.html">Wee::Component</a>).
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000305" class="method-detail">
-        <a name="M000305"></a>
+      <div id="method-M000396" class="method-detail">
+        <a name="M000396"></a>
 
         <div class="method-heading">
-          <a href="#M000305" class="method-signature">
+          <a href="#M000396" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(delegate)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000305-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000305-source">
+            onclick="toggleCode('M000396-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000396-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/decoration.rb, line 89</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">delegate</span>)
@@ -149,11 +149,11 @@ href="Component.html">Wee::Component</a>).
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000308" class="method-detail">
-        <a name="M000308"></a>
+      <div id="method-M000399" class="method-detail">
+        <a name="M000399"></a>
 
         <div class="method-heading">
-          <a href="#M000308" class="method-signature">
+          <a href="#M000399" class="method-signature">
           <span class="method-name">backtrack_state</span><span class="method-args">(snapshot)</span>
           </a>
         </div>
@@ -165,8 +165,8 @@ Forwards method to the corresponding top-level <b>chain</b> method of the
 components, thus we follow the @owner (via super).
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000308-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000308-source">
+            onclick="toggleCode('M000399-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000399-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/decoration.rb, line 111</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backtrack_state</span>(<span class="ruby-identifier">snapshot</span>)
@@ -178,11 +178,11 @@ components, thus we follow the @owner (via super).
         </div>
       </div>
 
-      <div id="method-M000307" class="method-detail">
-        <a name="M000307"></a>
+      <div id="method-M000398" class="method-detail">
+        <a name="M000398"></a>
 
         <div class="method-heading">
-          <a href="#M000307" class="method-signature">
+          <a href="#M000398" class="method-signature">
           <span class="method-name">do_render</span><span class="method-args">(rendering_context)</span>
           </a>
         </div>
@@ -193,8 +193,8 @@ Forwards method to the corresponding top-level <b>chain</b> method of the
 <em>delegate</em> component.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000307-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000307-source">
+            onclick="toggleCode('M000398-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000398-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/decoration.rb, line 103</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">do_render</span>(<span class="ruby-identifier">rendering_context</span>)
@@ -205,12 +205,12 @@ Forwards method to the corresponding top-level <b>chain</b> method of the
         </div>
       </div>
 
-      <div id="method-M000306" class="method-detail">
-        <a name="M000306"></a>
+      <div id="method-M000397" class="method-detail">
+        <a name="M000397"></a>
 
         <div class="method-heading">
-          <a href="#M000306" class="method-signature">
-          <span class="method-name">process_callbacks</span><span class="method-args">(callback_stream)</span>
+          <a href="#M000397" class="method-signature">
+          <span class="method-name">process_callbacks</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
       
@@ -220,12 +220,12 @@ Forwards method to the corresponding top-level <b>chain</b> method of the
 <em>delegate</em> component.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000306-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000306-source">
+            onclick="toggleCode('M000397-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000397-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/core/decoration.rb, line 96</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callbacks</span>(<span class="ruby-identifier">callback_stream</span>)
-    <span class="ruby-ivar">@delegate</span>.<span class="ruby-identifier">process_callbacks_chain</span>(<span class="ruby-identifier">callback_stream</span>)
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callbacks</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-ivar">@delegate</span>.<span class="ruby-identifier">process_callbacks_chain</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>

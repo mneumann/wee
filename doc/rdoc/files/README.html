@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Wed Jan 26 22:25:46 CET 2005</td>
+      <td>Mon Jul 11 23:54:42 CEST 2005</td>
     </tr>
     </table>
   </div>
@@ -266,7 +266,7 @@ Decorations are used to modify the look and behaviour of a component,
 without modifying the components tree. A component can have more than one
 decoration. This is implemented as a linked list of decorations
 (Wee::Decoration#owner points to the next decoration). <a
-href="../classes/Wee/Component.html#M000260">Wee::Component#decoration</a>
+href="../classes/Wee/Component.html#M000332">Wee::Component#decoration</a>
 points to the first decoration in the chain or to the component itself, if
 no decorations were specified. We actually use a <a
 href="../classes/Wee/ValueHolder.html">Wee::ValueHolder</a> for the
@@ -359,11 +359,11 @@ There are two methods related to callback processing:
 </p>
 <ul>
 <li><a
-href="../classes/Wee/Component.html#M000255">Wee::Component#process_callbacks_chain</a>
+href="../classes/Wee/Component.html#M000327">Wee::Component#process_callbacks_chain</a>
 
 </li>
 <li><a
-href="../classes/Wee/Presenter.html#M000293">Wee::Presenter#process_callbacks</a>
+href="../classes/Wee/Presenter.html#M000380">Wee::Presenter#process_callbacks</a>
 
 </li>
 </ul>
@@ -382,12 +382,8 @@ loop (a method calling itself). What decorations are, is discussed
 elsewhere.
 </p>
 <p>
-Method <em>process_callbacks</em> of class Component first invokes all
-input callbacks specified for this component, then calls
-<em>process_callbacks_chain</em> for all of it&#8217;s child components.
-This ensures, that all input callbacks are triggered before the first
-action callback is run. Finally, it invokes all of it&#8217;s action
-callbacks.
+There are two &quot;process_callbacks&quot; tree traversals. The first
+invokes all input callbacks, the second the action callback.
 </p>
 <h3>Rendering Phase</h3>
 <p>
@@ -400,11 +396,11 @@ a page:
 </p>
 <ul>
 <li><a
-href="../classes/Wee/Component.html#M000253">Wee::Component#do_render_chain</a>
+href="../classes/Wee/Component.html#M000325">Wee::Component#do_render_chain</a>
 
 </li>
 <li><a
-href="../classes/Wee/Presenter.html#M000288">Wee::Presenter#do_render</a>
+href="../classes/Wee/Presenter.html#M000375">Wee::Presenter#do_render</a>
 
 </li>
 </ul>

@@ -88,8 +88,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000248">build_url</a>&nbsp;&nbsp;
-      <a href="#M000249">parse_path</a>&nbsp;&nbsp;
+      <a href="#M000320">make_request_path</a>&nbsp;&nbsp;
+      <a href="#M000319">pageless?</a>&nbsp;&nbsp;
+      <a href="#M000321">parse_path</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -109,52 +110,82 @@
 
     <!-- if method_list -->
     <div id="methods">
-      <h3 class="section-bar">Public Instance methods</h3>
+      <h3 class="section-bar">Private Instance methods</h3>
 
-      <div id="method-M000248" class="method-detail">
-        <a name="M000248"></a>
+      <div id="method-M000320" class="method-detail">
+        <a name="M000320"></a>
 
         <div class="method-heading">
-          <a href="#M000248" class="method-signature">
-          <span class="method-name">build_url</span><span class="method-args">(request_handler_id=nil, page_id=nil, callback_id=nil)</span>
+          <a href="#M000320" class="method-signature">
+          <span class="method-name">make_request_path</span><span class="method-args">(request_handler_id, page_id)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000248-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000248-source">
+            onclick="toggleCode('M000320-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000320-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/pageless/request.rb, line 3</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_url</span>(<span class="ruby-identifier">request_handler_id</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">page_id</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">callback_id</span>=<span class="ruby-keyword kw">nil</span>)
-    <span class="ruby-identifier">url</span> = <span class="ruby-value str">&quot;&quot;</span> 
-    <span class="ruby-identifier">url</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@app_path</span>
-    <span class="ruby-identifier">url</span> <span class="ruby-operator">&lt;&lt;</span> (<span class="ruby-value str">'?'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">callback_id</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">callback_id</span>
-    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">url</span>
+<span class="ruby-comment cmt"># File lib/wee/pageless/request.rb, line 8</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">make_request_path</span>(<span class="ruby-identifier">request_handler_id</span>, <span class="ruby-identifier">page_id</span>)
+    <span class="ruby-value str">&quot;&quot;</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000249" class="method-detail">
-        <a name="M000249"></a>
+      <div id="method-M000319" class="method-detail">
+        <a name="M000319"></a>
 
         <div class="method-heading">
-          <a href="#M000249" class="method-signature">
+          <a href="#M000319" class="method-signature">
+          <span class="method-name">pageless?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000319-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000319-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/pageless/request.rb, line 4</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pageless?</span>
+    <span class="ruby-keyword kw">true</span>
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000321" class="method-detail">
+        <a name="M000321"></a>
+
+        <div class="method-heading">
+          <a href="#M000321" class="method-signature">
           <span class="method-name">parse_path</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000249-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000249-source">
+            onclick="toggleCode('M000321-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000321-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/pageless/request.rb, line 10</span>
+<span class="ruby-comment cmt"># File lib/wee/pageless/request.rb, line 12</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_path</span>
     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sid</span> = <span class="ruby-ivar">@cookies</span>.<span class="ruby-identifier">find</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">'SID'</span>}
       <span class="ruby-ivar">@request_handler_id</span> = <span class="ruby-identifier">sid</span>.<span class="ruby-identifier">value</span>
+    <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-identifier">full_app_path</span> = <span class="ruby-ivar">@path</span>
+
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">full_app_path</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@app_path</span>
+      <span class="ruby-ivar">@info</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">full_app_path</span>[<span class="ruby-value">0</span>, <span class="ruby-ivar">@app_path</span>.<span class="ruby-identifier">size</span>] <span class="ruby-operator">==</span> <span class="ruby-ivar">@app_path</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">full_app_path</span>[<span class="ruby-ivar">@app_path</span>.<span class="ruby-identifier">size</span>] <span class="ruby-operator">==</span> <span class="ruby-value">?/</span>
+      <span class="ruby-ivar">@info</span> = <span class="ruby-identifier">full_app_path</span>[<span class="ruby-ivar">@app_path</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">+</span><span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>] 
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;dispatched to wrong handler&quot;</span> 
     <span class="ruby-keyword kw">end</span>
   <span class="ruby-keyword kw">end</span>
 </pre>

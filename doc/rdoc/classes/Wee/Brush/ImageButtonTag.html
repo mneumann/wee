@@ -85,7 +85,7 @@ Most browsers do not send the &quot;name&quot; key together with the value
 specified by &quot;value&quot;, only &quot;name.x&quot; and
 &quot;name.y&quot;. This conforms to the standard. But Firefox also sends
 &quot;name&quot;=&quot;value&quot;. This is why I raise an exception from
-the <a href="ImageButtonTag.html#M000188">value</a> method. Note that
+the <a href="ImageButtonTag.html#M000236">value</a> method. Note that
 it&#8217;s neccessary to parse the passed form-fields and generate a
 &quot;name&quot; fields in the request, to make this image-button work.
 </p>
@@ -99,8 +99,8 @@ it&#8217;s neccessary to parse the passed form-fields and generate a
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000187">new</a>&nbsp;&nbsp;
-      <a href="#M000188">value</a>&nbsp;&nbsp;
+      <a href="#M000235">new</a>&nbsp;&nbsp;
+      <a href="#M000236">value</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -135,21 +135,21 @@ it&#8217;s neccessary to parse the passed form-fields and generate a
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000187" class="method-detail">
-        <a name="M000187"></a>
+      <div id="method-M000235" class="method-detail">
+        <a name="M000235"></a>
 
         <div class="method-heading">
-          <a href="#M000187" class="method-signature">
+          <a href="#M000235" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000187-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000187-source">
+            onclick="toggleCode('M000235-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000235-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 413</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 515</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
     <span class="ruby-keyword kw">super</span>
     <span class="ruby-identifier">type</span>(<span class="ruby-value str">'image'</span>)
@@ -161,21 +161,21 @@ it&#8217;s neccessary to parse the passed form-fields and generate a
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000188" class="method-detail">
-        <a name="M000188"></a>
+      <div id="method-M000236" class="method-detail">
+        <a name="M000236"></a>
 
         <div class="method-heading">
-          <a href="#M000188" class="method-signature">
+          <a href="#M000236" class="method-signature">
           <span class="method-name">value</span><span class="method-args">(v)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000188-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000188-source">
+            onclick="toggleCode('M000236-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000236-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 420</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 522</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">value</span>(<span class="ruby-identifier">v</span>)
     <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;specified value will not be used in the request&quot;</span>
   <span class="ruby-keyword kw">end</span>
