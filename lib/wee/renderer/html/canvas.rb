@@ -68,16 +68,20 @@ class HtmlCanvasRenderer < Renderer
   generic_tag :div, :span, :ul, :ol, :li
   generic_single_tag :link, :hr
 
-  def url_for_callback(callback, type=:action)
-    url_for_callback_id(register_callback(type, callback))
+  def url_for_callback(callback, type=:action, hash=nil)
+    url_for_callback_id(register_callback(type, callback), hash)
   end
 
-  def url_for_named_callback(name, callback)
-    url_for_callback_id(register_named_callback(name, :action, callback))
+  def url_for_named_callback(name, callback, hash=nil)
+    url_for_callback_id(register_named_callback(name, :action, callback), hash)
   end
 
-  def url_for_callback_id(callback_id)
-    build_url(:callback_id => callback_id)
+  def url_for_callback_id(callback_id, hash=nil)
+    if hash
+      build_url(hash.update(:callback_id => callback_id))
+    else
+      build_url(:callback_id => callback_id)
+    end
   end
 
   def build_url(*args)

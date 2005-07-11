@@ -1,3 +1,20 @@
+Mon Jul 11 23:18:17 CEST 2005	Michael Neumann	<mneumann@ntecs.de>
+
+	* lib/wee/components/pager.rb, lib/wee/examples/pager.rb: Moved from examples 
+	  into components directory. Slightly modified. Now class Wee::Pager.
+
+	* lib/wee/components/login_decoration.rb (Wee::LoginDecoration): Initial
+	  import.
+
+	* lib/wee/components/component_dispatcher.rb (Wee::ComponentDispatcher):
+	  Initial creation. 
+
+	* lib/wee/components.rb: Load new components.
+
+	* lib/wee/renderer/html/{brushes,canvas}.rb: Introduced
+	  r.anchor.info(info_url) which can be used to specify the info part of a
+		URL. 
+
 Mon Jul 11 19:29:44 CEST 2005	Michael Neumann	<mneumann@ntecs.de>
 
 	* lib/wee/renderer/html/{brushes,canvas}.rb: Added #hidden_input.	

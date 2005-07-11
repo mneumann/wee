@@ -577,8 +577,28 @@ class Brush::AnchorTag < Brush::GenericTagBrush
   alias tooltip title
 
   alias __set_url url
-  alias callback __actionurl_callback
-  alias named_callback __actionurl_named_callback
+
+  def info(info=nil)
+    @info = info
+    self
+  end
+
+  def callback(symbol=nil, *args, &block)
+    if @info
+      __set_url(@canvas.url_for_callback(to_callback(symbol, args, block), :action, :info => @info))
+    else
+      __set_url(@canvas.url_for_callback(to_callback(symbol, args, block)))
+    end
+  end
+
+  def named_callback(name, symbol=nil, *args, &block)
+    if @info
+      __set_url(@canvas.url_for_named_callback(name, to_callback(symbol, args, block), :info => @info))
+    else
+      __set_url(@canvas.url_for_named_callback(name, to_callback(symbol, args, block)))
+    end
+  end
+
 end
 
 class Brush::Page < Brush
