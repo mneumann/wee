@@ -34,7 +34,6 @@ module Wee::Nitro
   class FormTag < Wee::Brush::FormTag
     def with(*args, &block)
       rctx = @canvas.rendering_context
-      controller = rctx.request.path.split('/').first
 
       super(*args) do
         block.call if block
@@ -51,8 +50,11 @@ module Wee::Nitro
 
     def build_url(hash={})
       cid = hash[:callback_id]
-      controller = rendering_context.request.path.split('/').first
-      url = "/#{ controller }/callback"
+      controller = rendering_context.context.controller_name
+      
+      url = ""
+      url << "/#{ controller }" if controller
+      url << "/callback"
       url << "?__c=#{ rendering_context.component_name }"
       url << "&__a=#{ rendering_context.redirect_action }" if rendering_context.redirect_action 
       url << "&#{ cid }" if cid
@@ -92,9 +94,9 @@ module Wee::Nitro
       callback_stream = Wee::CallbackStream.new(c.callbacks, request.params)
       c.process_callbacks(callback_stream)
 
-      controller = request.path.split('/').first
+      controller = context.controller_name
       action = request.params['__a'] || 'index'
-      redirect [controller, action].join("/")
+      redirect [controller, action].compact.join("/")
     end
 
     protected
@@ -121,8 +123,7 @@ module Wee::Nitro
 
     def _show_component(name, hash={}, out='')
       cb = Wee::CallbackRegistry.new(Wee::SimpleIdGenerator.new)
-      ctx = Wee::Context.new(request(), response(), session())
-      rctx = Wee::RenderingContext.new(ctx, cb, Wee::HtmlWriter.new(out))
+      rctx = Wee::RenderingContext.new(context(), cb, Wee::HtmlWriter.new(out))
       rctx.component_name = name
       rctx.controller = self
       rctx.redirect_action = hash[:redirect_action]

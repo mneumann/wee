@@ -1,3 +1,13 @@
+Sun Jul 17 21:21:00 CEST 2005	Michael Neumann	<mneumann@ntecs.de>
+
+	* examples/nitro/run.rb: Mount example under '/'.
+
+	* lib/wee/adaptors/nitro.rb: Use Render#controller_name. Fix bugs that
+	  occured when mounted as '/'.
+
+	* lib/wee/databases/og/session.rb: Fixed bug. Now works with newest Og 
+	  version!
+
 --------------------------------------------------------------------
 TAGGED 0.9.0
 --------------------------------------------------------------------
