@@ -105,7 +105,7 @@ module Wee::Nitro
       if components.has_key?(name)
         raise "disallowed to overwrite component #{ name }"
       else
-        components[name] = Wee::PagelessComponentDriver.new(obj, Wee::CallbackRegistry.new(Wee::SimpleIdGenerator.new))
+        components[name] = Wee::PagelessComponentDriver.new(obj, Wee::CallbackRegistry.new(Wee::SequentialIdGenerator.new))
       end
     end
 
@@ -122,7 +122,7 @@ module Wee::Nitro
     end
 
     def _show_component(name, hash={}, out='')
-      cb = Wee::CallbackRegistry.new(Wee::SimpleIdGenerator.new)
+      cb = Wee::CallbackRegistry.new(Wee::SequentialIdGenerator.new)
       rctx = Wee::RenderingContext.new(context(), cb, Wee::HtmlWriter.new(out))
       rctx.component_name = name
       rctx.controller = self

@@ -98,7 +98,7 @@ module Wee::Rails
       if components.has_key?(name)
         raise "disallowed to overwrite component #{ name }"
       else
-        components[name] = Wee::PagelessComponentDriver.new(obj, Wee::CallbackRegistry.new(Wee::SimpleIdGenerator.new))
+        components[name] = Wee::PagelessComponentDriver.new(obj, Wee::CallbackRegistry.new(Wee::SequentialIdGenerator.new))
       end
     end
 
@@ -115,7 +115,7 @@ module Wee::Rails
     end
 
     def _show_component(name, hash={}, out='')
-      cb = Wee::CallbackRegistry.new(Wee::SimpleIdGenerator.new)
+      cb = Wee::CallbackRegistry.new(Wee::SequentialIdGenerator.new)
       ctx = Wee::Context.new(@request, @response, @session)
       rctx = Wee::RenderingContext.new(ctx, cb, Wee::HtmlWriter.new(out))
       rctx.component_name = name

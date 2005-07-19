@@ -21,7 +21,7 @@ class Wee::Session < Wee::AbstractSession
   protected
 
   def setup(&block)
-    @idgen = Wee::SimpleIdGenerator.new
+    @idgen = Wee::SequentialIdGenerator.new
 
     with_session do
       block.call(self) if block
@@ -143,7 +143,7 @@ class Wee::Session < Wee::AbstractSession
   # Return a new Wee::Page object with the given snapshot assigned.
 
   def create_page(snapshot)
-    idgen = Wee::SimpleIdGenerator.new
+    idgen = Wee::SequentialIdGenerator.new
     page = Wee::Page.new(snapshot, Wee::CallbackRegistry.new(idgen))
   end
 

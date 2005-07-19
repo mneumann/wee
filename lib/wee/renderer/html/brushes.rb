@@ -438,7 +438,7 @@ class Brush::RadioButtonTag < Brush::InputTag
     def initialize(canvas)
       @name = canvas.register_callback(:input, self)
       @callbacks = {} 
-      @ids = Wee::SimpleIdGenerator.new 
+      @ids = Wee::SequentialIdGenerator.new 
     end
 
     def add_callback(callback)

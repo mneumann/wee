@@ -27,14 +27,14 @@ class Wee::Application
   #
   #   Wee::Application.new {|app|
   #     app.default_request_handler { MySession.new } 
-  #     app.id_generator = Wee::SimpleIdGenerator.new
+  #     app.id_generator = Wee::SequentialIdGenerator.new
   #     app.max_request_handlers = 1000 
   #   }
 
   def initialize(&block)
     @request_handlers = Hash.new
     block.call(self)
-    @id_generator ||= Wee::SimpleIdGenerator.new(rand(1_000_000))
+    @id_generator ||= Wee::SequentialIdGenerator.new(rand(1_000_000))
     if @default_request_handler.nil?
       raise ArgumentError, "No default request handler specified"
     end

@@ -34,7 +34,7 @@ class Wee::PagelessSession < Wee::Session
   end
 
   def handle_render_phase
-    new_callbacks = Wee::CallbackRegistry.new(Wee::SimpleIdGenerator.new)
+    new_callbacks = Wee::CallbackRegistry.new(Wee::SequentialIdGenerator.new)
     respond(@context, new_callbacks)   # render
     self.callbacks = new_callbacks
   end

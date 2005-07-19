@@ -24,7 +24,7 @@ require 'wee/renderer/html/brushes'
 require 'wee/renderer/html/canvas'
 Wee::DefaultRenderer = Wee::HtmlCanvasRenderer
 
-require 'wee/idgen/simple'
+require 'wee/idgen/sequential'
 require 'wee/idgen/md5'
 
 def Wee.run(component, add_page_decoration=true, mount_path='/app')

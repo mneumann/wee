@@ -1,3 +1,16 @@
+Tue Jul 19 15:57:51 CEST 2005	Michael Neumann <mneumann@ntecs.de>
+
+	* lib/wee/session.rb, lib/wee/idgen/simple.rb, lib/wee/pageless/session.rb, 
+	  lib/wee/application.rb, lib/wee/renderer/html/brushes.rb,
+	  lib/wee/adaptors/rails.rb, lib/wee/adaptors/nitro.rb, lib/wee.rb,
+	  examples/test.rb:
+	  Renamed Wee::SimpleIdGenerator to Wee::SequentialIdGenerator.
+
+	* lib/wee/page.rb: removed as it is not used anymore (we have
+	  wee/core/page.rb instead).
+
+	* Rakefile: added target 'tag'
+
 --------------------------------------------------------------------
 TAGGED 0.9.1
 --------------------------------------------------------------------
