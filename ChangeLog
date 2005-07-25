@@ -1,3 +1,11 @@
+Mon Jul 25 14:59:14 CEST 2005	Michael Neumann	<mneumann@ntecs.de>
+
+	* lib/wee/renderer/html/brushes.rb:
+
+		- Refactored method html_attr (removed bool_attr) and all classes that use it.
+
+	  - removed methods GenericTagBrush#css_class_for and ImageTag#src_for.
+
 Tue Jul 19 15:57:51 CEST 2005	Michael Neumann <mneumann@ntecs.de>
 
 	* lib/wee/session.rb, lib/wee/idgen/simple.rb, lib/wee/pageless/session.rb, 

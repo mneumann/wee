@@ -19,7 +19,9 @@ class Brush
   end
 end
 
-class Brush::GenericTextBrush < Brush
+class Brush
+
+class GenericTextBrush < Brush
   def initialize(text)
     super()
     @text = text
@@ -33,7 +35,7 @@ class Brush::GenericTextBrush < Brush
   end
 end
 
-class Brush::GenericEncodedTextBrush < Brush
+class GenericEncodedTextBrush < Brush
   def initialize(text)
     super()
     @text = text
@@ -47,36 +49,53 @@ class Brush::GenericEncodedTextBrush < Brush
   end
 end
 
-class Brush::GenericTagBrush < Brush
+class GenericTagBrush < Brush
 
   class << self
     private
 
-    def bool_attr(*attrs)
-      attrs.each { |a|
+		def html_attr(attr, hash={})
+      name = hash[:html_name] || attr
+
+      case hash[:type]
+      when :bool
         class_eval " 
-          def #{ a }(bool=true)
+          def #{ attr }(bool=true)
             if bool
-              @attributes['#{ a }'] = nil
+              @attributes['#{ name }'] = nil
             else
-              @attributes.delete('#{ a }')
+              @attributes.delete('#{ name }')
             end
             self
           end
         "
-      }
-    end
-
-    def html_attr(*attrs)
-      attrs.each { |a|
+      else
         class_eval " 
-          def #{ a }(value)
-            html_attr('#{ a }', value)
+          def #{ attr }(value)
+            if value == nil
+              @attributes.delete('#{ name }')
+            else
+              @attributes['#{ name }'] = value.to_s
+            end
+            self
           end
         "
-      }
-    end
+      end
 
+      if hash[:aliases]
+        hash[:aliases].each do |a|
+          class_eval "alias #{ a } #{ attr }"
+        end
+      end
+
+      if hash[:shortcuts]
+        hash[:shortcuts].each_pair do |k,v|
+          class_eval "
+            def #{ k }() #{ attr }(#{ v.inspect }) end
+          "
+        end
+      end
+		end
   end
 
   private
@@ -139,11 +158,9 @@ class Brush::GenericTagBrush < Brush
     @attributes = Hash.new
   end
 
-  html_attr :type, :id
-
-  def css_class(c)
-    html_attr("class", c)
-  end
+  html_attr 'type'
+  html_attr 'id'
+  html_attr 'css_class', :html_name => 'class'
 
   def onclick_callback(symbol=nil, *args, &block)
     raise ArgumentError if symbol and block
@@ -155,15 +172,6 @@ class Brush::GenericTagBrush < Brush
     raise ArgumentError if symbol and block
     url = @canvas.url_for_callback(to_callback(symbol, args, block))
     onclick("javascript: new Ajax.Updater('#{ update_id }', '#{ url }', {method:'get'}); return false;")
-  end
-
-  # This method construct the css-class attribute by looking up the property
-  # from the current component.
-
-  def css_class_for(prop)
-    val = @canvas.current_component.lookup_property(prop)
-    raise "no property found for: <#{ prop }>" if val.nil?
-    css_class(val)
   end
 
   def with(text=nil, &block)
@@ -186,26 +194,17 @@ class Brush::GenericTagBrush < Brush
   end
 end
 
-class Brush::GenericSingleTagBrush < Brush::GenericTagBrush
+class GenericSingleTagBrush < GenericTagBrush
   def initialize(tag)
     super(tag, true)
   end
 end
 
-class Brush::ImageTag < Brush::GenericSingleTagBrush
-  html_attr :src
-
-  # This method construct the src attribute by looking up the property from the
-  # current component.
-
-  def src_for(prop)
-    val = @canvas.current_component.lookup_property(prop)
-    raise "no property found for: <#{ prop }>" if val.nil?
-    src(val)
-  end
+class ImageTag < GenericSingleTagBrush
+  html_attr 'src'
 
   def initialize
-    super("img")
+    super('img')
   end
 
   def with
@@ -213,29 +212,31 @@ class Brush::ImageTag < Brush::GenericSingleTagBrush
   end
 end
 
-class Brush::JavascriptTag < Brush::GenericTagBrush
-  html_attr :src, :type
+class JavascriptTag < GenericTagBrush
+  html_attr 'src'
+  html_attr 'type'
 
   def initialize
-    super("script")
-    type("text/javascript")
+    super('script')
+    type('text/javascript')
   end
 end
 
-class Brush::TableTag < Brush::GenericTagBrush
+class TableTag < GenericTagBrush
   def initialize
     super('table')
   end
 end  
 
-class Brush::TableRowTag < Brush::GenericTagBrush
+class TableRowTag < GenericTagBrush
   def initialize
     super('tr')
   end
 
-  def align_top
-    html_attr('align', 'top')
-  end
+  html_attr 'align', :shortcuts => {
+    :align_top => 'top',
+    :align_bottom => 'bottom'
+  }
 
   def columns(*cols, &block)
     with {
@@ -278,28 +279,44 @@ class Brush::TableRowTag < Brush::GenericTagBrush
   end
 end
 
-class Brush::InputTag < Brush::GenericSingleTagBrush
+class InputTag < GenericSingleTagBrush
   def initialize
     super('input')
   end
 
-  html_attr :type, :name, :value, :size, :maxlength, :src
-  bool_attr :checked, :disabled, :readonly
+  html_attr 'type'
+  html_attr 'name'
+  html_attr 'value'
+  html_attr 'size'
+  html_attr 'maxlength'
+  html_attr 'src'
+  html_attr 'checked',  :type => :bool
+  html_attr 'disabled', :type => :bool
+  html_attr 'readonly', :type => :bool
 
   def with
     super
   end
 end
 
-class Brush::TextAreaTag < Brush::GenericTagBrush
+class TextAreaTag < GenericTagBrush
   def initialize
     super('textarea')
   end
 
   alias callback __input_callback
 
-  html_attr :name, :rows, :cols, :tabindex, :accesskey, :onfocus, :onblur, :onselect, :onchange
-  bool_attr :disabled, :readonly
+  html_attr 'name'
+  html_attr 'rows'
+  html_attr 'cols'
+  html_attr 'tabindex'
+  html_attr 'accesskey'
+  html_attr 'onfocus'
+  html_attr 'onblur'
+  html_attr 'onselect'
+  html_attr 'onchange'
+  html_attr 'disabled', :type => :bool
+  html_attr 'readonly', :type => :bool
 
   def value(val)
     @value = val
@@ -319,18 +336,19 @@ class Brush::TextAreaTag < Brush::GenericTagBrush
   end
 end
 
-class Brush::SelectOptionTag < Brush::GenericTagBrush
+class SelectOptionTag < GenericTagBrush
   def initialize
     super('option')
   end
 
-  bool_attr :selected
+  html_attr 'selected', :type => :bool
 end
 
-class Brush::SelectListTag < Brush::GenericTagBrush
+class SelectListTag < GenericTagBrush
 
-  bool_attr :disabled, :readonly, :multiple
-  alias multi multiple
+  html_attr 'disabled', :type => :bool
+  html_attr 'readonly', :type => :bool
+  html_attr 'multiple', :type => :bool, :aliases => [:multi]
 
   def initialize(items)
     super('select')
@@ -410,7 +428,7 @@ class Brush::SelectListTag < Brush::GenericTagBrush
   end
 end
 
-class Brush::HiddenInputTag < Brush::InputTag
+class HiddenInputTag < InputTag
   def initialize
     super
     type('hidden')
@@ -419,7 +437,7 @@ class Brush::HiddenInputTag < Brush::InputTag
   alias callback __input_callback
 end
 
-class Brush::TextInputTag < Brush::InputTag
+class TextInputTag < InputTag
   def initialize
     super
     type('text')
@@ -428,7 +446,7 @@ class Brush::TextInputTag < Brush::InputTag
   alias callback __input_callback
 end
 
-class Brush::RadioButtonTag < Brush::InputTag
+class RadioButtonTag < InputTag
   def initialize
     super
     type('radio')
@@ -478,7 +496,7 @@ class Brush::RadioButtonTag < Brush::InputTag
 
 end
 
-class Brush::CheckboxTag < Wee::Brush::InputTag
+class CheckboxTag < InputTag
   def initialize
     super
     type('checkbox')
@@ -486,7 +504,7 @@ class Brush::CheckboxTag < Wee::Brush::InputTag
   alias callback __input_callback
 end
 
-class Brush::FileUploadTag < Brush::InputTag
+class FileUploadTag < InputTag
   def initialize
     super
     type('file')
@@ -495,7 +513,7 @@ class Brush::FileUploadTag < Brush::InputTag
   alias callback __input_callback
 end
 
-class Brush::SubmitButtonTag < Brush::InputTag
+class SubmitButtonTag < InputTag
   def initialize
     super
     type('submit')
@@ -511,7 +529,7 @@ end
 # #value method. Note that it's neccessary to parse the passed form-fields and
 # generate a "name" fields in the request, to make this image-button work. 
 
-class Brush::ImageButtonTag < Brush::InputTag
+class ImageButtonTag < InputTag
   def initialize
     super
     type('image')
@@ -524,29 +542,31 @@ class Brush::ImageButtonTag < Brush::InputTag
   end
 end
 
-class Brush::TableDataTag < Brush::GenericTagBrush
+class TableDataTag < GenericTagBrush
   def initialize
     super('td')
   end
 
-  def align_top
-    html_attr('align', 'top')
-  end
+  html_attr 'align', :shortcuts => {
+    :align_top => 'top',
+    :align_bottom => 'bottom'
+  }
 end
 
-class Brush::TableHeaderTag < Brush::GenericTagBrush
+class TableHeaderTag < GenericTagBrush
   def initialize
     super('th')
   end
 end
 
-class Brush::FormTag < Brush::GenericTagBrush
+class FormTag < GenericTagBrush
   def initialize
     super('form')
     @attributes['method'] = 'POST'
   end
 
-  html_attr :action, :enctype
+  html_attr 'action'
+  html_attr 'enctype'
 
   alias __set_url action
   alias callback __actionurl_callback
@@ -567,14 +587,13 @@ class Brush::FormTag < Brush::GenericTagBrush
   end
 end
 
-class Brush::AnchorTag < Brush::GenericTagBrush
+class AnchorTag < GenericTagBrush
   def initialize
     super('a')
   end
 
-  html_attr :href, :title
-  alias url href
-  alias tooltip title
+  html_attr 'href', :aliases => [:url]
+  html_attr 'title', :aliases => [:tooltip]
 
   alias __set_url url
 
@@ -601,7 +620,7 @@ class Brush::AnchorTag < Brush::GenericTagBrush
 
 end
 
-class Brush::Page < Brush
+class Page < Brush
   def title(t)
     @title = t
     self
@@ -633,5 +652,7 @@ class Brush::Page < Brush
     nil
   end
 end
+
+end # class Brush
 
 end # module Wee
