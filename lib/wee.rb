@@ -1,5 +1,5 @@
 module Wee
-  Version = "0.9.1"
+  Version = "0.10.0"
   LibPath = File.dirname(__FILE__)
 end
 

@@ -1,3 +1,18 @@
+Mon Jul 25 16:56:53 CEST 2005	Michael Neumann	<mneumann@ntecs.de>
+
+	* lib/wee/databases/og/scaffolder.rb: Now works again with Og >= 0.21.0.
+	  Enhanced for password input fields and for validation.
+
+	* lib/wee/renderer/html/brushes.rb, lib/wee/renderer/html/canvas.rb: 
+
+	  - Fixed bug in SelectListTag#selected where you could not pre-select 
+		  from [true, false] the false item. 
+	  - Added class PasswordInputTag and method HtmlCanvasRenderer#password_input   
+
+	* examples/og-test.rb: Works now with 0g 0.21.0. Enhanced.  
+
+	* lib/wee.rb: Version 0.10.0
+
 Mon Jul 25 14:59:14 CEST 2005	Michael Neumann	<mneumann@ntecs.de>
 
 	* lib/wee/renderer/html/brushes.rb:

@@ -2,12 +2,20 @@
 # The datamodel
 # -----------------------------------------
 
-require 'og'
+require 'rubygems'
+require_gem 'og', '>= 0.21.0'
 
-class Customer
-  prop_accessor :address, String, :sql => 'VARCHAR(100) NOT NULL'
-  prop_accessor :email, String, :sql => 'VARCHAR(50) NOT NULL'
-  prop_accessor :password, String, :sql => 'VARCHAR(10) NOT NULL'
+class Customer < Og::Entity
+  property :address, String, :sql => 'VARCHAR(100) NOT NULL'
+  property :email, String, :sql => 'VARCHAR(50) NOT NULL'
+  property :password, String, :sql => 'VARCHAR(10) NOT NULL', :ui => :password
+
+  property :birth_date, Date, :label => 'Date of Birth'
+  property :active, TrueClass
+
+  validate_value :address
+  validate_value :email
+  validate_value :password
 end
 
 # -----------------------------------------
@@ -38,14 +46,15 @@ if __FILE__ == $0
 
   DB_CONFIG = {
     :address => "localhost",
-    :database => "mneumann",
-    :backend => "psql",
+    :name => "mneumann",
+    :store => "psql",
     :user => "mneumann",
     :password => "",
+    #:destroy => true,
     :connection_count => 10 
   }
 
   app = Wee::Utils.app_for(CustomerList, :application => OgApplication, :session => OgSession)
-  app.db = Og::Database.new(DB_CONFIG)
+  app.db = Og.setup(DB_CONFIG)
   Wee::WEBrickAdaptor.register('/app' => app).start
 end

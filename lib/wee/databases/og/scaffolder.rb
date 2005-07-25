@@ -1,11 +1,10 @@
-# This is a Rails-like scaffolder for use with Og (http://navel.gr/nitro)
-# domain objects.
+# This is a Rails-like scaffolder for use with Og >= 0.21.0
+# (http://navel.gr/nitro).
 
 class OgScaffolder < Wee::Component
   def initialize(domain_class)
     super()
     @domain_class = domain_class
-    @props = @domain_class.__props.reject {|a| a.name == 'oid'}
   end
 
   def render
@@ -21,7 +20,7 @@ class OgScaffolder < Wee::Component
 
   def render_header
     r.table_row.with {
-      @props.each {|prop|
+      each_property {|prop|
         render_property_header(prop)
       }
       render_action_header
@@ -35,7 +34,7 @@ class OgScaffolder < Wee::Component
 
   def render_property_header(prop)
     r.table_header.with {
-      r.bold(prop.name.to_s.capitalize)
+      r.bold(prop.meta[:label] || prop.symbol.to_s.capitalize)
     }
   end
 
@@ -45,7 +44,7 @@ class OgScaffolder < Wee::Component
 
   def render_object(obj)
     r.table_row {
-      @props.each {|prop| render_property(obj, prop) } 
+      each_property {|prop| render_property(obj, prop) } 
       render_action(obj)
     }
   end
@@ -59,7 +58,7 @@ class OgScaffolder < Wee::Component
   end
 
   def render_property(obj, prop)
-    r.table_data(obj.send(prop.name).to_s)
+    r.table_data(obj.send(prop.symbol).to_s)
   end
 
   def edit(obj)
@@ -76,7 +75,7 @@ class OgScaffolder < Wee::Component
   end
 
   def confirm_destroy(obj, confirmed)
-    obj.delete! if confirmed
+    obj.delete if confirmed
   end
 
   def domain_objects
@@ -90,6 +89,15 @@ class OgScaffolder < Wee::Component
   def editor_for(obj)
     editor_class.new(obj).add_decoration(Wee::FormDecoration.new)
   end
+
+  protected
+
+  def each_property
+    @domain_class.properties.each {|prop|
+      yield prop if prop.symbol != :oid
+    }
+  end
+
 end
 
 class OgScaffolder::Editor < Wee::Component
@@ -97,15 +105,15 @@ class OgScaffolder::Editor < Wee::Component
   def initialize(domain_object)
     super()
     @domain_object = domain_object
+    @errors = nil
   end
 
   def render
     render_header
+    render_errors if @errors
     each_property {|prop| 
-      unless prop.name == 'oid'
-        render_label(prop)
-        render_property(prop) 
-      end
+      render_label(prop)
+      render_property(prop) 
     }
     render_buttons
   end
@@ -121,12 +129,27 @@ class OgScaffolder::Editor < Wee::Component
     r.h1 "#{ action } #{ @domain_object.class }"
   end
 
+  def render_errors
+    r.paragraph
+    r.h2 "Errors"
+    if @errors == :validation
+      r.ul {
+        @domain_object.errors.each do |sym, msg|
+          r.li("#{ sym }: #{ msg }")
+        end
+      }
+    else
+      r.text("Unexpected error occured")
+    end
+  end
+
   def render_property(prop)
     if prop.klass.ancestors.include?(Numeric)
       render_numeric(prop)
     elsif prop.klass.ancestors.include?(String)
       render_string(prop)
-    elsif prop.klass.ancestors.include?(TrueClass)
+    elsif prop.klass.ancestors.include?(TrueClass) or 
+          prop.klass.ancestors.include?(FalseClass)
       render_bool(prop)
     elsif prop.klass.ancestors.include?(Date)
       render_date(prop)
@@ -138,8 +161,11 @@ class OgScaffolder::Editor < Wee::Component
   end
 
   def render_string(prop)
-    if prop.meta[:ui] == :textarea
+    case prop.meta[:ui]
+    when :textarea
       r.text_area.callback(:set_value_of, prop).with(get_value_of(prop))
+    when :password
+      r.password_input.value(get_value_of(prop)).callback(:set_value_of, prop)
     else
       r.text_input.value(get_value_of(prop)).callback(:set_value_of, prop)
     end
@@ -148,7 +174,7 @@ class OgScaffolder::Editor < Wee::Component
   def render_bool(prop)
     selected = get_value_of(prop) ? true : false
     r.select_list([true, false]).labels(["Yes", "No"]).selected(selected).
-      callback {|choosen| set_value_of(prop, choosen) }
+      callback(:set_value_of, prop)
   end
 
   require 'date'
@@ -173,19 +199,31 @@ class OgScaffolder::Editor < Wee::Component
 
   def render_label(prop)
     r.paragraph
-    r.text prop.name.capitalize
+    r.text(prop.meta[:label] || prop.symbol.to_s.capitalize)
     r.break
   end
 
-  private
+  protected
 
-  def each_property(&block)
-    @domain_object.class.__props.each(&block)
+  def each_property
+    @domain_object.class.properties.each {|prop|
+      yield prop if prop.symbol != :oid
+    }
   end
 
   def save
-    @domain_object.save!
-    answer @domain_object
+    if @domain_object.valid?
+      begin
+        @domain_object.save
+        @errors = nil
+      rescue => err
+        @errors = err
+      end
+    else
+      @errors = :validation
+    end
+
+    answer @domain_object if @errors.nil?
   end
 
   def cancel

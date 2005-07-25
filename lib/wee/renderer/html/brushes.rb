@@ -362,7 +362,7 @@ class SelectListTag < GenericTagBrush
 
   def selected(arg=nil, &block)
     raise if arg and block
-    @selected = arg || block
+    @selected = block || arg
     self
   end
 
@@ -432,6 +432,15 @@ class HiddenInputTag < InputTag
   def initialize
     super
     type('hidden')
+  end
+
+  alias callback __input_callback
+end
+
+class PasswordInputTag < InputTag
+  def initialize
+    super
+    type('password')
   end
 
   alias callback __input_callback
