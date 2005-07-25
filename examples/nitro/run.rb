@@ -39,4 +39,4 @@ class AppController < Nitro::Controller
   end
 end
 
-Nitro.run(:host => '127.0.0.1', :port => 9999, :dispatcher => Nitro::Dispatcher.new('/' => AppController))
+Nitro.run(AppController)
