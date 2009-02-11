@@ -17,8 +17,6 @@ require 'wee/session'
 require 'wee/components'
 require 'wee/snapshot_ext'
 
-require 'wee/template'
-
 require 'wee/renderer/html/writer'
 require 'wee/renderer/html/brushes'
 require 'wee/renderer/html/canvas'
