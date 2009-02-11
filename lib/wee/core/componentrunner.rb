@@ -29,14 +29,14 @@ class Wee::ComponentRunner
   # and returns it.
 
   def snapshot
-    @root_component.backtrack_state_chain(snap = Wee::Snapshot.new)
+    @root_component.decoration.backtrack_state(snap = Wee::Snapshot.new)
     return snap.freeze
   end
 
   # Render the root component with the given rendering context.
 
   def render(rendering_context)
-    @root_component.do_render_chain(rendering_context)
+    @root_component.decoration.do_render(rendering_context)
   end
 
   # This method triggers several tree traversals to process the callbacks of
@@ -58,7 +58,7 @@ class Wee::ComponentRunner
   protected
 
   def process_callbacks_of(callback_stream, type, pass_value=true, once=false)
-    @root_component.process_callbacks_chain {|this|
+    @root_component.decoration.process_callbacks {|this|
       callback_stream.with_callbacks_for(this, type) { |callback, value|
         if pass_value
           callback.call(value)

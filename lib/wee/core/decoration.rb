@@ -94,14 +94,14 @@ class Wee::Delegate < Wee::Decoration
   # _delegate_ component.
 
   def process_callbacks(&block)
-    @delegate.process_callbacks_chain(&block)
+    @delegate.decoration.process_callbacks(&block)
   end
 
   # Forwards method to the corresponding top-level *chain* method of the
   # _delegate_ component.
 
   def do_render(rendering_context)
-    @delegate.do_render_chain(rendering_context)
+    @delegate.decoration.do_render(rendering_context)
   end
 
   # Forwards method to the corresponding top-level *chain* method of the
@@ -110,7 +110,7 @@ class Wee::Delegate < Wee::Decoration
 
   def backtrack_state(snapshot)
     super
-    @delegate.backtrack_state_chain(snapshot)
+    @delegate.decoration.backtrack_state(snapshot)
   end
 end
 

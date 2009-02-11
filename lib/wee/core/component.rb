@@ -9,17 +9,6 @@ class Wee::Component < Wee::Presenter
 
   public
 
-  # Starts rendering the decoration chain by calling method Presenter#do_render
-  # for the first decoration of the component, or calling <i>do_render</i> for
-  # the component itself if no decorations were specified. 
-  # 
-  # [+rendering_context+]
-  #    An object of class RenderingContext
-
-  def do_render_chain(rendering_context)
-    decoration.do_render(rendering_context)
-  end
-
   # This method renders the content of this component.
   #
   # *OVERWRITE* this method in your own component class to implement the
@@ -36,18 +25,6 @@ class Wee::Component < Wee::Presenter
 
   public
 
-  # Starts processing the callbacks for the decoration chain by invoking method
-  # #process_callbacks of the first decoration or the component itself if no
-  # decorations were specified.
-  #
-  # [+block+]
-  #    Specifies the action to be taken (e.g. whether to invoke input or action
-  #    callbacks).
-
-  def process_callbacks_chain(&block)
-    decoration.process_callbacks(&block)
-  end
-
   # Process and invoke all callbacks specified for this component and all of
   # it's child components. 
   #
@@ -59,8 +36,8 @@ class Wee::Component < Wee::Presenter
     block.call(self)
 
     # process callbacks of all children
-    children.each do |child|
-      child.process_callbacks_chain(&block)
+    each do |child|
+      child.decoration.process_callbacks(&block)
     end
   end
 
@@ -86,13 +63,15 @@ class Wee::Component < Wee::Presenter
 
   protected
 
-  # Returns all direct child components collected in an array.
-  # 
-  # You can overwrite this method to return all direct child components of this
-  # component.
- 
   def children
-    @__children
+    @__children ||= []
+  end
+
+  #
+  # Iterates over all direct child components. 
+  #
+  def each(&block)
+    @__children.each(&block) if @__children
   end
 
   # Add a child to the component. Example:
@@ -226,19 +205,6 @@ class Wee::Component < Wee::Presenter
 
   public
 
-  # Starts the backtrack-state phase for the decoration chain, by invoking
-  # method #backtrack_state of the first decoration or the component itself if
-  # no decorations were specified. 
-  # 
-  # See #backtrack_state for details.
-  #
-  # [+snapshot+]
-  #    An object of class Snapshot
-
-  def backtrack_state_chain(snapshot)
-    decoration.backtrack_state(snapshot)
-  end
-
   # Take snapshots of objects that should correctly be backtracked.
   #
   # Backtracking means that you can go back in time of the components' state.
@@ -273,7 +239,9 @@ class Wee::Component < Wee::Presenter
 
   def backtrack_state(snapshot)
     snapshot.add(@__decoration)
-    children.each do |child| child.backtrack_state_chain(snapshot) end
+    each do |child|
+      child.decoration.backtrack_state(snapshot)
+    end
   end
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

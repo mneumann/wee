@@ -229,7 +229,7 @@ class HtmlCanvasRenderer < Renderer
 
   def render(obj)
     self.close
-    obj.do_render_chain(@rendering_context)
+    obj.decoration.do_render(@rendering_context)
     nil
   end
 

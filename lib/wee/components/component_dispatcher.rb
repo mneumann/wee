@@ -14,20 +14,20 @@ class Wee::ComponentDispatcher < Wee::Component
 
   def do_render(rendering_context)
     if component = match(session.current_context.request.info)
-      component.do_render_chain(rendering_context)
+      component.decoration.do_render(rendering_context)
     end
   end
 
   def process_callbacks(&block)
     if component = match(session.current_context.request.info)
-      component.process_callbacks_chain(&block)
+      component.decoration.process_callbacks(&block)
     end
   end
 
   def backtrack_state(snapshot)
     snapshot.add(@__decoration)
     @components.each do |component|
-      component.backtrack_state_chain(snapshot)
+      component.decoration.backtrack_state(snapshot)
     end
   end
 

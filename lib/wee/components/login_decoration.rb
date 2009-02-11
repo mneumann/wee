@@ -7,7 +7,7 @@ class Wee::LoginDecoration < Wee::Decoration
     if logged_in?
       super
     else
-      @login_page.process_callbacks_chain(&block)
+      @login_page.decoration.process_callbacks(&block)
     end
   end
 
@@ -15,7 +15,7 @@ class Wee::LoginDecoration < Wee::Decoration
     if logged_in?
       super
     else
-      @login_page.do_render_chain(rendering_context)
+      @login_page.decoration.do_render(rendering_context)
     end
   end
 
@@ -23,7 +23,7 @@ class Wee::LoginDecoration < Wee::Decoration
     if logged_in?
       super
     else
-      @login_page.backtrack_state_chain(snapshot)
+      @login_page.decoration.backtrack_state(snapshot)
     end
   end
 
