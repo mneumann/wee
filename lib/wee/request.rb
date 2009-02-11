@@ -6,8 +6,6 @@
 
 class Wee::Request
 
-  DELIM = '/___/'
-
   attr_accessor :request_handler_id
   attr_reader :page_id, :fields, :cookies
 
@@ -53,9 +51,6 @@ class Wee::Request
       raise ArgumentError if page_id.nil? and not callback_id.nil?
     end
 
-    # build request path, e.g. /___/req-id/page-id
-    req_path = make_request_path(request_handler_id, page_id)
-
     # build the whole url
     url = ""
     url << @app_path
@@ -66,11 +61,10 @@ class Wee::Request
       url << '/'
       url << info
     end
-    url << req_path 
 
-    url << '/' if info.nil? and req_path.empty? 
-
-    url << ('?' + callback_id) if callback_id
+    url << '/' if info.nil? and @app_path.empty? 
+    url << "?_s=#{request_handler_id}&_p=#{page_id}"
+    url << ("&" + callback_id) if callback_id
 
     return url
   end
@@ -79,16 +73,6 @@ class Wee::Request
 
   def pageless?
     false
-  end
-
-  def make_request_path(request_handler_id, page_id)
-    arr = [request_handler_id, page_id].compact
-    req_path = 
-    if arr.empty?
-      ""
-    else
-      DELIM + arr.join('/')
-    end
   end
 
   def parse_fields(fields)
@@ -113,18 +97,8 @@ class Wee::Request
   end
 
   def parse_path
-    full_app_path, req_path = @path.split(DELIM, 2)
-
-    if full_app_path == @app_path
-      @info = nil
-    elsif full_app_path[0, @app_path.size] == @app_path and full_app_path[@app_path.size] == ?/
-      @info = full_app_path[@app_path.size+1..-1] 
-    else
-      raise "dispatched to wrong handler" 
-    end
-
-    @request_handler_id = @page_id = nil
-    @request_handler_id, @page_id = req_path.split('/', 2) if req_path
+    @request_handler_id = @fields.delete("_s")
+    @page_id = @fields.delete("_p")
   end
 
 end
