@@ -1,5 +1,5 @@
 # Abstract base class of all decorations. Forwards the methods
-# #process_callbacks, #do_render and #backtrack_state to the next decoration in
+# #process_callbacks, #render_on and #backtrack_state to the next decoration in
 # the chain. Subclasses should provide special behaviour in these methods,
 # otherwise the decoration does not make sense.
 #
@@ -7,7 +7,7 @@
 # around the decorations or components below itself:
 #
 #   class HeaderFooterDecoration < Wee::Decoration
-#     def do_render(rendering_context)
+#     def render_on(rendering_context)
 #       with_renderer_for(rendering_context) do
 #         render_header
 #         super(rendering_context)
@@ -31,7 +31,7 @@ class Wee::Decoration < Wee::Presenter
   # decoration in the chain). In other words, it's the owner of everything
   # "below" itself.
 
-  attr_accessor :owner   
+  attr_accessor :owner
 
   # Is this decoration a global or a local one? By default all decorations are
   # local unless this method is overwritten.
@@ -44,14 +44,14 @@ class Wee::Decoration < Wee::Presenter
 
   # Forwards method call to the next decoration in the chain.
 
-  def process_callbacks(&block)
-    @owner.process_callbacks(&block)
+  def process_callbacks(callbacks)
+    @owner.process_callbacks(callbacks)
   end
 
   # Forwards method call to the next decoration in the chain.
 
-  def do_render(rendering_context)
-    @owner.do_render(rendering_context)
+  def render_on(rendering_context)
+    @owner.render_on(rendering_context)
   end
 
   # Forwards method call to the next decoration in the chain.
@@ -82,7 +82,7 @@ class Wee::Decoration < Wee::Presenter
 end
 
 # A Wee::Delegate breaks the decoration chain and forwards the methods
-# #process_callbacks, #do_render and #backtrack_state to the corresponding
+# #process_callbacks, #render_on and #backtrack_state to the corresponding
 # *chain* method of it's _delegate_ component (a Wee::Component).
 
 class Wee::Delegate < Wee::Decoration
@@ -93,15 +93,15 @@ class Wee::Delegate < Wee::Decoration
   # Forwards method to the corresponding top-level *chain* method of the
   # _delegate_ component.
 
-  def process_callbacks(&block)
-    @delegate.decoration.process_callbacks(&block)
+  def process_callbacks(callbacks)
+    @delegate.decoration.process_callbacks(callbacks)
   end
 
   # Forwards method to the corresponding top-level *chain* method of the
   # _delegate_ component.
 
-  def do_render(rendering_context)
-    @delegate.decoration.do_render(rendering_context)
+  def render_on(rendering_context)
+    @delegate.decoration.render_on(rendering_context)
   end
 
   # Forwards method to the corresponding top-level *chain* method of the
@@ -128,7 +128,7 @@ class Wee::AnswerDecoration < Wee::Decoration
 
   attr_accessor :on_answer
 
-  def process_callbacks(&block)
+  def process_callbacks(callbacks)
     args = catch(:wee_answer) { super; nil }
     if args != nil
       # return to the calling component 

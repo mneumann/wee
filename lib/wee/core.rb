@@ -9,7 +9,6 @@ require 'wee/core/page'
 require 'wee/core/context'
 require 'wee/core/idgen'
 require 'wee/core/renderer'
-require 'wee/core/componentrunner'
 
 require 'wee/core/presenter'
 require 'wee/core/decoration'

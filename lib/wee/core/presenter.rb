@@ -4,10 +4,6 @@
 
 class Wee::Presenter
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # :section: Render
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   public
 
   # This method renders the content of the presenter.
@@ -30,8 +26,27 @@ class Wee::Presenter
   # [+rendering_context+]
   #    An object of class RenderingContext
 
-  def do_render(rendering_context)
+  def render_on(rendering_context)
     with_renderer_for(rendering_context) do render() end 
+  end
+
+  # Dummy implementation. See Component#backtrack_state for more information. 
+  #
+  # [+snapshot+]
+  #    An object of class Snapshot
+
+  def backtrack_state(snapshot)
+  end
+
+  def process_callbacks(callbacks)
+    callbacks.input_callbacks.each_triggered(self) do |callback, value|
+      callback.call(value)
+    end
+
+    callbacks.action_callbacks.each_triggered(self) do |callback, value|
+      callback.call
+      # TODO: return to main loop
+    end
   end
 
   protected
@@ -65,36 +80,6 @@ class Wee::Presenter
 
   def renderer_class
     raise "Method renderer_class needs to be implemented!"
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # :section: Callback
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  public
-
-  # Process all callbacks specified for this presenter. 
-  #
-  # [+block+]
-  #    Specifies the action to be taken (e.g. whether to invoke input or action
-  #    callbacks).
-
-  def process_callbacks(&block)
-    block.call(self)
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # :section: Backtrack
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  public
-
-  # Dummy implementation. See Component#backtrack_state for more information. 
-  #
-  # [+snapshot+]
-  #    An object of class Snapshot
-
-  def backtrack_state(snapshot)
   end
 
 end

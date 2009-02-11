@@ -2,7 +2,7 @@ require 'wee/abstractsession'
 
 class Wee::Session < Wee::AbstractSession
 
-  attr_accessor :component_runner
+  attr_accessor :root_component
   attr_accessor :page_store
 
   def initialize(&block)
@@ -25,10 +25,11 @@ class Wee::Session < Wee::AbstractSession
 
     with_session do
       block.call(self) if block
-      raise ArgumentError, "No component runner specified" if @component_runner.nil?
+      raise ArgumentError, "No root_component specified" if @root_component.nil?
       raise ArgumentError, "No page_store specified" if @page_store.nil?
-    
-      @initial_snapshot = @component_runner.snapshot
+
+      @initial_page = Wee::Page.new(nil, @root_component, nil, nil)   
+      @initial_page.snapshot = @initial_page.take_snapshot
     end
   end
 
@@ -60,7 +61,7 @@ class Wee::Session < Wee::AbstractSession
   end
 
   def handle_new_page
-    handle_new_page_view(@context, @initial_snapshot)
+    handle_new_page_view(@context, @initial_page)
   end
 
   def handle_existing_page
@@ -89,8 +90,8 @@ class Wee::Session < Wee::AbstractSession
     # 2. Render the page (respond).
     # 3. Store the page back into the store
 
-    @page = create_page(@page.snapshot)  # remove all action/input handlers
-    respond(@context, @page.callbacks)                    # render
+    @page = Wee::Page.new(nil, @root_component, @page.snapshot, Wee::Callbacks.new) # remove all action/input handlers
+    respond(@context, @page)                              # render
     @page_store[@context.request.page_id] = @page         # store
   end
 
@@ -100,14 +101,13 @@ class Wee::Session < Wee::AbstractSession
     # We process the request and invoke actions/inputs. Then we generate a
     # new page view. 
 
-    callback_stream = Wee::CallbackStream.new(@page.callbacks, @context.request.fields) 
-    premature_response = @component_runner.process_callbacks(callback_stream)
+    premature_response = @page.process_callbacks(@context.request.fields)
 
     post_callbacks_hook()
 
     if premature_response
       # replace existing page with new snapshot
-      @page.snapshot = @component_runner.snapshot
+      @page.snapshot = @page.take_snapshot
       @page_store[@context.request.page_id] = @page
       @snapshot_page_id = @context.request.page_id  
 
@@ -118,33 +118,31 @@ class Wee::Session < Wee::AbstractSession
     end
   end
 
-  def handle_new_page_view(context, snapshot=nil)
+  def handle_new_page_view(context, page=nil)
     new_page_id = @idgen.next.to_s
-    new_page = create_page(snapshot || @component_runner.snapshot)
+    new_page = Wee::Page.new(nil, @root_component, nil, Wee::Callbacks.new)
+    if page
+      new_page.snapshot = page.snapshot
+    else
+      new_page.snapshot = new_page.take_snapshot
+    end
     @page_store[new_page_id] = new_page
     @snapshot_page_id = new_page_id 
     redirect_url = context.request.build_url(:page_id => new_page_id)
     set_response(context, Wee::RedirectResponse.new(redirect_url))
   end
 
-  def respond(context, callbacks)
+  def respond(context, page)
     pre_respond_hook
     set_response(context, Wee::GenericResponse.new('text/html', ''))
-    rctx = Wee::RenderingContext.new(context, callbacks, Wee::HtmlWriter.new(context.response.content))
-    @component_runner.render(rctx)
+    rctx = Wee::RenderingContext.new(context, page.callbacks, Wee::HtmlWriter.new(context.response.content))
+    page.render(rctx)
   end
 
   def pre_respond_hook
   end
 
   def post_callbacks_hook
-  end
-
-  # Return a new Wee::Page object with the given snapshot assigned.
-
-  def create_page(snapshot)
-    idgen = Wee::SequentialIdGenerator.new
-    page = Wee::Page.new(snapshot, Wee::CallbackRegistry.new(idgen))
   end
 
 end

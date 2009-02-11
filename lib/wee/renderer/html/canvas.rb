@@ -89,11 +89,12 @@ class HtmlCanvasRenderer < Renderer
   end
 
   def register_callback(type, callback)
-    self.rendering_context.callbacks.register_for(self.current_component, type, callback)
-  end
-
-  def register_named_callback(name, type, callback)
-    self.rendering_context.callbacks.register_named_for(self.current_component, type, callback, name)
+    cbs = self.rendering_context.callbacks
+    if cbs.respond_to?("#{type}_callbacks")
+      cbs.send("#{type}_callbacks").register(self.current_component, callback)
+    else
+      raise
+    end
   end
 
   def table(*args, &block)
@@ -229,7 +230,7 @@ class HtmlCanvasRenderer < Renderer
 
   def render(obj)
     self.close
-    obj.decoration.do_render(@rendering_context)
+    obj.decoration.render_on(@rendering_context)
     nil
   end
 

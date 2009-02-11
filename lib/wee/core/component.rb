@@ -4,22 +4,6 @@
 class Wee::Component < Wee::Presenter
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # :section: Render
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  public
-
-  # This method renders the content of this component.
-  #
-  # *OVERWRITE* this method in your own component class to implement the
-  # view. By default this method does nothing!
-  #
-  # Use the current renderer as returned by #renderer or it's short-cut #r.
-
-  def render
-  end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # :section: Callback
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -27,17 +11,20 @@ class Wee::Component < Wee::Presenter
 
   # Process and invoke all callbacks specified for this component and all of
   # it's child components. 
-  #
-  # [+block+]
-  #    Specifies the action to be taken (e.g. whether to invoke input or action
-  #    callbacks).
 
-  def process_callbacks(&block)
-    block.call(self)
+  def process_callbacks(callbacks)
+    callbacks.input_callbacks.each_triggered(self) do |callback, value|
+      callback.call(value)
+    end
 
     # process callbacks of all children
     each do |child|
-      child.decoration.process_callbacks(&block)
+      child.decoration.process_callbacks(callbacks)
+    end
+
+    callbacks.action_callbacks.each_triggered(self) do |callback, value|
+      callback.call
+      # TODO: return to main loop
     end
   end
 
