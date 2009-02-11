@@ -37,7 +37,7 @@ class Wee::Presenter
     context.callbacks = session.current_callbacks
     context.document = Wee::HtmlWriter.new(response.content)
 
-    with_renderer_for(context, &block)
+    block.call(renderer_class.new(context, self))
 
     send_response(response)
   end

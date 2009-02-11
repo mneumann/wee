@@ -1,9 +1,10 @@
+$LOAD_PATH.unshift "../lib"
 require 'wee'
 require 'wee/adaptors/webrick'
 require 'wee/utils'
 
 class Demo < Wee::Component
-  def render
+  def render(r)
     r.h1 'Wee Demos' 
     r.ul {
       APPS.each do |name, descr, _| 

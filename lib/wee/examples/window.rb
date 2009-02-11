@@ -18,7 +18,7 @@ class Wee::Examples::Window < Wee::Component
     super
   end
 
-  def render
+  def render(r)
     return if @status == :closed
 
     r.table.cellspacing(0).style("border:solid 1px grey; position: absolute; left: #{@pos_x}; top: #{@pos_y};").with do

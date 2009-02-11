@@ -4,8 +4,6 @@
 
 class Wee::Presenter
 
-  public
-
   # This method renders the content of the presenter.
   #
   # *OVERWRITE* this method in your own presenter classes to implement the
@@ -13,7 +11,7 @@ class Wee::Presenter
   #
   # Use the current renderer as returned by #renderer or it's short-cut #r.
 
-  def render
+  def render(r)
   end
 
   # Render the presenter in the given rendering context. <b>DO NOT</b>
@@ -27,7 +25,7 @@ class Wee::Presenter
   #    An object of class Context
 
   def render_on(context)
-    with_renderer_for(context) do render() end
+    render(renderer_class.new(context, self))
   end
 
   # Dummy implementation. See Component#backtrack_state for more information. 
@@ -50,26 +48,6 @@ class Wee::Presenter
   end
 
   protected
-
-  # Returns the current renderer object for use by the render methods.
-  def renderer() @__renderer end
-
-  # Short cut for #renderer.
-  def r() @__renderer end
-
-  # Creates a new renderer object of the class returned by method
-  # #renderer_class, then makes this the current renderer for the time the
-  # block it yields to executes. Finally, it restores the current renderer to
-  # the former one and closes the newly created renderer. 
-
-  def with_renderer_for(context) 
-    old_renderer = @__renderer
-    begin
-      renderer_class.new(context, self) {|@__renderer| yield }
-    ensure
-      @__renderer = old_renderer
-    end
-  end
 
   # Returns the class used as renderer for this presenter. Overwrite this
   # method if you want to use a different renderer.

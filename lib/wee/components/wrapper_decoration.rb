@@ -1,7 +1,9 @@
 class Wee::WrapperDecoration < Wee::Decoration
   def render_on(context)
-    with_renderer_for(context) do
-      render_wrapper { super(context) }
-    end
+    render_wrapper(renderer_class.new(context, self)) { super(context) }
+  end
+
+  def render_wrapper(r)
+    yield
   end
 end

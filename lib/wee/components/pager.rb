@@ -61,34 +61,34 @@ class Wee::Pager < Wee::Component
     validate
   end
 
-  def render
+  def render(r)
     return if num_pages() <= 0
-    render_arrow(:first, "<<", "Go to first page"); r.space(2)
-    render_arrow(:prev, "<", "Go to previous page"); r.space(2)
-    render_index; r.space(2)
-    render_arrow(:next, ">", "Go to next page"); r.space(2)
-    render_arrow(:last, ">>", "Go to last page")
+    render_arrow(r, :first, "<<", "Go to first page"); r.space(2)
+    render_arrow(r, :prev, "<", "Go to previous page"); r.space(2)
+    render_index(r); r.space(2)
+    render_arrow(r, :next, ">", "Go to next page"); r.space(2)
+    render_arrow(r, :last, ">>", "Go to last page")
   end
 
   private
 
-  def render_arrow(sym, text, tooltip=text)
+  def render_arrow(r, sym, text, tooltip=text)
     r.anchor.callback(sym).tooltip(tooltip).with { r.encode_text(text) }
   end
 
-  def render_index
+  def render_index(r)
     last = last_page_index()
     (0 .. last).each do |i|
       if i == @current_page
-        render_page_num(i, true)
+        render_page_num(r, i, true)
       else
-        render_page_num(i, false)
+        render_page_num(r, i, false)
       end
       r.space if i < last
     end
   end
 
-  def render_page_num(num, current)
+  def render_page_num(r, num, current)
     if current
       r.bold(num+1)
     else

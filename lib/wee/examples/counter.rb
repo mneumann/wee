@@ -19,15 +19,15 @@ class Wee::Examples::Counter < Wee::Component
     @count += 1
   end
 
-  def render
-    r.anchor.callback(:dec).with("--")
+  def render(r)
+    r.anchor.callback { dec }.with("--")
     r.space
-    render_count
+    render_count(r)
     r.space 
-    r.anchor.callback(:inc).with("++")
+    r.anchor.callback { inc }.with("++")
   end
 
-  def render_count
+  def render_count(r)
     r.text @count.to_s
   end
 end

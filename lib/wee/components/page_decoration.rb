@@ -8,7 +8,7 @@ class Wee::PageDecoration < Wee::WrapperDecoration
 
   private
 
-  def render_wrapper
+  def render_wrapper(r)
     r.page.title(@title).with { yield }
   end
 end

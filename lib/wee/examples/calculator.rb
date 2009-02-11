@@ -8,7 +8,7 @@ class Wee::Examples::Calculator < Wee::Component
     @input = "" 
   end
 
-  def render
+  def render(r)
     # the number stack
 
     r.ul { @number_stack.each {|num| r.li(num)} }

@@ -9,12 +9,12 @@ class Wee::Examples::EditableCounter < Wee::Examples::Counter
     @show_edit_field = false
   end
 
-  def render_count
+  def render_count(r)
     if @show_edit_field
-      r.text_input.callback(:count=).value(@count).size(6)
-      r.submit_button.callback(:submit).value('S')
+      r.text_input.value(@count).size(6).callback {|val| self.count = val}
+      r.submit_button.value('S').callback { submit }
     else
-      r.anchor.callback(:submit).with(@count) 
+      r.anchor.callback { submit }.with(@count)
     end
   end
 

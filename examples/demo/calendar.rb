@@ -140,23 +140,23 @@ class MiniCalendar < Wee::Component
   
   # Render a given day
   #
-  def render_day(date)
+  def render_day(r, date)
     if current_month?(date)
-      selected_day?(date) ? render_selected_day(date) : render_month_day(date)
+      selected_day?(date) ? render_selected_day(r, date) : render_month_day(r, date)
     else
-      render_other_day(date)
+      render_other_day(r, date)
     end
   end
   
   # Render a day of the currently selected month
   #
-  def render_month_day(date)
+  def render_month_day(r, date)
     r.table_data { r.anchor.callback { save(date) }.with(date.day) }
   end
   
   # Render the currently selected day
   #
-  def render_selected_day(date)
+  def render_selected_day(r, date)
     r.table_data.style('border: 1px solid black').with do
       r.anchor.style('font-weight: bold').callback { save(date) }.with(date.day)
     end
@@ -164,7 +164,7 @@ class MiniCalendar < Wee::Component
   
   # Render days of the previous or next month
   #
-  def render_other_day(date)
+  def render_other_day(r, date)
     r.table_data do
       r.anchor.style('color: silver').callback { save(date) }.with(date.day)
     end
@@ -172,13 +172,13 @@ class MiniCalendar < Wee::Component
   
   # CSS styles
   #
-  def render_styles
+  def render_styles(r)
     # ...
   end
   
   # Render Calender header
   #
-  def render_header
+  def render_header(r)
     r.table_row do
       r.table_header.colspan(4).with { r.encode_text(month_heading) }
       r.table_header { r.anchor.callback { go_prev }.with(prev_month_abbr) }
@@ -189,27 +189,27 @@ class MiniCalendar < Wee::Component
   
   # Render Calendar footer
   #
-  def render_footer
+  def render_footer(r)
     r.table_row { r.table_header.colspan(7).with { r.encode_text(today_string) } }
   end
   
   # Render Calendar
   #
-  def render
+  def render(r)
     r.html do
-      r.head { r.title('Calendar'); render_styles }
+      r.head { r.title('Calendar'); render_styles(r) }
       r.body do
         r.text(sprintf('<!--Month: %s, Day: %s-->', @month, @day))
         r.table { r.table_row { r.table_header {
           r.table do
-            render_header
+            render_header(r)
             r.table_row { Date::ABBR_DAYNAMES.each { |day| r.table_header(day) } }
             @month.calendar.each do |week|
               r.table_row do
-                week.each { |day| render_day(day) }
+                week.each { |day| render_day(r, day) }
               end
             end
-            render_footer
+            render_footer(r)
           end
         }}}
       end
@@ -246,7 +246,7 @@ end
 # Custom CSS styles
 #
 module StyleMixin
-  def render_styles
+  def render_styles(r)
     r.style("
       a {
         text-decoration: none;
@@ -308,16 +308,16 @@ class CustomCalendarDemo < Wee::Component
 
   # Render calendar icon
   #
-  def render_icon
+  def render_icon(r)
     icon = 'http://www.softcomplex.com/products/tigra_calendar/img/cal.gif'
     r.image.src(icon).width(16).height(16).border(0).alt('Calendar')
   end
   
   # Render Calendar demo
   #
-  def render
+  def render(r)
     r.html do
-      r.head { r.title('Calendar Demo'); render_styles }
+      r.head { r.title('Calendar Demo'); render_styles(r) }
       r.body do
         r.break
         r.table { r.table_row { r.table_header {
@@ -326,7 +326,7 @@ class CustomCalendarDemo < Wee::Component
             r.table_row { r.table_data {
               r.text_input.value(@date).attr(:date)
               r.space
-              r.anchor.callback { calendar }.with { render_icon }
+              r.anchor.callback { calendar }.with { render_icon(r) }
             }}
           end
         }}}

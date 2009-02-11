@@ -8,18 +8,17 @@
 #
 #   class HeaderFooterDecoration < Wee::Decoration
 #     def render_on(context)
-#       with_renderer_for(context) do
-#         render_header
-#         super(context)
-#         render_footer
-#       end
+#       r = renderer_class.new(context, self)
+#       render_header(r)
+#       super(context)
+#       render_footer(r)
 #     end
 #
-#     def render_header
+#     def render_header(r)
 #       r.text "header
 #     end
 #
-#     def render_footer
+#     def render_footer(r)
 #       ...
 #     end
 #   end
