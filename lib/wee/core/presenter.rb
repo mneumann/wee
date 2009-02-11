@@ -23,11 +23,11 @@ class Wee::Presenter
   # #renderer_class, makes this the current renderer, then invokes method
   # #render.
   #
-  # [+rendering_context+]
-  #    An object of class RenderingContext
+  # [+context+]
+  #    An object of class Context
 
-  def render_on(rendering_context)
-    with_renderer_for(rendering_context) do render() end 
+  def render_on(context)
+    with_renderer_for(context) do render() end
   end
 
   # Dummy implementation. See Component#backtrack_state for more information. 
@@ -62,10 +62,10 @@ class Wee::Presenter
   # block it yields to executes. Finally, it restores the current renderer to
   # the former one and closes the newly created renderer. 
 
-  def with_renderer_for(rendering_context) 
+  def with_renderer_for(context) 
     old_renderer = @__renderer
     begin
-      renderer_class.new(rendering_context, self) {|@__renderer| yield }
+      renderer_class.new(context, self) {|@__renderer| yield }
     ensure
       @__renderer = old_renderer
     end

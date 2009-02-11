@@ -11,11 +11,11 @@ class Wee::LoginDecoration < Wee::Decoration
     end
   end
 
-  def render_on(rendering_context)
+  def render_on(context)
     if logged_in?
       super
     else
-      @login_page.decoration.render_on(rendering_context)
+      @login_page.decoration.render_on(context)
     end
   end
 

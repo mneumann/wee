@@ -56,9 +56,9 @@ class HtmlCanvasRenderer < Renderer
     }
   end
 
-  def initialize(rendering_context, current_component=nil, &block)
+  def initialize(context, current_component=nil, &block)
     # cache the document, to reduce method calls
-    @document = rendering_context.document 
+    @document = context.document 
 
     initialize_canvas
     super
@@ -81,11 +81,11 @@ class HtmlCanvasRenderer < Renderer
   end
 
   def build_url(*args)
-    rendering_context.request.build_url(*args)
+    context.request.build_url(*args)
   end
 
   def register_callback(type, callback)
-    cbs = self.rendering_context.callbacks
+    cbs = self.context.callbacks
     if cbs.respond_to?("#{type}_callbacks")
       cbs.send("#{type}_callbacks").register(self.current_component, callback)
     else
@@ -226,7 +226,7 @@ class HtmlCanvasRenderer < Renderer
 
   def render(obj)
     self.close
-    obj.decoration.render_on(@rendering_context)
+    obj.decoration.render_on(@context)
     nil
   end
 

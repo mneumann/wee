@@ -34,15 +34,10 @@ class Wee::Presenter
 
     # Get the current context we are in
     context = session.current_context
+    context.callbacks = session.current_callbacks
+    context.document = Wee::HtmlWriter.new(response.content)
 
-    # A rendering context is needed to use 'r' (if you want, you can simply
-    # omit this and just return the response with some html/xml filled in.
-    rendering_context = Wee::RenderingContext.new(
-      context,
-      session.current_callbacks, 
-      Wee::HtmlWriter.new(response.content))
-
-    with_renderer_for(rendering_context, &block)
+    with_renderer_for(context, &block)
 
     send_response(response)
   end

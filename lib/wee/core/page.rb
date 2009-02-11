@@ -18,8 +18,8 @@ class Wee::Page
 
   # Render the root component with the given rendering context.
 
-  def render(rendering_context)
-    @root_component.decoration.render_on(rendering_context)
+  def render(context)
+    @root_component.decoration.render_on(context)
   end
 
   # This method processes the callbacks of the root component.

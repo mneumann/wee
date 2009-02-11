@@ -12,9 +12,9 @@ class Wee::ComponentDispatcher < Wee::Component
     @rules << [pattern, component, block]
   end
 
-  def render_on(rendering_context)
+  def render_on(context)
     if component = match(session.current_context.request.info)
-      component.decoration.render_on(rendering_context)
+      component.decoration.render_on(context)
     end
   end
 

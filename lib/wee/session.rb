@@ -135,8 +135,9 @@ class Wee::Session < Wee::AbstractSession
   def respond(context, page)
     pre_respond_hook
     set_response(context, Wee::GenericResponse.new('text/html', ''))
-    rctx = Wee::RenderingContext.new(context, page.callbacks, Wee::HtmlWriter.new(context.response.content))
-    page.render(rctx)
+    context.callbacks = page.callbacks
+    context.document = Wee::HtmlWriter.new(context.response.content)
+    page.render(context)
   end
 
   def pre_respond_hook

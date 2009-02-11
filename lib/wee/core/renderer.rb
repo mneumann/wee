@@ -1,11 +1,11 @@
 # Base class of all Renderer classes.
 
 class Wee::Renderer
-  attr_reader   :rendering_context   # holds the current Wee::RenderingContext
+  attr_reader   :context   # holds the current Wee::Context
   attr_accessor :current_component
 
-  def initialize(rendering_context, current_component=nil, &block)
-    @rendering_context = rendering_context
+  def initialize(context, current_component=nil, &block)
+    @context = context
     @current_component = current_component
     if block
       begin
