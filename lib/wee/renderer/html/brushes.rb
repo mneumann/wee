@@ -109,43 +109,20 @@ class GenericTagBrush < Brush
     self
   end
 
-  # Converts the arguments into a callable object.
-  #
-  def to_callback(symbol, args, block)
-    raise ArgumentError if symbol and block
-    if symbol.nil?
-      raise ArgumentError if not args.empty?
-      block
-    else
-      if symbol.is_a?(Symbol) or symbol.is_a?(String)
-        Wee::LiteralMethodCallback.new(@canvas.current_component, symbol, *args)
-      else
-        raise ArgumentError if not args.empty?
-        symbol
-      end
-    end
-  end
-
   public
 
-  def __input_callback(symbol=nil, *args, &block)
-    name(@canvas.register_callback(:input, to_callback(symbol, args, block)))
+  def __input_callback(&block)
+    name(@canvas.register_callback(:input, block))
   end
 
-  def __action_callback(symbol=nil, *args, &block)
-    name(@canvas.register_callback(:action, to_callback(symbol, args, block)))
-  end
-
-  # The callback id is listed in the URL (not as a form-data field)
-
-  def __actionurl_callback(symbol=nil, *args, &block)
-    __set_url(@canvas.url_for_callback(to_callback(symbol, args, block)))
+  def __action_callback(&block)
+    name(@canvas.register_callback(:action, block))
   end
 
   # The callback id is listed in the URL (not as a form-data field)
 
-  def __actionurl_named_callback(name, symbol=nil, *args, &block)
-    __set_url(@canvas.url_for_named_callback(name, to_callback(symbol, args, block)))
+  def __actionurl_callback(&block)
+    __set_url(@canvas.url_for_callback(block))
   end
 
   def method_missing(id, attr)
@@ -489,8 +466,8 @@ class RadioButtonTag < InputTag
     self
   end
 
-  def callback(symbol=nil, *args, &block)
-    @callback = to_callback(symbol, args, block)
+  def callback(&block)
+    @callback = block
     self
   end
 
@@ -579,13 +556,14 @@ class FormTag < GenericTagBrush
 
   alias __set_url action
   alias callback __actionurl_callback
-  alias named_callback __actionurl_named_callback
 
-  def onsubmit_update(update_id, symbol=nil, *args, &block)
+=begin
+  def onsubmit_update(update_id, &block)
     raise ArgumentError if symbol and block
-    url = @canvas.url_for_callback(to_callback(symbol, args, block), :live_update)
+    url = @canvas.url_for_callback(block, :live_update)
     onsubmit("javascript: new Ajax.Updater('#{ update_id }', '#{ url }', {method:'get', parameters: Form.serialize(this)}); return false;")
   end
+=end
 
   def with(*args, &block)
     # If no action was specified, use a dummy one.
@@ -611,19 +589,11 @@ class AnchorTag < GenericTagBrush
     self
   end
 
-  def callback(symbol=nil, *args, &block)
+  def callback(&block)
     if @info
-      __set_url(@canvas.url_for_callback(to_callback(symbol, args, block), :action, :info => @info))
+      __set_url(@canvas.url_for_callback(block, :action, :info => @info))
     else
-      __set_url(@canvas.url_for_callback(to_callback(symbol, args, block)))
-    end
-  end
-
-  def named_callback(name, symbol=nil, *args, &block)
-    if @info
-      __set_url(@canvas.url_for_named_callback(name, to_callback(symbol, args, block), :info => @info))
-    else
-      __set_url(@canvas.url_for_named_callback(name, to_callback(symbol, args, block)))
+      __set_url(@canvas.url_for_callback(block))
     end
   end
 

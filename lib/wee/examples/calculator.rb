@@ -19,26 +19,26 @@ class Wee::Examples::Calculator < Wee::Component
 
     r.space
 
-    r.submit_button.value("Enter").callback(:enter)
+    r.submit_button.value("Enter").callback { enter }
 
-    r.submit_button.value("C").callback(:clear)
+    r.submit_button.value("C").callback { clear }
 
     r.break
 
     # the number buttons
 
     (0..9).each {|num|
-      r.submit_button.value(num).callback(:append, num.to_s)
+      r.submit_button.value(num).callback { append(num.to_s) }
     }
 
     # the decimal point
 
-    r.submit_button.value(".").disabled(@input.include?(".")).callback(:append, '.')
+    r.submit_button.value(".").disabled(@input.include?(".")).callback { append(".") }
 
     # binary operators
 
     ['+', '-', '*', '/'].each { |op|
-      r.submit_button.value(op).callback(:operation, op)
+      r.submit_button.value(op).callback { operation(op) }
     }
   end
 

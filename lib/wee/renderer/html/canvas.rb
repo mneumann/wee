@@ -72,10 +72,6 @@ class HtmlCanvasRenderer < Renderer
     url_for_callback_id(register_callback(type, callback), hash)
   end
 
-  def url_for_named_callback(name, callback, hash=nil)
-    url_for_callback_id(register_named_callback(name, :action, callback), hash)
-  end
-
   def url_for_callback_id(callback_id, hash=nil)
     if hash
       build_url(hash.update(:callback_id => callback_id))
