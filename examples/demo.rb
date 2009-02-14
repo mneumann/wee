@@ -1,6 +1,6 @@
 $LOAD_PATH.unshift "../lib"
 require 'wee'
-require 'wee/utils'
+require 'wee/lru_cache'
 require 'rubygems'
 require 'rack'
 require 'rack/builder'
@@ -28,7 +28,7 @@ class RackHandler
       app.default_request_handler {
         Wee::Session.new {|sess|
           sess.root_component = block.call 
-          sess.page_store = Wee::Utils::LRUCache.new  
+          sess.page_store = Wee::LRUCache.new
         }
       }
     }
