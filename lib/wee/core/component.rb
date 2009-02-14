@@ -3,12 +3,6 @@
 
 class Wee::Component < Wee::Presenter
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # :section: Callback
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  public
-
   # Process and invoke all callbacks specified for this component and all of
   # it's child components. 
 
@@ -28,10 +22,6 @@ class Wee::Component < Wee::Presenter
     end
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # :section: Init
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   protected
 
   # Initializes a newly created component.
@@ -43,10 +33,6 @@ class Wee::Component < Wee::Presenter
     @__decoration = Wee::ValueHolder.new(self)
     @__children = []
   end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # :section: Children/Composite
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   protected
 
@@ -84,10 +70,6 @@ class Wee::Component < Wee::Presenter
     self.children << child
     child
   end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # :section: Decoration
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   public
 
@@ -185,10 +167,6 @@ class Wee::Component < Wee::Presenter
     each_decoration {|d| to_remove << d if yield d}
     to_remove.each {|d| remove_decoration(d)}
   end
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # :section: Backtrack
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   public
 

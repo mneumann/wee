@@ -14,10 +14,6 @@ class Wee::Session < Wee::AbstractSession
     @page.callbacks
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # :section: Request processing/handling
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   protected
 
   def setup(&block)

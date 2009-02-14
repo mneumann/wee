@@ -4,10 +4,6 @@ class Wee::Presenter
     Wee::DefaultRenderer
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # :section: Session
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   public
 
   # Returns the current session. A presenter (or component) has always an
