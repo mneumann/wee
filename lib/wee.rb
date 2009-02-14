@@ -26,7 +26,6 @@ require 'wee/response'
 require 'wee/session'
 
 require 'wee/components'
-require 'wee/snapshot_ext'
 
 require 'wee/renderer/html/writer'
 require 'wee/renderer/html/brushes'
