@@ -3,12 +3,9 @@ require 'rack'
 module Wee
   
   #
-  # Represents a request.
-  # 
-  # XXX
-  # NOTE that if there are fields named "xxx" and "xxx.yyy", the value of
-  # fields['xxx'] is a Hash {nil => val of "xxx", 'yyy' => val of 'xxx.yyy'}.
-  # This is for the image-button to work correctly.
+  # NOTE that if fields named "xxx" and "xxx.yyy" occur, the value of 
+  # @fields['xxx'] is { nil => ..., 'yyy' => ... }. This is required
+  # to make image buttons work correctly.
   #
   class Request < Rack::Request
 
