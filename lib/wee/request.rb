@@ -25,7 +25,7 @@ module Wee
             @fields[prefix] = { nil => @fields[prefix], postfix => val }
           end
         else
-          if @fields[key]
+          if @fields[key].kind_of?(Hash)
             @fields[key][nil] = val
           else
             @fields[key] = val
