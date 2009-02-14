@@ -26,12 +26,12 @@ class Wee::Presenter
 
   def send_render_response(&block)
     # Generate a response
-    response = Wee::GenericResponse.new('text/html', '')
+    response = Wee::GenericResponse.new
 
     # Get the current context we are in
     context = session.current_context
     context.callbacks = session.current_callbacks
-    context.document = Wee::HtmlWriter.new(response.content)
+    context.document = Wee::HtmlWriter.new(response)
 
     block.call(renderer_class.new(context, self))
 

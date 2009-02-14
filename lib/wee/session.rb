@@ -130,9 +130,9 @@ class Wee::Session < Wee::AbstractSession
 
   def respond(context, page)
     pre_respond_hook
-    set_response(context, Wee::GenericResponse.new('text/html', ''))
+    set_response(context, Wee::GenericResponse.new)
     context.callbacks = page.callbacks
-    context.document = Wee::HtmlWriter.new(context.response.content)
+    context.document = Wee::HtmlWriter.new(context.response)
     page.render(context)
   end
 

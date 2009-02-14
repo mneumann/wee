@@ -13,7 +13,6 @@ class Wee::Request
   attr_accessor :info
 
   def initialize(app_path, path, headers, fields, cookies)
-    raise ArgumentError if app_path[-1] == ?/
     @app_path, @path, @headers, @cookies = app_path, path, headers, cookies
     parse_fields(fields)
     parse_path

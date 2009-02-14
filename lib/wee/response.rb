@@ -1,86 +1,66 @@
 require 'time'
-require 'cgi'
+require 'rack'
 
-class Wee::Response
-  DEFAULT_HEADER = {}.freeze
+module Wee
+  class Response < Rack::Response
+    alias << write
 
-  attr_accessor :status, :content
-  attr_reader :header
+    # TODO
+    def cookies?; false end
+    def cookies; [] end
 
-  def cookies?
-    @cookies
+    def content_type
+      self['Content-Type']
+    end
+
+    def content_type=(ct)
+      self['Content-Type'] = ct
+    end
   end
 
-  def cookies
-    @cookies ||= []   
+  class GenericResponse < Response
+    EXPIRE_OFFSET = 3600*24*365*20   # 20 years
+
+    def initialize(*args)
+      super
+      self['Expires'] ||= (Time.now + EXPIRE_OFFSET).rfc822
+    end
   end
 
-  def initialize(mime_type = 'text/html', content='')
-    @status = 200
-    @header = DEFAULT_HEADER.dup
-    self.content_type = mime_type
-    @content = content 
+  class RedirectResponse < GenericResponse
+    def initialize(location)
+      super(['<title>302 - Redirect</title><h1>302 - Redirect</h1>',
+             '<p>You are being redirected to <a href="', location, '">', 
+             location, '</a>'], 302, 'Location' => location)
+    end
   end
 
-  def content_type
-    @header['Content-Type']
+  class RefreshResponse < GenericResponse
+    def initialize(message, location, seconds=10)
+      super(%[<html>
+        <head>
+          <meta http-equiv="REFRESH" content="#{seconds};URL=#{location}">
+          <title>#{message}</title>
+        </head>
+        <body>
+          <h1>#{message}</h1>
+          You are being redirected to <a href="#{location}">#{location}</a>
+        </body>
+        </html>])
+    end
   end
 
-  def content_type=(mime_type)
-    @header['Content-Type'] = mime_type
+  class ErrorResponse < Response
+    include Rack::Utils
+
+    def initialize(exception)
+      super()
+      write "<html><head><title>Error occured</title></head><body>"
+      write "<p>#{ escape_html(@exception.inspect) }<br/>"
+      write exception.backtrace.map{|s| escape_html(s)}.join("<br/>") 
+      write "</p>"
+      write "</body></html>"
+    end
   end
 
-  def <<(str)
-    @content << str
-  end
-end
-
-class Wee::GenericResponse < Wee::Response
-
-  EXPIRE_OFFSET = 3600*24*365*20   # 20 years
-
-  def initialize(mime_type = 'text/html', content='')
-    super
-    @header['Expires'] = (Time.now + EXPIRE_OFFSET).rfc822
-  end
-
-end
-
-class Wee::RedirectResponse < Wee::GenericResponse
-  def initialize(location)
-    super('text/html', %[<title>302 - Redirect</title><h1>302 - Redirect</h1><p>You are being redirected to <a href="#{location}">#{location}</a>])
-    @status = 302
-    @header['Location'] = location
-  end
-end
-
-class Wee::RefreshResponse < Wee::GenericResponse
-  def initialize(message, location, seconds=10)
-    super('text/html', %[<html>
-      <head>
-        <meta http-equiv="REFRESH" content="#{seconds};URL=#{location}">
-        <title>#{message}</title>
-      </head>
-      <body>
-        <h1>#{message}</h1>
-        You are being redirected to <a href="#{location}">#{location}</a>
-      </body>
-      </html>])
-  end
-end
-
-class Wee::ErrorResponse < Wee::Response
-  def initialize(exception)
-    super('text/html', '')
-    @exception = exception
-    render(@content)
-  end
-
-  def render(c)
-    c << "<html><head><title>Error occured</title></head><body>"
-    c << "<p>#{ CGI.escapeHTML(@exception.inspect) }<br/>"
-    c << @exception.backtrace.map{|s| CGI.escapeHTML(s)}.join("<br/>") 
-    c << "</p>"
-    c << "</body></html>"
-  end
 end

@@ -1,7 +1,11 @@
 $LOAD_PATH.unshift "../lib"
 require 'wee'
-require 'wee/adaptors/webrick'
 require 'wee/utils'
+require 'rubygems'
+require 'rack'
+require 'rack/builder'
+
+APPS = []
 
 class Demo < Wee::Component
   def render(r)
@@ -16,7 +20,29 @@ class Demo < Wee::Component
   end
 end
 
-APPS = []
+class RackHandler
+  def initialize(description, &block)
+    @description = description
+    @block = block
+    @application = Wee::Application.new {|app|
+      app.default_request_handler {
+        Wee::Session.new {|sess|
+          sess.root_component = block.call 
+          sess.page_store = Wee::Utils::LRUCache.new  
+        }
+      }
+    }
+  end
+
+  def call(env)
+    req = Rack::Request.new(env)
+    context = Wee::Context.new(Wee::Request.new(req.script_name, req.path_info, {}, req.params, req.cookies))
+    @application.handle_request(context)
+    return context.response.finish
+  end
+end
+
+
 def APPS.add(name, description=nil, &block)
   self << [name, description||name, block]
 end
@@ -42,15 +68,14 @@ APPS.add 'example', 'Misc Components' do
   MainPage.new
 end
 
-APPS.each do |name, descr, block|
-  Wee::WEBrickAdaptor.register("/#{ name }" => 
-    Wee::Application.new {|app|
-      app.default_request_handler {
-        Wee::Session.new {|sess|
-          sess.root_component = block.call 
-          sess.page_store = Wee::Utils::LRUCache.new  
-        }
-      }
-    })
+app = Rack::Builder.app do
+  use Rack::CommonLogger
+  APPS.each do |name, descr, block|
+    map "/#{name}" do
+      run RackHandler.new('This demo application', &block)
+    end
+  end
 end
-Wee::WEBrickAdaptor.start
+
+require 'rack/handler/webrick'
+Rack::Handler::WEBrick.run(app, :Port => 2000)
