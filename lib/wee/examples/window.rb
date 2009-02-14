@@ -1,16 +1,12 @@
 class Wee::Examples::Window < Wee::Component
 
-  attr_accessor :title, :pos_x, :pos_y, :child
+  attr_accessor :title, :pos_x, :pos_y
 
   def initialize(&block)
     super()
     @status = :normal  
     @pos_x, @pos_y = "0px", "0px"
     block.call(self) if block
-  end
-
-  def children
-    [@child].uniq
   end
 
   def process_callbacks(callbacks)
@@ -36,7 +32,11 @@ class Wee::Examples::Window < Wee::Component
       end
       r.table_row do
         r.table_data.colspan(2).with do
-          r.render(@child) if @child and @status == :normal
+          if @status == :normal
+            each do |child|
+              r.render(child)
+            end
+          end
         end
       end
     end
