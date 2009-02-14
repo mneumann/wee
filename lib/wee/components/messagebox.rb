@@ -4,12 +4,12 @@ class Wee::MessageBox < Wee::Component
     @text = text 
   end
 
-  def render
+  def render(r)
     r.bold(@text)
     r.form do 
-      r.submit_button.value('OK').callback(:answer, true)
+      r.submit_button.value('OK').callback { answer true }
       r.space
-      r.submit_button.value('Cancel').callback(:answer, false)
+      r.submit_button.value('Cancel').callback { answer false }
     end
   end
 end
