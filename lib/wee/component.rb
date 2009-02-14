@@ -209,10 +209,6 @@ class Wee::Component < Wee::Presenter
     end
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # :section: Call/Answer
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   protected
 
   # Call another component. The calling component is neither rendered nor are
