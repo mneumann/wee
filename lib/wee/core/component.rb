@@ -37,14 +37,14 @@ class Wee::Component < Wee::Presenter
   protected
 
   def children
-    @__children ||= []
+    @__children
   end
 
   #
   # Iterates over all direct child components. 
   #
   def each(&block)
-    @__children.each(&block) if @__children
+    @__children.each(&block)
   end
 
   # Add a child to the component. Example:
