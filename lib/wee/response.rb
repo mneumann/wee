@@ -4,18 +4,6 @@ require 'rack'
 module Wee
   class Response < Rack::Response
     alias << write
-
-    # TODO
-    def cookies?; false end
-    def cookies; [] end
-
-    def content_type
-      self['Content-Type']
-    end
-
-    def content_type=(ct)
-      self['Content-Type'] = ct
-    end
   end
 
   class GenericResponse < Response
