@@ -43,6 +43,14 @@ APPS.add 'example', 'Misc Components' do
 end
 
 APPS.each do |name, descr, block|
-  Wee::WEBrickAdaptor.register("/#{ name }" => Wee::Utils.app_for(&block))
+  Wee::WEBrickAdaptor.register("/#{ name }" => 
+    Wee::Application.new {|app|
+      app.default_request_handler {
+        Wee::Session.new {|sess|
+          sess.root_component = block.call 
+          sess.page_store = Wee::Utils::LRUCache.new  
+        }
+      }
+    })
 end
 Wee::WEBrickAdaptor.start
