@@ -1,4 +1,4 @@
-module Wee::Utils
+module Wee
   module_function
 
   def autoreload(check_interval=10)
