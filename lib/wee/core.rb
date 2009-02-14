@@ -2,14 +2,14 @@
 
 module Wee; end
 
-require 'wee/core/valueholder'
-require 'wee/core/snapshot'
-require 'wee/core/callback'
-require 'wee/core/page'
-require 'wee/core/context'
-require 'wee/core/idgen'
-require 'wee/core/renderer'
+require 'wee/valueholder'
+require 'wee/snapshot'
+require 'wee/callback'
+require 'wee/page'
+require 'wee/context'
+require 'wee/idgen'
+require 'wee/renderer'
 
-require 'wee/core/presenter'
-require 'wee/core/decoration'
-require 'wee/core/component'
+require 'wee/presenter'
+require 'wee/decoration'
+require 'wee/component'
