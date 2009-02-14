@@ -13,7 +13,7 @@ class Wee::Examples::Window < Wee::Component
     [@child].uniq
   end
 
-  def process_callbacks(&block)
+  def process_callbacks(callbacks)
     return if @status == :closed
     super
   end
@@ -26,12 +26,12 @@ class Wee::Examples::Window < Wee::Component
         r.table_data.style("text-align: left; width: 66%").with(@title)
         r.table_data.style("text-align: right").with do
           if @status == :minimized
-            r.anchor.callback(:maximize).with("^")
+            r.anchor.callback{maximize}.with("^")
           else
-            r.anchor.callback(:minimize).with("_")
+            r.anchor.callback{minimize}.with("_")
           end
           r.space
-          r.anchor.callback(:close).with("x")
+          r.anchor.callback{close}.with("x")
         end
       end
       r.table_row do

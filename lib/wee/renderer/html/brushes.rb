@@ -139,15 +139,13 @@ class GenericTagBrush < Brush
   html_attr 'id'
   html_attr 'css_class', :html_name => 'class'
 
-  def onclick_callback(symbol=nil, *args, &block)
-    raise ArgumentError if symbol and block
-    url = @canvas.url_for_callback(to_callback(symbol, args, block))
+  def onclick_callback(&block)
+    url = @canvas.url_for_callback(block)
     onclick("javascript: document.location.href='#{ url }';")          
   end
 
-  def onclick_update(update_id, symbol=nil, *args, &block)
-    raise ArgumentError if symbol and block
-    url = @canvas.url_for_callback(to_callback(symbol, args, block))
+  def onclick_update(update_id, &block)
+    url = @canvas.url_for_callback(block)
     onclick("javascript: new Ajax.Updater('#{ update_id }', '#{ url }', {method:'get'}); return false;")
   end
 
@@ -354,27 +352,9 @@ class SelectListTag < GenericTagBrush
     self
   end
 
-  def callback(symbol=nil, *args, &block)
-    @callback = to_callback(symbol, args, block)
+  def callback(&block)
+    @callback = block 
     self
-  end
-
-  class SelectListCallback < Struct.new(:callback, :items, :is_multiple)
-    def call(input)
-      choosen = input.list.map {|idx| 
-        idx = Integer(idx)
-        raise "invalid index in select list" if idx < 0 or idx > items.size
-        items[idx]
-      }
-      if choosen.size > 1 and not is_multiple
-        raise "choosen more than one element from a non-multiple select list" 
-      end
-      if is_multiple
-        callback.call(choosen)
-      else
-        callback.call(choosen.first)
-      end
-    end
   end
 
   def with
@@ -386,7 +366,17 @@ class SelectListTag < GenericTagBrush
       # A callback was specified. We have to wrap it inside a
       # SelectListCallback object as we want to perform some 
       # additional actions.
-      __input_callback(SelectListCallback.new(@callback, @items, is_multiple))
+      __input_callback {|input|
+        choosen = input.list.map {|idx| 
+          idx = Integer(idx)
+          raise "invalid index in select list" if idx < 0 or idx > @items.size
+          @items[idx]
+        }
+        if choosen.size > 1 and not is_multiple
+          raise "choosen more than one element from a non-multiple select list" 
+        end
+        @callback.call(is_multiple ? choosen : choosen.first)
+      }
     end
 
     super do

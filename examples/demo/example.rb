@@ -24,7 +24,7 @@ class RegexpValidatedInput < Wee::Component
     @input = @value = new_value
   end
 
-  def render
+  def render(r)
     r.form do
       r.text_input.value(@input).callback {|val| self.input = val }
       r.text %(<div style="color: red">Invalid input</div>) if @error
@@ -84,7 +84,7 @@ class MainPage < Wee::Component
 
   attr_accessor :text
 
-  def render
+  def render(r)
     r.page.title("Counter Test").with do 
 
       r.form do
