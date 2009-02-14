@@ -1,103 +1,77 @@
-# Represents a request.
-# 
-# NOTE that if there are fields named "xxx" and "xxx.yyy", the value of
-# fields['xxx'] is a Hash {nil => val of "xxx", 'yyy' => val of 'xxx.yyy'}.
-# This is for the image-button to work correctly.
+require 'rack'
 
-class Wee::Request
+module Wee
+  
+  #
+  # Represents a request.
+  # 
+  # XXX
+  # NOTE that if there are fields named "xxx" and "xxx.yyy", the value of
+  # fields['xxx'] is a Hash {nil => val of "xxx", 'yyy' => val of 'xxx.yyy'}.
+  # This is for the image-button to work correctly.
+  #
+  class Request < Rack::Request
 
-  attr_accessor :request_handler_id
-  attr_reader :page_id, :fields, :cookies
+    attr_reader :fields
+    attr_accessor :request_handler_id
+    attr_accessor :page_id
 
-  # The part of the URL that is user-defineable
-  attr_accessor :info
-
-  def initialize(app_path, path, headers, fields, cookies)
-    @app_path, @path, @headers, @cookies = app_path, path, headers, cookies
-    parse_fields(fields)
-    parse_path
-  end
-
-  def application_path
-    @app_path
-  end
-
-  # Is this an action request?
-  def action?
-    not render?
-  end
-
-  # Is this a render request?
-  def render?
-    self.fields.empty?
-  end
-
-  def build_url(hash={})
-    default = {
-      :request_handler_id => self.request_handler_id,
-      :page_id => self.page_id,
-      :info => self.info
-    }
-    hash = default.update(hash)
-
-    request_handler_id = hash[:request_handler_id]
-    page_id = hash[:page_id]
-    callback_id = hash[:callback_id]
-    info = hash[:info]
-
-    raise ArgumentError if request_handler_id.nil? and not page_id.nil?
-    if not pageless?
-      raise ArgumentError if page_id.nil? and not callback_id.nil?
-    end
-
-    # build the whole url
-    url = ""
-    url << @app_path
-
-    raise if url[-1] == ?/  # sanity check
-
-    if info
-      url << '/'
-      url << info
-    end
-
-    url << '/' if info.nil? and @app_path.empty? 
-    url << "?_s=#{request_handler_id}&_p=#{page_id}"
-    url << ("&" + callback_id) if callback_id
-
-    return url
-  end
-
-  private
-
-  def pageless?
-    false
-  end
-
-  def parse_fields(fields)
-    fields ||= Hash.new
-    @fields = Hash.new
-
-    # sorted by decreasing key length, e.g. "2.x" comes before "2"
-    fields.keys.sort_by {|k| -k.length}.each do |key|
-      val = fields[key] 
-      if key.include?(".")
-        a, b = key.split(".", 2)
-        @fields[a] ||= Hash.new
-        @fields[a][b] = val 
-      else
-        if @fields.has_key?(key)
-          @fields[key][nil] = val
+    def initialize(env)
+      super(env)
+      @fields = {}
+      self.params.each {|key, val|
+        if key.index(".") 
+          prefix, postfix = key.split(".", 2)
+          if @fields[prefix].kind_of?(Hash)
+            @fields[prefix][postfix] = val
+          else
+            @fields[prefix] = { nil => @fields[prefix], postfix => val }
+          end
         else
-          @fields[key] = val
+          if @fields[key]
+            @fields[key][nil] = val
+          else
+            @fields[key] = val
+          end
         end
-      end
-    end
-  end
+      }
 
-  def parse_path
-    @request_handler_id = @fields.delete("_s")
-    @page_id = @fields.delete("_p")
-  end
+      @request_handler_id = @fields.delete("_s")
+      @page_id = @fields.delete("_p")
+    end
+
+    # Is this an action request?
+    def action?
+      not render?
+    end
+
+    # Is this a render request?
+    def render?
+      @fields.empty?
+    end
+
+    include Rack::Utils
+
+    def build_url(hash={})
+      request_handler_id = hash[:request_handler_id] || @request_handler_id
+      page_id = hash[:page_id] || @page_id
+      callback_id = hash[:callback_id]
+      info = hash[:info] || @info
+
+      raise ArgumentError if request_handler_id.nil? and not page_id.nil?
+      raise ArgumentError if page_id.nil? and not callback_id.nil?
+
+      q = {}
+      q['_s'] = request_handler_id if request_handler_id
+      q['_p'] = page_id if page_id
+      q[callback_id] = nil if callback_id 
+
+      path = script_name() + (info || path_info())
+      path << "?" << Rack::Utils.build_query(q) 
+
+      return path
+    end
+
+  end # class Request
 
 end

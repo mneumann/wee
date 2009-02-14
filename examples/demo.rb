@@ -35,8 +35,7 @@ class RackHandler
   end
 
   def call(env)
-    req = Rack::Request.new(env)
-    context = Wee::Context.new(Wee::Request.new(req.script_name, req.path_info, {}, req.params, req.cookies))
+    context = Wee::Context.new(Wee::Request.new(env))
     @application.handle_request(context)
     return context.response.finish
   end

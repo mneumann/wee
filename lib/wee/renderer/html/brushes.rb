@@ -363,11 +363,12 @@ class SelectListTag < GenericTagBrush
     is_multiple = @attributes.has_key?('multiple')
 
     if @callback
-      # A callback was specified. We have to wrap it inside a
-      # SelectListCallback object as we want to perform some 
-      # additional actions.
+      # A callback was specified. We have to wrap it inside another
+      # callback, as we want to perform some additional actions.
       __input_callback {|input|
-        choosen = input.list.map {|idx| 
+        input = [input] unless input.kind_of?(Array)
+
+        choosen = input.map {|idx|
           idx = Integer(idx)
           raise "invalid index in select list" if idx < 0 or idx > @items.size
           @items[idx]
