@@ -45,13 +45,7 @@ module Wee
         item.time = (@time += 1)
         item.value = value
         while @store.size >= @capacity 
-          min_k, min_time = nil, @time
-          @store.each {|k, v|
-            if v.time < min_time 
-              min_k, min_time = k, v.time
-            end
-          }
-          old_item = @store.delete(min_k) || raise
+          old_item = @store.delete(min_key()) || raise
           @replace_callback.call(old_item) if @replace_callback
         end
         @store[key] = item
@@ -64,6 +58,21 @@ module Wee
 
     alias [] fetch
     alias []= store
+
+    protected
+
+    #
+    # Returns the key of the minimum item
+    #
+    def min_key
+      min_k, min_time = nil, @time
+      @store.each {|k, v|
+        if v.time < min_time 
+          min_k, min_time = k, v.time
+        end
+      }
+      return min_k
+    end
 
   end # class LRUCache
 
