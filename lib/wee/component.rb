@@ -85,33 +85,38 @@ module Wee
     # <i>marshal_load</i>). Overwrite them if you want to define special
     # behaviour. 
     #
-    # By default only <tt>@__decoration</tt> is backtracked (which actually is a
-    # ValueHolder, as only the pointer changes not the decoration-object
-    # itself!).
-    #
     # For example if you dynamically add children to your component, you might
-    # want to backtrack the children array. Therefore you simply pass it to the
-    # State#add method:
+    # want to backtrack the children array: 
     #
     #   def backtrack_state(state)
     #     super
-    #     state.add(self.children)
+    #     backtrack_children(state)
     #   end
     #
-    # This will call Array#take_snapshot to take the snapshot for the children
-    # array. If at a later point in time a snapshot is restored,
-    # Array#restore_snapshot will be called with the return value of
-    # Array#take_snapshot as argument.
+    # Or, those components that dynamically add decorations or make use of the 
+    # call/answer mechanism should backtrack decorations as well: 
+    #
+    #   def backtrack_state(state)
+    #     super
+    #     backtrack_children(state)
+    #     backtrack_decoration(state)
+    #   end
     #
     # [+state+]
     #    An object of class State
 
     def backtrack_state(state)
-      state.add_ivar(self, :@decoration, @decoration)
-      state.add_ivar(self, :@children, (@children and @children.dup))
       each_child do |child|
         child.decoration.backtrack_state(state)
       end
+    end
+
+    def backtrack_decoration(state)
+      state.add_ivar(self, :@decoration, @decoration)
+    end
+
+    def backtrack_children(state)
+      state.add_ivar(self, :@children, (@children and @children.dup))
     end
 
     protected
