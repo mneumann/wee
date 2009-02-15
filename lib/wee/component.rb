@@ -34,7 +34,7 @@ module Wee
 
     def initialize() # :notnew:
       @decoration = self
-      @children = nil 
+      @children = nil
     end
 
     protected
