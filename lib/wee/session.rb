@@ -231,8 +231,6 @@ class Wee::Session
 
     premature_response = @page.process_callbacks(@context.request.fields)
 
-    post_callbacks_hook()
-
     if premature_response
       # replace existing page with new snapshot
       @page.snapshot = @page.take_snapshot
@@ -261,17 +259,10 @@ class Wee::Session
   end
 
   def respond(context, page)
-    pre_respond_hook
     set_response(context, Wee::GenericResponse.new)
     context.callbacks = page.callbacks
     context.document = Wee::HtmlWriter.new(context.response)
     page.render(context)
-  end
-
-  def pre_respond_hook
-  end
-
-  def post_callbacks_hook
   end
 
 end
