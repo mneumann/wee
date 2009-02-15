@@ -76,6 +76,94 @@ class Wee::Decoration < Wee::Presenter
 
 end
 
+module Wee::DecorationMixin
+
+    attr_accessor :decoration
+
+    # Iterates over all decorations (note that the component itself is excluded). 
+
+    def each_decoration # :yields: decoration
+      d = self.decoration
+      loop do
+        break if d == self or d.nil?
+        yield d
+        d = d.owner
+      end
+    end
+    
+    # Adds decoration +d+ to the decoration chain.
+    #
+    # A global decoration is added in front of the decoration chain, a local
+    # decoration is added in front of all other local decorations but after all
+    # global decorations.
+    #
+    # Returns: +self+
+
+    def add_decoration(d)
+      if d.global?
+        d.owner = self.decoration
+        self.decoration = d
+      else
+        last_global = nil
+        each_decoration {|i| 
+          if i.global?
+            last_global = i
+          else
+            break
+          end
+        }
+        if last_global.nil?
+          # no global decorations specified -> add in front
+          d.owner = self.decoration
+          self.decoration = d
+        else
+          # add after last_global
+          d.owner = last_global.owner
+          last_global.owner = d 
+        end
+      end
+
+      return self
+    end
+
+    # Remove decoration +d+ from the decoration chain. 
+    # 
+    # Returns the removed decoration or +nil+ if it did not exist in the
+    # decoration chain.
+
+    def remove_decoration(d)
+      if d == self.decoration  # 'd' is in front
+        self.decoration = d.owner
+      else
+        last_decoration = self.decoration
+        next_decoration = nil
+        loop do
+          return nil if last_decoration == self or last_decoration.nil?
+          next_decoration = last_decoration.owner
+          break if d == next_decoration
+          last_decoration = next_decoration
+        end
+        last_decoration.owner = d.owner  
+      end
+      d.owner = nil  # decoration 'd' no longer is an owner of anything!
+      return d
+    end
+
+    # Remove all decorations that match the block condition.
+    # 
+    # Example (removes all decorations of class +HaloDecoration+):
+    # 
+    #   remove_decoration_if {|d| d.class == HaloDecoration}
+    #
+
+    def remove_decoration_if # :yields: decoration
+      to_remove = []
+      each_decoration {|d| to_remove << d if yield d}
+      to_remove.each {|d| remove_decoration(d)}
+    end
+
+end
+
 # A Wee::Delegate breaks the decoration chain and forwards the methods
 # #process_callbacks, #render_on and #backtrack_state to the corresponding
 # *chain* method of it's _delegate_ component (a Wee::Component).
