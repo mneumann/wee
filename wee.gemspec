@@ -11,11 +11,9 @@ spec = Gem::Specification.new do |s|
   s.version = version 
   s.summary = 'Wee is a framework for building highly dynamic web applications.'
 
-  s.files = Dir['**/*'].delete_if {|item| item.include?(".svn") }
+  s.files = Dir['**/*']
 
   s.require_path = 'lib'
-  s.bindir = 'bin'
-  s.executables = ['wee']
 
   s.author = "Michael Neumann"
   s.email = "mneumann@ntecs.de"
