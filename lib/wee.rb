@@ -5,7 +5,6 @@ end
 
 module Wee::Examples; end
 
-require 'wee/valueholder'
 require 'wee/state'
 require 'wee/callback'
 require 'wee/page'
