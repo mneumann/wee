@@ -81,12 +81,6 @@ class Wee::Session
     @root_component = root_component
     @page_store = Wee::LRUCache.new(page_store_capacity)
     @idgen = Wee::SequentialIdGenerator.new
-
-    with_session do
-      # XXX: postpone initial page creation
-      @initial_page = Wee::Page.new(nil, @root_component, nil, nil)
-      @initial_page.snapshot = @initial_page.take_snapshot
-    end
   end
 
   def self.current
@@ -164,18 +158,25 @@ class Wee::Session
   # The main routine where the request is processed.
 
   def process_request
-    if @context.request.page_id.nil?
+    page_id = @context.request.page_id
+    if page_id.nil?
 
       # No page_id was specified in the URL. This means that we start with a
       # fresh component and a fresh page_id, then redirect to render itself.
 
-      handle_new_page
+      handle_new_page_view(@context, initial_page())
 
-    elsif @page = @page_store.fetch(@context.request.page_id, false)
+    elsif @page = @page_store.fetch(page_id, false)
 
       # A valid page_id was specified and the corresponding page exists.
 
-      handle_existing_page
+      @page.snapshot.restore if @context.request.page_id != @snapshot_page_id 
+
+      if @context.request.render?
+        handle_render_phase
+      else
+        handle_callback_phase
+      end
 
     else
 
@@ -183,31 +184,15 @@ class Wee::Session
       # page store. Either the page has timed out, or an invalid page_id was
       # specified. 
 
-      handle_invalid_page
+      # TODO:: Display an "invalid page or page timed out" message, which
+      # forwards to /app/session-id
+      raise "Not yet implemented"
 
     end
   end
 
-  def handle_new_page
-    handle_new_page_view(@context, @initial_page)
-  end
-
-  def handle_existing_page
-    @page.snapshot.restore if @context.request.page_id != @snapshot_page_id 
-
-    p @context.request.fields if $DEBUG
-
-    if @context.request.render?
-      handle_render_phase
-    else
-      handle_callback_phase
-    end
-  end
-
-  def handle_invalid_page
-    # TODO:: Display an "invalid page or page timed out" message, which
-    # forwards to /app/session-id
-    raise "Not yet implemented"
+  def initial_page
+    @initial_page ||= Wee::Page.new(nil, @root_component, nil, nil)
   end
 
   def handle_render_phase
@@ -246,12 +231,7 @@ class Wee::Session
 
   def handle_new_page_view(context, page=nil)
     new_page_id = @idgen.next.to_s
-    new_page = Wee::Page.new(nil, @root_component, nil, Wee::Callbacks.new)
-    if page
-      new_page.snapshot = page.snapshot
-    else
-      new_page.snapshot = new_page.take_snapshot
-    end
+    new_page = Wee::Page.new(nil, @root_component, page ? page.snapshot : nil, Wee::Callbacks.new)
     @page_store[new_page_id] = new_page
     @snapshot_page_id = new_page_id 
     redirect_url = context.request.build_url(:page_id => new_page_id)

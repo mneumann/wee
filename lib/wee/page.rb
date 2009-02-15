@@ -4,7 +4,7 @@ class Wee::Page
   def initialize(id, root_component, snapshot, callbacks)
     @id = id
     @root_component = root_component
-    @snapshot = snapshot
+    @snapshot = snapshot || take_snapshot()
     @callbacks = callbacks
   end
 
