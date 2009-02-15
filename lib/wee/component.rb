@@ -186,11 +186,11 @@ module Wee
     #
     # For example if you dynamically add children to your component, you might
     # want to backtrack the children array. Therefore you simply pass it to the
-    # Snapshot#add method:
+    # State#add method:
     #
-    #   def backtrack_state(snapshot)
+    #   def backtrack_state(state)
     #     super
-    #     snapshot.add(self.children)
+    #     state.add(self.children)
     #   end
     #
     # This will call Array#take_snapshot to take the snapshot for the children
@@ -198,8 +198,8 @@ module Wee
     # Array#restore_snapshot will be called with the return value of
     # Array#take_snapshot as argument.
     #
-    # [+snapshot+]
-    #    An object of class Snapshot
+    # [+state+]
+    #    An object of class State
 
     def backtrack_state(state)
       state.add_ivar(self, :@decoration, @decoration)
