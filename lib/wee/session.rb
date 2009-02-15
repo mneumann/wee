@@ -32,7 +32,6 @@ class Wee::Session
   attr_accessor :max_requests
 
   attr_accessor :root_component
-  attr_accessor :page_store
 
   # Terminates the handler. 
   #
@@ -69,7 +68,7 @@ class Wee::Session
     }
   end
  
-  def initialize(root_component, page_store_capacity=20)
+  def initialize(root_component, page_cache_capacity=20)
     @last_access = @creation_time = Time.now 
     @expire_after = 30*60                  # The default is 30 minutes of inactivity
     @request_count = 0
@@ -79,7 +78,7 @@ class Wee::Session
     @mutex = Mutex.new    
 
     @root_component = root_component
-    @page_store = Wee::LRUCache.new(page_store_capacity)
+    @page_cache = Wee::LRUCache.new(page_cache_capacity)
     @idgen = Wee::SequentialIdGenerator.new
   end
 
@@ -159,7 +158,7 @@ class Wee::Session
 
       snapshot = initial_page().snapshot
 
-    elsif @page = @page_store.fetch(page_id, false)
+    elsif @page = @page_cache.fetch(page_id)
 
       # A valid page_id was specified and the corresponding page exists.
 
@@ -197,8 +196,9 @@ class Wee::Session
           if premature_response = ex.response
             # replace existing page with new snapshot
             @page.snapshot = @page.take_snapshot
-            @page_store[@context.request.page_id] = @page
-            @snapshot_page_id = @context.request.page_id  
+            @page.id = @context.request.page_id
+            cache(@page)
+            @snapshot_page_id = @page.id
 
             # and send response
             set_response(@context, premature_response) 
@@ -225,10 +225,14 @@ class Wee::Session
     # handle_new_page_view
 
     new_page = Wee::Page.new(@idgen.next.to_s, @root_component, snapshot, Wee::Callbacks.new)
-    @page_store[new_page.id] = new_page
+    cache(new_page)
     @snapshot_page_id = new_page.id 
     redirect_url = @context.request.build_url(:page_id => new_page.id)
     set_response(@context, Wee::RedirectResponse.new(redirect_url))
+  end
+
+  def cache(page)
+    @page_cache[page.id] = page
   end
 
   def initial_page
