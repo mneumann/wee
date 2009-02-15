@@ -33,7 +33,7 @@ class Wee::Examples::Window < Wee::Component
       r.table_row do
         r.table_data.colspan(2).with do
           if @status == :normal
-            each do |child|
+            each_child do |child|
               r.render(child)
             end
           end

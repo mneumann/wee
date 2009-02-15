@@ -10,22 +10,28 @@ module Wee
   #
   class State
     class Snapshot < Struct.new(:object, :snapshot); end
+    class SnapshotIVars < Struct.new(:object, :ivars); end
 
     def initialize
       @objects = Hash.new
+      @objects_ivars = Hash.new 
     end
 
     def add(object)
-      oid = object.object_id
-      unless @objects.include?(oid)
-        @objects[oid] = Snapshot.new(object, object.take_snapshot)
-      end
+      @objects[object.object_id] ||= Snapshot.new(object, object.take_snapshot)
+    end
+
+    def add_ivar(object, ivar, value)
+      (@objects_ivars[object.object_id] ||= SnapshotIVars.new(object, {})).ivars[ivar] = value
     end
 
     alias << add
 
     def restore
       @objects.each_value {|s| s.object.restore_snapshot(s.snapshot) }
+      @objects_ivars.each_value {|s|
+        s.ivars.each {|k,v| s.object.instance_variable_set(k, v) }
+      }
     end
   end # class State
 
@@ -49,8 +55,8 @@ module Wee
     end
 
     def restore_snapshot(snap)
-      instance_variables.each do |iv|
-        instance_variable_set(iv, snap[iv])
+      snap.each do |k,v|
+        instance_variable_set(k, v)
       end
     end
   end # module ObjectSnapshotMixin

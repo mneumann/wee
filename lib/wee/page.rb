@@ -12,8 +12,8 @@ class Wee::Page
   # and returns it.
 
   def take_snapshot
-    @root_component.decoration.backtrack_state(snap = Wee::Snapshot.new)
-    return snap.freeze
+    @root_component.decoration.backtrack_state(state = Wee::State.new)
+    return state.freeze
   end
 
   # Render the root component with the given rendering context.

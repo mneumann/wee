@@ -15,7 +15,7 @@ module Wee
       end
 
       # process callbacks of all children
-      each do |child|
+      each_child do |child|
         child.decoration.process_callbacks(callbacks)
       end
 
@@ -33,21 +33,17 @@ module Wee
     # +super+, before setting up anything else! 
 
     def initialize() # :notnew:
-      @__decoration = Wee::ValueHolder.new(self)
-      @__children = []
+      @decoration = self
+      @children = nil 
     end
 
     protected
 
-    def children
-      @__children
-    end
-
     #
     # Iterates over all direct child components. 
     #
-    def each(&block)
-      @__children.each(&block)
+    def each_child(&block)
+      @children.each(&block) if @children
     end
 
     # Add a child to the component. Example:
@@ -70,7 +66,7 @@ module Wee
     #
 
     def add_child(child)
-      self.children << child
+      (@children ||= []) << child
       child
     end
 
@@ -80,13 +76,13 @@ module Wee
     # +self+ if no decorations were specified for the component.
 
     def decoration
-      @__decoration.value
+      @decoration
     end
 
     # Set the pointer to the first decoration to +d+. 
 
     def decoration=(d) 
-      @__decoration.value = d
+      @decoration = d
     end
 
     # Iterates over all decorations (note that the component itself is excluded). 
@@ -205,10 +201,11 @@ module Wee
     # [+snapshot+]
     #    An object of class Snapshot
 
-    def backtrack_state(snapshot)
-      snapshot.add(@__decoration)
-      each do |child|
-        child.decoration.backtrack_state(snapshot)
+    def backtrack_state(state)
+      state.add_ivar(self, :@decoration, @decoration)
+      state.add_ivar(self, :@children, (@children and @children.dup))
+      each_child do |child|
+        child.decoration.backtrack_state(state)
       end
     end
 

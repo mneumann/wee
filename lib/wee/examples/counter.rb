@@ -6,9 +6,9 @@ class Wee::Examples::Counter < Wee::Component
     @count = initial_count 
   end
 
-  def backtrack_state(snap)
+  def backtrack_state(state)
     super
-    snap.add(self)
+    state.add_ivar(self, :@count, @count)
   end
 
   def dec
