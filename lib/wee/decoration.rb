@@ -60,10 +60,6 @@ class Wee::Decoration < Wee::Presenter
     snapshot.add(self)
   end
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # :section: Snapshot
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   # We have to save the @owner attribute to be able to correctly backtrack
   # calls, as method Wee::Component#call modifies it in the call to
   # <tt>component.remove_decoration(answer)</tt>. Removing the
