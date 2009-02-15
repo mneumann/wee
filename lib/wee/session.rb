@@ -3,6 +3,8 @@ require 'wee/lru_cache'
 
 class Wee::Session
 
+  class Page < Struct.new(:id, :state, :callbacks); end
+
   # Points to the Wee::Application object for which this handler is registered. 
 
   attr_accessor :application
@@ -110,13 +112,7 @@ class Wee::Session
       end
     }
   rescue Exception => exn
-    set_response(context, Wee::ErrorResponse.new(exn))
-  end
-
-  protected
-
-  def set_response(context, response)
-    context.response = response
+    context.response = Wee::ErrorResponse.new(exn)
   end
 
   protected
@@ -137,106 +133,62 @@ class Wee::Session
   def sleep
   end
 
-  private
-
-  def current_callbacks
-    @page.callbacks
-  end
-
-  protected
-
   # The main routine where the request is processed.
 
   def process_request
-    page_id = @context.request.page_id
-    snapshot = nil
+    page = @page_cache.fetch(@context.request.page_id)
 
-    if page_id.nil?
-
-      # No page_id was specified in the URL. This means that we start with a
-      # fresh component and a fresh page_id, then redirect to render itself.
-
-      snapshot = initial_page().snapshot
-
-    elsif @page = @page_cache.fetch(page_id)
-
-      # A valid page_id was specified and the corresponding page exists.
-
-      @page.snapshot.restore if page_id != @snapshot_page_id 
+    if page
+      # sestore state
+      page.state.restore # XXX
 
       if @context.request.render?
-        # No action/inputs were specified -> render page
-        #
-        # 1. Reset the action/input fields (as they are regenerated in the
-        #    rendering process).
-        # 2. Render the page (respond).
-        # 3. Store the page back into the store
-
-        # render
-        set_response(@context, Wee::GenericResponse.new)
+        @context.response = Wee::GenericResponse.new
         @context.callbacks = Wee::Callbacks.new
         @context.document = Wee::HtmlWriter.new(@context.response)
 
-        @page.root_component.decoration.render_on(@context)
+        @root_component.decoration.render_on(@context)
 
-        @page.callbacks = @context.callbacks
-        return
+        page.callbacks = @context.callbacks
       else
-        # Actions/inputs were specified.
-        #
-        # We process the request and invoke actions/inputs. Then we generate a
-        # new page view. 
-
         begin
-          @page.callbacks.with_triggered(@context.request.fields) do
-            @page.root_component.decoration.process_callbacks(@page.callbacks)
+          page.callbacks.with_triggered(@context.request.fields) do
+            @root_component.decoration.process_callbacks(page.callbacks)
           end
-          snapshot = nil
-        rescue Wee::AbortCallbackProcessing => ex 
-          if premature_response = ex.response
-            # replace existing page with new snapshot
-            @page.snapshot = @page.take_snapshot
-            @page.id = @context.request.page_id
-            cache(@page)
-            @snapshot_page_id = @page.id
-
-            # and send response
-            set_response(@context, premature_response) 
-            return
-          else
-            snapshot = nil
-          end
+        rescue Wee::AbortCallbackProcessing
         end
 
+        # create new page (state)
+        new_page = Page.new(@idgen.next.to_s, take_snapshot(), nil) 
+        cache(new_page)
+        redirect(new_page)
       end
-
     else
-
-      # A page_id was specified in the URL, but there's no page for it in the
-      # page store. Either the page has timed out, or an invalid page_id was
-      # specified. 
-
-      # TODO:: Display an "invalid page or page timed out" message, which
-      # forwards to /app/session-id
-      raise "Not yet implemented"
-
+      # either no or invalid page_id specified.  reset to initial state (or
+      # create initial state if no such exists yet)
+      
+      @initial_state ||= take_snapshot() 
+      new_page = Page.new(@idgen.next.to_s, @initial_state, nil) 
+      cache(new_page)
+      redirect(new_page) # XXX: Show some informative message and wait 5 secs
     end
+  end
+  
+  # This method takes a snapshot from the current state of the root component
+  # and returns it.
 
-    # handle_new_page_view
-
-    new_page = Wee::Page.new(@idgen.next.to_s, @root_component, snapshot, Wee::Callbacks.new)
-    cache(new_page)
-    @snapshot_page_id = new_page.id 
-    redirect_url = @context.request.build_url(:page_id => new_page.id)
-    set_response(@context, Wee::RedirectResponse.new(redirect_url))
+  def take_snapshot
+    @root_component.decoration.backtrack_state(state = Wee::State.new)
+    return state.freeze
   end
 
   def cache(page)
     @page_cache[page.id] = page
   end
 
-  def initial_page
-    @initial_page ||= Wee::Page.new(nil, @root_component, nil, nil)
+  def redirect(page)
+    @context.response = Wee::RedirectResponse.new(
+      @context.request.build_url(:page_id => page.id))
   end
 
 end
