@@ -20,7 +20,6 @@ require 'wee/component'
 require 'wee/core_ext'
 
 require 'wee/application'
-require 'wee/requesthandler'
 require 'wee/request'
 require 'wee/response'
 require 'wee/session'
