@@ -96,19 +96,19 @@ class Wee::Session
   # Called by Wee::Application to send the session a request.
 
   def handle_request(context)
-    with_session { 
-      @mutex.synchronize {
-        begin
-          @context = context
-          @request_count += 1
-          @last_access = Time.now
-          awake
-          process_request
-          sleep
-        ensure
-          @context = nil   # clean up
-        end
-      }
+    @mutex.synchronize {
+      begin
+        Thread.current[:wee_session] = self
+        @context = context
+        @request_count += 1
+        @last_access = Time.now
+        awake
+        process_request
+        sleep
+      ensure
+        @context = nil   # clean up
+        Thread.current[:wee_session] = nil
+      end
     }
   rescue Exception => exn
     set_response(context, Wee::ErrorResponse.new(exn))
@@ -139,15 +139,6 @@ class Wee::Session
   end
 
   private
-
-  # The block is run inside a session.
-
-  def with_session
-    Thread.current[:wee_session] = self
-    yield
-  ensure
-    Thread.current[:wee_session] = nil
-  end
 
   def current_callbacks
     @page.callbacks
