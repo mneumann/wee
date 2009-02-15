@@ -2,6 +2,7 @@ require 'time'
 require 'rack'
 
 module Wee
+
   class Response < Rack::Response
     alias << write
   end
