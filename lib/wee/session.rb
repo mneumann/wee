@@ -1,13 +1,22 @@
 require 'wee/abstractsession'
+require 'wee/lru_cache'
 
 class Wee::Session < Wee::AbstractSession
 
   attr_accessor :root_component
   attr_accessor :page_store
 
-  def initialize(&block)
+  def initialize(root_component, page_store_capacity=20)
     super()
-    setup(&block)
+    @root_component = root_component
+    @page_store = Wee::LRUCache.new(page_store_capacity)
+    @idgen = Wee::SequentialIdGenerator.new
+
+    with_session do
+      # XXX: postpone initial page creation
+      @initial_page = Wee::Page.new(nil, @root_component, nil, nil)
+      @initial_page.snapshot = @initial_page.take_snapshot
+    end
   end
 
   def current_callbacks
@@ -16,18 +25,6 @@ class Wee::Session < Wee::AbstractSession
 
   protected
 
-  def setup(&block)
-    @idgen = Wee::SequentialIdGenerator.new
-
-    with_session do
-      block.call(self) if block
-      raise ArgumentError, "No root_component specified" if @root_component.nil?
-      raise ArgumentError, "No page_store specified" if @page_store.nil?
-
-      @initial_page = Wee::Page.new(nil, @root_component, nil, nil)   
-      @initial_page.snapshot = @initial_page.take_snapshot
-    end
-  end
 
   # The main routine where the request is processed.
 
