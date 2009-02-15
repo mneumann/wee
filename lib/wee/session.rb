@@ -163,7 +163,7 @@ class Wee::Session
 
       # A valid page_id was specified and the corresponding page exists.
 
-      @page.snapshot.restore if @context.request.page_id != @snapshot_page_id 
+      @page.snapshot.restore if page_id != @snapshot_page_id 
 
       if @context.request.render?
         # No action/inputs were specified -> render page
@@ -173,15 +173,14 @@ class Wee::Session
         # 2. Render the page (respond).
         # 3. Store the page back into the store
 
-        @page = Wee::Page.new(nil, @root_component, @page.snapshot, Wee::Callbacks.new) # remove all action/input handlers
-
         # render
         set_response(@context, Wee::GenericResponse.new)
-        @context.callbacks = @page.callbacks
+        @context.callbacks = Wee::Callbacks.new
         @context.document = Wee::HtmlWriter.new(@context.response)
-        @page.render(@context)
 
-        @page_store[@context.request.page_id] = @page         # store
+        @page.root_component.decoration.render_on(@context)
+
+        @page.callbacks = @context.callbacks
         return
       else
         # Actions/inputs were specified.

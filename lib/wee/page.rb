@@ -16,12 +16,6 @@ class Wee::Page
     return state.freeze
   end
 
-  # Render the root component with the given rendering context.
-
-  def render(context)
-    @root_component.decoration.render_on(context)
-  end
-
   # This method processes the callbacks of the root component.
   #
   # Returns nil or a Response object in case of a premature response.
