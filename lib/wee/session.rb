@@ -159,12 +159,14 @@ class Wee::Session
 
   def process_request
     page_id = @context.request.page_id
+    snapshot = nil
+
     if page_id.nil?
 
       # No page_id was specified in the URL. This means that we start with a
       # fresh component and a fresh page_id, then redirect to render itself.
 
-      handle_new_page_view(@context, initial_page())
+      snapshot = initial_page().snapshot
 
     elsif @page = @page_store.fetch(page_id, false)
 
@@ -173,9 +175,43 @@ class Wee::Session
       @page.snapshot.restore if @context.request.page_id != @snapshot_page_id 
 
       if @context.request.render?
-        handle_render_phase
+        # No action/inputs were specified -> render page
+        #
+        # 1. Reset the action/input fields (as they are regenerated in the
+        #    rendering process).
+        # 2. Render the page (respond).
+        # 3. Store the page back into the store
+
+        @page = Wee::Page.new(nil, @root_component, @page.snapshot, Wee::Callbacks.new) # remove all action/input handlers
+
+        # render
+        set_response(@context, Wee::GenericResponse.new)
+        @context.callbacks = @page.callbacks
+        @context.document = Wee::HtmlWriter.new(@context.response)
+        @page.render(@context)
+
+        @page_store[@context.request.page_id] = @page         # store
+        return
       else
-        handle_callback_phase
+        # Actions/inputs were specified.
+        #
+        # We process the request and invoke actions/inputs. Then we generate a
+        # new page view. 
+
+        premature_response = @page.process_callbacks(@context.request.fields)
+
+        if premature_response
+          # replace existing page with new snapshot
+          @page.snapshot = @page.take_snapshot
+          @page_store[@context.request.page_id] = @page
+          @snapshot_page_id = @context.request.page_id  
+
+          # and send response
+          set_response(@context, premature_response) 
+          return
+        else
+          snapshot = nil
+        end
       end
 
     else
@@ -189,60 +225,19 @@ class Wee::Session
       raise "Not yet implemented"
 
     end
+
+    # handle_new_page_view
+
+    new_page_id = @idgen.next.to_s
+    new_page = Wee::Page.new(nil, @root_component, snapshot, Wee::Callbacks.new)
+    @page_store[new_page_id] = new_page
+    @snapshot_page_id = new_page_id 
+    redirect_url = @context.request.build_url(:page_id => new_page_id)
+    set_response(@context, Wee::RedirectResponse.new(redirect_url))
   end
 
   def initial_page
     @initial_page ||= Wee::Page.new(nil, @root_component, nil, nil)
-  end
-
-  def handle_render_phase
-    # No action/inputs were specified -> render page
-    #
-    # 1. Reset the action/input fields (as they are regenerated in the
-    #    rendering process).
-    # 2. Render the page (respond).
-    # 3. Store the page back into the store
-
-    @page = Wee::Page.new(nil, @root_component, @page.snapshot, Wee::Callbacks.new) # remove all action/input handlers
-    respond(@context, @page)                              # render
-    @page_store[@context.request.page_id] = @page         # store
-  end
-
-  def handle_callback_phase
-    # Actions/inputs were specified.
-    #
-    # We process the request and invoke actions/inputs. Then we generate a
-    # new page view. 
-
-    premature_response = @page.process_callbacks(@context.request.fields)
-
-    if premature_response
-      # replace existing page with new snapshot
-      @page.snapshot = @page.take_snapshot
-      @page_store[@context.request.page_id] = @page
-      @snapshot_page_id = @context.request.page_id  
-
-      # and send response
-      set_response(@context, premature_response) 
-    else
-      handle_new_page_view(@context)
-    end
-  end
-
-  def handle_new_page_view(context, page=nil)
-    new_page_id = @idgen.next.to_s
-    new_page = Wee::Page.new(nil, @root_component, page ? page.snapshot : nil, Wee::Callbacks.new)
-    @page_store[new_page_id] = new_page
-    @snapshot_page_id = new_page_id 
-    redirect_url = context.request.build_url(:page_id => new_page_id)
-    set_response(context, Wee::RedirectResponse.new(redirect_url))
-  end
-
-  def respond(context, page)
-    set_response(context, Wee::GenericResponse.new)
-    context.callbacks = page.callbacks
-    context.document = Wee::HtmlWriter.new(context.response)
-    page.render(context)
   end
 
 end
