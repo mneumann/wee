@@ -47,6 +47,13 @@ module Wee
       @input_callbacks = CallbackRegistry.new("")
       @action_callbacks = CallbackRegistry.new("a")
     end
+
+    def with_triggered(ids_and_values, &block)
+      @input_callbacks.with_triggered(ids_and_values) do
+        @action_callbacks.with_triggered(ids_and_values, &block)
+      end
+    end
+
   end # class Callbacks
 
 end # module Wee

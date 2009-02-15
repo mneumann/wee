@@ -16,19 +16,4 @@ class Wee::Page
     return state.freeze
   end
 
-  # This method processes the callbacks of the root component.
-  #
-  # Returns nil or a Response object in case of a premature response.
-  
-  def process_callbacks(ids_and_values)
-    catch(:wee_abort_callback_processing) { 
-      @callbacks.input_callbacks.with_triggered(ids_and_values) do
-        @callbacks.action_callbacks.with_triggered(ids_and_values) do
-          @root_component.decoration.process_callbacks(@callbacks)
-        end
-      end
-      nil
-    }
-  end
-
 end
