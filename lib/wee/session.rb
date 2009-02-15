@@ -188,25 +188,26 @@ class Wee::Session
         # We process the request and invoke actions/inputs. Then we generate a
         # new page view. 
 
-        premature_response = catch(:wee_abort_callback_processing) {
+        begin
           @page.callbacks.with_triggered(@context.request.fields) do
             @page.root_component.decoration.process_callbacks(@page.callbacks)
           end
-          nil
-        }
-
-        if premature_response
-          # replace existing page with new snapshot
-          @page.snapshot = @page.take_snapshot
-          @page_store[@context.request.page_id] = @page
-          @snapshot_page_id = @context.request.page_id  
-
-          # and send response
-          set_response(@context, premature_response) 
-          return
-        else
           snapshot = nil
+        rescue Wee::AbortCallbackProcessing => ex 
+          if premature_response = ex.response
+            # replace existing page with new snapshot
+            @page.snapshot = @page.take_snapshot
+            @page_store[@context.request.page_id] = @page
+            @snapshot_page_id = @context.request.page_id  
+
+            # and send response
+            set_response(@context, premature_response) 
+            return
+          else
+            snapshot = nil
+          end
         end
+
       end
 
     else

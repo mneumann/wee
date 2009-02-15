@@ -1,3 +1,13 @@
+module Wee
+  class AbortCallbackProcessing < Exception
+    attr_reader :response
+    def initialize(response)
+      super()
+      @response = response
+    end
+  end
+end
+
 class Wee::Presenter
 
   def renderer_class
@@ -18,8 +28,9 @@ class Wee::Presenter
 
   protected
 
+
   def send_response(response)
-    throw :wee_abort_callback_processing, response
+    raise Wee::AbortCallbackProcessing.new(response)
   end
 
   # Call the block inside a rendering environment, then send the response prematurely.

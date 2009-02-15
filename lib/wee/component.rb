@@ -254,7 +254,7 @@ module Wee
       component.add_decoration(answer = Wee::AnswerDecoration.new)
       answer.on_answer = OnAnswer.new(self, component, delegate, answer, 
                                       return_callback, args)
-      throw :wee_abort_callback_processing, nil 
+      send_response(nil)
     end
 
     class OnAnswer < Struct.new(:calling_component, :called_component, :delegate, 
