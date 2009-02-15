@@ -224,11 +224,10 @@ class Wee::Session
 
     # handle_new_page_view
 
-    new_page_id = @idgen.next.to_s
-    new_page = Wee::Page.new(nil, @root_component, snapshot, Wee::Callbacks.new)
-    @page_store[new_page_id] = new_page
-    @snapshot_page_id = new_page_id 
-    redirect_url = @context.request.build_url(:page_id => new_page_id)
+    new_page = Wee::Page.new(@idgen.next.to_s, @root_component, snapshot, Wee::Callbacks.new)
+    @page_store[new_page.id] = new_page
+    @snapshot_page_id = new_page.id 
+    redirect_url = @context.request.build_url(:page_id => new_page.id)
     set_response(@context, Wee::RedirectResponse.new(redirect_url))
   end
 
