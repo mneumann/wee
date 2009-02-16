@@ -1,6 +1,6 @@
 # NEEDS: FormDecoration
 
-require 'wee/examples/counter'
+require 'demo/counter'
 
 class Wee::Examples::EditableCounter < Wee::Examples::Counter 
 
