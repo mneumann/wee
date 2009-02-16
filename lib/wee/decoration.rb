@@ -30,7 +30,7 @@ class Wee::Decoration < Wee::Presenter
   # decoration in the chain). In other words, it's the owner of everything
   # "below" itself.
 
-  attr_accessor :owner
+  attr_accessor :next
 
   # Is this decoration a global or a local one? By default all decorations are
   # local unless this method is overwritten.
@@ -44,34 +44,24 @@ class Wee::Decoration < Wee::Presenter
   # Forwards method call to the next decoration in the chain.
 
   def process_callbacks(callbacks)
-    @owner.process_callbacks(callbacks)
+    @next.process_callbacks(callbacks)
   end
 
   # Forwards method call to the next decoration in the chain.
 
   def render_on(context)
-    @owner.render_on(context)
+    @next.render_on(context)
   end
 
-  # Forwards method call to the next decoration in the chain.
-
-  def backtrack_state(snapshot)
-    @owner.backtrack_state(snapshot)
-    snapshot.add(self)
-  end
-
-  # We have to save the @owner attribute to be able to correctly backtrack
+  # We have to save the @next attribute to be able to correctly backtrack
   # calls, as method Wee::Component#call modifies it in the call to
   # <tt>component.remove_decoration(answer)</tt>. Removing the
   # answer-decoration has the advantage to be able to call a component more
   # than once!
 
-  def take_snapshot
-    @owner
-  end
-
-  def restore_snapshot(snap)
-    @owner = snap
+  def backtrack_state(state)
+    @next.backtrack_state(state)
+    state.add_ivar(self, :@next, @next)
   end
 
 end
@@ -84,10 +74,9 @@ module Wee::DecorationMixin
 
     def each_decoration # :yields: decoration
       d = self.decoration
-      loop do
-        break if d == self or d.nil?
+      while d and d != self
         yield d
-        d = d.owner
+        d = d.next
       end
     end
     
@@ -101,7 +90,7 @@ module Wee::DecorationMixin
 
     def add_decoration(d)
       if d.global?
-        d.owner = self.decoration
+        d.next = self.decoration
         self.decoration = d
       else
         last_global = nil
@@ -114,12 +103,12 @@ module Wee::DecorationMixin
         }
         if last_global.nil?
           # no global decorations specified -> add in front
-          d.owner = self.decoration
+          d.next = self.decoration
           self.decoration = d
         else
           # add after last_global
-          d.owner = last_global.owner
-          last_global.owner = d 
+          d.next = last_global.next
+          last_global.next = d
         end
       end
 
@@ -133,19 +122,19 @@ module Wee::DecorationMixin
 
     def remove_decoration(d)
       if d == self.decoration  # 'd' is in front
-        self.decoration = d.owner
+        self.decoration = d.next
       else
         last_decoration = self.decoration
         next_decoration = nil
         loop do
           return nil if last_decoration == self or last_decoration.nil?
-          next_decoration = last_decoration.owner
+          next_decoration = last_decoration.next
           break if d == next_decoration
           last_decoration = next_decoration
         end
-        last_decoration.owner = d.owner  
+        last_decoration.next = d.next
       end
-      d.owner = nil  # decoration 'd' no longer is an owner of anything!
+      d.next = nil  # decoration 'd' no longer is an owner of anything!
       return d
     end
 
@@ -189,7 +178,7 @@ class Wee::Delegate < Wee::Decoration
 
   # Forwards method to the corresponding top-level *chain* method of the
   # _delegate_ component. We also take snapshots of all non-visible components,
-  # thus we follow the @owner (via super). 
+  # thus we follow the @next decoration (via super).
 
   def backtrack_state(snapshot)
     super
