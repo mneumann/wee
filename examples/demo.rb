@@ -47,7 +47,7 @@ APPS.add 'demo', 'This demo application' do
 end
 
 APPS.add 'calc', 'RPN Calculator' do
-  require 'wee/examples/calculator'
+  require File.join(File.dirname(__FILE__), 'demo', 'calculator')
   Wee::Examples::Calculator.new.
   add_decoration(Wee::FormDecoration.new).
   add_decoration(Wee::PageDecoration.new('RPN Calculator'))

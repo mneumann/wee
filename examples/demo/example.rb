@@ -1,5 +1,5 @@
-require 'wee/examples/window'
-require 'wee/examples/editable_counter'
+require 'demo/window'
+require 'demo/editable_counter'
 
 class RegexpValidatedInput < Wee::Component
 
