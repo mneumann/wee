@@ -73,7 +73,7 @@ module Wee::DecorationMixin
     # Iterates over all decorations (note that the component itself is excluded). 
 
     def each_decoration # :yields: decoration
-      d = self.decoration
+      d = @decoration
       while d and d != self
         yield d
         d = d.next
@@ -90,8 +90,8 @@ module Wee::DecorationMixin
 
     def add_decoration(d)
       if d.global?
-        d.next = self.decoration
-        self.decoration = d
+        d.next = @decoration
+        @decoration = d
       else
         last_global = nil
         each_decoration {|i| 
@@ -103,8 +103,8 @@ module Wee::DecorationMixin
         }
         if last_global.nil?
           # no global decorations specified -> add in front
-          d.next = self.decoration
-          self.decoration = d
+          d.next = @decoration
+          @decoration = d
         else
           # add after last_global
           d.next = last_global.next
@@ -121,10 +121,10 @@ module Wee::DecorationMixin
     # decoration chain.
 
     def remove_decoration(d)
-      if d == self.decoration  # 'd' is in front
-        self.decoration = d.next
+      if d == @decoration  # 'd' is in front
+        @decoration = d.next
       else
-        last_decoration = self.decoration
+        last_decoration = @decoration
         next_decoration = nil
         loop do
           return nil if last_decoration == self or last_decoration.nil?
