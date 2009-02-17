@@ -1,5 +1,4 @@
 require 'rake/rdoctask'
-require 'rake/testtask'
 
 Rake::RDocTask.new do |rd|
   rd.main = "README"
@@ -12,9 +11,8 @@ task :rdoc do
   sh 'cpdup -o doc/tmp doc/rdoc' 
 end
 
-Rake::TestTask.new do |t|
-  t.test_files = FileList['test/test*.rb']
-  t.verbose = true
+task :test do
+  sh 'mspec -I./lib -f s test/component_spec.rb'
 end
 
 task :package do

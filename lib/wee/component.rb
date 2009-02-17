@@ -1,3 +1,6 @@
+require 'wee/presenter'
+require 'wee/decoration'
+
 module Wee
 
   #
@@ -5,6 +8,41 @@ module Wee
   # #render in your own subclasses.
   #
   class Component < Presenter
+
+    # This method renders the content of the component.
+    #
+    # *OVERWRITE* this method in your own component classes to implement the
+    # view. By default this method does nothing!
+
+    def render(r)
+    end
+
+    # Renders the component in the given rendering context. <b>DO NOT</b>
+    # overwrite this method, unless you know exactly what you're doing!
+    #
+    # Creates a new renderer object of the class returned by method
+    # #renderer_class, makes this the current renderer, then invokes method
+    # #render.
+    #
+    # [+context+]
+    #    An object of class Context
+
+    def render_on(context)
+      render(renderer_class.new(context, self))
+    end
+
+    protected
+
+    # Returns the class used as renderer for this presenter. Overwrite this
+    # method if you want to use a different renderer.
+    #
+    # Returned class must be a subclass of Wee::Renderer.
+
+    def renderer_class
+      raise "Method renderer_class needs to be implemented!"
+    end
+
+    public
 
     # Process and invoke all callbacks specified for this component and all of
     # it's child components. 
