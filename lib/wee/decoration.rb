@@ -203,31 +203,6 @@ module Wee
       @delegate.decoration.backtrack(state)
     end
 
-  end # class DelegateDecoration
-
-  #
-  # A Wee::AnswerDecoration is wrapped around a component that will call
-  # Component#answer. This makes it possible to use such components without the
-  # need to call them (Component#call), e.g. as child components of other
-  # components.
-  #
-  class AnswerDecoration < Decoration
-
-    #
-    # When a component answers, <tt>on_answer.call(args)</tt> will be executed
-    # (unless nil), where +args+ are the arguments passed to Component#answer.
-    # Note that no snapshot of on_answer is taken, so you should avoid
-    # modifying it!
-    #
-    attr_accessor :on_answer
-
-    def process_callbacks(callbacks)
-      args = catch(:wee_answer) { super; nil }
-      if args != nil
-        # return to the calling component 
-        @on_answer.call(*args) if @on_answer
-      end
-    end
-  end # class AnswerDecoration
+  end # class Delegate
 
 end # module Wee
