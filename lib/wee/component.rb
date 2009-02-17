@@ -33,7 +33,7 @@ module Wee
 
     protected
 
-    # Returns the class used as renderer for this presenter. Overwrite this
+    # Returns the class used as renderer for this component. Overwrite this
     # method if you want to use a different renderer.
     #
     # Returned class must be a subclass of Wee::Renderer.
