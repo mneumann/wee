@@ -17,7 +17,7 @@ module Wee
     # Creates a new application. The block, when called, must
     # return a new Session instance. 
     #
-    #   Wee::Application.new { Wee::Session.new(rootcomponent) }
+    #   Wee::Application.new { Wee::Session.new(root_component) }
     #
     def initialize(&block)
       @session_factory = block || raise(ArgumentError)
@@ -51,46 +51,24 @@ module Wee
     end
     
     def call(env)
-      context = Wee::Context.new(Wee::Request.new(env))
+      request = Wee::Request.new(env)
 
-      session_id = context.request.session_id
-      session = @mutex.synchronize { @sessions[session_id] }
-
-      if session_id.nil?
-        # No id was given -> check whether the maximum number of sessions
-        # is reached. if not, create new id and handler
-        session = new_session()
-        context.request.session_id = session.id 
-        session.handle_request(context)
-      elsif session.nil? or session.dead?
-        session_expired(context)
-      else
-        session.handle_request(context)
-      end
-
-      return context.response.finish
-    end
-
-=begin
-    def insert_new_request_handler(request_handler)
-      @mutex.synchronize {
-        if @max_request_handlers != nil and @request_handlers.size >= @max_request_handlers
-          # limit reached -> remove non-alive handlers...
-          garbage_collect_handlers()
-
-          # ...and test again
-          if @request_handlers.size >= @max_request_handlers
-            # TODO: show a custom error message
-            raise "maximum number of request-handlers reached" 
-          end
+      if request.session_id
+        session = @mutex.synchronize { @sessions[request.session_id] }
+        if session and session.alive?
+          context = Wee::Context.new(request)
+          session.handle_request(context)
+          context.response.finish
+        else
+          url = request.build_url(:session_id => nil, :page_id => nil)
+          Wee::RefreshResponse.new("Invalid or expired session", url).finish
         end
-
-        request_handler.id = unique_request_handler_id()
-        request_handler.application = self
-        @request_handlers[request_handler.id] = request_handler
-      }
+      else
+        session = new_session()
+        url = request.build_url(:session_id => session.id, :page_id => nil)
+        Wee::RedirectResponse.new(url).finish
+      end
     end
-=end
 
     private
 
@@ -98,12 +76,6 @@ module Wee
 
     def garbage_collect_handlers
       @sessions.delete_if {|id,rh| rh.dead? }
-    end
-
-    def session_expired(context)
-      context.response = Wee::RefreshResponse.new("Invalid or expired session!",
-                         context.request.build_url(:session_id => nil,
-                                                   :page_id => nil))
     end
 
   end # class Application
