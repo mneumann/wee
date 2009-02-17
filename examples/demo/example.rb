@@ -75,6 +75,8 @@ class MainPage < Wee::Component
 
   def backtrack(state)
     super
+    backtrack_children(state)
+    backtrack_decoration(state)
     state.add(@arr)
     state.add(@text)
 
