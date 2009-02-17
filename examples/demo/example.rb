@@ -1,5 +1,6 @@
 require 'demo/window'
 require 'demo/editable_counter'
+require 'wee/components/messagebox'
 
 class RegexpValidatedInput < Wee::Component
 
@@ -119,12 +120,12 @@ class MainPage < Wee::Component
   end
 
   def add
-    call Wee::MessageBox.new("Do you really want to add '" + @text + "'?"), proc {|res|
+    call Wee::MessageBox.new("Do you really want to add '" + @text + "'?") do |res|
       if res
-        call Wee::MessageBox.new("Do you really really really want to add '" + @text + "'?"), proc {|res2| 
+        call Wee::MessageBox.new("Do you really really really want to add '" + @text + "'?") do |res2| 
           @arr << @text if res2
-        }
+        end
       end
-    }
+    end 
   end
 end

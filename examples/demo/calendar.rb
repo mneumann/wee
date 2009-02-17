@@ -337,7 +337,9 @@ class CustomCalendarDemo < Wee::Component
   # Call the calendar component
   #
   def calendar()
-    call( CustomCalendar.new(@date), :set_date)
+    call CustomCalendar.new(@date) do |date|
+      set_date(date)
+    end
   end
 
   def set_date(date)

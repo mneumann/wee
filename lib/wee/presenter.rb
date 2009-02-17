@@ -13,6 +13,17 @@ module Wee
     def backtrack(state); raise end
     def process_callbacks(callbacks); raise end
 
+    protected
+
+    # Returns the class used as renderer for this presenter. Overwrite this
+    # method if you want to use a different renderer.
+    #
+    # Returned class must be a subclass of Wee::Renderer.
+
+    def renderer_class
+      Wee::DefaultRenderer
+    end
+
   end # class Presenter
 
 end # module Wee

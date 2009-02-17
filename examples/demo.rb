@@ -1,71 +1,70 @@
 $LOAD_PATH.unshift "../lib"
 require 'wee'
+require 'wee/components/wrapper_decoration'
+require 'wee/components/page_decoration'
+require 'wee/components/form_decoration'
+
 require 'rubygems'
 require 'rack'
 require 'rack/builder'
 
-APPS = []
+class Wee::Application
+  attr_accessor :path, :description
+
+  def self.applications
+    @@applications ||= [] 
+  end
+
+  def self.register(path=nil, description=nil)
+    app = new { Wee::Session.new(yield, 20) } 
+    app.path = path if path
+    app.description = description if description
+    self.applications << app 
+  end
+end
 
 class Demo < Wee::Component
   def render(r)
     r.h1 'Wee Demos' 
     r.ul {
-      APPS.each do |name, descr, _| 
+      Wee::Application.applications.each do |app|
         r.li {
-          r.anchor.href("/#{ name }").with("/#{ name }: #{ descr }")
+          r.anchor.href(app.path).with("#{ app.path }: #{ app.description }")
         }
       end
     }
   end
 end
 
-class RackHandler
-  def initialize(description, &block)
-    @description = description
-    @block = block
-    @application = Wee::Application.new {
-      Wee::Session.new(block.call, 20)
-    }
-  end
-
-  def call(env)
-    context = Wee::Context.new(Wee::Request.new(env))
-    @application.handle_request(context)
-    return context.response.finish
-  end
-end
-
-
-def APPS.add(name, description=nil, &block)
-  self << [name, description||name, block]
-end
-
-APPS.add 'demo', 'This demo application' do 
+Wee::Application.register('/demo', 'This demo application') do 
   Demo.new.add_decoration Wee::PageDecoration.new('Demo')
 end
 
-APPS.add 'calc', 'RPN Calculator' do
+Wee::Application.register('/calc', 'RPN Calculator') do
   require File.join(File.dirname(__FILE__), 'demo', 'calculator')
   Wee::Examples::Calculator.new.
   add_decoration(Wee::FormDecoration.new).
   add_decoration(Wee::PageDecoration.new('RPN Calculator'))
 end
 
-APPS.add 'calendar', 'Calendar' do
+Wee::Application.register('/calendar', 'Calendar') do
   require File.join(File.dirname(__FILE__), 'demo', 'calendar')
   CustomCalendarDemo.new
 end
 
-APPS.add 'example', 'Misc Components' do
+Wee::Application.register('/example', 'Misc Components') do
   require File.join(File.dirname(__FILE__), 'demo', 'example')
   MainPage.new
 end
 
 app = Rack::Builder.app do
   use Rack::CommonLogger
-  APPS.each do |name, descr, block|
-    map "/#{name}" do
-      run RackHandler.new('This demo application', &block)
+  use Rack::ShowExceptions
+  #use Rack::ShowStatus
+
+  Wee::Application.applications.each do |a|
+    map a.path do
+      run a
     end
   end
 end

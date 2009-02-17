@@ -32,17 +32,6 @@ module Wee
       render(renderer_class.new(context, self))
     end
 
-    protected
-
-    # Returns the class used as renderer for this component. Overwrite this
-    # method if you want to use a different renderer.
-    #
-    # Returned class must be a subclass of Wee::Renderer.
-
-    def renderer_class
-      Wee::DefaultRenderer
-    end
-
     public
 
     # Process and invoke all callbacks specified for this component and all of

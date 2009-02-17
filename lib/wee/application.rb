@@ -50,7 +50,9 @@ module Wee
       raise
     end
     
-    def handle_request(context)
+    def call(env)
+      context = Wee::Context.new(Wee::Request.new(env))
+
       session_id = context.request.session_id
       session = @mutex.synchronize { @sessions[session_id] }
 
@@ -66,8 +68,7 @@ module Wee
         session.handle_request(context)
       end
 
-    rescue => exn
-      context.response = Wee::ErrorResponse.new(exn) 
+      return context.response.finish
     end
 
 =begin
