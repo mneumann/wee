@@ -83,7 +83,7 @@ module Wee
 
       @root_component = root_component
       @page_cache = Wee::LRUCache.new(page_cache_capacity)
-      @idgen = Wee::SequentialIdGenerator.new
+      @idgen = Wee::IdGenerator::Sequential.new
     end
 
     def self.current

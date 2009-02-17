@@ -32,7 +32,7 @@ if __FILE__ == $0
   require 'wee/adaptors/webrick'
   app = Wee::Application.new {|app|
     app.default_request_handler { MySession.new }
-    app.id_generator = Wee::SequentialIdGenerator.new(rand(1_000_000))
+    app.id_generator = Wee::IdGenerator::Sequential.new(rand(1_000_000))
     app.max_request_handlers = 2
   }
   Wee::WEBrickAdaptor.register('/app' => app).start
