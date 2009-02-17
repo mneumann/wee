@@ -68,7 +68,7 @@ module Wee
       q[callback_id] = nil if callback_id 
 
       path = script_name() + (info || path_info())
-      path << "?" << Rack::Utils.build_query(q) 
+      path << "?" << Rack::Utils.build_query(q) unless q.empty? 
 
       return path
     end
