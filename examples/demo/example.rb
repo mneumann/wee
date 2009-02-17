@@ -111,7 +111,7 @@ class MainPage < Wee::Component
       end
 
       r.form do
-        r.text_input.value(@text).callback{|@text|}
+        r.text_input.value(@text).callback{|val| @text = val}
         r.submit_button.callback{add}.value('add')
       end
 
