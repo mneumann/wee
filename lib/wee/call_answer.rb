@@ -43,10 +43,6 @@ module Wee
     #   Either a symbol or any object that responds to #call. If it's a symbol,
     #   then the corresponding method of the current component will be called.
     #
-    # [+args+]
-    #   Arguments that are passed to the +return_callback+ before the 'onanswer'
-    #   arguments.
-    #
     # <b>How it works</b>
     # 
     # The component to be called is wrapped with an AnswerDecoration and the
@@ -68,26 +64,23 @@ module Wee
     # callback which cleans up the decorations we added during #call, and finally
     # passes control to the +return_callback+. 
     #
-    def call(component, return_callback=nil, *args)
-      add_decoration(delegate = Wee::Delegate.new(component))
-      component.add_decoration(answer = Wee::AnswerDecoration.new)
-      answer.on_answer = OnAnswer.new(self, component, delegate, answer, 
-                                      return_callback, args)
+    def call(component, &return_callback)
+      delegate = Wee::Delegate.new(component)
+      answer = Wee::AnswerDecoration.new
+      answer.on_answer = OnAnswer.new(self, component, delegate, answer, return_callback)
+
+      add_decoration(delegate)
+      component.add_decoration(answer)
       send_response(nil)
     end
 
-    class OnAnswer < Struct.new(:calling_component, :called_component, :delegate, 
-                                :answer, :return_callback, :args)
+    class OnAnswer < Struct.new(:calling_component, :called_component, 
+                                :delegate, :answer, :return_callback)
 
       def call(*answer_args)
         calling_component.remove_decoration(delegate)
         called_component.remove_decoration(answer)
-        return if return_callback.nil?
-        if return_callback.respond_to?(:call)
-          return_callback.call(*(args + answer_args))
-        else
-          calling_component.send(return_callback, *(args + answer_args))
-        end
+        return_callback.call(*answer_args) if return_callback
       end
     end
 
