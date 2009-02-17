@@ -20,8 +20,6 @@ require 'wee/request'
 require 'wee/response'
 require 'wee/session'
 
-require 'wee/components'
-
 require 'wee/renderer/html/writer'
 require 'wee/renderer/html/brushes'
 require 'wee/renderer/html/canvas'

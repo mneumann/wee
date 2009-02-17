@@ -62,6 +62,10 @@ module Wee
       return true
     end
 
+    def dead?
+      !alive?
+    end
+
     def statistics
       now = Time.now
       {

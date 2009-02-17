@@ -23,10 +23,8 @@ class RackHandler
   def initialize(description, &block)
     @description = description
     @block = block
-    @application = Wee::Application.new {|app|
-      app.default_request_handler {
-        Wee::Session.new(block.call, 20)
-      }
+    @application = Wee::Application.new {
+      Wee::Session.new(block.call, 20)
     }
   end
 
