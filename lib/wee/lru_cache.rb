@@ -25,6 +25,12 @@ module Wee
       @store.delete(key)
     end
 
+    def delete_if
+      @store.delete_if {|id, item|
+        yield id, item.value
+      }
+    end
+
     def fetch(key, default_value=nil)
       if item = @store[key]
         item.time = (@time += 1)
@@ -44,12 +50,16 @@ module Wee
         item = Item.new
         item.time = (@time += 1)
         item.value = value
+        garbage_collect() if @store.size >= @capacity
         while @store.size >= @capacity 
           old_item = @store.delete(min_key()) || raise
           @replace_callback.call(old_item) if @replace_callback
         end
         @store[key] = item
       end
+    end
+
+    def garbage_collect
     end
 
     def each(&block)

@@ -1,4 +1,6 @@
+require 'thread'
 require 'wee/id_generator'
+require 'wee/lru_cache'
 
 module Wee
 
@@ -8,28 +10,35 @@ module Wee
   #
   class Application
 
+    class SessionCache < Wee::LRUCache
+      def garbage_collect
+        delete_if {|id, session| session.dead? }
+      end
+    end
+
     #
     # Creates a new application. The block, when called, must
     # return a new Session instance. 
     #
     #   Wee::Application.new { Wee::Session.new(root_component) }
     #
-    def initialize(max_sessions=nil, &block)
-      @max_sessions = max_sessions
+    def initialize(max_sessions=10_000, &block)
       @session_factory = block || raise(ArgumentError)
       @session_ids ||= Wee::IdGenerator::Secure.new
-
-      @sessions = Hash.new
+      @sessions = SessionCache.new(max_sessions)
       @mutex = Mutex.new
+    end
 
-      # start request-handler collecting thread
-      # run once every minute
-      @gc_thread = Thread.new {
-        sleep 60
-        @mutex.synchronize { garbage_collect_handlers }
-      }
+    #
+    # Garbage collect dead sessions
+    #
+    def cleanup_sessions
+      @mutex.synchronize { @sessions.garbage_collect }
     end
     
+    #
+    # Handles a web request
+    #
     def call(env)
       request = Wee::Request.new(env)
 
@@ -52,24 +61,23 @@ module Wee
 
     def new_session
       session = @session_factory.call
-      session.id = unique_session_id()
-      @sessions[session.id] = session
       session.application = self
+      insert_session(session)
       return session
     end
 
-    def unique_session_id
-      3.times do
-        id = @session_ids.next
-        return id if @sessions[id].nil?
+    def insert_session(session, retries=3)
+      retries.times do
+        @mutex.synchronize {
+          id = @session_ids.next
+          if @sessions[id].nil?
+            @sessions[id] = session 
+            session.id = id
+            return
+          end
+        }
       end
       raise
-    end
-
-    # MUST be called while holding @mutex
-
-    def garbage_collect_handlers
-      @sessions.delete_if {|id,rh| rh.dead? }
     end
 
   end # class Application
