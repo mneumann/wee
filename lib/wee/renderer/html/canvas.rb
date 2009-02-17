@@ -1,6 +1,6 @@
 module Wee
 
-module CanvasMixin
+class HtmlCanvasRenderer < Renderer
   def initialize_canvas
     @parent_brush = nil
     @current_brush = nil
@@ -29,10 +29,6 @@ module CanvasMixin
     @current_brush.close if @current_brush
     @parent_brush = @parent_brush.parent 
   end
-end
-
-class HtmlCanvasRenderer < Renderer
-  include CanvasMixin
 
   attr_reader :document
 
