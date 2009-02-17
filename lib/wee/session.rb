@@ -88,7 +88,7 @@ module Wee
 
       @root_component = root_component
       @page_cache = Wee::LRUCache.new(page_cache_capacity)
-      @idgen = Wee::IdGenerator::Sequential.new
+      @page_ids = Wee::IdGenerator::Sequential.new
     end
 
     def self.current
@@ -165,7 +165,7 @@ module Wee
           end
 
           # create new page (state)
-          new_page = Page.new(@idgen.next.to_s, take_snapshot(), nil) 
+          new_page = Page.new(@page_ids.next, take_snapshot(), nil) 
           cache(new_page)
           redirect(new_page)
         end
@@ -174,7 +174,7 @@ module Wee
         # create initial state if no such exists yet)
         
         @initial_state ||= take_snapshot() 
-        new_page = Page.new(@idgen.next.to_s, @initial_state, nil) 
+        new_page = Page.new(@page_ids.next, @initial_state, nil) 
         cache(new_page)
         redirect(new_page) # XXX: Show some informative message and wait 5 secs
       end
@@ -205,7 +205,6 @@ module Wee
     def send_response(response)
       raise Wee::AbortCallbackProcessing.new(response)
     end
-
 
   end # class Session
 
