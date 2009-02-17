@@ -25,7 +25,7 @@ module Wee
   end
 
   class RefreshResponse < GenericResponse
-    def initialize(message, location, seconds=10)
+    def initialize(message, location, seconds=5)
       super(%[<html>
         <head>
           <meta http-equiv="REFRESH" content="#{seconds};URL=#{location}">
@@ -33,7 +33,8 @@ module Wee
         </head>
         <body>
           <h1>#{message}</h1>
-          You are being redirected to <a href="#{location}">#{location}</a>
+          You are being redirected to <a href="#{location}">#{location}</a> 
+          in #{seconds} seconds.
         </body>
         </html>])
     end
