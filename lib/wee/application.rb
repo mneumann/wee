@@ -1,132 +1,136 @@
 require 'wee/id_generator'
 
-# A Wee::Application manages all Wee::RequestHandler's of a single application,
-# where most of the time the request handlers are Wee::Session objects. It
-# dispatches the request to the correct handler by examining the request.
+module Wee
 
-class Wee::Application
+  # A Wee::Application manages all Wee::RequestHandler's of a single application,
+  # where most of the time the request handlers are Wee::Session objects. It
+  # dispatches the request to the correct handler by examining the request.
 
-  # The generator used for creating unique request handler id's.
+  class Application
 
-  attr_accessor :id_generator
+    # The generator used for creating unique request handler id's.
 
-  # The maximum number of request handlers
+    attr_accessor :id_generator
 
-  attr_accessor :max_request_handlers
+    # The maximum number of request handlers
 
-  # Get or set the default request handler. The default request handler is used
-  # if no request handler id is given in a request. 
+    attr_accessor :max_request_handlers
 
-  def default_request_handler(&block)
-    if block.nil?
-      @default_request_handler
-    else
-      @default_request_handler = block
-    end
-  end
+    # Get or set the default request handler. The default request handler is used
+    # if no request handler id is given in a request. 
 
-  # Creates a new application. The block is used to initialize the attributes:
-  #
-  #   Wee::Application.new {|app|
-  #     app.default_request_handler { MySession.new } 
-  #     app.id_generator = Wee::IdGenerator::Sequential.new
-  #     app.max_request_handlers = 1000 
-  #   }
-
-  def initialize(&block)
-    @request_handlers = Hash.new
-    block.call(self)
-    @id_generator ||= Wee::IdGenerator::Secure.new
-    if @default_request_handler.nil?
-      raise ArgumentError, "No default request handler specified"
-    end
-    @mutex = Mutex.new
-
-    # start request-handler collecting thread
-    # run once every minute
-    @gc_thread = Thread.new {
-      sleep 60
-      @mutex.synchronize { garbage_collect_handlers }
-    }
-  end
-  
-  def handle_request(context)
-    request_handler_id = context.request.request_handler_id
-    request_handler = @mutex.synchronize { @request_handlers[request_handler_id] }
-
-    if request_handler_id.nil?
-
-      # No id was given -> check whether the maximum number of request-handlers
-      # limit is reached. if not, create new id and handler
-
-      request_handler = @default_request_handler.call 
-      insert_new_request_handler(request_handler)
-      context.request.request_handler_id = request_handler.id 
-      handle_request(context)
-      return
-
-    elsif request_handler.nil?
-
-      # A false request handler id was given. This might indicate that a
-      # request handler has expired. 
-
-      request_handler_expired(context)
-      return
-
-    elsif !request_handler.alive?
-
-      # The request_handler is not alive anymore.
-
-      request_handler_expired(context)
-      return
-
+    def default_request_handler(&block)
+      if block.nil?
+        @default_request_handler
+      else
+        @default_request_handler = block
+      end
     end
 
-    request_handler.handle_request(context)
+    # Creates a new application. The block is used to initialize the attributes:
+    #
+    #   Wee::Application.new {|app|
+    #     app.default_request_handler { MySession.new } 
+    #     app.id_generator = Wee::IdGenerator::Sequential.new
+    #     app.max_request_handlers = 1000 
+    #   }
 
-  rescue => exn
-    context.response = Wee::ErrorResponse.new(exn) 
-  end
+    def initialize(&block)
+      @request_handlers = Hash.new
+      block.call(self)
+      @id_generator ||= Wee::IdGenerator::Secure.new
+      if @default_request_handler.nil?
+        raise ArgumentError, "No default request handler specified"
+      end
+      @mutex = Mutex.new
 
-  def insert_new_request_handler(request_handler)
-    @mutex.synchronize {
-      if @max_request_handlers != nil and @request_handlers.size >= @max_request_handlers
-        # limit reached -> remove non-alive handlers...
-        garbage_collect_handlers()
+      # start request-handler collecting thread
+      # run once every minute
+      @gc_thread = Thread.new {
+        sleep 60
+        @mutex.synchronize { garbage_collect_handlers }
+      }
+    end
+    
+    def handle_request(context)
+      request_handler_id = context.request.request_handler_id
+      request_handler = @mutex.synchronize { @request_handlers[request_handler_id] }
 
-        # ...and test again
-        if @request_handlers.size >= @max_request_handlers
-          # TODO: show a custom error message
-          raise "maximum number of request-handlers reached" 
-        end
+      if request_handler_id.nil?
+
+        # No id was given -> check whether the maximum number of request-handlers
+        # limit is reached. if not, create new id and handler
+
+        request_handler = @default_request_handler.call 
+        insert_new_request_handler(request_handler)
+        context.request.request_handler_id = request_handler.id 
+        handle_request(context)
+        return
+
+      elsif request_handler.nil?
+
+        # A false request handler id was given. This might indicate that a
+        # request handler has expired. 
+
+        request_handler_expired(context)
+        return
+
+      elsif !request_handler.alive?
+
+        # The request_handler is not alive anymore.
+
+        request_handler_expired(context)
+        return
+
       end
 
-      request_handler.id = unique_request_handler_id()
-      request_handler.application = self
-      @request_handlers[request_handler.id] = request_handler
-    }
-  end
+      request_handler.handle_request(context)
 
-  private
+    rescue => exn
+      context.response = Wee::ErrorResponse.new(exn) 
+    end
 
-  # MUST be called while holding @mutex
+    def insert_new_request_handler(request_handler)
+      @mutex.synchronize {
+        if @max_request_handlers != nil and @request_handlers.size >= @max_request_handlers
+          # limit reached -> remove non-alive handlers...
+          garbage_collect_handlers()
 
-  def unique_request_handler_id
-    id = @id_generator.next.to_s
-    raise "failed to create unique request handler id" if @request_handlers.include?(id)
-    return id
-  end
+          # ...and test again
+          if @request_handlers.size >= @max_request_handlers
+            # TODO: show a custom error message
+            raise "maximum number of request-handlers reached" 
+          end
+        end
 
-  # MUST be called while holding @mutex
+        request_handler.id = unique_request_handler_id()
+        request_handler.application = self
+        @request_handlers[request_handler.id] = request_handler
+      }
+    end
 
-  def garbage_collect_handlers
-    @request_handlers.delete_if {|id,rh| !rh.alive? }
-  end
+    private
 
-  def request_handler_expired(context)
-    context.response = Wee::RefreshResponse.new("Invalid or expired request handler!",
-                       context.request.build_url(:request_handler_id => nil,
-                                                 :page_id => nil))
-  end
+    # MUST be called while holding @mutex
 
-end
+    def unique_request_handler_id
+      id = @id_generator.next.to_s
+      raise "failed to create unique request handler id" if @request_handlers.include?(id)
+      return id
+    end
+
+    # MUST be called while holding @mutex
+
+    def garbage_collect_handlers
+      @request_handlers.delete_if {|id,rh| !rh.alive? }
+    end
+
+    def request_handler_expired(context)
+      context.response = Wee::RefreshResponse.new("Invalid or expired request handler!",
+                         context.request.build_url(:request_handler_id => nil,
+                                                   :page_id => nil))
+    end
+
+  end # class Application
+
+end # module Wee
