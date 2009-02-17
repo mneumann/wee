@@ -2,7 +2,7 @@
 
 == Copyright and License
 
-Copyright (c) 2004, 2005 by Michael Neumann (mneumann@ntecs.de).
+Copyright (c) 2004, 2005, 2009 by Michael Neumann (mneumann@ntecs.de).
 
 Released under the same terms of license as Ruby. Some files under directory
 <tt>examples/</tt> might be copyrighted by third parties and licensed under
@@ -46,12 +46,6 @@ the browser's back and forward-button play well together with your application.
 
 Wee is well thought out, is written in *and* supports clean and concise code.
 Furthermore I think most parts are now very well documented.
-
-=== Abstract core
-
-The core of Wee is completely independent of both HTTP and HTML. That means,
-with little effort, you should be able to render other formats than HTML and
-use other communication protocols like SOAP, XML-RPC, Email, GUI or Console.
 
 === Templating-independent 
 
@@ -111,11 +105,6 @@ your code... ;-)
 To enable continuations, you have to require:
 
   require 'wee/continuation'
-
-=== Fully Marshallable (drops Continuation support)
-
-If you don't need continuations, Wee can be made fully marshallable. It is not
-yet fully marshallable (it was in the past), but it can be made, if required. 
 
 == Observations and Limitations
 
@@ -220,46 +209,14 @@ kinds of callbacks:
 The distinction between input and action callbacks is important, as action
 callbacks might depend on values of input-fields being assigned to instance
 variables of the controlling component. Hence, Wee first invokes all input
-callbacks before any action callback is triggered.
-
-There are two methods related to callback processing:
-
-* Wee::Component#process_callbacks_chain
-
-* Wee::Presenter#process_callbacks
-
-Note that each Wee::Component is also a Wee::Presenter, whereas a
-Wee::Decoration is not a Component (but a Presenter)! 
-
-Method <i>process_callbacks_chain</i> invokes <i>process_callbacks</i> for
-it's first decoration, or if the component has no decorations, the method is
-called for the component itself.  As such, <i>process_callbacks_chain</i>
-is important to avoid entering an infinite loop (a method calling itself). What
-decorations are, is discussed elsewhere.
-
-There are two "process_callbacks" tree traversals. The first invokes all input
-callbacks, the second the action callback.
+callbacks before any action callback is triggered. Callback processing
+is performed by method Wee::Component#process_callbacks.
 
 === Rendering Phase
 
-The rendering phase is assumed to be side-effect free! So, you as a
-programmer should take care to meet this assumption.
-
-Similar as in the callback-step, there are two methods related to rendering a
-page:
-
-* Wee::Component#do_render_chain
-
-* Wee::Presenter#do_render
-
-Method <i>Component#do_render_chain</i> starts rendering the decoration chain by
-calling <i>Presenter#do_render</i> for the first decoration of the component or
-for the component itself if no decorations were specified.  Method
-<i>Presenter#do_render</i> then generates the desired output which gets sent to
-the user. Note that method <i>do_render</i> might call other components'
-<i>do_render_chain</i> methods to display those components "inside" itself
-(usually a component does this for it's child components, but this has to be
-implemented by the programmer). 
+The rendering phase is assumed to be side-effect free! So, you as a programmer
+should take care to meet this assumption. Rendering is performed by method
+Wee::Component#render_on.
 
 === Further Reads
 
