@@ -230,23 +230,6 @@ class HtmlCanvasRenderer < Renderer
     nil
   end
 
-  require 'erb'
-
-  def template(filename)
-    raise "Template file #{ filename } not found!" unless File.exists?(filename)
-    self.close
-    compiler = ERB::Compiler.new(nil)
-    compiler.put_cmd = 'r << '
-    src = compiler.compile(File.read(filename))
-    if $DEBUG
-      puts "-------------------------"
-      puts src
-      puts "-------------------------"
-    end
-    @current_component.instance_eval(src, '(erb)', 1) 
-    return nil
-  end
-
   private
 
   def handle(brush, *args, &block)
