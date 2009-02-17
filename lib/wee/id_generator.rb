@@ -59,8 +59,10 @@ module Wee
 
     def next
       str = defined?(::SecureRandom) ? next_secure : next_md5
-      a, b = str.unpack('QQ')
-      a.to_s(36) << b.to_s(36)
+      packed = [str].pack('m')
+      packed.tr!("=\r\n", '')
+      packed.tr!('+/', '-_')
+      packed
     end
 
   end
