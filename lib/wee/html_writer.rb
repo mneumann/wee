@@ -1,4 +1,4 @@
-require 'cgi'
+require 'rack'
 
 module Wee
 
@@ -16,11 +16,9 @@ module Wee
   #   w.end_tag('body')
   #   w.end_tag('html')
   #
-  #   p doc        # => '<html><body><a href="http://...">link</a></body></html>'
+  #   p doc  # => '<html><body><a href="http://...">link</a></body></html>'
   #
-
-  class Wee::HtmlWriter
-    attr_accessor :port
+  class HtmlWriter
 
     def initialize(port)
       @port = port 
@@ -76,10 +74,11 @@ module Wee
     alias << text
 
     def encode_text(str)
-      @port << CGI.escapeHTML(str.to_s)
+      @port << Rack::Utils.escape_html(str.to_s)
 
       self
     end
-  end
+
+  end # class HtmlWriter
 
 end # module Wee
