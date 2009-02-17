@@ -97,9 +97,9 @@ module Wee
     # initialize), then you should consider to backtrack the children array (of
     # course only if you want backtracking at all): 
     #   
-    #   def backtrack_state(snapshot)
+    #   def backtrack(state)
     #     super
-    #     snapshot.add(self.children)
+    #     state.add(self.children)
     #   end
     #
 
@@ -126,7 +126,7 @@ module Wee
     # For example if you dynamically add children to your component, you might
     # want to backtrack the children array: 
     #
-    #   def backtrack_state(state)
+    #   def backtrack(state)
     #     super
     #     backtrack_children(state)
     #   end
@@ -134,7 +134,7 @@ module Wee
     # Or, those components that dynamically add decorations or make use of the 
     # call/answer mechanism should backtrack decorations as well: 
     #
-    #   def backtrack_state(state)
+    #   def backtrack(state)
     #     super
     #     backtrack_children(state)
     #     backtrack_decoration(state)
@@ -143,9 +143,9 @@ module Wee
     # [+state+]
     #    An object of class State
 
-    def backtrack_state(state)
+    def backtrack(state)
       each_child do |child|
-        child.decoration.backtrack_state(state)
+        child.decoration.backtrack(state)
       end
     end
 

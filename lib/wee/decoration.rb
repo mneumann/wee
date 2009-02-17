@@ -1,5 +1,7 @@
+module Wee; end
+
 # Abstract base class of all decorations. Forwards the methods
-# #process_callbacks, #render_on and #backtrack_state to the next decoration in
+# #process_callbacks, #render_on and #backtrack to the next decoration in
 # the chain. Subclasses should provide special behaviour in these methods,
 # otherwise the decoration does not make sense.
 #
@@ -59,8 +61,8 @@ class Wee::Decoration < Wee::Presenter
   # answer-decoration has the advantage to be able to call a component more
   # than once!
 
-  def backtrack_state(state)
-    @next.backtrack_state(state)
+  def backtrack(state)
+    @next.backtrack(state)
     state.add_ivar(self, :@next, @next)
   end
 
@@ -154,7 +156,7 @@ module Wee::DecorationMixin
 end
 
 # A Wee::Delegate breaks the decoration chain and forwards the methods
-# #process_callbacks, #render_on and #backtrack_state to the corresponding
+# #process_callbacks, #render_on and #backtrack to the corresponding
 # *chain* method of it's _delegate_ component (a Wee::Component).
 
 class Wee::Delegate < Wee::Decoration
@@ -180,9 +182,9 @@ class Wee::Delegate < Wee::Decoration
   # _delegate_ component. We also take snapshots of all non-visible components,
   # thus we follow the @next decoration (via super).
 
-  def backtrack_state(snapshot)
+  def backtrack(state)
     super
-    @delegate.decoration.backtrack_state(snapshot)
+    @delegate.decoration.backtrack(state)
   end
 end
 

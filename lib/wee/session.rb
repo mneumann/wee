@@ -180,7 +180,7 @@ module Wee
     # and returns it.
 
     def take_snapshot
-      @root_component.decoration.backtrack_state(state = Wee::State.new)
+      @root_component.decoration.backtrack(state = Wee::State.new)
       return state.freeze
     end
 

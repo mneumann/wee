@@ -10,7 +10,7 @@ module Wee
   class Presenter
 
     def render_on(context); raise end
-    def backtrack_state(state); raise end
+    def backtrack(state); raise end
     def process_callbacks(callbacks); raise end
 
   end # class Presenter

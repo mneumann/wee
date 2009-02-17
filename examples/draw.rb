@@ -10,8 +10,8 @@ class MainPage < Wee::Component
     @points = []
   end
 
-  def backtrack_state(snap)
-    snap.add(@points)
+  def backtrack(state)
+    state.add(@points)
   end
 
   def create_image(points)

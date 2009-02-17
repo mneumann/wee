@@ -19,11 +19,11 @@ class Wee::LoginDecoration < Wee::Decoration
     end
   end
 
-  def backtrack_state(snapshot)
+  def backtrack(state)
     if logged_in?
       super
     else
-      @login_page.decoration.backtrack_state(snapshot)
+      @login_page.decoration.backtrack(state)
     end
   end
 

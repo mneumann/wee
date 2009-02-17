@@ -10,9 +10,9 @@ class RegexpValidatedInput < Wee::Component
     @error = false
   end
 
-  def backtrack_state(snap)
+  def backtrack(state)
     super
-    snap.add(self)
+    state.add(self)
   end
 
   def value
@@ -72,15 +72,15 @@ class MainPage < Wee::Component
     @selected2 = []
   end
 
-  def backtrack_state(snap)
+  def backtrack(state)
     super
-    snap.add(@arr)
-    snap.add(@text)
+    state.add(@arr)
+    state.add(@text)
 
-    snap.add(@list1)
-    snap.add(@selected1)
-    snap.add(@list2)
-    snap.add(@selected2)
+    state.add(@list1)
+    state.add(@selected1)
+    state.add(@list2)
+    state.add(@selected2)
   end
 
   attr_accessor :text
