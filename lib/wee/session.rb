@@ -1,5 +1,6 @@
 require 'thread'
 require 'wee/lru_cache'
+require 'wee/id_generator'
 
 module Wee
 

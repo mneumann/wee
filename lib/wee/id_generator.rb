@@ -20,7 +20,7 @@ module Wee
     end
 
     def next
-      @value += 1
+      (@value += 1).to_s
     end
   end
 
@@ -30,7 +30,7 @@ module Wee
   #
   class IdGenerator::Secure < IdGenerator
 
-    require 'digest/sha1'
+    require 'digest/md5'
     begin
       require 'securerandom'
     rescue LoadError
@@ -40,27 +40,27 @@ module Wee
       @salt = salt
     end
 
-    def next_sha1
+    def next_md5
       now = Time.now
-      dig = Digest::SHA1.new
+      dig = Digest::MD5.new
       dig.update(now.to_s)
       dig.update(now.usec.to_s)
       dig.update(rand(0).to_s)
       dig.update($$.to_s)
       dig.update(@salt.to_s)
-      dig.hexdigest
+      dig.digest
     end
 
     def next_secure
-      SecureRandom.hex
+      SecureRandom.random_bytes(16)
     rescue NotImplementedError
-      next_sha1
+      next_md5
     end
 
-    if defined?(SecureRandom)
-      alias next next_secure
-    else
-      alias next next_sha1
+    def next
+      str = defined?(::SecureRandom) ? next_secure : next_md5
+      a, b = str.unpack('QQ')
+      a.to_s(36) << b.to_s(36)
     end
 
   end

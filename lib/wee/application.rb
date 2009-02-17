@@ -1,3 +1,5 @@
+require 'wee/id_generator'
+
 # A Wee::Application manages all Wee::RequestHandler's of a single application,
 # where most of the time the request handlers are Wee::Session objects. It
 # dispatches the request to the correct handler by examining the request.
@@ -34,7 +36,7 @@ class Wee::Application
   def initialize(&block)
     @request_handlers = Hash.new
     block.call(self)
-    @id_generator ||= Wee::IdGenerator::Sequential.new(rand(1_000_000))
+    @id_generator ||= Wee::IdGenerator::Secure.new
     if @default_request_handler.nil?
       raise ArgumentError, "No default request handler specified"
     end
