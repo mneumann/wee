@@ -15,14 +15,14 @@ class Wee::Pager
     when :last
       last_page_index
     end
-    r.anchor.info("pager/#{ index }").callback(sym).tooltip(tooltip).with { r.encode_text(text) }
+    r.anchor.info("pager/#{ index }").callback(&method(sym)).tooltip(tooltip).with { r.encode_text(text) }
   end
 
   def render_page_num(num, current)
     if current
       r.bold(num+1)
     else
-      r.anchor.info("pager/#{ num }").callback(:goto, num).with(num+1)
+      r.anchor.info("pager/#{ num }").callback{goto(num)}.with(num+1)
     end
   end
 end
