@@ -10,10 +10,6 @@ end
 
 class Wee::Presenter
 
-  def renderer_class
-    Wee::DefaultRenderer
-  end
-
   public
 
   # Returns the current session. A presenter (or component) has always an

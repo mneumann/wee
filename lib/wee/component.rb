@@ -40,7 +40,7 @@ module Wee
     # Returned class must be a subclass of Wee::Renderer.
 
     def renderer_class
-      raise "Method renderer_class needs to be implemented!"
+      Wee::DefaultRenderer
     end
 
     public
