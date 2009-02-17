@@ -19,9 +19,7 @@ module Wee
     end
   end
 
-  class Brush
-
-  class GenericTextBrush < Brush
+  class Brush::GenericTextBrush < Brush
     def initialize(text)
       super()
       @text = text
@@ -35,7 +33,7 @@ module Wee
     end
   end
 
-  class GenericEncodedTextBrush < Brush
+  class Brush::GenericEncodedTextBrush < Brush
     def initialize(text)
       super()
       @text = text
@@ -49,53 +47,43 @@ module Wee
     end
   end
 
-  class GenericTagBrush < Brush
-
-    class << self
-      private
-
-                  def html_attr(attr, hash={})
-        name = hash[:html_name] || attr
-
-        case hash[:type]
-        when :bool
-          class_eval " 
-            def #{ attr }(bool=true)
-              if bool
-                @attributes['#{ name }'] = nil
-              else
-                @attributes.delete('#{ name }')
-              end
-              self
+  class Brush::GenericTagBrush < Brush
+    def self.html_attr(attr, hash={})
+      name = hash[:html_name] || attr
+      case hash[:type]
+      when :bool
+        class_eval " 
+          def #{ attr }(bool=true)
+            if bool
+              @attributes['#{ name }'] = nil
+            else
+              @attributes.delete('#{ name }')
             end
-          "
-        else
-          class_eval " 
-            def #{ attr }(value)
-              if value == nil
-                @attributes.delete('#{ name }')
-              else
-                @attributes['#{ name }'] = value.to_s
-              end
-              self
+            self
+          end
+        "
+      else
+        class_eval " 
+          def #{ attr }(value)
+            if value == nil
+              @attributes.delete('#{ name }')
+            else
+              @attributes['#{ name }'] = value.to_s
             end
-          "
-        end
-
-        if hash[:aliases]
-          hash[:aliases].each do |a|
-            class_eval "alias #{ a } #{ attr }"
+            self
           end
-        end
+        "
+      end
 
-        if hash[:shortcuts]
-          hash[:shortcuts].each_pair do |k,v|
-            class_eval "
-              def #{ k }() #{ attr }(#{ v.inspect }) end
-            "
-          end
-        end
-                  end
+      (hash[:aliases] || []).each do |a|
+        class_eval "alias #{ a } #{ attr }"
+      end
+
+      (hash[:shortcuts] || {}).each_pair do |k,v|
+        class_eval "
+          def #{ k }() #{ attr }(#{ v.inspect }) end
+        "
+      end
     end
 
     private
@@ -169,13 +157,13 @@ module Wee
     end
   end
 
-  class GenericSingleTagBrush < GenericTagBrush
+  class Brush::GenericSingleTagBrush < Brush::GenericTagBrush
     def initialize(tag)
       super(tag, true)
     end
   end
 
-  class ImageTag < GenericSingleTagBrush
+  class Brush::ImageTag < Brush::GenericSingleTagBrush
     html_attr 'src'
 
     def initialize
@@ -187,7 +175,7 @@ module Wee
     end
   end
 
-  class JavascriptTag < GenericTagBrush
+  class Brush::JavascriptTag < Brush::GenericTagBrush
     html_attr 'src'
     html_attr 'type'
 
@@ -197,13 +185,13 @@ module Wee
     end
   end
 
-  class TableTag < GenericTagBrush
+  class Brush::TableTag < Brush::GenericTagBrush
     def initialize
       super('table')
     end
   end  
 
-  class TableRowTag < GenericTagBrush
+  class Brush::TableRowTag < Brush::GenericTagBrush
     def initialize
       super('tr')
     end
@@ -254,7 +242,7 @@ module Wee
     end
   end
 
-  class InputTag < GenericSingleTagBrush
+  class Brush::InputTag < Brush::GenericSingleTagBrush
     def initialize
       super('input')
     end
@@ -274,7 +262,7 @@ module Wee
     end
   end
 
-  class TextAreaTag < GenericTagBrush
+  class Brush::TextAreaTag < Brush::GenericTagBrush
     def initialize
       super('textarea')
     end
@@ -311,7 +299,7 @@ module Wee
     end
   end
 
-  class SelectOptionTag < GenericTagBrush
+  class Brush::SelectOptionTag < Brush::GenericTagBrush
     def initialize
       super('option')
     end
@@ -319,8 +307,7 @@ module Wee
     html_attr 'selected', :type => :bool
   end
 
-  class SelectListTag < GenericTagBrush
-
+  class Brush::SelectListTag < Brush::GenericTagBrush
     html_attr 'disabled', :type => :bool
     html_attr 'readonly', :type => :bool
     html_attr 'multiple', :type => :bool, :aliases => [:multi]
@@ -396,7 +383,7 @@ module Wee
     end
   end
 
-  class HiddenInputTag < InputTag
+  class Brush::HiddenInputTag < Brush::InputTag
     def initialize
       super
       type('hidden')
@@ -405,7 +392,7 @@ module Wee
     alias callback __input_callback
   end
 
-  class PasswordInputTag < InputTag
+  class Brush::PasswordInputTag < Brush::InputTag
     def initialize
       super
       type('password')
@@ -414,7 +401,7 @@ module Wee
     alias callback __input_callback
   end
 
-  class TextInputTag < InputTag
+  class Brush::TextInputTag < Brush::InputTag
     def initialize
       super
       type('text')
@@ -423,7 +410,7 @@ module Wee
     alias callback __input_callback
   end
 
-  class RadioButtonTag < InputTag
+  class Brush::RadioButtonTag < Brush::InputTag
     def initialize
       super
       type('radio')
@@ -473,7 +460,7 @@ module Wee
 
   end
 
-  class CheckboxTag < InputTag
+  class Brush::CheckboxTag < Brush::InputTag
     def initialize
       super
       type('checkbox')
@@ -481,7 +468,7 @@ module Wee
     alias callback __input_callback
   end
 
-  class FileUploadTag < InputTag
+  class Brush::FileUploadTag < Brush::InputTag
     def initialize
       super
       type('file')
@@ -490,7 +477,7 @@ module Wee
     alias callback __input_callback
   end
 
-  class SubmitButtonTag < InputTag
+  class Brush::SubmitButtonTag < Brush::InputTag
     def initialize
       super
       type('submit')
@@ -506,7 +493,7 @@ module Wee
   # #value method. Note that it's neccessary to parse the passed form-fields and
   # generate a "name" fields in the request, to make this image-button work. 
 
-  class ImageButtonTag < InputTag
+  class Brush::ImageButtonTag < Brush::InputTag
     def initialize
       super
       type('image')
@@ -519,7 +506,7 @@ module Wee
     end
   end
 
-  class TableDataTag < GenericTagBrush
+  class Brush::TableDataTag < Brush::GenericTagBrush
     def initialize
       super('td')
     end
@@ -530,13 +517,13 @@ module Wee
     }
   end
 
-  class TableHeaderTag < GenericTagBrush
+  class Brush::TableHeaderTag < Brush::GenericTagBrush
     def initialize
       super('th')
     end
   end
 
-  class FormTag < GenericTagBrush
+  class Brush::FormTag < Brush::GenericTagBrush
     def initialize
       super('form')
       @attributes['method'] = 'POST'
@@ -565,7 +552,7 @@ module Wee
     end
   end
 
-  class AnchorTag < GenericTagBrush
+  class Brush::AnchorTag < Brush::GenericTagBrush
     def initialize
       super('a')
     end
@@ -587,10 +574,9 @@ module Wee
         __set_url(@canvas.url_for_callback(block))
       end
     end
-
   end
 
-  class Page < Brush
+  class Brush::Page < Brush
     def title(t)
       @title = t
       self
@@ -622,7 +608,5 @@ module Wee
       nil
     end
   end
-
-  end # class Brush
 
 end # module Wee
