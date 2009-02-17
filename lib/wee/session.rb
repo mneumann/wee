@@ -193,6 +193,16 @@ module Wee
         @context.request.build_url(:page_id => page.id))
     end
 
+    public
+
+    #
+    # Send a premature response
+    #
+    def send_response(response)
+      raise Wee::AbortCallbackProcessing.new(response)
+    end
+
+
   end # class Session
 
 end # module Wee

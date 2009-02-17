@@ -71,7 +71,7 @@ module Wee
 
       add_decoration(delegate)
       component.add_decoration(answer)
-      send_response(nil)
+      session.send_response(nil)
     end
 
     class OnAnswer < Struct.new(:calling_component, :called_component, 

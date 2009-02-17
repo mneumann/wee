@@ -38,7 +38,7 @@ class LiveUpdateTest < Wee::Component
       render_live_update
     end
 
-    send_response(response)
+    session.send_response(response)
   end
 end
 

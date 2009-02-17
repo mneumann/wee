@@ -20,15 +20,6 @@ class Wee::Presenter
     Wee::Session.current
   end
 
-  # Send a premature response. 
-
-  protected
-
-
-  def send_response(response)
-    raise Wee::AbortCallbackProcessing.new(response)
-  end
-
   # Call the block inside a rendering environment, then send the response prematurely.
 
   def send_render_response(&block)
@@ -42,7 +33,7 @@ class Wee::Presenter
 
     block.call(renderer_class.new(context, self))
 
-    send_response(response)
+    session.send_response(response)
   end
 
 end
