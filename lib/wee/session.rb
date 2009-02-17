@@ -103,23 +103,22 @@ module Wee
 
     # Called by Wee::Application to send the session a request.
 
-    def handle_request(context)
+    def call(env)
       @mutex.synchronize {
         begin
           Thread.current[:wee_session] = self
-          @context = context
           @request_count += 1
           @last_access = Time.now
+          @context = Wee::Context.new(Wee::Request.new(env))
           awake
           process_request
           sleep
+          return @context.response.finish
         ensure
           @context = nil   # clean up
           Thread.current[:wee_session] = nil
         end
       }
-    rescue Exception => exn
-      context.response = Wee::ErrorResponse.new(exn)
     end
 
     protected

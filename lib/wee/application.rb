@@ -56,9 +56,7 @@ module Wee
       if request.session_id
         session = @mutex.synchronize { @sessions[request.session_id] }
         if session and session.alive?
-          context = Wee::Context.new(request)
-          session.handle_request(context)
-          context.response.finish
+          session.call(env)
         else
           url = request.build_url(:session_id => nil, :page_id => nil)
           Wee::RefreshResponse.new("Invalid or expired session", url).finish
