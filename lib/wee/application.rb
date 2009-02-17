@@ -2,16 +2,11 @@ require 'wee/id_generator'
 
 module Wee
 
-  # A Wee::Application manages all Wee::RequestHandler's of a single application,
-  # where most of the time the request handlers are Wee::Session objects. It
+  #
+  # A Wee::Application manages all Session's of a single application.  It
   # dispatches the request to the correct handler by examining the request.
-
+  #
   class Application
-
-    #
-    # The maximum number of sessions
-    #
-    attr_accessor :max_sessions
 
     #
     # Creates a new application. The block, when called, must
@@ -19,7 +14,8 @@ module Wee
     #
     #   Wee::Application.new { Wee::Session.new(root_component) }
     #
-    def initialize(&block)
+    def initialize(max_sessions=nil, &block)
+      @max_sessions = max_sessions
       @session_factory = block || raise(ArgumentError)
       @session_ids ||= Wee::IdGenerator::Secure.new
 
@@ -32,22 +28,6 @@ module Wee
         sleep 60
         @mutex.synchronize { garbage_collect_handlers }
       }
-    end
-
-    def new_session
-      session = @session_factory.call
-      session.id = unique_session_id()
-      @sessions[session.id] = session
-      session.application = self
-      return session
-    end
-
-    def unique_session_id
-      3.times do
-        id = @session_ids.next
-        return id if @sessions[id].nil?
-      end
-      raise
     end
     
     def call(env)
@@ -68,7 +48,23 @@ module Wee
       end
     end
 
-    private
+    protected
+
+    def new_session
+      session = @session_factory.call
+      session.id = unique_session_id()
+      @sessions[session.id] = session
+      session.application = self
+      return session
+    end
+
+    def unique_session_id
+      3.times do
+        id = @session_ids.next
+        return id if @sessions[id].nil?
+      end
+      raise
+    end
 
     # MUST be called while holding @mutex
 
