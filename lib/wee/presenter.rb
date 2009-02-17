@@ -24,6 +24,15 @@ module Wee
       Wee::DefaultRenderer
     end
 
+    #
+    # Returns the current session. A presenter (or component) has always an
+    # associated session. The returned object is of class Wee::Session or a
+    # subclass thereof.
+    #
+    def session
+      Wee::Session.current
+    end
+
   end # class Presenter
 
 end # module Wee

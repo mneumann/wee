@@ -8,101 +8,122 @@ module Wee
 
     class Page < Struct.new(:id, :state, :callbacks); end
 
-    # Points to the Wee::Application object for which this handler is registered. 
+    class AbortCallbackProcessing < Exception
+      attr_reader :response
+      def initialize(response)
+        @response = response
+      end
+    end
 
-    attr_accessor :application
-
-    # Each request handler of an application has a unique id, which should be
-    # non-guessable, that means it has to be cryptographically secure.
     #
-    # This id is used to uniquely identify a RequestHandler from each other. This
-    # is the same id used as a session id in class Wee::Session.
-
+    # The (application-wide) unique id of this session.
+    #
     attr_accessor :id
 
-    # Expire after this number of seconds of inactivity. If this value is +nil+,
-    # the RequestHandler will never expire due to inactivity (but may still due
-    # to <i>max_lifetime</i>).
+    #
+    # Points to the Wee::Application object this session belongs to.
+    #
+    attr_accessor :application
 
+    #
+    # Expire the session after this number of seconds of inactivity. If this
+    # value is +nil+, the Session will never expire due to inactivity.
+    # (but still may expire for example due to <i>max_lifetime</i>).
+    #
+    # Default: <tt>1800</tt> seconds (30 minutes)
+    #
     attr_accessor :expire_after
 
-    # The lifetime of this handler is limited to this number of seconds. A value
-    # of +nil+ means infinite lifetime.
-
+    #
+    # The maximum lifetime of this session in seconds. A value of +nil+ means
+    # infinite lifetime.
+    #
+    # Default: <tt>nil</tt> (infinite lifetime)
+    #
     attr_accessor :max_lifetime
 
-    # The maximum number of requests this handler should serve. A value of +nil+
-    # means infinity.
-
+    #
+    # The maximum number of requests this session is allowed to serve.
+    # A value of +nil+ means no limitation.
+    #
+    # Default: <tt>nil</tt> (infinite number of requests)
+    #
     attr_accessor :max_requests
 
-    attr_accessor :root_component
-
-    # Terminates the handler. 
     #
-    # This will usually not immediatly terminate the handler from running, but
-    # further requests will not be answered.
-
-    def teminate
-      @running = false
-    end
-
-    # Query whether this handler is still alive.
-
-    def alive?
-      return false if not @running
-      return @running = false if @max_requests and @request_count >= @max_requests
-
-      now = Time.now
-      inactivity = now - @last_access 
-      lifetime = now - @creation_time
-
-      return @running = false if @expire_after and inactivity > @expire_after 
-      return @running = false if @max_lifetime and lifetime > @max_lifetime 
-      return true
-    end
-
-    def dead?
-      !alive?
-    end
-
-    def statistics
-      now = Time.now
-      {
-        :last_access => @last_access,        # The time when this handler was last accessed
-        :inactivity => now - @last_access,   # The number of seconds of inactivity
-        :creation_time => @creation_time,    # The time when this handler was created 
-        :lifetime =>  now - @creation_time,  # The uptime or lifetime of this handler in seconds
-        :request_count => @request_count     # The number of requests served by this handler
-      }
-    end
-   
+    # Creates a new session.
+    #
     def initialize(root_component, page_cache_capacity=20)
-      @last_access = @creation_time = Time.now 
-      @expire_after = 30*60                  # The default is 30 minutes of inactivity
-      @request_count = 0
-      @running = true
-      
-      # to serialize the requests we need a mutex
-      @mutex = Mutex.new    
-
       @root_component = root_component
       @page_cache = Wee::LRUCache.new(page_cache_capacity)
       @page_ids = Wee::IdGenerator::Sequential.new
+
+      @running = true
+
+      @expire_after = 30*60
+      @max_lifetime = nil
+      @max_requests = nil
+
+      @last_access = @creation_time = Time.now 
+      @request_count = 0
+      
+      # to serialize the requests we need a mutex
+      @mutex = Mutex.new    
     end
 
+    #
+    # Terminates the session. 
+    #
+    # This will usually not immediatly terminate the session from running, but
+    # further requests will not be answered.
+    #
+    def terminate
+      @running = false
+    end
+
+    #
+    # Queries whether the session is still alive.
+    #
+    def alive?
+      now = Time.now
+      return false if not @running
+      return false if @expire_after and now - @last_access > @expire_after 
+      return false if @max_lifetime and now - @creation_time > @max_lifetime 
+      return false if @max_requests and @request_count >= @max_requests
+      return true
+    end
+
+    #
+    # Queries whether the session is dead.
+    #
+    def dead?
+      not alive?
+    end
+
+    #
+    # Returns some statistics
+    #
+    def statistics
+      now = Time.now
+      {
+        :last_access => @last_access,        # The time when this session was last accessed
+        :inactivity => now - @last_access,   # The number of seconds of inactivity
+        :creation_time => @creation_time,    # The time at which this session was created 
+        :lifetime =>  now - @creation_time,  # The lifetime of this session in seconds
+        :request_count => @request_count     # The number of requests served by this session
+      }
+    end
+   
+    #
+    # Returns the current session (thread-local).
+    #
     def self.current
       Thread.current[:wee_session] || (raise "Not in session")
     end
 
-    # Returns the current context.
-
-    def current_context
-      @context
-    end
-
-    # Called by Wee::Application to send the session a request.
-
+    #
+    # Handles a web request.
+    #
     def call(env)
       @mutex.synchronize {
         begin
@@ -121,26 +142,34 @@ module Wee
       }
     end
 
+    #
+    # Send a premature response
+    #
+    def send_response(response)
+      raise AbortCallbackProcessing.new(response)
+    end
+
     protected
 
-    # Is called before process_request is invoked.
-    # Can be used to setup e.g. a database connection.
-    # 
-    # OVERWRITE IT (if you like)!
-
+    #
+    # Is called before <i>process_request</i> is invoked.
+    #
+    # Can be used e.g. to setup a database connection.
+    #
     def awake
     end
 
-    # Is called after process_request is run.
-    # Can be used to release e.g. a database connection.
-    # 
-    # OVERWRITE IT (if you like)!
-
+    #
+    # Is called after <i>process_request</i> is run.
+    #
+    # Can be used e.g. to release a database connection.
+    #
     def sleep
     end
 
+    #
     # The main routine where the request is processed.
-
+    #
     def process_request
       page = @page_cache.fetch(@context.request.page_id)
 
@@ -161,7 +190,7 @@ module Wee
             page.callbacks.with_triggered(@context.request.fields) do
               @root_component.decoration.process_callbacks(page.callbacks)
             end
-          rescue Wee::AbortCallbackProcessing
+          rescue AbortCallbackProcessing
           end
 
           # create new page (state)
@@ -180,9 +209,10 @@ module Wee
       end
     end
     
+    #
     # This method takes a snapshot from the current state of the root component
     # and returns it.
-
+    #
     def take_snapshot
       @root_component.decoration.backtrack(state = Wee::State.new)
       return state.freeze
@@ -193,17 +223,8 @@ module Wee
     end
 
     def redirect(page)
-      @context.response = Wee::RedirectResponse.new(
-        @context.request.build_url(:page_id => page.id))
-    end
-
-    public
-
-    #
-    # Send a premature response
-    #
-    def send_response(response)
-      raise Wee::AbortCallbackProcessing.new(response)
+      url = @context.request.build_url(:page_id => page.id)
+      @context.response = Wee::RedirectResponse.new(url)
     end
 
   end # class Session

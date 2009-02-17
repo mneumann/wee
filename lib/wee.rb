@@ -13,8 +13,6 @@ require 'wee/presenter'
 require 'wee/decoration'
 require 'wee/component'
 
-require 'wee/core_ext'
-
 require 'wee/application'
 require 'wee/request'
 require 'wee/response'
