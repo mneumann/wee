@@ -53,4 +53,4 @@ module Wee
     end
   end
 
-end
+end # module Wee
