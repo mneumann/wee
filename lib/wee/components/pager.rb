@@ -73,7 +73,7 @@ class Wee::Pager < Wee::Component
   private
 
   def render_arrow(r, sym, text, tooltip=text)
-    r.anchor.callback(sym).tooltip(tooltip).with { r.encode_text(text) }
+    r.anchor.callback(&method(sym)).tooltip(tooltip).with { r.encode_text(text) }
   end
 
   def render_index(r)
@@ -92,7 +92,7 @@ class Wee::Pager < Wee::Component
     if current
       r.bold(num+1)
     else
-      r.anchor.callback(:goto, num).with(num+1)
+      r.anchor.callback{ goto(num) }.with(num+1)
     end
   end
 
