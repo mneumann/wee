@@ -130,13 +130,11 @@ module Wee
           Thread.current[:wee_session] = self
           @request_count += 1
           @last_access = Time.now
-          @context = Wee::Context.new(Wee::Request.new(env))
           awake
-          process_request
+          response = process_request(env)
           sleep
-          return @context.response.finish
+          return response
         ensure
-          @context = nil   # clean up
           Thread.current[:wee_session] = nil
         end
       }
@@ -170,24 +168,27 @@ module Wee
     #
     # The main routine where the request is processed.
     #
-    def process_request
-      page = @page_cache.fetch(@context.request.page_id)
+    def process_request(env)
+      request = Wee::Request.new(env)
+      page = @page_cache.fetch(request.page_id)
 
       if page
-        # sestore state
         page.state.restore # XXX
 
-        if @context.request.render?
-          @context.response = Wee::GenericResponse.new
-          @context.callbacks = Wee::Callbacks.new
-          @context.document = Wee::HtmlWriter.new(@context.response)
+        if request.render?
+          context = Wee::Context.new
+          context.request = request 
+          context.response = Wee::GenericResponse.new
+          context.callbacks = Wee::Callbacks.new
+          context.document = Wee::HtmlWriter.new(context.response)
 
-          @root_component.decoration.render_on(@context)
+          @root_component.decoration.render_on(context)
+          page.callbacks = context.callbacks
 
-          page.callbacks = @context.callbacks
+          return context.response.finish
         else
           begin
-            page.callbacks.with_triggered(@context.request.fields) do
+            page.callbacks.with_triggered(request.fields) do
               @root_component.decoration.process_callbacks(page.callbacks)
             end
           rescue AbortCallbackProcessing
@@ -195,17 +196,26 @@ module Wee
 
           # create new page (state)
           new_page = Page.new(@page_ids.next, take_snapshot(), nil) 
-          cache(new_page)
-          redirect(new_page)
+          @page_cache[new_page.id] = new_page
+
+          url = request.build_url(:page_id => new_page.id)
+          return Wee::RedirectResponse.new(url).finish
         end
       else
+        #
         # either no or invalid page_id specified.  reset to initial state (or
         # create initial state if no such exists yet)
-        
+        #
         @initial_state ||= take_snapshot() 
         new_page = Page.new(@page_ids.next, @initial_state, nil) 
-        cache(new_page)
-        redirect(new_page) # XXX: Show some informative message and wait 5 secs
+        @page_cache[new_page.id] = new_page
+
+        url = request.build_url(:page_id => new_page.id)
+        if request.page_id
+          return Wee::RefreshResponse.new("Invalid or expired page", url).finish
+        else
+          return Wee::RedirectResponse.new(url).finish
+        end
       end
     end
     
@@ -216,15 +226,6 @@ module Wee
     def take_snapshot
       @root_component.decoration.backtrack(state = Wee::State.new)
       return state.freeze
-    end
-
-    def cache(page)
-      @page_cache[page.id] = page
-    end
-
-    def redirect(page)
-      url = @context.request.build_url(:page_id => page.id)
-      @context.response = Wee::RedirectResponse.new(url)
     end
 
   end # class Session

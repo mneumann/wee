@@ -9,6 +9,10 @@ module Wee
   #
   class Request < Rack::Request
 
+    def self.new(env)
+      env['wee.request'] ||= super 
+    end
+
     attr_reader :fields
     attr_accessor :session_id
     attr_accessor :page_id
