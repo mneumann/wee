@@ -20,7 +20,7 @@ module Wee
     end
 
     def next
-      (@value += 1).to_s
+      (@value += 1).to_s(36)
     end
   end
 
