@@ -24,8 +24,7 @@ module Wee
       # tell previous brush to finish
       @current_brush.close if @current_brush
 
-      brush.parent = @parent_brush
-      brush.canvas = self
+      brush.setup(@parent_brush, self, @document)
       @current_brush = brush
 
       return brush

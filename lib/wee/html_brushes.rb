@@ -1,20 +1,30 @@
 module Wee
 
   class Brush
-    attr_accessor :parent, :canvas
+    attr_accessor :parent, :canvas, :document
 
-    def initialize
-      @parent = @canvas = @closed = nil
+    # This method is called right after #initialize.  It's only here to
+    # simplify the implementation of Brushes, mainly to avoid passing all those
+    # arguments to super. 
+    #
+    # There is a bit of redundancy with canvas and document here. It's there to
+    # avoid method calls. 
+    #
+    # A brush is considered to be closed, when @document is nil. 
+    #
+    def setup(parent, canvas, document)
+      @parent = parent
+      @canvas = canvas
+      @document = document
     end
 
     def with(*args, &block)
       @canvas.nest(&block) if block
-      @closed = true
-      nil
+      @document = @canvas = nil
     end
 
     def close
-      with unless @closed
+      with if @document
     end
 
     def self.nesting?() true end
@@ -22,9 +32,8 @@ module Wee
 
   class Brush::GenericTextBrush < Brush
     def with(text)
-      @canvas.document.text(text)
-      @closed = true
-      nil
+      @document.text(text)
+      @document = @canvas = nil
     end
 
     def self.nesting?() false end
@@ -32,9 +41,8 @@ module Wee
 
   class Brush::GenericEncodedTextBrush < Brush::GenericTextBrush
     def with(text)
-      @canvas.document.encode_text(text)
-      @closed = true
-      nil
+      @document.encode_text(text)
+      @document = @canvas = nil
     end
   end
 
@@ -101,13 +109,11 @@ module Wee
     end
 
     def with(text=nil, &block)
-      doc = @canvas.document
-      doc.start_tag(@tag, @attributes)
-      doc.text(text) if text
+      @document.start_tag(@tag, @attributes)
+      @document.text(text) if text
       @canvas.nest(&block) if block
-      doc.end_tag(@tag)
-      @closed = true
-      nil
+      @document.end_tag(@tag)
+      @document = @canvas = nil
     end
 
     def __input_callback(&block)
@@ -132,9 +138,8 @@ module Wee
 
   class Brush::GenericSingleTagBrush < Brush::GenericTagBrush
     def with
-      @canvas.document.single_tag(@tag, @attributes) 
-      @closed = true
-      nil
+      @document.single_tag(@tag, @attributes) 
+      @document = @canvas = nil
     end
 
     def self.nesting?() false end
@@ -611,31 +616,29 @@ module Wee
     HTML_BODY = 'body'.freeze
 
     def with(text=nil, &block)
-      doc = @canvas.document
-      doc.start_tag(HTML_HTML)
-      doc.start_tag(HTML_HEAD)
+      @document.start_tag(HTML_HTML)
+      @document.start_tag(HTML_HEAD)
 
       if @title
-        doc.start_tag(HTML_TITLE)
-        doc.text(@title)
-        doc.end_tag(HTML_TITLE)
+        @document.start_tag(HTML_TITLE)
+        @document.text(@title)
+        @document.end_tag(HTML_TITLE)
       end
 
-      doc.end_tag(HTML_HEAD)
-      doc.start_tag(HTML_BODY)
+      @document.end_tag(HTML_HEAD)
+      @document.start_tag(HTML_BODY)
 
       if text
         raise ArgumentError if block
-        doc.text(text)
+        @document.text(text)
       else
         @canvas.nest(&block) if block 
       end
 
-      doc.end_tag(HTML_BODY)
-      doc.end_tag(HTML_HTML)
+      @document.end_tag(HTML_BODY)
+      @document.end_tag(HTML_HTML)
 
-      @closed = true
-      nil
+      @document = @canvas = nil
     end
 
     def title(t)
