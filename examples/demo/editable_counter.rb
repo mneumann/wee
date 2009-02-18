@@ -9,6 +9,11 @@ class EditableCounter < Counter
     @show_edit_field = false
   end
 
+  def backtrack(state)
+    super
+    state.add_ivar(self, :@show_edit_field, @show_edit_field)
+  end
+
   def render_count(r)
     if @show_edit_field
       r.text_input.value(@count).size(6).callback {|val| self.count = val}
