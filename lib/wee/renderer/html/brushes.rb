@@ -8,10 +8,9 @@ module Wee
     end
 
     def with(*args, &block)
-      raise "either args or block, but not both" if block and not args.empty?
-
       @canvas.nest(&block) if block
       @closed = true
+      nil
     end
 
     def close
@@ -26,23 +25,16 @@ module Wee
     end
     
     def with
-      doc = @canvas.document
-      doc << @text
-      super
+      @canvas.document.text(@text)
+      @closed = true
       nil
     end
   end
 
-  class Brush::GenericEncodedTextBrush < Brush
-    def initialize(text)
-      super()
-      @text = text
-    end
-
+  class Brush::GenericEncodedTextBrush < Brush::GenericTextBrush
     def with
-      doc = @canvas.document
-      doc.encode_text(@text)
-      super
+      @canvas.document.encode_text(@text)
+      @closed = true
       nil
     end
   end
@@ -50,54 +42,74 @@ module Wee
   class Brush::GenericTagBrush < Brush
     def self.html_attr(attr, hash={})
       name = hash[:html_name] || attr
-      case hash[:type]
-      when :bool
-        class_eval " 
+      if hash[:type] == :bool
+        class_eval %{
           def #{ attr }(bool=true)
             if bool
-              @attributes['#{ name }'] = nil
+              @attributes[:"#{ name }"] = nil
             else
-              @attributes.delete('#{ name }')
+              @attributes.delete(:"#{ name }")
             end
             self
           end
-        "
+        }
       else
-        class_eval " 
+        class_eval %{ 
           def #{ attr }(value)
             if value == nil
-              @attributes.delete('#{ name }')
+              @attributes.delete(:"#{ name }")
             else
-              @attributes['#{ name }'] = value.to_s
+              @attributes[:"#{ name }"] = value
             end
             self
           end
-        "
+        }
       end
 
       (hash[:aliases] || []).each do |a|
         class_eval "alias #{ a } #{ attr }"
       end
 
-      (hash[:shortcuts] || {}).each_pair do |k,v|
-        class_eval "
-          def #{ k }() #{ attr }(#{ v.inspect }) end
-        "
+      (hash[:shortcuts] || {}).each_pair do |k, v|
+        class_eval "def #{ k }() #{ attr }(#{ v.inspect }) end"
       end
     end
+  end
 
-    private
+  class Brush::GenericTagBrush < Brush
+    html_attr :id
+    html_attr :name # XXX
+    html_attr :css_class, :html_name => :class
+    html_attr :css_style, :html_name => :style, :aliases => [:style] 
 
-    def html_attr(attr, value)
-      if value.nil?
-        @attributes.delete(attr)
-      else
-        @attributes[attr] = value.to_s
-      end
-      self
+    def initialize(tag)
+      super()
+      @tag = tag
+      @attributes = Hash.new
     end
 
-    public
+    def onclick_callback(&block)
+      url = @canvas.url_for_callback(block)
+      js = "javascript: document.location.href='#{ url }';"
+      onclick(js)
+    end
+
+    def onclick_update(update_id, &block)
+      url = @canvas.url_for_callback(block)
+      js = "javascript: new Ajax.Updater('#{ update_id }', '#{ url }', " \
+           "{method:'get'}); return false;"
+      onclick(js)
+    end
+
+    def with(text=nil, &block)
+      doc = @canvas.document
+      doc.start_tag(@tag, @attributes)
+      doc.text(text) if text
+      @canvas.nest(&block) if block
+      doc.end_tag(@tag)
+      @closed = true
+      nil
+    end
 
     def __input_callback(&block)
       name(@canvas.register_callback(:input, block))
@@ -107,67 +119,34 @@ module Wee
       name(@canvas.register_callback(:action, block))
     end
 
+    #
     # The callback id is listed in the URL (not as a form-data field)
-
+    #
     def __actionurl_callback(&block)
       __set_url(@canvas.url_for_callback(block))
     end
 
-    def method_missing(id, attr)
-      html_attr(id.to_s, attr)
-    end
-
-    def initialize(tag, is_single_tag=false)
-      super()
-      @tag, @is_single_tag = tag, is_single_tag
-      @attributes = Hash.new
-    end
-
-    html_attr 'type'
-    html_attr 'id'
-    html_attr 'css_class', :html_name => 'class'
-
-    def onclick_callback(&block)
-      url = @canvas.url_for_callback(block)
-      onclick("javascript: document.location.href='#{ url }';")          
-    end
-
-    def onclick_update(update_id, &block)
-      url = @canvas.url_for_callback(block)
-      onclick("javascript: new Ajax.Updater('#{ update_id }', '#{ url }', {method:'get'}); return false;")
-    end
-
-    def with(text=nil, &block)
-      doc = @canvas.document
-      if @is_single_tag
-        raise ArgumentError if text or block
-        doc.single_tag(@tag, @attributes) 
-        @closed = true
-      else
-        doc.start_tag(@tag, @attributes)
-        if text
-          doc.text(text)
-          super(text, &block)
-        else
-          super(&block)
-        end
-        doc.end_tag(@tag)
-      end
-      nil
+    def __set_url(url)
+      raise
     end
   end
 
   class Brush::GenericSingleTagBrush < Brush::GenericTagBrush
-    def initialize(tag)
-      super(tag, true)
+    def with(text=nil, &block)
+      raise ArgumentError if text or block
+      @canvas.document.single_tag(@tag, @attributes) 
+      @closed = true
+      nil
     end
   end
 
   class Brush::ImageTag < Brush::GenericSingleTagBrush
-    html_attr 'src'
+    HTML_TAG = 'img'.freeze
+
+    html_attr :src
 
     def initialize
-      super('img')
+      super(HTML_TAG)
     end
 
     def with
@@ -176,30 +155,42 @@ module Wee
   end
 
   class Brush::JavascriptTag < Brush::GenericTagBrush
-    html_attr 'src'
-    html_attr 'type'
+    HTML_TAG = 'script'.freeze
+    HTML_TYPE = 'text/javascript'.freeze
+
+    html_attr :src
+    html_attr :type
 
     def initialize
-      super('script')
-      type('text/javascript')
+      super(HTML_TAG)
+      type(HTML_TYPE)
     end
   end
 
+  #---------------------------------------------------------------------
+  # Table
+  #---------------------------------------------------------------------
+
   class Brush::TableTag < Brush::GenericTagBrush
+    HTML_TAG = 'table'.freeze
+
+    html_attr :cellspacing
+
     def initialize
-      super('table')
+      super(HTML_TAG)
     end
   end  
 
   class Brush::TableRowTag < Brush::GenericTagBrush
-    def initialize
-      super('tr')
-    end
+    HTML_TAG = 'tr'.freeze
 
-    html_attr 'align', :shortcuts => {
-      :align_top => 'top',
-      :align_bottom => 'bottom'
+    html_attr :align, :shortcuts => {
+      :align_top => :top, :align_bottom => :bottom
     }
+
+    def initialize
+      super(HTML_TAG)
+    end
 
     def columns(*cols, &block)
       with {
@@ -230,109 +221,243 @@ module Wee
     end
 
     def spanning_column(str, colspan)
-      with {
-        @canvas.table_data.col_span(colspan).with(str)
-      }
+      with { @canvas.table_data.col_span(colspan).with(str) }
     end
 
     def spacer
-      with {
-        @canvas.table_data { @canvas.space }
-      }
+      with { @canvas.table_data { @canvas.space } }
     end
   end
 
-  class Brush::InputTag < Brush::GenericSingleTagBrush
+  class Brush::TableDataTag < Brush::GenericTagBrush
+    HTML_TAG = 'td'.freeze
+
+    html_attr :colspan
+    html_attr :align, :shortcuts => {
+      :align_top => :top,
+      :align_bottom => :bottom
+    }
+
     def initialize
-      super('input')
+      super(HTML_TAG)
+    end
+  end
+
+  class Brush::TableHeaderTag < Brush::TableDataTag
+    HTML_TAG = 'th'.freeze
+
+    def initialize
+      super(HTML_TAG)
+    end
+  end
+
+  #---------------------------------------------------------------------
+  # Form
+  #---------------------------------------------------------------------
+
+  class Brush::FormTag < Brush::GenericTagBrush
+    HTML_TAG = 'form'.freeze
+    HTML_METHOD_POST = 'POST'.freeze
+
+    html_attr :action
+    html_attr :enctype
+
+    def initialize
+      super(HTML_TAG)
+      @attributes[:method] = HTML_METHOD_POST
     end
 
-    html_attr 'type'
-    html_attr 'name'
-    html_attr 'value'
-    html_attr 'size'
-    html_attr 'maxlength'
-    html_attr 'src'
-    html_attr 'checked',  :type => :bool
-    html_attr 'disabled', :type => :bool
-    html_attr 'readonly', :type => :bool
+    def with(*args, &block)
+      # If no action was specified, use a dummy one.
+      unless @attributes.has_key?(:action)
+        @attributes[:action] = @canvas.build_url
+      end
+      super
+    end
+
+    alias __set_url action
+    alias callback __actionurl_callback
+
+=begin
+    def onsubmit_update(update_id, &block)
+      raise ArgumentError if symbol and block
+      url = @canvas.url_for_callback(block, :live_update)
+      onsubmit("javascript: new Ajax.Updater('#{ update_id }', '#{ url }', {method:'get', parameters: Form.serialize(this)}); return false;")
+    end
+=end
+  end
+
+  #---------------------------------------------------------------------
+  # Form - Input
+  #---------------------------------------------------------------------
+
+  class Brush::InputTag < Brush::GenericSingleTagBrush
+    HTML_TAG = 'input'.freeze
+
+    html_attr :type
+    html_attr :name
+    html_attr :value
+    html_attr :size
+    html_attr :maxlength
+    html_attr :src
+    html_attr :checked,  :type => :bool
+    html_attr :disabled, :type => :bool
+    html_attr :readonly, :type => :bool
+
+    def initialize(_type)
+      super(HTML_TAG)
+      type(_type)
+    end
 
     def with
       super
     end
-  end
-
-  class Brush::TextAreaTag < Brush::GenericTagBrush
-    def initialize
-      super('textarea')
-    end
 
     alias callback __input_callback
+  end
 
-    html_attr 'name'
-    html_attr 'rows'
-    html_attr 'cols'
-    html_attr 'tabindex'
-    html_attr 'accesskey'
-    html_attr 'onfocus'
-    html_attr 'onblur'
-    html_attr 'onselect'
-    html_attr 'onchange'
-    html_attr 'disabled', :type => :bool
-    html_attr 'readonly', :type => :bool
+  class Brush::TextInputTag < Brush::InputTag
+    HTML_TYPE = 'text'.freeze
+
+    def initialize
+      super(HTML_TYPE)
+    end
+  end
+
+  class Brush::HiddenInputTag < Brush::InputTag
+    HTML_TYPE = 'hidden'.freeze
+
+    def initialize
+      super(HTML_TYPE)
+    end
+  end
+
+  class Brush::PasswordInputTag < Brush::InputTag
+    HTML_TYPE = 'password'.freeze
+
+    def initialize
+      super(HTML_TYPE)
+    end
+  end
+
+  class Brush::CheckboxTag < Brush::InputTag
+    HTML_TYPE = 'checkbox'.freeze
+
+    def initialize
+      super(HTML_TYPE)
+    end
+  end
+
+  class Brush::FileUploadTag < Brush::InputTag
+    HTML_TYPE = 'file'.freeze
+
+    def initialize
+      super(HTML_TYPE)
+    end
+  end
+
+  #---------------------------------------------------------------------
+  # Form - Buttons
+  #---------------------------------------------------------------------
+
+  class Brush::ActionInputTag < Brush::InputTag
+    alias callback __action_callback
+  end
+
+  class Brush::SubmitButtonTag < Brush::ActionInputTag
+    HTML_TYPE = 'submit'.freeze
+
+    def initialize
+      super(HTML_TYPE)
+    end
+  end
+
+  #
+  # NOTE: The form-fields returned by a image-button-tag is browser-specific.
+  # Most browsers do not send the "name" key together with the value specified
+  # by "value", only "name.x" and "name.y". This conforms to the standard. But
+  # Firefox also sends "name"="value". This is why I raise an exception from
+  # the #value method. Note that it's neccessary to parse the passed
+  # form-fields and generate a "name" fields in the request, to make this
+  # image-button work. 
+  #
+  class Brush::ImageButtonTag < Brush::ActionInputTag
+    HTML_TYPE = 'image'.freeze
+
+    def initialize
+      super(HTML_TYPE)
+    end
+
+    undef :value
+  end
+
+  #---------------------------------------------------------------------
+  # Form - Textarea
+  #---------------------------------------------------------------------
+
+  class Brush::TextAreaTag < Brush::GenericTagBrush
+    HTML_TAG = 'textarea'.freeze
+
+    html_attr :name
+    html_attr :rows
+    html_attr :cols
+    html_attr :tabindex
+    html_attr :accesskey
+    html_attr :onfocus
+    html_attr :onblur
+    html_attr :onselect
+    html_attr :onchange
+    html_attr :disabled, :type => :bool
+    html_attr :readonly, :type => :bool
+
+    def initialize
+      super(HTML_TAG)
+    end
 
     def value(val)
       @value = val
       self
     end
 
-    def with(*args, &block)
-      if @value
-        if block or !args.empty?
-          raise "please use either method 'value' or 'with'"
-        else
-          super(@value)
-        end
-      else
-        super
-      end
-    end
-  end
-
-  class Brush::SelectOptionTag < Brush::GenericTagBrush
-    def initialize
-      super('option')
+    def with(value=nil)
+      super(value || @value)
     end
 
-    html_attr 'selected', :type => :bool
+    alias callback __input_callback
   end
+  
+  #---------------------------------------------------------------------
+  # Form - Select
+  #---------------------------------------------------------------------
 
   class Brush::SelectListTag < Brush::GenericTagBrush
-    html_attr 'disabled', :type => :bool
-    html_attr 'readonly', :type => :bool
-    html_attr 'multiple', :type => :bool, :aliases => [:multi]
+    HTML_TAG = 'select'.freeze
+
+    html_attr :size
+    html_attr :disabled, :type => :bool
+    html_attr :readonly, :type => :bool
+    html_attr :multiple, :type => :bool, :aliases => [:multi]
 
     def initialize(items)
-      super('select')
+      super(HTML_TAG)
       @items = items
     end
 
-    def items(arg)
-      @items = arg
+    def items(items)
+      @items = items
       self
     end
 
     def selected(arg=nil, &block)
-      raise if arg and block
+      raise ArgumentError if arg and block
       @selected = block || arg
       self
     end
 
     def labels(arg=nil, &block)
-      raise if arg and block
-
+      raise ArgumentError if arg and block
       if block
-        @labels = proc{|i| block.call(@items[i])}
+        @labels = proc {|i| block.call(@items[i])}
       else
         @labels = arg
       end
@@ -344,10 +469,11 @@ module Wee
       self
     end
 
+    # XXX
     def with
-      @labels ||= @items.collect { |i| i.to_s }
+      @labels ||= @items.collect {|i| i.to_s}
 
-      is_multiple = @attributes.has_key?('multiple')
+      is_multiple = @attributes.has_key?(:multiple)
 
       if @callback
         # A callback was specified. We have to wrap it inside another
@@ -383,60 +509,49 @@ module Wee
     end
   end
 
-  class Brush::HiddenInputTag < Brush::InputTag
-    def initialize
-      super
-      type('hidden')
-    end
+  class Brush::SelectOptionTag < Brush::GenericTagBrush
+    HTML_TAG = 'option'.freeze
 
-    alias callback __input_callback
+    html_attr :value
+    html_attr :selected, :type => :bool
+
+    def initialize
+      super(HTML_TAG)
+    end
   end
 
-  class Brush::PasswordInputTag < Brush::InputTag
-    def initialize
-      super
-      type('password')
+  #---------------------------------------------------------------------
+  # Form - Radio
+  #---------------------------------------------------------------------
+
+  class Brush::RadioGroup
+    def initialize(canvas)
+      @name = canvas.register_callback(:input, self)
+      @callbacks = {} 
+      @ids = Wee::SequentialIdGenerator.new 
     end
 
-    alias callback __input_callback
-  end
-
-  class Brush::TextInputTag < Brush::InputTag
-    def initialize
-      super
-      type('text')
+    def add_callback(callback)
+      value = @ids.next.to_s
+      @callbacks[value] = callback
+      return [@name, value]
     end
 
-    alias callback __input_callback
+    def call(value)
+      if @callbacks.has_key?(value)
+        cb = @callbacks[value]
+        cb.call(value) if cb
+      else
+        raise "invalid radio button/group value"
+      end
+    end
   end
 
   class Brush::RadioButtonTag < Brush::InputTag
+    HTML_TYPE = 'radio'.freeze
+
     def initialize
-      super
-      type('radio')
-    end
-
-    class RadioGroup
-      def initialize(canvas)
-        @name = canvas.register_callback(:input, self)
-        @callbacks = {} 
-        @ids = Wee::SequentialIdGenerator.new 
-      end
-
-      def add_callback(callback)
-        value = @ids.next.to_s
-        @callbacks[value] = callback
-        return [@name, value]
-      end
-
-      def call(value)
-        if @callbacks.has_key?(value)
-          cb = @callbacks[value]
-          cb.call(value) if cb
-        else
-          raise "invalid radio button/group value"
-        end
-      end
+      super(HTML_TYPE)
     end
 
     def group(radio_group)
@@ -457,110 +572,21 @@ module Wee
       end
       super
     end
-
   end
 
-  class Brush::CheckboxTag < Brush::InputTag
-    def initialize
-      super
-      type('checkbox')
-    end
-    alias callback __input_callback
-  end
-
-  class Brush::FileUploadTag < Brush::InputTag
-    def initialize
-      super
-      type('file')
-    end
-
-    alias callback __input_callback
-  end
-
-  class Brush::SubmitButtonTag < Brush::InputTag
-    def initialize
-      super
-      type('submit')
-    end
-
-    alias callback __action_callback
-  end
-
-  # NOTE: The form-fields returned by a image-button-tag is browser-specific.
-  # Most browsers do not send the "name" key together with the value specified by
-  # "value", only "name.x" and "name.y". This conforms to the standard. But
-  # Firefox also sends "name"="value". This is why I raise an exception from the
-  # #value method. Note that it's neccessary to parse the passed form-fields and
-  # generate a "name" fields in the request, to make this image-button work. 
-
-  class Brush::ImageButtonTag < Brush::InputTag
-    def initialize
-      super
-      type('image')
-    end
-
-    alias callback __action_callback
-
-    def value(v)
-      raise "specified value will not be used in the request"
-    end
-  end
-
-  class Brush::TableDataTag < Brush::GenericTagBrush
-    def initialize
-      super('td')
-    end
-
-    html_attr 'align', :shortcuts => {
-      :align_top => 'top',
-      :align_bottom => 'bottom'
-    }
-  end
-
-  class Brush::TableHeaderTag < Brush::GenericTagBrush
-    def initialize
-      super('th')
-    end
-  end
-
-  class Brush::FormTag < Brush::GenericTagBrush
-    def initialize
-      super('form')
-      @attributes['method'] = 'POST'
-    end
-
-    html_attr 'action'
-    html_attr 'enctype'
-
-    alias __set_url action
-    alias callback __actionurl_callback
-
-=begin
-    def onsubmit_update(update_id, &block)
-      raise ArgumentError if symbol and block
-      url = @canvas.url_for_callback(block, :live_update)
-      onsubmit("javascript: new Ajax.Updater('#{ update_id }', '#{ url }', {method:'get', parameters: Form.serialize(this)}); return false;")
-    end
-=end
-
-    def with(*args, &block)
-      # If no action was specified, use a dummy one.
-      unless @attributes.has_key?('action')
-        @attributes['action'] = @canvas.build_url
-      end
-      super
-    end
-  end
+  #---------------------------------------------------------------------
+  # Misc
+  #---------------------------------------------------------------------
 
   class Brush::AnchorTag < Brush::GenericTagBrush
+    HTML_TAG = 'a'.freeze
+
+    html_attr :href,  :aliases => [:url]
+    html_attr :title, :aliases => [:tooltip]
+
     def initialize
-      super('a')
+      super(HTML_TAG)
     end
-
-    html_attr 'href', :aliases => [:url]
-    html_attr 'title', :aliases => [:tooltip]
-
-    alias __set_url url
 
     def info(info=nil)
       @info = info
@@ -574,38 +600,47 @@ module Wee
         __set_url(@canvas.url_for_callback(block))
       end
     end
+
+    alias __set_url url
   end
 
   class Brush::Page < Brush
-    def title(t)
-      @title = t
-      self
-    end
+    HTML_HTML = 'html'.freeze
+    HTML_HEAD = 'head'.freeze
+    HTML_TITLE = 'title'.freeze
+    HTML_BODY = 'body'.freeze
 
     def with(text=nil, &block)
       doc = @canvas.document
-      doc.start_tag("html")
+      doc.start_tag(HTML_HTML)
+      doc.start_tag(HTML_HEAD)
 
       if @title
-        doc.start_tag("head")
-        doc.start_tag("title")
+        doc.start_tag(HTML_TITLE)
         doc.text(@title)
-        doc.end_tag("title")
-        doc.end_tag("head")
+        doc.end_tag(HTML_TITLE)
       end
 
-      doc.start_tag("body")
+      doc.end_tag(HTML_HEAD)
+      doc.start_tag(HTML_BODY)
 
       if text
+        raise ArgumentError if block
         doc.text(text)
-        super(text, &block)
       else
-        super(&block)
+        @canvas.nest(&block) if block 
       end
 
-      doc.end_tag("body")
-      doc.end_tag("html")
+      doc.end_tag(HTML_BODY)
+      doc.end_tag(HTML_HTML)
+
+      @closed = true
       nil
+    end
+
+    def title(t)
+      @title = t
+      self
     end
   end
 
