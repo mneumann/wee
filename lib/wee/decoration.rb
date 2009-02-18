@@ -12,6 +12,7 @@ module Wee
   # around the decorations or components below itself:
   #
   #   class HeaderFooterDecoration < Wee::Decoration
+  #     alias render_on render_presenter_on
   #     def render(r)
   #       r.text "header"
   #       r.render_decoration(@next)
@@ -46,6 +47,7 @@ module Wee
       @next.process_callbacks(callbacks)
     end
 
+    alias render_presenter_on render_on
     #
     # Forwards method call to the next decoration in the chain.
     #
