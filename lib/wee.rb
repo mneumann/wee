@@ -19,6 +19,6 @@ require 'wee/response'
 require 'wee/session'
 
 require 'wee/html_writer'
-require 'wee/renderer/html/brushes'
+require 'wee/html_brushes'
 require 'wee/renderer/html/canvas'
 Wee::DefaultRenderer = Wee::HtmlCanvasRenderer
