@@ -7,7 +7,6 @@ module Wee::Examples; end
 require 'wee/state'
 require 'wee/callback'
 require 'wee/context'
-require 'wee/renderer'
 
 require 'wee/presenter'
 require 'wee/decoration'

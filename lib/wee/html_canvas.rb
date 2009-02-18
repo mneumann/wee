@@ -1,3 +1,5 @@
+require 'wee/renderer'
+
 module Wee
 
 class HtmlCanvasRenderer < Renderer
