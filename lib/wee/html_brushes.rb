@@ -152,10 +152,6 @@ module Wee
     def initialize
       super(HTML_TAG)
     end
-
-    def with
-      super
-    end
   end
 
   class Brush::JavascriptTag < Brush::GenericTagBrush
@@ -311,10 +307,6 @@ module Wee
     def initialize(_type)
       super(HTML_TAG)
       type(_type)
-    end
-
-    def with
-      super
     end
 
     alias callback __input_callback
