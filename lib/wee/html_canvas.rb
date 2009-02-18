@@ -8,7 +8,6 @@ module Wee
       # cache the document, to reduce method calls
       @document = context.document 
 
-      @parent_brush = nil
       @current_brush = nil
       super
     end
@@ -19,21 +18,22 @@ module Wee
     end
 
     def set_brush(brush)
-      # tell previous brush to finish
-      @current_brush.close if @current_brush
+      brush.setup(self, @document)
 
-      brush.setup(@parent_brush, self, @document)
+      @current_brush.close if @current_brush
       @current_brush = brush
 
       return brush
     end
 
-    def nest(&block)
-      @parent_brush = @current_brush
-      @current_brush = nil
-      block.call
+    def nest
+      old_brush = @current_brush
+      # we don't want that Brush#close is calledas #nest
+      # is called from #with -> this avoids an infinite loop
+      @current_brush = nil 
+      yield
       @current_brush.close if @current_brush
-      @parent_brush = @parent_brush.parent 
+      @current_brush = old_brush
     end
 
     def self.brush_tag(attr, klass, *args_to_new)

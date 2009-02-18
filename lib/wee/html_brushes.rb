@@ -1,7 +1,7 @@
 module Wee
 
   class Brush
-    attr_accessor :parent, :canvas, :document
+    attr_accessor :canvas, :document
 
     # This method is called right after #initialize.  It's only here to
     # simplify the implementation of Brushes, mainly to avoid passing all those
@@ -12,8 +12,7 @@ module Wee
     #
     # A brush is considered to be closed, when @document is nil. 
     #
-    def setup(parent, canvas, document)
-      @parent = parent
+    def setup(canvas, document)
       @canvas = canvas
       @document = document
     end
