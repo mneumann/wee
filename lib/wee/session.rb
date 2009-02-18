@@ -174,7 +174,11 @@ module Wee
       page = @page_cache.fetch(request.page_id)
 
       if page
-        page.state.restore # XXX
+        if page.id != @current_page_id
+          @current_page_id = nil
+          page.state.restore
+          @current_page_id = page.id
+        end
 
         if request.render?
           r = Wee::Renderer.new
@@ -192,7 +196,9 @@ module Wee
           page.callbacks = r.callbacks
 
           return r.response.finish
-        else
+        else # request.action?
+          @current_page_id = @page_ids.next
+
           begin
             page.callbacks.with_triggered(request.fields) do
               @root_component.decoration.process_callbacks(page.callbacks)
@@ -201,7 +207,7 @@ module Wee
           end
 
           # create new page (state)
-          new_page = Page.new(@page_ids.next, take_snapshot(), nil) 
+          new_page = Page.new(@current_page_id, take_snapshot(), nil) 
           @page_cache[new_page.id] = new_page
 
           url = request.build_url(:page_id => new_page.id)
