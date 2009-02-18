@@ -1,7 +1,8 @@
+$LOAD_PATH.unshift "../lib"
 require 'rubygems'
 require 'wee'
-require 'wee/adaptors/webrick' 
-require 'wee/utils'
+require 'wee/components/page_decoration'
+require 'rack'
 
 class HelloWorld < Wee::Component
   def initialize
@@ -9,9 +10,19 @@ class HelloWorld < Wee::Component
     add_decoration(Wee::PageDecoration.new("Hello World"))
   end
 
-  def render
+  def render(r)
     r.h1 "Hello World from Wee!"
   end
 end
 
-Wee::WEBrickAdaptor.register('/app' => Wee::Utils.app_for(HelloWorld)).start 
+if __FILE__ == $0
+  require 'rack/handler/webrick'
+  app = Rack::Builder.app do
+    map '/' do
+      run Wee::Application.new {
+        Wee::Session.new(HelloWorld.new)
+      }
+    end
+  end
+  Rack::Handler::WEBrick.run(app, :Port => 2000)
+end

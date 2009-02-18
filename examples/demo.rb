@@ -1,11 +1,9 @@
 $LOAD_PATH.unshift "../lib"
+require 'rubygems'
 require 'wee'
 require 'wee/components/page_decoration'
 require 'wee/components/form_decoration'
-
-require 'rubygems'
 require 'rack'
-require 'rack/builder'
 
 class Wee::Application
   attr_accessor :path, :description
