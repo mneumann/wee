@@ -4,8 +4,6 @@ module Wee
 
   class HtmlCanvasRenderer < Renderer
 
-    attr_reader :document
-
     def initialize(context, current_component=nil, &block)
       # cache the document, to reduce method calls
       @document = context.document 
