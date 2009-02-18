@@ -1,6 +1,6 @@
 # NEEDS: FormDecoration
 
-class Wee::Examples::Calculator < Wee::Component
+class Calculator < Wee::Component
   def initialize
     super()
 

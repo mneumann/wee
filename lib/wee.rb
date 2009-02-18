@@ -2,8 +2,6 @@ module Wee
   Version = "2.0.0"
 end
 
-module Wee::Examples; end
-
 require 'wee/state'
 require 'wee/callback'
 

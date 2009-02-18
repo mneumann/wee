@@ -41,7 +41,7 @@ end
 
 Wee::Application.register('/calc', 'RPN Calculator') do
   require File.join(File.dirname(__FILE__), 'demo', 'calculator')
-  Wee::Examples::Calculator.new.
+  Calculator.new.
   add_decoration(Wee::FormDecoration.new).
   add_decoration(Wee::PageDecoration.new('RPN Calculator'))
 end

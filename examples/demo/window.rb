@@ -1,4 +1,4 @@
-class Wee::Examples::Window < Wee::Component
+class Window < Wee::Component
 
   attr_accessor :title, :pos_x, :pos_y
 

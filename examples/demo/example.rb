@@ -53,11 +53,11 @@ class MainPage < Wee::Component
   def initialize
     super()
     @counters = (1..10).map {|i|
-      add_child Wee::Examples::Window.new {|w| 
+      add_child Window.new {|w| 
         w.title = "Cnt #{ i }"
         w.pos_x = "200px"
         w.pos_y = "#{i*50}px"
-	w.add_child Wee::Examples::EditableCounter.new(i)
+	w.add_child EditableCounter.new(i)
       }
     }
 

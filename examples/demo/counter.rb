@@ -1,4 +1,4 @@
-class Wee::Examples::Counter < Wee::Component
+class Counter < Wee::Component
   attr_accessor :count
 
   def initialize(initial_count=0)

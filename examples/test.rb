@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 $LOAD_PATH.unshift << "../lib"
 require 'wee'
-require 'wee/examples/counter'
+require 'demo/counter'
 
 class MainPage < Wee::Component
   def initialize
     super
-    @counters = (1..10).map {|i| Wee::Examples::Counter.new(i)}
+    @counters = (1..10).map {|i| Counter.new(i)}
     children.push(*@counters)
   end
 

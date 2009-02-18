@@ -2,7 +2,7 @@
 
 require 'demo/counter'
 
-class Wee::Examples::EditableCounter < Wee::Examples::Counter 
+class EditableCounter < Counter 
 
   def initialize(initial_count=0)
     super

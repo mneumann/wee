@@ -28,10 +28,10 @@ class Wee::Pager
 end
 
 comp = Wee::ComponentDispatcher.new
-comp.add_rule /calc/, Wee::Examples::Calculator.new
+comp.add_rule /calc/, Calculator.new
 comp.add_rule /pager\/(\d+)/, Wee::Pager.new(50) do |comp, match|
   comp.goto(Integer(match[1]))
 end
-comp.add_rule /(counter|)/, Wee::Examples::Counter.new
+comp.add_rule /(counter|)/, Counter.new
 
 Wee.run(comp)
