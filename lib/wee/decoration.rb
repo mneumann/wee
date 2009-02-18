@@ -12,19 +12,10 @@ module Wee
   # around the decorations or components below itself:
   #
   #   class HeaderFooterDecoration < Wee::Decoration
-  #     def render_on(context)
-  #       r = renderer_class.new(context, self)
-  #       render_header(r)
-  #       super(context)
-  #       render_footer(r)
-  #     end
-  #
-  #     def render_header(r)
-  #       r.text "header
-  #     end
-  #
-  #     def render_footer(r)
-  #       ...
+  #     def render(r)
+  #       r.text "header"
+  #       r.render_decoration(@next)
+  #       r.text "footer"
   #     end
   #   end
   #
@@ -58,8 +49,8 @@ module Wee
     #
     # Forwards method call to the next decoration in the chain.
     #
-    def render_on(context)
-      @next.render_on(context)
+    def render_on(r)
+      @next.render_on(r)
     end
 
     #
@@ -189,8 +180,8 @@ module Wee
     # Forwards method to the corresponding top-level *chain* method of the
     # _delegate_ component.
     #
-    def render_on(context)
-      @delegate.decoration.render_on(context)
+    def render_on(r)
+      @delegate.decoration.render_on(r)
     end
 
     #

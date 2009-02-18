@@ -2,28 +2,16 @@ require 'wee/renderer'
 
 module Wee
 
-  class HtmlCanvasRenderer < Renderer
+  class HtmlCanvas < Renderer
 
-    def initialize(context, current_component=nil, &block)
-      # cache the document, to reduce method calls
-      @document = context.document 
-
-      @current_brush = nil
+    def initialize(*args)
       super
+      @current_brush = nil
     end
 
     def close
       @current_brush.close if @current_brush
       @current_brush = nil
-    end
-
-    def set_brush(brush)
-      brush.setup(self, @document)
-
-      @current_brush.close if @current_brush
-      @current_brush = brush
-
-      return brush
     end
 
     def nest
@@ -150,13 +138,6 @@ module Wee
       link.type(HTML_TYPE_CSS).rel(HTML_REL_STYLESHEET).href(url)
     end
 
-    def render(obj)
-      @current_brush.close if @current_brush
-      @current_brush = nil
-      obj.decoration.render_on(@context)
-      nil
-    end
-
     def new_radio_group
       Wee::Brush::RadioButtonTag::RadioGroup.new(self)
     end
@@ -174,19 +155,28 @@ module Wee
     end
 
     def build_url(*args)
-      context.request.build_url(*args)
+      @request.build_url(*args)
     end
 
     def register_callback(type, callback)
-      cbs = self.context.callbacks
+      cbs = @callbacks
       if cbs.respond_to?("#{type}_callbacks")
-        cbs.send("#{type}_callbacks").register(self.current_component, callback)
+        cbs.send("#{type}_callbacks").register(@current_component, callback)
       else
         raise
       end
     end
 
     protected
+
+    def set_brush(brush)
+      brush.setup(self, @document)
+
+      @current_brush.close if @current_brush
+      @current_brush = brush
+
+      return brush
+    end
 
     def handle(brush, *args, &block)
       if block or not args.empty?

@@ -1,14 +1,16 @@
-class Wee::PageDecoration < Wee::WrapperDecoration
-  def initialize(title='')
-    @title = title
-    super()
-  end
+require 'wee/components/wrapper_decoration'
 
-  def global?() true end
+module Wee
+  class PageDecoration < WrapperDecoration
+    def initialize(title='')
+      @title = title
+      super()
+    end
 
-  private
+    def global?() true end
 
-  def render_wrapper(r)
-    r.page.title(@title).with { yield }
+    def render(r)
+      r.page.title(@title).with { render_inner(r) }
+    end
   end
 end

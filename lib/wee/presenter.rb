@@ -9,20 +9,25 @@ module Wee
   # 
   class Presenter
 
-    def render_on(context); raise end
+    def render_on(r)
+      r.with(self) {|new_r| render(new_r)}
+    end
+
+    def render(r); raise end
     def backtrack(state); raise end
     def process_callbacks(callbacks); raise end
 
-    protected
-
-    # Returns the class used as renderer for this presenter. Overwrite this
-    # method if you want to use a different renderer.
+    #
+    # Returns the class used as Renderer for this presenter. Overwrite this
+    # method if you want to use a different Renderer than the default one.
     #
     # Returned class must be a subclass of Wee::Renderer.
-
+    #
     def renderer_class
       Wee::DefaultRenderer
     end
+
+    protected
 
     #
     # Returns the current session. A presenter (or component) has always an

@@ -10,33 +10,33 @@ module Wee
   #
   class Component < Presenter
 
+    #
+    # Initializes a newly created component.
+    #
+    # Call this method from your own components' <i>initialize</i> method using
+    # +super+, before setting up anything else! 
+    #
+    def initialize() # :notnew:
+      @decoration = self
+      @children = nil
+    end
+
+    #
     # This method renders the content of the component.
     #
     # *OVERWRITE* this method in your own component classes to implement the
     # view. By default this method does nothing!
-
+    #
+    # [+r+]
+    #    An instance of class <tt>renderer_class()</tt>
+    #
     def render(r)
     end
 
-    # Renders the component in the given rendering context. <b>DO NOT</b>
-    # overwrite this method, unless you know exactly what you're doing!
     #
-    # Creates a new renderer object of the class returned by method
-    # #renderer_class, makes this the current renderer, then invokes method
-    # #render.
-    #
-    # [+context+]
-    #    An object of class Context
-
-    def render_on(context)
-      render(renderer_class.new(context, self))
-    end
-
-    public
-
     # Process and invoke all callbacks specified for this component and all of
     # it's child components. 
-
+    #
     def process_callbacks(callbacks)
       callbacks.input_callbacks.each_triggered(self) do |callback, value|
         callback.call(value)
@@ -53,56 +53,7 @@ module Wee
       end
     end
 
-    protected
-
-    # Initializes a newly created component.
     #
-    # Call this method from your own components' <i>initialize</i> method using
-    # +super+, before setting up anything else! 
-
-    def initialize() # :notnew:
-      @decoration = self
-      @children = nil
-    end
-
-    protected
-
-    #
-    # Iterates over all direct child components. 
-    #
-    def each_child(&block)
-      @children.each(&block) if @children
-    end
-
-    # Add a child to the component. Example:
-    # 
-    #   class YourComponent < Wee::Component
-    #     def initialize
-    #       super()
-    #       add_child ChildComponent.new
-    #     end
-    #   end
-    #
-    # If you dynamically add child components to a component at run-time (not in
-    # initialize), then you should consider to backtrack the children array (of
-    # course only if you want backtracking at all): 
-    #   
-    #   def backtrack(state)
-    #     super
-    #     state.add(self.children)
-    #   end
-    #
-
-    def add_child(child)
-      (@children ||= []) << child
-      child
-    end
-
-    include Wee::DecorationMixin
-    include Wee::CallAnswerMixin
-
-    public
-
     # Take snapshots of objects that should correctly be backtracked.
     #
     # Backtracking means that you can go back in time of the components' state.
@@ -133,12 +84,14 @@ module Wee
     #
     # [+state+]
     #    An object of class State
-
+    #
     def backtrack(state)
       each_child do |child|
         child.decoration.backtrack(state)
       end
     end
+
+    protected
 
     def backtrack_decoration(state)
       state.add_ivar(self, :@decoration, @decoration)
@@ -148,6 +101,39 @@ module Wee
       state.add_ivar(self, :@children, (@children and @children.dup))
     end
 
+    #
+    # Iterates over all direct child components. 
+    #
+    def each_child(&block)
+      @children.each(&block) if @children
+    end
+
+    #
+    # Add a child to the component. Example:
+    # 
+    #   class YourComponent < Wee::Component
+    #     def initialize
+    #       super()
+    #       add_child ChildComponent.new
+    #     end
+    #   end
+    #
+    # If you dynamically add child components to a component at run-time (not in
+    # initialize), then you should consider to backtrack the children array (of
+    # course only if you want backtracking at all): 
+    #   
+    #   def backtrack(state)
+    #     super
+    #     state.add(self.children)
+    #   end
+    #
+    def add_child(child)
+      (@children ||= []) << child
+      child
+    end
+
+    include Wee::DecorationMixin
+    include Wee::CallAnswerMixin
 
   end # class Component
 

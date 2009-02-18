@@ -1,35 +1,39 @@
-class Wee::LoginDecoration < Wee::Decoration
-  def initialize(login_page)
-    @login_page = login_page
-  end
+require  'wee/decoration'
 
-  def process_callbacks(&block)
-    if logged_in?
-      super
-    else
-      @login_page.decoration.process_callbacks(&block)
+module Wee
+  class LoginDecoration < Decoration
+    def initialize(login_page)
+      @login_page = login_page
     end
-  end
 
-  def render_on(context)
-    if logged_in?
-      super
-    else
-      @login_page.decoration.render_on(context)
+    def process_callbacks(&block)
+      if logged_in?
+        super
+      else
+        @login_page.decoration.process_callbacks(&block)
+      end
     end
-  end
 
-  def backtrack(state)
-    if logged_in?
-      super
-    else
-      @login_page.decoration.backtrack(state)
+    def render_on(context)
+      if logged_in?
+        super
+      else
+        @login_page.decoration.render_on(context)
+      end
     end
-  end
 
-  # Overwrite this method!
+    def backtrack(state)
+      if logged_in?
+        super
+      else
+        @login_page.decoration.backtrack(state)
+      end
+    end
 
-  def logged_in?
-    raise "subclass responsibility"
+    # Overwrite this method!
+
+    def logged_in?
+      raise "subclass responsibility"
+    end
   end
 end

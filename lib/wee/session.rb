@@ -1,6 +1,7 @@
 require 'thread'
 require 'wee/lru_cache'
 require 'wee/id_generator'
+require 'wee/renderer'
 
 module Wee
 
@@ -176,16 +177,21 @@ module Wee
         page.state.restore # XXX
 
         if request.render?
-          context = Wee::Context.new
-          context.request = request 
-          context.response = Wee::GenericResponse.new
-          context.callbacks = Wee::Callbacks.new
-          context.document = Wee::HtmlWriter.new(context.response)
+          r = Wee::Renderer.new
+          r.request   = request
+          r.response  = Wee::GenericResponse.new
+          r.callbacks = Wee::Callbacks.new
+          r.document  = Wee::HtmlWriter.new(r.response)
 
-          @root_component.decoration.render_on(context)
-          page.callbacks = context.callbacks
+          begin
+            @root_component.decoration.render_on(r)
+          ensure
+            r.close
+          end
 
-          return context.response.finish
+          page.callbacks = r.callbacks
+
+          return r.response.finish
         else
           begin
             page.callbacks.with_triggered(request.fields) do

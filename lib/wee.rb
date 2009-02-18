@@ -6,7 +6,6 @@ module Wee::Examples; end
 
 require 'wee/state'
 require 'wee/callback'
-require 'wee/context'
 
 require 'wee/presenter'
 require 'wee/decoration'
@@ -20,4 +19,4 @@ require 'wee/session'
 require 'wee/html_writer'
 require 'wee/html_brushes'
 require 'wee/html_canvas'
-Wee::DefaultRenderer = Wee::HtmlCanvasRenderer
+Wee::DefaultRenderer = Wee::HtmlCanvas

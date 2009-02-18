@@ -1,7 +1,9 @@
-class Wee::FormDecoration < Wee::WrapperDecoration
-  private
+require 'wee/components/wrapper_decoration'
 
-  def render_wrapper(r)
-    r.form { yield }
+module Wee
+  class FormDecoration < WrapperDecoration
+    def render(r)
+      r.form { render_inner(r) }
+    end
   end
 end

@@ -1,9 +1,17 @@
-class Wee::WrapperDecoration < Wee::Decoration
-  def render_on(context)
-    render_wrapper(renderer_class.new(context, self)) { super(context) }
-  end
+require 'wee/decoration'
 
-  def render_wrapper(r)
-    yield
+module Wee
+  class WrapperDecoration < Decoration
+    #
+    # Overwrite this method, and call render_inner(r) 
+    # where you want the inner content to be drawn.
+    #
+    def render(r)
+      render_inner(r)
+    end
+
+    def render_inner(r)
+      r.render_decoration(@next)
+    end
   end
 end
