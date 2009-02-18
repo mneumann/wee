@@ -3,9 +3,16 @@ require 'wee/renderer'
 module Wee
 
   class HtmlCanvasRenderer < Renderer
-    def initialize_canvas
+
+    attr_reader :document
+
+    def initialize(context, current_component=nil, &block)
+      # cache the document, to reduce method calls
+      @document = context.document 
+
       @parent_brush = nil
       @current_brush = nil
+      super
     end
 
     def close
@@ -32,39 +39,130 @@ module Wee
       @parent_brush = @parent_brush.parent 
     end
 
-    attr_reader :document
+    def self.brush_tag(attr, klass, *args_to_new)
+      args_to_new = args_to_new.map {|a| a.inspect}.join(", ")
+      if klass.instance_method(:with).arity != 0
+        class_eval %{ 
+          def #{attr}(*args, &block)
+            handle(#{klass}.new(#{args_to_new}), *args, &block)
+          end
+        }
+      elsif klass.nesting?
+        class_eval %{ 
+          def #{attr}(&block)
+            handle2(#{klass}.new(#{args_to_new}), &block)
+          end
+        }
+      else
+        class_eval %{ 
+          def #{attr}
+            handle3(#{klass}.new(#{args_to_new}))
+          end
+        }
+      end
+    end 
 
     def self.generic_tag(*attrs)
-      attrs.each { |a|
-        class_eval " 
-          def #{ a }(*args, &block)
-            handle(Brush::GenericTagBrush.new('#{ a }'), *args, &block)
-          end
-        "
-      }
+      attrs.each {|attr| brush_tag attr, Brush::GenericTagBrush, attr }
     end
 
     def self.generic_single_tag(*attrs)
-      attrs.each { |a|
-        class_eval " 
-          def #{ a }(*args, &block)
-            handle(Brush::GenericSingleTagBrush.new('#{ a }'), *args, &block)
-          end
-        "
-      }
+      attrs.each {|attr| brush_tag attr, Brush::GenericSingleTagBrush, attr }
     end
 
-    def initialize(context, current_component=nil, &block)
-      # cache the document, to reduce method calls
-      @document = context.document 
-
-      initialize_canvas
-      super
-    end
-
-    generic_tag :html, :head, :body, :title, :style, :h1, :h2, :h3, :h4, :h5, :div
+    generic_tag :html, :head, :body, :title, :style, :label
+    generic_tag :h1, :h2, :h3, :h4, :h5
     generic_tag :div, :span, :ul, :ol, :li
     generic_single_tag :link, :hr
+
+    brush_tag :table, Brush::TableTag
+    brush_tag :table_row, Brush::TableRowTag
+    brush_tag :table_data, Brush::TableDataTag
+    brush_tag :table_header, Brush::TableHeaderTag
+    brush_tag :form, Brush::FormTag
+    brush_tag :input, Brush::InputTag
+    brush_tag :hidden_input, Brush::HiddenInputTag
+    brush_tag :password_input, Brush::PasswordInputTag
+    brush_tag :text_input, Brush::TextInputTag
+    brush_tag :radio_button, Brush::RadioButtonTag
+    brush_tag :check_box, Brush::CheckboxTag; alias checkbox check_box
+    brush_tag :text_area, Brush::TextAreaTag
+    brush_tag :option, Brush::SelectOptionTag
+    brush_tag :submit_button, Brush::SubmitButtonTag
+    brush_tag :image_button, Brush::ImageButtonTag
+    brush_tag :file_upload, Brush::FileUploadTag
+    brush_tag :page, Brush::Page
+    brush_tag :anchor, Brush::AnchorTag
+    brush_tag :javascript, Brush::JavascriptTag
+    brush_tag :image, Brush::ImageTag
+
+    brush_tag :bold, Brush::GenericTagBrush, :b
+    brush_tag :paragraph, Brush::GenericTagBrush, :p
+    brush_tag :break, Brush::GenericSingleTagBrush, :br
+
+    def select_list(items, &block)
+      handle2(Brush::SelectListTag.new(items), &block)
+    end
+
+    HTML_NBSP = "&nbsp;".freeze
+
+    def space(n=1)
+      text(HTML_NBSP*n)
+    end
+
+    def text(str)
+      @current_brush.close if @current_brush
+      @current_brush = nil
+      @document.text(str)
+      nil
+    end
+
+    alias << text
+
+    def encode_text(str)
+      @current_brush.close if @current_brush
+      @current_brush = nil
+      @document.encode_text(str)
+      nil
+    end
+
+    #
+    # converts \n into <br/>
+    #
+    def multiline_text(str, encode=true)
+      @current_brush.close if @current_brush
+      @current_brush = nil
+
+      first = true
+      str.each_line do |line|
+        @document.single_tag(:br) unless first
+        first = false
+
+        if encode
+          @document.encode_text(line)
+        else
+          @document.text(line)
+        end
+      end 
+    end
+
+    HTML_TYPE_CSS = 'text/css'.freeze
+    HTML_REL_STYLESHEET = 'stylesheet'.freeze
+
+    def link_css(url)
+      link.type(HTML_TYPE_CSS).rel(HTML_REL_STYLESHEET).href(url)
+    end
+
+    def render(obj)
+      @current_brush.close if @current_brush
+      @current_brush = nil
+      obj.decoration.render_on(@context)
+      nil
+    end
+
+    def new_radio_group
+      Wee::Brush::RadioButtonTag::RadioGroup.new(self)
+    end
 
     def url_for_callback(callback, type=:action, hash=nil)
       url_for_callback_id(register_callback(type, callback), hash)
@@ -91,153 +189,28 @@ module Wee
       end
     end
 
-    def table(*args, &block)
-      handle(Brush::TableTag.new, *args, &block)
-    end
-
-    def table_row(*args, &block)
-      handle(Brush::TableRowTag.new, *args, &block)
-    end
-
-    def table_data(*args, &block)
-      handle(Brush::TableDataTag.new, *args, &block)
-    end
-
-    def table_header(*args, &block)
-      handle(Brush::TableHeaderTag.new, *args, &block)
-    end
-
-    def form(*args, &block)
-      handle(Brush::FormTag.new, *args, &block)
-    end 
-
-    def input(*args, &block)
-      handle(Brush::InputTag.new, *args, &block)
-    end
-
-    def hidden_input(*args, &block)
-      handle(Brush::HiddenInputTag.new, *args, &block)
-    end
-
-    def password_input(*args, &block)
-      handle(Brush::PasswordInputTag.new, *args, &block)
-    end
-
-    def text_input(*args, &block)
-      handle(Brush::TextInputTag.new, *args, &block)
-    end
-
-    def new_radio_group
-      Wee::Brush::RadioButtonTag::RadioGroup.new(self)
-    end
-
-    def radio_button(*args, &block)
-      handle(Brush::RadioButtonTag.new, *args, &block)
-    end
-
-    def check_box(*args, &block)
-      handle(Wee::Brush::CheckboxTag.new, *args, &block)
-    end
-
-    alias checkbox check_box
-
-    def text_area(*args, &block)
-      handle(Brush::TextAreaTag.new, *args, &block)
-    end
-
-    def option(*args, &block)
-      handle(Brush::SelectOptionTag.new, *args, &block)
-    end
-
-    def select_list(items)
-      handle(Brush::SelectListTag.new(items))
-    end
-
-    def submit_button(*args, &block)
-      handle(Brush::SubmitButtonTag.new, *args, &block)
-    end
-
-    def image_button(*args, &block)
-      handle(Wee::Brush::ImageButtonTag.new, *args, &block)
-    end
-
-    def file_upload(*args, &block)
-      handle(Wee::Brush::FileUploadTag.new, *args, &block)
-    end
-
-    def page(*args, &block)
-      handle(Brush::Page.new, *args, &block)
-    end 
-
-    def anchor(*args, &block)
-      handle(Brush::AnchorTag.new, *args, &block)
-    end 
-
-    def space(n=1)
-      set_brush(Brush::GenericTextBrush.new("&nbsp;"*n))
-    end
-
-    def bold(*args, &block)
-      handle(Brush::GenericTagBrush.new("b"), *args, &block)
-    end
-
-    def javascript(*args, &block)
-      handle(Brush::JavascriptTag.new, *args, &block)
-    end
-
-    def paragraph(*args, &block)
-      handle(Brush::GenericTagBrush.new("p"), *args, &block)
-    end
-
-    def label(*args, &block)
-      handle(Brush::GenericTagBrush.new("label"), *args, &block)
-    end
-
-    def break
-      set_brush(Brush::GenericSingleTagBrush.new("br"))
-    end
-
-    def image
-      handle(Brush::ImageTag.new)
-    end
-
-    def link_css(url)
-      link.type('text/css').rel('stylesheet').href(url)
-    end
-
-    def text(str)
-      set_brush(Brush::GenericTextBrush.new(str))
-    end
-    alias << text
-
-    def encode_text(str)
-      set_brush(Brush::GenericEncodedTextBrush.new(str))
-    end
-
-    # converts \n into <br/>
-    def multiline_text(text, encode=true)
-      meth = encode ? :encode_text : :text
-      lines = text.split("\n")
-      send(meth, lines.first)
-      lines[1..-1].each { |l| self.break; send(meth, l) }
-    end
-
-    def render(obj)
-      self.close
-      obj.decoration.render_on(@context)
-      nil
-    end
-
-    private
+    protected
 
     def handle(brush, *args, &block)
-      set_brush(brush)
-      if not args.empty? or block
+      if block or not args.empty?
+        set_brush(brush)
         brush.with(*args, &block) 
       else
-        brush
+        set_brush(brush)
       end
     end
+
+    def handle2(brush, &block)
+      if block
+        set_brush(brush)
+        brush.with(&block) 
+      else
+        set_brush(brush)
+      end
+    end
+
+    alias handle3 set_brush
+
   end # class HtmlCanvasRenderer
 
 end # module Wee

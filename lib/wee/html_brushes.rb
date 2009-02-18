@@ -16,24 +16,23 @@ module Wee
     def close
       with unless @closed
     end
+
+    def self.nesting?() true end
   end
 
   class Brush::GenericTextBrush < Brush
-    def initialize(text)
-      super()
-      @text = text
-    end
-    
-    def with
-      @canvas.document.text(@text)
+    def with(text)
+      @canvas.document.text(text)
       @closed = true
       nil
     end
+
+    def self.nesting?() false end
   end
 
   class Brush::GenericEncodedTextBrush < Brush::GenericTextBrush
-    def with
-      @canvas.document.encode_text(@text)
+    def with(text)
+      @canvas.document.encode_text(text)
       @closed = true
       nil
     end
@@ -132,12 +131,13 @@ module Wee
   end
 
   class Brush::GenericSingleTagBrush < Brush::GenericTagBrush
-    def with(text=nil, &block)
-      raise ArgumentError if text or block
+    def with
       @canvas.document.single_tag(@tag, @attributes) 
       @closed = true
       nil
     end
+
+    def self.nesting?() false end
   end
 
   class Brush::ImageTag < Brush::GenericSingleTagBrush
@@ -267,7 +267,7 @@ module Wee
       @attributes[:method] = HTML_METHOD_POST
     end
 
-    def with(*args, &block)
+    def with(&block)
       # If no action was specified, use a dummy one.
       unless @attributes.has_key?(:action)
         @attributes[:action] = @canvas.build_url
