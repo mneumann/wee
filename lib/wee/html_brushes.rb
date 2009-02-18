@@ -148,6 +148,10 @@ module Wee
     HTML_TAG = 'img'.freeze
 
     html_attr :src
+    html_attr :width
+    html_attr :height
+    html_attr :border
+    html_attr :alt
 
     def initialize
       super(HTML_TAG)
@@ -243,8 +247,14 @@ module Wee
     end
   end
 
-  class Brush::TableHeaderTag < Brush::TableDataTag
+  class Brush::TableHeaderTag < Brush::GenericTagBrush
     HTML_TAG = 'th'.freeze
+
+    html_attr :colspan
+    html_attr :align, :shortcuts => {
+      :align_top => :top,
+      :align_bottom => :bottom
+    }
 
     def initialize
       super(HTML_TAG)

@@ -324,7 +324,7 @@ class CustomCalendarDemo < Wee::Component
           r.table do
             r.table_row { r.table_header('Calendar Demo') }
             r.table_row { r.table_data {
-              r.text_input.value(@date).attr(:date)
+              r.text_input.value(@date).callback{|val| @date = val}
               r.space
               r.anchor.callback { calendar }.with { render_icon(r) }
             }}
