@@ -1,8 +1,6 @@
 $LOAD_PATH.unshift "../lib"
 require 'rubygems'
 require 'wee'
-require 'wee/components/page_decoration'
-require 'wee/components/form_decoration'
 require 'rack'
 
 class Wee::Application
