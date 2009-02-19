@@ -88,8 +88,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000263">new</a>&nbsp;&nbsp;
-      <a href="#M000264">render</a>&nbsp;&nbsp;
+      <a href="#M000122">backtrack</a>&nbsp;&nbsp;
+      <a href="#M000121">new</a>&nbsp;&nbsp;
+      <a href="#M000123">render</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -111,19 +112,19 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000263" class="method-detail">
-        <a name="M000263"></a>
+      <div id="method-M000121" class="method-detail">
+        <a name="M000121"></a>
 
         <div class="method-heading">
-          <a href="#M000263" class="method-signature">
+          <a href="#M000121" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(text)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000263-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000263-source">
+            onclick="toggleCode('M000121-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000121-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/components/messagebox.rb, line 2</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">text</span>)
@@ -137,27 +138,50 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000264" class="method-detail">
-        <a name="M000264"></a>
+      <div id="method-M000122" class="method-detail">
+        <a name="M000122"></a>
 
         <div class="method-heading">
-          <a href="#M000264" class="method-signature">
-          <span class="method-name">render</span><span class="method-args">()</span>
+          <a href="#M000122" class="method-signature">
+          <span class="method-name">backtrack</span><span class="method-args">(state)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000264-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000264-source">
+            onclick="toggleCode('M000122-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000122-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/components/messagebox.rb, line 7</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backtrack</span>(<span class="ruby-identifier">state</span>)
+    <span class="ruby-identifier">backtrack_decoration</span>(<span class="ruby-identifier">state</span>)
+  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000123" class="method-detail">
+        <a name="M000123"></a>
+
+        <div class="method-heading">
+          <a href="#M000123" class="method-signature">
+          <span class="method-name">render</span><span class="method-args">(r)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000123-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000123-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/components/messagebox.rb, line 11</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">r</span>)
     <span class="ruby-identifier">r</span>.<span class="ruby-identifier">bold</span>(<span class="ruby-ivar">@text</span>)
     <span class="ruby-identifier">r</span>.<span class="ruby-identifier">form</span> <span class="ruby-keyword kw">do</span> 
-      <span class="ruby-identifier">r</span>.<span class="ruby-identifier">submit_button</span>.<span class="ruby-identifier">value</span>(<span class="ruby-value str">'OK'</span>).<span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:answer</span>, <span class="ruby-keyword kw">true</span>)
+      <span class="ruby-identifier">r</span>.<span class="ruby-identifier">submit_button</span>.<span class="ruby-identifier">value</span>(<span class="ruby-value str">'OK'</span>).<span class="ruby-identifier">callback</span> { <span class="ruby-identifier">answer</span> <span class="ruby-keyword kw">true</span> }
       <span class="ruby-identifier">r</span>.<span class="ruby-identifier">space</span>
-      <span class="ruby-identifier">r</span>.<span class="ruby-identifier">submit_button</span>.<span class="ruby-identifier">value</span>(<span class="ruby-value str">'Cancel'</span>).<span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:answer</span>, <span class="ruby-keyword kw">false</span>)
+      <span class="ruby-identifier">r</span>.<span class="ruby-identifier">submit_button</span>.<span class="ruby-identifier">value</span>(<span class="ruby-value str">'Cancel'</span>).<span class="ruby-identifier">callback</span> { <span class="ruby-identifier">answer</span> <span class="ruby-keyword kw">false</span> }
     <span class="ruby-keyword kw">end</span>
   <span class="ruby-keyword kw">end</span>
 </pre>

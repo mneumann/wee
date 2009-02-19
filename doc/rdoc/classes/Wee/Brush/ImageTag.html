@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../../files/lib/wee/renderer/html/brushes_rb.html">
-                lib/wee/renderer/html/brushes.rb
+                <a href="../../../files/lib/wee/html_brushes_rb.html">
+                lib/wee/html_brushes.rb
                 </a>
         <br />
             </td>
@@ -86,9 +86,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000200">new</a>&nbsp;&nbsp;
-      <a href="#M000199">src_for</a>&nbsp;&nbsp;
-      <a href="#M000201">with</a>&nbsp;&nbsp;
+      <a href="#M000145">new</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -100,9 +98,55 @@
     <div id="section">
 
 
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">HTML_TAG</td>
+          <td>=</td>
+          <td class="context-item-value">'img'.freeze</td>
+        </tr>
+        </table>
+      </div>
+    </div>
 
 
 
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">alt</td>
+          <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">border</td>
+          <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">height</td>
+          <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">src</td>
+          <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">width</td>
+          <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
       
 
 
@@ -110,78 +154,24 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000200" class="method-detail">
-        <a name="M000200"></a>
+      <div id="method-M000145" class="method-detail">
+        <a name="M000145"></a>
 
         <div class="method-heading">
-          <a href="#M000200" class="method-signature">
+          <a href="#M000145" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000200-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000200-source">
+            onclick="toggleCode('M000145-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000145-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 207</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
-    <span class="ruby-keyword kw">super</span>(<span class="ruby-value str">&quot;img&quot;</span>)
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <h3 class="section-bar">Public Instance methods</h3>
-
-      <div id="method-M000199" class="method-detail">
-        <a name="M000199"></a>
-
-        <div class="method-heading">
-          <a href="#M000199" class="method-signature">
-          <span class="method-name">src_for</span><span class="method-args">(prop)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-This method construct the src attribute by looking up the property from the
-current component.
-</p>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000199-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000199-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 201</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">src_for</span>(<span class="ruby-identifier">prop</span>)
-    <span class="ruby-identifier">val</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">current_component</span>.<span class="ruby-identifier">lookup_property</span>(<span class="ruby-identifier">prop</span>)
-    <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;no property found for: &lt;#{ prop }&gt;&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">val</span>.<span class="ruby-identifier">nil?</span>
-    <span class="ruby-identifier">src</span>(<span class="ruby-identifier">val</span>)
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000201" class="method-detail">
-        <a name="M000201"></a>
-
-        <div class="method-heading">
-          <a href="#M000201" class="method-signature">
-          <span class="method-name">with</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000201-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000201-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 211</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with</span>
-    <span class="ruby-keyword kw">super</span>
-  <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 168</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+      <span class="ruby-keyword kw">super</span>(<span class="ruby-constant">HTML_TAG</span>)
+    <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

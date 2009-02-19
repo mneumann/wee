@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../files/lib/wee/core/decoration_rb.html">
-                lib/wee/core/decoration.rb
+                <a href="../../files/lib/wee/call_answer_rb.html">
+                lib/wee/call_answer.rb
                 </a>
         <br />
             </td>
@@ -66,7 +66,7 @@
             <td><strong>Parent:</strong></td>
             <td>
                 <a href="Decoration.html">
-                Wee::Decoration
+                Decoration
                </a>
             </td>
         </tr>
@@ -83,11 +83,9 @@
     <div id="description">
       <p>
 A <a href="AnswerDecoration.html">Wee::AnswerDecoration</a> is wrapped
-around a component that will call <a
-href="Component.html#M000341">Component#answer</a>. This makes it possible
-to use such components without the need to call them (<a
-href="Component.html#M000340">Component#call</a>), e.g. as child components
-of other components.
+around a component that will call Component#answer. This makes it possible
+to use such components without the need to call them (Component#call), e.g.
+as child components of other components.
 </p>
 
     </div>
@@ -99,7 +97,8 @@ of other components.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000168">process_callbacks</a>&nbsp;&nbsp;
+      <a href="#M000114">new</a>&nbsp;&nbsp;
+      <a href="#M000115">process_callbacks</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -110,58 +109,77 @@ of other components.
 
     <div id="section">
 
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
 
+      Class <a href="AnswerDecoration/Answer.html" class="link">Wee::AnswerDecoration::Answer</a><br />
 
-
-
-    <div id="attribute-list">
-      <h3 class="section-bar">Attributes</h3>
-
-      <div class="name-list">
-        <table>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">on_answer</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc">
-When a component answers, <tt>on_answer.call(args)</tt> will be executed
-(unless nil), where <tt>args</tt> are the arguments passed to <a
-href="Component.html#M000341">Component#answer</a>. Note that no snapshot
-of on_answer is taken, so you should avoid modifying it!
-
-</td>
-        </tr>
-        </table>
-      </div>
     </div>
+
+
+
+
       
 
 
     <!-- if method_list -->
     <div id="methods">
-      <h3 class="section-bar">Public Instance methods</h3>
+      <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000168" class="method-detail">
-        <a name="M000168"></a>
+      <div id="method-M000114" class="method-detail">
+        <a name="M000114"></a>
 
         <div class="method-heading">
-          <a href="#M000168" class="method-signature">
-          <span class="method-name">process_callbacks</span><span class="method-args">(&amp;block)</span>
+          <a href="#M000114" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(&amp;answer_callback)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000168-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000168-source">
+            onclick="toggleCode('M000114-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000114-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/decoration.rb, line 131</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callbacks</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-    <span class="ruby-identifier">args</span> = <span class="ruby-identifier">catch</span>(<span class="ruby-identifier">:wee_answer</span>) { <span class="ruby-keyword kw">super</span>; <span class="ruby-keyword kw">nil</span> }
-    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>
-      <span class="ruby-comment cmt"># return to the calling component </span>
-      <span class="ruby-ivar">@on_answer</span>.<span class="ruby-identifier">call</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@on_answer</span>
+<span class="ruby-comment cmt"># File lib/wee/call_answer.rb, line 19</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">answer_callback</span>)
+      <span class="ruby-keyword kw">super</span>()
+      <span class="ruby-ivar">@answer_callback</span> = <span class="ruby-identifier">answer_callback</span>
     <span class="ruby-keyword kw">end</span>
-  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000115" class="method-detail">
+        <a name="M000115"></a>
+
+        <div class="method-heading">
+          <a href="#M000115" class="method-signature">
+          <span class="method-name">process_callbacks</span><span class="method-args">(callbacks)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+When a component answers, <tt>@answer_callback.call(args)</tt> will be
+executed (unless nil), where <tt>args</tt> are the arguments passed to
+Component#answer.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000115-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000115-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/call_answer.rb, line 29</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callbacks</span>(<span class="ruby-identifier">callbacks</span>)
+      <span class="ruby-keyword kw">begin</span>
+        <span class="ruby-keyword kw">super</span>
+      <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Answer</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">answer</span>
+        <span class="ruby-comment cmt"># return to the calling component </span>
+        <span class="ruby-ivar">@answer_callback</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">answer</span>.<span class="ruby-identifier">args</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@answer_callback</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

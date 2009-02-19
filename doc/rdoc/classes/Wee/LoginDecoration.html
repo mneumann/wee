@@ -66,7 +66,7 @@
             <td><strong>Parent:</strong></td>
             <td>
                 <a href="Decoration.html">
-                Wee::Decoration
+                Decoration
                </a>
             </td>
         </tr>
@@ -88,11 +88,11 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000347">backtrack_state</a>&nbsp;&nbsp;
-      <a href="#M000346">do_render</a>&nbsp;&nbsp;
-      <a href="#M000348">logged_in?</a>&nbsp;&nbsp;
-      <a href="#M000344">new</a>&nbsp;&nbsp;
-      <a href="#M000345">process_callbacks</a>&nbsp;&nbsp;
+      <a href="#M000108">backtrack</a>&nbsp;&nbsp;
+      <a href="#M000109">logged_in?</a>&nbsp;&nbsp;
+      <a href="#M000105">new</a>&nbsp;&nbsp;
+      <a href="#M000106">process_callbacks</a>&nbsp;&nbsp;
+      <a href="#M000107">render_on</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -114,24 +114,24 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000344" class="method-detail">
-        <a name="M000344"></a>
+      <div id="method-M000105" class="method-detail">
+        <a name="M000105"></a>
 
         <div class="method-heading">
-          <a href="#M000344" class="method-signature">
+          <a href="#M000105" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(login_page)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000344-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000344-source">
+            onclick="toggleCode('M000105-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000105-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/components/login_decoration.rb, line 2</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">login_page</span>)
-    <span class="ruby-ivar">@login_page</span> = <span class="ruby-identifier">login_page</span>
-  <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/wee/components/login_decoration.rb, line 5</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">login_page</span>)
+      <span class="ruby-ivar">@login_page</span> = <span class="ruby-identifier">login_page</span>
+    <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -139,65 +139,38 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000347" class="method-detail">
-        <a name="M000347"></a>
+      <div id="method-M000108" class="method-detail">
+        <a name="M000108"></a>
 
         <div class="method-heading">
-          <a href="#M000347" class="method-signature">
-          <span class="method-name">backtrack_state</span><span class="method-args">(snapshot)</span>
+          <a href="#M000108" class="method-signature">
+          <span class="method-name">backtrack</span><span class="method-args">(state)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000347-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000347-source">
+            onclick="toggleCode('M000108-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000108-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/components/login_decoration.rb, line 22</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backtrack_state</span>(<span class="ruby-identifier">snapshot</span>)
-    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">logged_in?</span>
-      <span class="ruby-keyword kw">super</span>
-    <span class="ruby-keyword kw">else</span>
-      <span class="ruby-ivar">@login_page</span>.<span class="ruby-identifier">backtrack_state_chain</span>(<span class="ruby-identifier">snapshot</span>)
+<span class="ruby-comment cmt"># File lib/wee/components/login_decoration.rb, line 25</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backtrack</span>(<span class="ruby-identifier">state</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">logged_in?</span>
+        <span class="ruby-keyword kw">super</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-ivar">@login_page</span>.<span class="ruby-identifier">decoration</span>.<span class="ruby-identifier">backtrack</span>(<span class="ruby-identifier">state</span>)
+      <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span>
-  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000346" class="method-detail">
-        <a name="M000346"></a>
+      <div id="method-M000109" class="method-detail">
+        <a name="M000109"></a>
 
         <div class="method-heading">
-          <a href="#M000346" class="method-signature">
-          <span class="method-name">do_render</span><span class="method-args">(rendering_context)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000346-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000346-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/components/login_decoration.rb, line 14</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">do_render</span>(<span class="ruby-identifier">rendering_context</span>)
-    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">logged_in?</span>
-      <span class="ruby-keyword kw">super</span>
-    <span class="ruby-keyword kw">else</span>
-      <span class="ruby-ivar">@login_page</span>.<span class="ruby-identifier">do_render_chain</span>(<span class="ruby-identifier">rendering_context</span>)
-    <span class="ruby-keyword kw">end</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000348" class="method-detail">
-        <a name="M000348"></a>
-
-        <div class="method-heading">
-          <a href="#M000348" class="method-signature">
+          <a href="#M000109" class="method-signature">
           <span class="method-name">logged_in?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -207,40 +180,67 @@
 Overwrite this method!
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000348-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000348-source">
+            onclick="toggleCode('M000109-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000109-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/components/login_decoration.rb, line 32</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">logged_in?</span>
-    <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;subclass responsibility&quot;</span>
-  <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/wee/components/login_decoration.rb, line 35</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">logged_in?</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;subclass responsibility&quot;</span>
+    <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000345" class="method-detail">
-        <a name="M000345"></a>
+      <div id="method-M000106" class="method-detail">
+        <a name="M000106"></a>
 
         <div class="method-heading">
-          <a href="#M000345" class="method-signature">
+          <a href="#M000106" class="method-signature">
           <span class="method-name">process_callbacks</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000345-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000345-source">
+            onclick="toggleCode('M000106-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000106-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/components/login_decoration.rb, line 6</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callbacks</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">logged_in?</span>
-      <span class="ruby-keyword kw">super</span>
-    <span class="ruby-keyword kw">else</span>
-      <span class="ruby-ivar">@login_page</span>.<span class="ruby-identifier">process_callbacks_chain</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+<span class="ruby-comment cmt"># File lib/wee/components/login_decoration.rb, line 9</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callbacks</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">logged_in?</span>
+        <span class="ruby-keyword kw">super</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-ivar">@login_page</span>.<span class="ruby-identifier">decoration</span>.<span class="ruby-identifier">process_callbacks</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span>
-  <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000107" class="method-detail">
+        <a name="M000107"></a>
+
+        <div class="method-heading">
+          <a href="#M000107" class="method-signature">
+          <span class="method-name">render_on</span><span class="method-args">(context)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000107-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000107-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/components/login_decoration.rb, line 17</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_on</span>(<span class="ruby-identifier">context</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">logged_in?</span>
+        <span class="ruby-keyword kw">super</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-ivar">@login_page</span>.<span class="ruby-identifier">decoration</span>.<span class="ruby-identifier">render_on</span>(<span class="ruby-identifier">context</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

@@ -65,9 +65,7 @@
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
-                <a href="../Object.html">
-                Object
-               </a>
+                Rack::Response
             </td>
         </tr>
         </table>
@@ -84,18 +82,6 @@
 
    </div>
 
-    <div id="method-list">
-      <h3 class="section-bar">Methods</h3>
-
-      <div class="name-list">
-      <a href="#M000292">&lt;&lt;</a>&nbsp;&nbsp;
-      <a href="#M000290">content_type</a>&nbsp;&nbsp;
-      <a href="#M000291">content_type=</a>&nbsp;&nbsp;
-      <a href="#M000288">cookies</a>&nbsp;&nbsp;
-      <a href="#M000287">cookies?</a>&nbsp;&nbsp;
-      <a href="#M000289">new</a>&nbsp;&nbsp;
-      </div>
-    </div>
 
   </div>
 
@@ -105,197 +91,26 @@
     <div id="section">
 
 
-    <div id="constants-list">
-      <h3 class="section-bar">Constants</h3>
+
+    <div id="aliases-list">
+      <h3 class="section-bar">External Aliases</h3>
 
       <div class="name-list">
-        <table summary="Constants">
+                        <table summary="aliases">
         <tr class="top-aligned-row context-row">
-          <td class="context-item-name">DEFAULT_HEADER</td>
-          <td>=</td>
-          <td class="context-item-value">{}.freeze</td>
+          <td class="context-item-name">write</td>
+          <td>-&gt;</td>
+          <td class="context-item-value"><<</td>
         </tr>
-        </table>
+                        </table>
       </div>
     </div>
 
 
-
-    <div id="attribute-list">
-      <h3 class="section-bar">Attributes</h3>
-
-      <div class="name-list">
-        <table>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">content</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">header</td>
-          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">status</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        </table>
-      </div>
-    </div>
       
 
 
     <!-- if method_list -->
-    <div id="methods">
-      <h3 class="section-bar">Public Class methods</h3>
-
-      <div id="method-M000289" class="method-detail">
-        <a name="M000289"></a>
-
-        <div class="method-heading">
-          <a href="#M000289" class="method-signature">
-          <span class="method-name">new</span><span class="method-args">(mime_type = 'text/html', content='')</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000289-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000289-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/response.rb, line 18</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">mime_type</span> = <span class="ruby-value str">'text/html'</span>, <span class="ruby-identifier">content</span>=<span class="ruby-value str">''</span>)
-    <span class="ruby-ivar">@status</span> = <span class="ruby-value">200</span>
-    <span class="ruby-ivar">@header</span> = <span class="ruby-constant">DEFAULT_HEADER</span>.<span class="ruby-identifier">dup</span>
-    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">content_type</span> = <span class="ruby-identifier">mime_type</span>
-    <span class="ruby-ivar">@content</span> = <span class="ruby-identifier">content</span> 
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <h3 class="section-bar">Public Instance methods</h3>
-
-      <div id="method-M000292" class="method-detail">
-        <a name="M000292"></a>
-
-        <div class="method-heading">
-          <a href="#M000292" class="method-signature">
-          <span class="method-name">&lt;&lt;</span><span class="method-args">(str)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000292-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000292-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/response.rb, line 33</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&lt;&lt;</span>(<span class="ruby-identifier">str</span>)
-    <span class="ruby-ivar">@content</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">str</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000290" class="method-detail">
-        <a name="M000290"></a>
-
-        <div class="method-heading">
-          <a href="#M000290" class="method-signature">
-          <span class="method-name">content_type</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000290-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000290-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/response.rb, line 25</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_type</span>
-    <span class="ruby-ivar">@header</span>[<span class="ruby-value str">'Content-Type'</span>]
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000291" class="method-detail">
-        <a name="M000291"></a>
-
-        <div class="method-heading">
-          <a href="#M000291" class="method-signature">
-          <span class="method-name">content_type=</span><span class="method-args">(mime_type)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000291-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000291-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/response.rb, line 29</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_type=</span>(<span class="ruby-identifier">mime_type</span>)
-    <span class="ruby-ivar">@header</span>[<span class="ruby-value str">'Content-Type'</span>] = <span class="ruby-identifier">mime_type</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000288" class="method-detail">
-        <a name="M000288"></a>
-
-        <div class="method-heading">
-          <a href="#M000288" class="method-signature">
-          <span class="method-name">cookies</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000288-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000288-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/response.rb, line 14</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cookies</span>
-    <span class="ruby-ivar">@cookies</span> <span class="ruby-operator">||=</span> []   
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000287" class="method-detail">
-        <a name="M000287"></a>
-
-        <div class="method-heading">
-          <a href="#M000287" class="method-signature">
-          <span class="method-name">cookies?</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000287-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000287-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/response.rb, line 10</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cookies?</span>
-    <span class="ruby-ivar">@cookies</span>
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
 
 
   </div>

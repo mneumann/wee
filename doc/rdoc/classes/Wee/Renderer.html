@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../files/lib/wee/core/renderer_rb.html">
-                lib/wee/core/renderer.rb
+                <a href="../../files/lib/wee/renderer_rb.html">
+                lib/wee/renderer.rb
                 </a>
         <br />
             </td>
@@ -94,8 +94,11 @@ Base class of all <a href="Renderer.html">Renderer</a> classes.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000163">close</a>&nbsp;&nbsp;
-      <a href="#M000162">new</a>&nbsp;&nbsp;
+      <a href="#M000098">close</a>&nbsp;&nbsp;
+      <a href="#M000094">new</a>&nbsp;&nbsp;
+      <a href="#M000096">render</a>&nbsp;&nbsp;
+      <a href="#M000097">render_decoration</a>&nbsp;&nbsp;
+      <a href="#M000095">with</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -116,13 +119,28 @@ Base class of all <a href="Renderer.html">Renderer</a> classes.
       <div class="name-list">
         <table>
         <tr class="top-aligned-row context-row">
+          <td class="context-item-name">callbacks</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
           <td class="context-item-name">current_component</td>
           <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
           <td class="context-item-desc"></td>
         </tr>
         <tr class="top-aligned-row context-row">
-          <td class="context-item-name">rendering_context</td>
-          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-name">document</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">request</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">response</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
           <td class="context-item-desc"></td>
         </tr>
         </table>
@@ -135,32 +153,28 @@ Base class of all <a href="Renderer.html">Renderer</a> classes.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000162" class="method-detail">
-        <a name="M000162"></a>
+      <div id="method-M000094" class="method-detail">
+        <a name="M000094"></a>
 
         <div class="method-heading">
-          <a href="#M000162" class="method-signature">
-          <span class="method-name">new</span><span class="method-args">(rendering_context, current_component=nil, &amp;block)</span>
+          <a href="#M000094" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(request=nil, response=nil, callbacks=nil, document=nil, current_component=nil)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000162-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000162-source">
+            onclick="toggleCode('M000094-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000094-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/renderer.rb, line 7</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">rendering_context</span>, <span class="ruby-identifier">current_component</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-    <span class="ruby-ivar">@rendering_context</span> = <span class="ruby-identifier">rendering_context</span>
-    <span class="ruby-ivar">@current_component</span> = <span class="ruby-identifier">current_component</span>
-    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>
-      <span class="ruby-keyword kw">begin</span>
-        <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-keyword kw">self</span>)
-      <span class="ruby-keyword kw">ensure</span>
-        <span class="ruby-identifier">close</span>
-      <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer.rb, line 13</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">request</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">response</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">callbacks</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">document</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">current_component</span>=<span class="ruby-keyword kw">nil</span>)
+      <span class="ruby-ivar">@request</span> = <span class="ruby-identifier">request</span>
+      <span class="ruby-ivar">@response</span> = <span class="ruby-identifier">response</span>
+      <span class="ruby-ivar">@callbacks</span> = <span class="ruby-identifier">callbacks</span>
+      <span class="ruby-ivar">@document</span> = <span class="ruby-identifier">document</span>
+      <span class="ruby-ivar">@current_component</span> = <span class="ruby-identifier">current_component</span>
     <span class="ruby-keyword kw">end</span>
-  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -168,11 +182,11 @@ Base class of all <a href="Renderer.html">Renderer</a> classes.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000163" class="method-detail">
-        <a name="M000163"></a>
+      <div id="method-M000098" class="method-detail">
+        <a name="M000098"></a>
 
         <div class="method-heading">
-          <a href="#M000163" class="method-signature">
+          <a href="#M000098" class="method-signature">
           <span class="method-name">close</span><span class="method-args">()</span>
           </a>
         </div>
@@ -182,12 +196,103 @@ Base class of all <a href="Renderer.html">Renderer</a> classes.
 Subclass responsibility.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000163-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000163-source">
+            onclick="toggleCode('M000098-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000098-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/renderer.rb, line 21</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
-  <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer.rb, line 58</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000096" class="method-detail">
+        <a name="M000096"></a>
+
+        <div class="method-heading">
+          <a href="#M000096" class="method-signature">
+          <span class="method-name">render</span><span class="method-args">(component)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000096-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000096-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/renderer.rb, line 43</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">component</span>)
+      <span class="ruby-identifier">close</span>
+      <span class="ruby-identifier">component</span>.<span class="ruby-identifier">decoration</span>.<span class="ruby-identifier">render_on</span>(<span class="ruby-keyword kw">self</span>)
+      <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000097" class="method-detail">
+        <a name="M000097"></a>
+
+        <div class="method-heading">
+          <a href="#M000097" class="method-signature">
+          <span class="method-name">render_decoration</span><span class="method-args">(decoration)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000097-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000097-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/renderer.rb, line 49</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_decoration</span>(<span class="ruby-identifier">decoration</span>)
+      <span class="ruby-identifier">close</span>
+      <span class="ruby-identifier">decoration</span>.<span class="ruby-identifier">render_on</span>(<span class="ruby-keyword kw">self</span>)
+      <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000095" class="method-detail">
+        <a name="M000095"></a>
+
+        <div class="method-heading">
+          <a href="#M000095" class="method-signature">
+          <span class="method-name">with</span><span class="method-args">(component) {|self| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000095-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000095-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/renderer.rb, line 21</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with</span>(<span class="ruby-identifier">component</span>)
+      <span class="ruby-identifier">rclass</span> = <span class="ruby-identifier">component</span>.<span class="ruby-identifier">renderer_class</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">rclass</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">self</span>
+        <span class="ruby-comment cmt"># reuse renderer</span>
+        <span class="ruby-identifier">old_component</span> = <span class="ruby-ivar">@current_component</span> 
+        <span class="ruby-keyword kw">begin</span>
+          <span class="ruby-ivar">@current_component</span> = <span class="ruby-identifier">component</span>
+          <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">self</span>
+        <span class="ruby-keyword kw">ensure</span>
+          <span class="ruby-ivar">@current_component</span> = <span class="ruby-identifier">old_component</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">close</span>
+        <span class="ruby-identifier">r</span> = <span class="ruby-identifier">rclass</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@request</span>, <span class="ruby-ivar">@response</span>, <span class="ruby-ivar">@callbacks</span>, <span class="ruby-ivar">@document</span>, <span class="ruby-identifier">component</span>)
+        <span class="ruby-keyword kw">begin</span>
+          <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">r</span>
+        <span class="ruby-keyword kw">ensure</span>
+          <span class="ruby-identifier">r</span>.<span class="ruby-identifier">close</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

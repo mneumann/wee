@@ -88,20 +88,20 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000172">current_start_index</a>&nbsp;&nbsp;
-      <a href="#M000174">first</a>&nbsp;&nbsp;
-      <a href="#M000178">goto</a>&nbsp;&nbsp;
-      <a href="#M000175">last</a>&nbsp;&nbsp;
-      <a href="#M000173">last_page_index</a>&nbsp;&nbsp;
-      <a href="#M000170">new</a>&nbsp;&nbsp;
-      <a href="#M000177">next</a>&nbsp;&nbsp;
-      <a href="#M000171">num_pages</a>&nbsp;&nbsp;
-      <a href="#M000176">prev</a>&nbsp;&nbsp;
-      <a href="#M000179">render</a>&nbsp;&nbsp;
-      <a href="#M000180">render_arrow</a>&nbsp;&nbsp;
-      <a href="#M000181">render_index</a>&nbsp;&nbsp;
-      <a href="#M000182">render_page_num</a>&nbsp;&nbsp;
-      <a href="#M000183">validate</a>&nbsp;&nbsp;
+      <a href="#M000034">current_start_index</a>&nbsp;&nbsp;
+      <a href="#M000036">first</a>&nbsp;&nbsp;
+      <a href="#M000040">goto</a>&nbsp;&nbsp;
+      <a href="#M000037">last</a>&nbsp;&nbsp;
+      <a href="#M000035">last_page_index</a>&nbsp;&nbsp;
+      <a href="#M000032">new</a>&nbsp;&nbsp;
+      <a href="#M000039">next</a>&nbsp;&nbsp;
+      <a href="#M000033">num_pages</a>&nbsp;&nbsp;
+      <a href="#M000038">prev</a>&nbsp;&nbsp;
+      <a href="#M000041">render</a>&nbsp;&nbsp;
+      <a href="#M000042">render_arrow</a>&nbsp;&nbsp;
+      <a href="#M000043">render_index</a>&nbsp;&nbsp;
+      <a href="#M000044">render_page_num</a>&nbsp;&nbsp;
+      <a href="#M000045">validate</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -146,19 +146,19 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000170" class="method-detail">
-        <a name="M000170"></a>
+      <div id="method-M000032" class="method-detail">
+        <a name="M000032"></a>
 
         <div class="method-heading">
-          <a href="#M000170" class="method-signature">
+          <a href="#M000032" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(num_entries=0) {|self if block_given?| ...}</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000170-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000170-source">
+            onclick="toggleCode('M000032-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000032-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/components/pager.rb, line 5</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">num_entries</span>=<span class="ruby-value">0</span>)
@@ -175,22 +175,23 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000172" class="method-detail">
-        <a name="M000172"></a>
+      <div id="method-M000034" class="method-detail">
+        <a name="M000034"></a>
 
         <div class="method-heading">
-          <a href="#M000172" class="method-signature">
+          <a href="#M000034" class="method-signature">
           <span class="method-name">current_start_index</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns the index of the first entry on the current page
+Returns the index of the <a href="Pager.html#M000036">first</a> entry on
+the current page
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000172-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000172-source">
+            onclick="toggleCode('M000034-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000034-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/components/pager.rb, line 22</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_start_index</span>
@@ -201,22 +202,22 @@ Returns the index of the first entry on the current page
         </div>
       </div>
 
-      <div id="method-M000174" class="method-detail">
-        <a name="M000174"></a>
+      <div id="method-M000036" class="method-detail">
+        <a name="M000036"></a>
 
         <div class="method-heading">
-          <a href="#M000174" class="method-signature">
+          <a href="#M000036" class="method-signature">
           <span class="method-name">first</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Go to first page
+Go to <a href="Pager.html#M000036">first</a> page
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000174-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000174-source">
+            onclick="toggleCode('M000036-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000036-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/components/pager.rb, line 34</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">first</span>
@@ -227,11 +228,11 @@ Go to first page
         </div>
       </div>
 
-      <div id="method-M000178" class="method-detail">
-        <a name="M000178"></a>
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
 
         <div class="method-heading">
-          <a href="#M000178" class="method-signature">
+          <a href="#M000040" class="method-signature">
           <span class="method-name">goto</span><span class="method-args">(page)</span>
           </a>
         </div>
@@ -241,8 +242,8 @@ Go to first page
 Go to page with index <tt>page</tt> Note that page-indices start with zero!
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000178-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000178-source">
+            onclick="toggleCode('M000040-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000040-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/components/pager.rb, line 59</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">goto</span>(<span class="ruby-identifier">page</span>)
@@ -254,22 +255,22 @@ Go to page with index <tt>page</tt> Note that page-indices start with zero!
         </div>
       </div>
 
-      <div id="method-M000175" class="method-detail">
-        <a name="M000175"></a>
+      <div id="method-M000037" class="method-detail">
+        <a name="M000037"></a>
 
         <div class="method-heading">
-          <a href="#M000175" class="method-signature">
+          <a href="#M000037" class="method-signature">
           <span class="method-name">last</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Go to last page
+Go to <a href="Pager.html#M000037">last</a> page
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000175-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000175-source">
+            onclick="toggleCode('M000037-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000037-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/components/pager.rb, line 40</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">last</span>
@@ -280,22 +281,22 @@ Go to last page
         </div>
       </div>
 
-      <div id="method-M000173" class="method-detail">
-        <a name="M000173"></a>
+      <div id="method-M000035" class="method-detail">
+        <a name="M000035"></a>
 
         <div class="method-heading">
-          <a href="#M000173" class="method-signature">
+          <a href="#M000035" class="method-signature">
           <span class="method-name">last_page_index</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Returns the index of the last page
+Returns the index of the <a href="Pager.html#M000037">last</a> page
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000173-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000173-source">
+            onclick="toggleCode('M000035-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000035-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/components/pager.rb, line 28</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">last_page_index</span>
@@ -306,22 +307,22 @@ Returns the index of the last page
         </div>
       </div>
 
-      <div id="method-M000177" class="method-detail">
-        <a name="M000177"></a>
+      <div id="method-M000039" class="method-detail">
+        <a name="M000039"></a>
 
         <div class="method-heading">
-          <a href="#M000177" class="method-signature">
+          <a href="#M000039" class="method-signature">
           <span class="method-name">next</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Go to next page
+Go to <a href="Pager.html#M000039">next</a> page
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000177-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000177-source">
+            onclick="toggleCode('M000039-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000039-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/components/pager.rb, line 52</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">next</span>
@@ -332,11 +333,11 @@ Go to next page
         </div>
       </div>
 
-      <div id="method-M000171" class="method-detail">
-        <a name="M000171"></a>
+      <div id="method-M000033" class="method-detail">
+        <a name="M000033"></a>
 
         <div class="method-heading">
-          <a href="#M000171" class="method-signature">
+          <a href="#M000033" class="method-signature">
           <span class="method-name">num_pages</span><span class="method-args">()</span>
           </a>
         </div>
@@ -346,8 +347,8 @@ Go to next page
 Returns the number of pages
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000171-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000171-source">
+            onclick="toggleCode('M000033-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000033-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/components/pager.rb, line 15</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">num_pages</span>
@@ -359,11 +360,11 @@ Returns the number of pages
         </div>
       </div>
 
-      <div id="method-M000176" class="method-detail">
-        <a name="M000176"></a>
+      <div id="method-M000038" class="method-detail">
+        <a name="M000038"></a>
 
         <div class="method-heading">
-          <a href="#M000176" class="method-signature">
+          <a href="#M000038" class="method-signature">
           <span class="method-name">prev</span><span class="method-args">()</span>
           </a>
         </div>
@@ -373,8 +374,8 @@ Returns the number of pages
 Go to previous page
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000176-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000176-source">
+            onclick="toggleCode('M000038-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000038-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/components/pager.rb, line 46</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prev</span>
@@ -385,28 +386,28 @@ Go to previous page
         </div>
       </div>
 
-      <div id="method-M000179" class="method-detail">
-        <a name="M000179"></a>
+      <div id="method-M000041" class="method-detail">
+        <a name="M000041"></a>
 
         <div class="method-heading">
-          <a href="#M000179" class="method-signature">
-          <span class="method-name">render</span><span class="method-args">()</span>
+          <a href="#M000041" class="method-signature">
+          <span class="method-name">render</span><span class="method-args">(r)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000179-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000179-source">
+            onclick="toggleCode('M000041-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000041-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/components/pager.rb, line 64</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">r</span>)
     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">num_pages</span>() <span class="ruby-operator">&lt;=</span> <span class="ruby-value">0</span>
-    <span class="ruby-identifier">render_arrow</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-value str">&quot;&lt;&lt;&quot;</span>, <span class="ruby-value str">&quot;Go to first page&quot;</span>); <span class="ruby-identifier">r</span>.<span class="ruby-identifier">space</span>(<span class="ruby-value">2</span>)
-    <span class="ruby-identifier">render_arrow</span>(<span class="ruby-identifier">:prev</span>, <span class="ruby-value str">&quot;&lt;&quot;</span>, <span class="ruby-value str">&quot;Go to previous page&quot;</span>); <span class="ruby-identifier">r</span>.<span class="ruby-identifier">space</span>(<span class="ruby-value">2</span>)
-    <span class="ruby-identifier">render_index</span>; <span class="ruby-identifier">r</span>.<span class="ruby-identifier">space</span>(<span class="ruby-value">2</span>)
-    <span class="ruby-identifier">render_arrow</span>(<span class="ruby-identifier">:next</span>, <span class="ruby-value str">&quot;&gt;&quot;</span>, <span class="ruby-value str">&quot;Go to next page&quot;</span>); <span class="ruby-identifier">r</span>.<span class="ruby-identifier">space</span>(<span class="ruby-value">2</span>)
-    <span class="ruby-identifier">render_arrow</span>(<span class="ruby-identifier">:last</span>, <span class="ruby-value str">&quot;&gt;&gt;&quot;</span>, <span class="ruby-value str">&quot;Go to last page&quot;</span>)
+    <span class="ruby-identifier">render_arrow</span>(<span class="ruby-identifier">r</span>, <span class="ruby-identifier">:first</span>, <span class="ruby-value str">&quot;&lt;&lt;&quot;</span>, <span class="ruby-value str">&quot;Go to first page&quot;</span>); <span class="ruby-identifier">r</span>.<span class="ruby-identifier">space</span>(<span class="ruby-value">2</span>)
+    <span class="ruby-identifier">render_arrow</span>(<span class="ruby-identifier">r</span>, <span class="ruby-identifier">:prev</span>, <span class="ruby-value str">&quot;&lt;&quot;</span>, <span class="ruby-value str">&quot;Go to previous page&quot;</span>); <span class="ruby-identifier">r</span>.<span class="ruby-identifier">space</span>(<span class="ruby-value">2</span>)
+    <span class="ruby-identifier">render_index</span>(<span class="ruby-identifier">r</span>); <span class="ruby-identifier">r</span>.<span class="ruby-identifier">space</span>(<span class="ruby-value">2</span>)
+    <span class="ruby-identifier">render_arrow</span>(<span class="ruby-identifier">r</span>, <span class="ruby-identifier">:next</span>, <span class="ruby-value str">&quot;&gt;&quot;</span>, <span class="ruby-value str">&quot;Go to next page&quot;</span>); <span class="ruby-identifier">r</span>.<span class="ruby-identifier">space</span>(<span class="ruby-value">2</span>)
+    <span class="ruby-identifier">render_arrow</span>(<span class="ruby-identifier">r</span>, <span class="ruby-identifier">:last</span>, <span class="ruby-value str">&quot;&gt;&gt;&quot;</span>, <span class="ruby-value str">&quot;Go to last page&quot;</span>)
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -415,51 +416,51 @@ Go to previous page
 
       <h3 class="section-bar">Private Instance methods</h3>
 
-      <div id="method-M000180" class="method-detail">
-        <a name="M000180"></a>
+      <div id="method-M000042" class="method-detail">
+        <a name="M000042"></a>
 
         <div class="method-heading">
-          <a href="#M000180" class="method-signature">
-          <span class="method-name">render_arrow</span><span class="method-args">(sym, text, tooltip=text)</span>
+          <a href="#M000042" class="method-signature">
+          <span class="method-name">render_arrow</span><span class="method-args">(r, sym, text, tooltip=text)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000180-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000180-source">
+            onclick="toggleCode('M000042-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000042-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/components/pager.rb, line 75</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_arrow</span>(<span class="ruby-identifier">sym</span>, <span class="ruby-identifier">text</span>, <span class="ruby-identifier">tooltip</span>=<span class="ruby-identifier">text</span>)
-    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">anchor</span>.<span class="ruby-identifier">callback</span>(<span class="ruby-identifier">sym</span>).<span class="ruby-identifier">tooltip</span>(<span class="ruby-identifier">tooltip</span>).<span class="ruby-identifier">with</span> { <span class="ruby-identifier">r</span>.<span class="ruby-identifier">encode_text</span>(<span class="ruby-identifier">text</span>) }
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_arrow</span>(<span class="ruby-identifier">r</span>, <span class="ruby-identifier">sym</span>, <span class="ruby-identifier">text</span>, <span class="ruby-identifier">tooltip</span>=<span class="ruby-identifier">text</span>)
+    <span class="ruby-identifier">r</span>.<span class="ruby-identifier">anchor</span>.<span class="ruby-identifier">callback</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">method</span>(<span class="ruby-identifier">sym</span>)).<span class="ruby-identifier">tooltip</span>(<span class="ruby-identifier">tooltip</span>).<span class="ruby-identifier">with</span> { <span class="ruby-identifier">r</span>.<span class="ruby-identifier">encode_text</span>(<span class="ruby-identifier">text</span>) }
   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000181" class="method-detail">
-        <a name="M000181"></a>
+      <div id="method-M000043" class="method-detail">
+        <a name="M000043"></a>
 
         <div class="method-heading">
-          <a href="#M000181" class="method-signature">
-          <span class="method-name">render_index</span><span class="method-args">()</span>
+          <a href="#M000043" class="method-signature">
+          <span class="method-name">render_index</span><span class="method-args">(r)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000181-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000181-source">
+            onclick="toggleCode('M000043-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000043-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/components/pager.rb, line 79</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_index</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_index</span>(<span class="ruby-identifier">r</span>)
     <span class="ruby-identifier">last</span> = <span class="ruby-identifier">last_page_index</span>()
     (<span class="ruby-value">0</span> <span class="ruby-operator">..</span> <span class="ruby-identifier">last</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">==</span> <span class="ruby-ivar">@current_page</span>
-        <span class="ruby-identifier">render_page_num</span>(<span class="ruby-identifier">i</span>, <span class="ruby-keyword kw">true</span>)
+        <span class="ruby-identifier">render_page_num</span>(<span class="ruby-identifier">r</span>, <span class="ruby-identifier">i</span>, <span class="ruby-keyword kw">true</span>)
       <span class="ruby-keyword kw">else</span>
-        <span class="ruby-identifier">render_page_num</span>(<span class="ruby-identifier">i</span>, <span class="ruby-keyword kw">false</span>)
+        <span class="ruby-identifier">render_page_num</span>(<span class="ruby-identifier">r</span>, <span class="ruby-identifier">i</span>, <span class="ruby-keyword kw">false</span>)
       <span class="ruby-keyword kw">end</span>
       <span class="ruby-identifier">r</span>.<span class="ruby-identifier">space</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">last</span>
     <span class="ruby-keyword kw">end</span>
@@ -469,26 +470,26 @@ Go to previous page
         </div>
       </div>
 
-      <div id="method-M000182" class="method-detail">
-        <a name="M000182"></a>
+      <div id="method-M000044" class="method-detail">
+        <a name="M000044"></a>
 
         <div class="method-heading">
-          <a href="#M000182" class="method-signature">
-          <span class="method-name">render_page_num</span><span class="method-args">(num, current)</span>
+          <a href="#M000044" class="method-signature">
+          <span class="method-name">render_page_num</span><span class="method-args">(r, num, current)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000182-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000182-source">
+            onclick="toggleCode('M000044-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000044-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/components/pager.rb, line 91</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_page_num</span>(<span class="ruby-identifier">num</span>, <span class="ruby-identifier">current</span>)
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_page_num</span>(<span class="ruby-identifier">r</span>, <span class="ruby-identifier">num</span>, <span class="ruby-identifier">current</span>)
     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">current</span>
       <span class="ruby-identifier">r</span>.<span class="ruby-identifier">bold</span>(<span class="ruby-identifier">num</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)
     <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">r</span>.<span class="ruby-identifier">anchor</span>.<span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:goto</span>, <span class="ruby-identifier">num</span>).<span class="ruby-identifier">with</span>(<span class="ruby-identifier">num</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)
+      <span class="ruby-identifier">r</span>.<span class="ruby-identifier">anchor</span>.<span class="ruby-identifier">callback</span>{ <span class="ruby-identifier">goto</span>(<span class="ruby-identifier">num</span>) }.<span class="ruby-identifier">with</span>(<span class="ruby-identifier">num</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)
     <span class="ruby-keyword kw">end</span>
   <span class="ruby-keyword kw">end</span>
 </pre>
@@ -496,19 +497,19 @@ Go to previous page
         </div>
       </div>
 
-      <div id="method-M000183" class="method-detail">
-        <a name="M000183"></a>
+      <div id="method-M000045" class="method-detail">
+        <a name="M000045"></a>
 
         <div class="method-heading">
-          <a href="#M000183" class="method-signature">
+          <a href="#M000045" class="method-signature">
           <span class="method-name">validate</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000183-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000183-source">
+            onclick="toggleCode('M000045-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000045-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/components/pager.rb, line 99</span>
   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate</span>

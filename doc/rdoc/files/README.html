@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Mon Jul 11 23:54:42 CEST 2005</td>
+      <td>Fri Feb 20 00:05:14 +0100 2009</td>
     </tr>
     </table>
   </div>
@@ -72,38 +72,19 @@
       <h1><a href="../classes/Wee.html">Wee</a> Web Framework</h1>
 <h2>Copyright and License</h2>
 <p>
-Copyright &#169; 2004, 2005 by Michael Neumann (mneumann@ntecs.de).
+Copyright (c) 2004-2009 by Michael Neumann (mneumann@ntecs.de).
 </p>
 <p>
-Released under the same terms of license as Ruby. Some files under
-directory <tt>examples/</tt> might be copyrighted by third parties and
-licensed under different terms.
+Released under the same terms of license as Ruby.
 </p>
-<h2>Status and Bugs</h2>
-<p>
-<a href="../classes/Wee.html">Wee</a> is now considered pretty stable (if
-you don&#8217;t use continuations). Nevertheless I wouldn&#8217;t use it
-yet for mission-critical applications ;-)
-</p>
-<p>
-Known Bugs:
-</p>
-<ul>
-<li>Using continuations might leak memory, at least they did in the past. The
-latest memory stress-test has not showed up any memory problems, but since
-I haven&#8217;t changed anything at the continuation implementation, I
-can&#8217;t say for sure whether the problem has been fixed or not.
-
-</li>
-</ul>
 <h2>Introduction</h2>
 <p>
 <a href="../classes/Wee.html">Wee</a> is a light-weight, very high-level
 and modern web-framework that makes <b>W</b>eb <b>e</b>ngineering
 <b>e</b>asy. It mainly inherits many ideas and features from <a
-href="http://beta4.com/seaside2">Seaside2</a>, but was written from scratch
-without ever looking at the Seaside (or any other) sources. All code was
-developed from ideas and lots of discussions with Avi Bryant.
+href="http://seaside.st/">Seaside</a>, but was written from scratch without
+ever looking at the Seaside (or any other) sources. All code was developed
+from ideas and lots of discussions with Avi Bryant.
 </p>
 <h2>Features</h2>
 <h3>Reusable components</h3>
@@ -117,7 +98,7 @@ external model or use templates for rendering.
 <h3>Backtracking</h3>
 <p>
 See the <em>What is backtracking?</em> section below. In short,
-backtracking lets the browser&#8217;s back and forward-button play well
+backtracking lets the browser&#8216;s back and forward-button play well
 together with your application.
 </p>
 <h3>Clean and concise</h3>
@@ -125,13 +106,6 @@ together with your application.
 <a href="../classes/Wee.html">Wee</a> is well thought out, is written in
 <b>and</b> supports clean and concise code. Furthermore I think most parts
 are now very well documented.
-</p>
-<h3>Abstract core</h3>
-<p>
-The core of <a href="../classes/Wee.html">Wee</a> is completely independent
-of both HTTP and HTML. That means, with little effort, you should be able
-to render other formats than HTML and use other communication protocols
-like SOAP, XML-RPC, Email, GUI or Console.
 </p>
 <h3>Templating-independent</h3>
 <p>
@@ -142,7 +116,7 @@ component if you want.
 <h3>Powerful programmatic HTML generation</h3>
 <p>
 <a href="../classes/Wee.html">Wee</a> ships with an easy to use and very
-powerful programmatic html-generation library. For example you can create a
+powerful programmatic HTML-generation library. For example you can create a
 select list easily with this piece of code:
 </p>
 <pre>
@@ -160,80 +134,17 @@ select list easily with this piece of code:
 </pre>
 <p>
 The callback is called with the selected objects from the <em>items</em>
-array. Items can be any object, e.g. whole components:
+array. Items can be any object, even whole components:
 </p>
 <pre>
    labels = [&quot;msg1&quot;, &quot;msg2&quot;]
    items = labels.collect {|m| MessageBox.new(m)}
    r.select_list(items).labels(labels).callback {|choosen| call choosen.first}
 </pre>
-<h3>Optional use of Continuations</h3>
-<p>
-<b>IMPORTANT:</b> <em>The current implementation of continuations in Ruby
-(or their use in <a href="../classes/Wee.html">Wee</a>) might lead to
-memory leaks, if you use continuations. Furthermore, if you use
-continuations, it&#8217;s no longer possible to store the session state to
-disk.</em>
-</p>
-<p>
-Continuation-based frameworks are also known as <em>modal</em> frameworks.
-You can write code like the one shown below (taken from one of Avi&#8217;s
-emails) where each method displays a new page:
-</p>
-<pre>
-  def checkout
-    billing = getAddress(&quot;Billing Address&quot;)
-    if useSeparateShippingAddress()
-      shipping = getAddress(&quot;Shipping Address&quot;)
-    else
-      shipping = billing
-    end
-    payment = getPaymentInfo()
-    showConfirmation(billing, shipping, payment)
-  end
-</pre>
-<p>
-Try to implement the same in a non-continuation based framework and show me
-your code&#8230; ;-)
-</p>
-<p>
-To enable continuations, you have to require:
-</p>
-<pre>
-  require 'wee/continuation'
-</pre>
-<h3>Fully Marshallable (drops Continuation support)</h3>
-<p>
-If you don&#8217;t need continuations, <a
-href="../classes/Wee.html">Wee</a> can be made fully marshallable. It is
-not yet fully marshallable (it was in the past), but it can be made, if
-required.
-</p>
 <h2>Observations and Limitations</h2>
 <ul>
-<li>Using continuations (might) lead to memory leaks!
-
-</li>
-<li>When using continuations for cross-component calls, it&#8217;s impossible
-to store a session to disk (at least in Ruby). This problem is partly
-addressed by checkpointing provided by operating systems like <a
-href="http://www.dragonflybsd.org">DragonFly</a>. But with this approach
-it&#8217;s still impossible to store sessions <em>selectively</em> to disk.
-
-</li>
-<li>When using continuations, each session runs in it&#8217;s own
-(light-weigth) thread. This is not the case if you don&#8217;t use
-continuations.
-
-</li>
-<li>Only one action callback can be invoked per request (a former version of <a
-href="../classes/Wee.html">Wee</a> was able to invoke multiple callback,
-and answer even from multiple components at the same time, but this was
-removed, due to the unreliability of continuations in Ruby).
-
-</li>
-<li>Components are thread-safe, as a fresh components-tree is created for each
-session and requests inside a session are serialized.
+<li>Components are thread-safe by nature as a fresh components-tree is created
+for each session and requests inside a session are serialized.
 
 </li>
 </ul>
@@ -243,95 +154,39 @@ If you want, you can make the back-button of your browser work correctly
 together with your web-application. Imagine you have a simple counter
 application, which shows the current count and two links <em>inc</em> and
 <em>dec</em> with which you can increase or decrease the current count.
-Starting with an inital count of 0, you increase the counter up to 8, then
-click three times the back button of your browser (now displays 5) and
-finally decrease by one, then the counter really shows the expected 4,
-instead of 7 (as clicking the back button does usually not send a HTTP
-request, and the last state of your application was 8).
+Starting with an inital count of 0 you increase the counter up to 8, then
+click three times the back button of your browser (now displays 5). Finally
+you decrease by one and your counter shows what you&#8216;d have expected:
+4. In contrast, traditional web applications would have shown 7, because
+the back button usually does not trigger a HTTP request and as such the
+server-side state still has a value of 8 for the counter when the request
+to decrease comes in.
 </p>
 <p>
-Only individual objects are backtracked, those of which you explicitly take
-a snapshot, not the whole component. That&#8217;s the easiest (from an
-application programmers perspective) and most flexible way. And its fast
-and uses less memory.
-</p>
-<p>
-You can decide yourself whether you want infinite backtracking or only
-backtracking up to n pages, with whatever replacement strategy you want,
-least recently used (LRU), least frequently used (LFU) etc.
+The solution to this problem is to take snapshots of the components state
+after an action is performed and restoring the state before peforming
+actions. Each action generates a new state, which is indicated by a
+so-called <em>page-id</em> within the URL.
 </p>
 <h2>Decorations</h2>
 <p>
-Decorations are used to modify the look and behaviour of a component,
-without modifying the components tree. A component can have more than one
-decoration. This is implemented as a linked list of decorations
-(Wee::Decoration#owner points to the next decoration). <a
-href="../classes/Wee/Component.html#M000332">Wee::Component#decoration</a>
-points to the first decoration in the chain or to the component itself, if
-no decorations were specified. We actually use a <a
-href="../classes/Wee/ValueHolder.html">Wee::ValueHolder</a> for the
-<tt>@decoration</tt> instance variable of class <a
-href="../classes/Wee/Component.html">Wee::Component</a> to be able to
-easily backtrack it (required if you want to &quot;undo&quot; component
-calls).
+Decorations are used to modify the look and behaviour of a component
+without modifying the components tree itself. A component can have more
+than one decoration. Decorations are implemented as a linked list
+(Wee::Decoration#next points to the next decoration), starting at
+Wee::Component#decoration, which either points to the next decoration in
+the chain, or to itself.
 </p>
-<h2>The anatomy of a request/response cycle</h2>
+<h2>The request/response cycle</h2>
 <p>
 The request/response cycle in <a href="../classes/Wee.html">Wee</a> is
-actually split into two separate phases or steps. Depending on the
-point-of-view (given that a page is rendered and the user clicks on a link
-or button), the first phase is to invoke an action (a
-&quot;callback&quot;). Then in the second phase, a new page is rendered and
-sent back to the user. So the two steps are:
+actually split into two separate phases.
 </p>
-<ol>
-<li>invoke callbacks (action phase)
-
-</li>
-<li>render new page and display (render phase)
-
-</li>
-</ol>
+<h3>Render Phase</h3>
 <p>
-These two phases repeat permanently. Which tasks are performed in each of
-them, is briefly listed below:
-</p>
-<p>
-<b>Action:</b>
-</p>
-<ol>
-<li>restore snapshot (if not up-to-date)
-
-</li>
-<li>invoke actions
-
-</li>
-<li>backtrack state
-
-</li>
-<li>update url -&gt; redirect to render phase (not yet)
-
-</li>
-</ol>
-<p>
-<b>Render:</b>
-</p>
-<ol>
-<li>restore snapshot (if not up-to-date)
-
-</li>
-<li>render
-
-</li>
-</ol>
-<p>
-For each session there is at most one request handled at the same time.
-That means, that there is either one action request or one render request
-handled. Why? Because we have only one components tree, which we update on
-action requests. As <a href="../classes/Wee.html">Wee</a> allows to go back
-in time, we have to restore this components tree to a certain point in time
-before we can handle an action or render request. This disallows to handle
-e.g. two render requests simultaneous.
+The rendering phase is assumed to be side-effect free! So, you as a
+programmer should take care to meet this assumption. Rendering is performed
+by method Wee::Component#render_on.
 </p>
 <h3>Action Phase (Invoking Callbacks)</h3>
 <p>
@@ -352,90 +207,16 @@ The distinction between input and action callbacks is important, as action
 callbacks might depend on values of input-fields being assigned to instance
 variables of the controlling component. Hence, <a
 href="../classes/Wee.html">Wee</a> first invokes all input callbacks before
-any action callback is triggered.
+any action callback is triggered. Callback processing is performed by
+method Wee::Component#process_callbacks.
 </p>
 <p>
-There are two methods related to callback processing:
+The result of the action phase is an updated components state. As such, a
+snapshot is taken of the new state and stored under a new page-id. Then, a
+redirect requests is sent back to the client, including this new page-id.
+The client automatically follows this redirect and triggers a render phase
+of the new page.
 </p>
-<ul>
-<li><a
-href="../classes/Wee/Component.html#M000327">Wee::Component#process_callbacks_chain</a>
-
-</li>
-<li><a
-href="../classes/Wee/Presenter.html#M000380">Wee::Presenter#process_callbacks</a>
-
-</li>
-</ul>
-<p>
-Note that each <a href="../classes/Wee/Component.html">Wee::Component</a>
-is also a <a href="../classes/Wee/Presenter.html">Wee::Presenter</a>,
-whereas a <a href="../classes/Wee/Decoration.html">Wee::Decoration</a> is
-not a Component (but a Presenter)!
-</p>
-<p>
-Method <em>process_callbacks_chain</em> invokes <em>process_callbacks</em>
-for it&#8217;s first decoration, or if the component has no decorations,
-the method is called for the component itself. As such,
-<em>process_callbacks_chain</em> is important to avoid entering an infinite
-loop (a method calling itself). What decorations are, is discussed
-elsewhere.
-</p>
-<p>
-There are two &quot;process_callbacks&quot; tree traversals. The first
-invokes all input callbacks, the second the action callback.
-</p>
-<h3>Rendering Phase</h3>
-<p>
-The rendering phase is assumed to be side-effect free! So, you as a
-programmer should take care to meet this assumption.
-</p>
-<p>
-Similar as in the callback-step, there are two methods related to rendering
-a page:
-</p>
-<ul>
-<li><a
-href="../classes/Wee/Component.html#M000325">Wee::Component#do_render_chain</a>
-
-</li>
-<li><a
-href="../classes/Wee/Presenter.html#M000375">Wee::Presenter#do_render</a>
-
-</li>
-</ul>
-<p>
-Method <em>Component#do_render_chain</em> starts rendering the decoration
-chain by calling <em>Presenter#do_render</em> for the first decoration of
-the component or for the component itself if no decorations were specified.
-Method <em>Presenter#do_render</em> then generates the desired output which
-gets sent to the user. Note that method <em>do_render</em> might call other
-components&#8217; <em>do_render_chain</em> methods to display those
-components &quot;inside&quot; itself (usually a component does this for
-it&#8217;s child components, but this has to be implemented by the
-programmer).
-</p>
-<h3>Further Reads</h3>
-<p>
-In this order:
-</p>
-<ul>
-<li><a href="../classes/Wee/Presenter.html">Wee::Presenter</a>
-
-</li>
-<li><a href="../classes/Wee/Component.html">Wee::Component</a>
-
-</li>
-<li><a href="../classes/Wee/Decoration.html">Wee::Decoration</a>
-
-</li>
-<li><a href="../classes/Wee/Delegate.html">Wee::Delegate</a>
-
-</li>
-<li><a href="../classes/Wee/AnswerDecoration.html">Wee::AnswerDecoration</a>
-
-</li>
-</ul>
 
     </div>
 

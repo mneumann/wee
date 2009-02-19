@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../files/lib/wee/core/idgen_rb.html">
-                lib/wee/core/idgen.rb
+                <a href="../../files/lib/wee/id_generator_rb.html">
+                lib/wee/id_generator.rb
                 </a>
         <br />
             </td>
@@ -80,6 +80,12 @@
 
   <div id="contextContent">
 
+    <div id="description">
+      <p>
+Abstract base class of all id generators.
+</p>
+
+    </div>
 
 
    </div>
@@ -88,7 +94,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000152">next</a>&nbsp;&nbsp;
+      <a href="#M000068">next</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -99,6 +105,13 @@
 
     <div id="section">
 
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="IdGenerator/Secure.html" class="link">Wee::IdGenerator::Secure</a><br />
+Class <a href="IdGenerator/Sequential.html" class="link">Wee::IdGenerator::Sequential</a><br />
+
+    </div>
 
 
 
@@ -110,24 +123,24 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000152" class="method-detail">
-        <a name="M000152"></a>
+      <div id="method-M000068" class="method-detail">
+        <a name="M000068"></a>
 
         <div class="method-heading">
-          <a href="#M000152" class="method-signature">
+          <a href="#M000068" class="method-signature">
           <span class="method-name">next</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000152-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000152-source">
+            onclick="toggleCode('M000068-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000068-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/core/idgen.rb, line 2</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">next</span>
-    <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;subclass responsibility&quot;</span>
-  <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/wee/id_generator.rb, line 7</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">next</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;subclass responsibility&quot;</span>
+    <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../../files/lib/wee/renderer/html/brushes_rb.html">
-                lib/wee/renderer/html/brushes.rb
+                <a href="../../../files/lib/wee/html_brushes_rb.html">
+                lib/wee/html_brushes.rb
                 </a>
         <br />
             </td>
@@ -65,7 +65,7 @@
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
-                Brush::InputTag
+                Brush::ActionInputTag
             </td>
         </tr>
         </table>
@@ -85,9 +85,9 @@ Most browsers do not send the &quot;name&quot; key together with the value
 specified by &quot;value&quot;, only &quot;name.x&quot; and
 &quot;name.y&quot;. This conforms to the standard. But Firefox also sends
 &quot;name&quot;=&quot;value&quot;. This is why I raise an exception from
-the <a href="ImageButtonTag.html#M000236">value</a> method. Note that
-it&#8217;s neccessary to parse the passed form-fields and generate a
-&quot;name&quot; fields in the request, to make this image-button work.
+the value method. Note that it&#8216;s neccessary to parse the passed
+form-fields and generate a &quot;name&quot; fields in the request, to make
+this image-button work.
 </p>
 
     </div>
@@ -99,8 +99,7 @@ it&#8217;s neccessary to parse the passed form-fields and generate a
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000235">new</a>&nbsp;&nbsp;
-      <a href="#M000236">value</a>&nbsp;&nbsp;
+      <a href="#M000161">new</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -112,20 +111,20 @@ it&#8217;s neccessary to parse the passed form-fields and generate a
     <div id="section">
 
 
-
-    <div id="aliases-list">
-      <h3 class="section-bar">External Aliases</h3>
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
 
       <div class="name-list">
-                        <table summary="aliases">
+        <table summary="Constants">
         <tr class="top-aligned-row context-row">
-          <td class="context-item-name">__action_callback</td>
-          <td>-></td>
-          <td class="context-item-value">callback</td>
+          <td class="context-item-name">HTML_TYPE</td>
+          <td>=</td>
+          <td class="context-item-value">'image'.freeze</td>
         </tr>
-                        </table>
+        </table>
       </div>
     </div>
+
 
 
       
@@ -135,50 +134,24 @@ it&#8217;s neccessary to parse the passed form-fields and generate a
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000235" class="method-detail">
-        <a name="M000235"></a>
+      <div id="method-M000161" class="method-detail">
+        <a name="M000161"></a>
 
         <div class="method-heading">
-          <a href="#M000235" class="method-signature">
+          <a href="#M000161" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000235-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000235-source">
+            onclick="toggleCode('M000161-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000161-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 515</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
-    <span class="ruby-keyword kw">super</span>
-    <span class="ruby-identifier">type</span>(<span class="ruby-value str">'image'</span>)
-  <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <h3 class="section-bar">Public Instance methods</h3>
-
-      <div id="method-M000236" class="method-detail">
-        <a name="M000236"></a>
-
-        <div class="method-heading">
-          <a href="#M000236" class="method-signature">
-          <span class="method-name">value</span><span class="method-args">(v)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000236-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000236-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer/html/brushes.rb, line 522</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">value</span>(<span class="ruby-identifier">v</span>)
-    <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;specified value will not be used in the request&quot;</span>
-  <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 405</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+      <span class="ruby-keyword kw">super</span>(<span class="ruby-constant">HTML_TYPE</span>)
+    <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

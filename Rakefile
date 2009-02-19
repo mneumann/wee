@@ -2,13 +2,14 @@ require 'rake/rdoctask'
 
 Rake::RDocTask.new do |rd|
   rd.main = "README"
-  rd.rdoc_dir = 'doc/tmp'
-  rd.rdoc_files.include('lib/**/*.rb', 'README', 'INSTALL')
-  rd.options << '--all --inline-source' 
-end
-
-task :rdoc do
-  sh 'cpdup -o doc/tmp doc/rdoc' 
+  rd.rdoc_dir = 'doc/rdoc'
+  rd.rdoc_files.include('lib/**/*.rb', 'README')
+  rd.options << '--inline-source' 
+  rd.options << '--all' 
+  rd.options << '--accessor=html_attr=HtmlAttribute'
+  rd.options << '--accessor=generic_tag=GenericTagBrush'
+  rd.options << '--accessor=generic_single_tag=GenericSingleTagBrush'
+  rd.options << '--accessor=brush_tag=Brush'
 end
 
 task :test do

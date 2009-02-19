@@ -66,7 +66,7 @@
             <td><strong>Parent:</strong></td>
             <td>
                 <a href="Decoration.html">
-                Wee::Decoration
+                Decoration
                </a>
             </td>
         </tr>
@@ -88,7 +88,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000169">do_render</a>&nbsp;&nbsp;
+      <a href="#M000110">render</a>&nbsp;&nbsp;
+      <a href="#M000111">render_inner</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -101,6 +102,19 @@
 
 
 
+    <div id="aliases-list">
+      <h3 class="section-bar">External Aliases</h3>
+
+      <div class="name-list">
+                        <table summary="aliases">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">render_presenter_on</td>
+          <td>-&gt;</td>
+          <td class="context-item-value">render_on</td>
+        </tr>
+                        </table>
+      </div>
+    </div>
 
 
       
@@ -110,26 +124,52 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000169" class="method-detail">
-        <a name="M000169"></a>
+      <div id="method-M000110" class="method-detail">
+        <a name="M000110"></a>
 
         <div class="method-heading">
-          <a href="#M000169" class="method-signature">
-          <span class="method-name">do_render</span><span class="method-args">(rendering_context)</span>
+          <a href="#M000110" class="method-signature">
+          <span class="method-name">render</span><span class="method-args">(r)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Overwrite this method, and call <a
+href="WrapperDecoration.html#M000111">render_inner</a>(r) where you want
+the inner content to be drawn.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000110-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000110-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/components/wrapper_decoration.rb, line 12</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">r</span>)
+      <span class="ruby-identifier">render_inner</span>(<span class="ruby-identifier">r</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000111" class="method-detail">
+        <a name="M000111"></a>
+
+        <div class="method-heading">
+          <a href="#M000111" class="method-signature">
+          <span class="method-name">render_inner</span><span class="method-args">(r)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000169-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000169-source">
+            onclick="toggleCode('M000111-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000111-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/components/wrapper_decoration.rb, line 2</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">do_render</span>(<span class="ruby-identifier">rendering_context</span>)
-    <span class="ruby-identifier">with_renderer_for</span>(<span class="ruby-identifier">rendering_context</span>) <span class="ruby-keyword kw">do</span>
-      <span class="ruby-identifier">render_wrapper</span> { <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">rendering_context</span>) }
+<span class="ruby-comment cmt"># File lib/wee/components/wrapper_decoration.rb, line 16</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_inner</span>(<span class="ruby-identifier">r</span>)
+      <span class="ruby-identifier">r</span>.<span class="ruby-identifier">render_decoration</span>(<span class="ruby-ivar">@next</span>)
     <span class="ruby-keyword kw">end</span>
-  <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
