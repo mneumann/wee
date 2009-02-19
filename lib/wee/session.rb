@@ -58,6 +58,7 @@ module Wee
       @root_component = root_component
       @page_cache = Wee::LRUCache.new(page_cache_capacity)
       @page_ids = Wee::IdGenerator::Sequential.new
+      @current_page = nil
 
       @running = true
 
@@ -174,44 +175,16 @@ module Wee
       page = @page_cache.fetch(request.page_id)
 
       if page
-        if page.id != @current_page_id
-          @current_page_id = nil
+        if page != @current_page
+          @current_page = nil
           page.state.restore
-          @current_page_id = page.id
+          @current_page = page
         end
 
         if request.render?
-          r = Wee::Renderer.new
-          r.request   = request
-          r.response  = Wee::GenericResponse.new
-          r.callbacks = Wee::Callbacks.new
-          r.document  = Wee::HtmlWriter.new(r.response)
-
-          begin
-            @root_component.decoration.render_on(r)
-          ensure
-            r.close
-          end
-
-          page.callbacks = r.callbacks
-
-          return r.response.finish
+          return render(request, page).finish
         else # request.action?
-          @current_page_id = @page_ids.next
-
-          begin
-            page.callbacks.with_triggered(request.fields) do
-              @root_component.decoration.process_callbacks(page.callbacks)
-            end
-          rescue AbortCallbackProcessing
-          end
-
-          # create new page (state)
-          new_page = Page.new(@current_page_id, take_snapshot(), nil) 
-          @page_cache[new_page.id] = new_page
-
-          url = request.build_url(:page_id => new_page.id)
-          return Wee::RedirectResponse.new(url).finish
+          return action(request, page).finish
         end
       else
         #
@@ -230,7 +203,56 @@ module Wee
         end
       end
     end
-    
+
+    def render(request, page)
+      r = Wee::Renderer.new
+      r.request   = request
+      r.response  = Wee::GenericResponse.new
+      r.callbacks = Wee::Callbacks.new
+      r.document  = Wee::HtmlWriter.new(r.response)
+
+      begin
+        @root_component.decoration.render_on(r)
+      ensure
+        r.close
+      end
+
+      page.callbacks = r.callbacks
+      return r.response
+    end
+
+    def action(request, page)
+      @current_page = nil
+
+      begin
+        page.callbacks.with_triggered(request.fields) do
+          @root_component.decoration.process_callbacks(page.callbacks)
+        end
+      rescue AbortCallbackProcessing => abort
+        if abort.response
+          #
+          # replace the state of the current page
+          #
+          @current_page = page
+          page.state = take_snapshot() 
+          @page_cache[page.id] = page
+          return abort.response
+        else
+          # pass on - this is a premature response from Component#call
+        end
+      end
+
+      #
+      # create new page (state)
+      #
+      new_page = Page.new(@page_ids.next, take_snapshot(), nil) 
+      @page_cache[new_page.id] = new_page
+      @current_page = new_page
+
+      url = request.build_url(:page_id => new_page.id)
+      return Wee::RedirectResponse.new(url)
+    end
+
     #
     # This method takes a snapshot from the current state of the root component
     # and returns it.
