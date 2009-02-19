@@ -87,6 +87,7 @@ module Wee
     html_attr :name # XXX
     html_attr :css_class, :html_name => :class
     html_attr :css_style, :html_name => :style, :aliases => [:style] 
+    html_attr :onclick
 
     def initialize(tag)
       super()
@@ -94,17 +95,28 @@ module Wee
       @attributes = Hash.new
     end
 
+    def onclick_javascript(v)
+      onclick("javascript: #{v};")
+      self
+    end
+
     def onclick_callback(&block)
       url = @canvas.url_for_callback(block)
-      js = "javascript: document.location.href='#{ url }';"
-      onclick(js)
+      onclick_javascript("document.location.href='#{ url }'")
     end
 
     def onclick_update(update_id, &block)
       url = @canvas.url_for_callback(block)
-      js = "javascript: new Ajax.Updater('#{ update_id }', '#{ url }', " \
-           "{method:'get'}); return false;"
-      onclick(js)
+      onclick_javascript("jQuery.get('#{url}', {}, function(data) {jQuery('##{update_id}').html(data);}, 'html'); return false")
+    end
+
+    def onclick_update_multi(&block)
+      url = @canvas.url_for_callback(block)
+      onclick_javascript("jQuery.get('#{url}', {}, function(data) {" +
+        "jQuery(data).each(function(i,j){
+         var e = jQuery(j); jQuery('#'+e.attr('id')).html(e.html());
+         }); 
+       }, 'html'); return false")
     end
 
     def with(text=nil, &block)
