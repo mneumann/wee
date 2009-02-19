@@ -9,18 +9,29 @@ module Wee
   class AnswerDecoration < Decoration
 
     #
-    # When a component answers, <tt>on_answer.call(args)</tt> will be executed
-    # (unless nil), where +args+ are the arguments passed to Component#answer.
-    # Note that no snapshot of on_answer is taken, so you should avoid
-    # modifying it!
+    # Used to unwind the component call chain in Component#answer.
     #
-    attr_accessor :on_answer
+    class Answer < Exception
+      attr_reader :args
+      def initialize(args) @args = args end
+    end
 
+    def initialize(&answer_callback)
+      super()
+      @answer_callback = answer_callback
+    end
+
+    #
+    # When a component answers, <tt>@answer_callback.call(args)</tt> will be
+    # executed (unless nil), where +args+ are the arguments passed to
+    # Component#answer.
+    #
     def process_callbacks(callbacks)
-      args = catch(:wee_answer) { super; nil }
-      if args != nil
+      begin
+        super
+      rescue Answer => answer
         # return to the calling component 
-        @on_answer.call(*args) if @on_answer
+        @answer_callback.call(answer.args) if @answer_callback
       end
     end
 
@@ -40,58 +51,44 @@ module Wee
     #
     # [+return_callback+]
     #   Is invoked when the called component answers.
-    #   Either a symbol or any object that responds to #call. If it's a symbol,
-    #   then the corresponding method of the current component will be called.
     #
     # <b>How it works</b>
     # 
-    # The component to be called is wrapped with an AnswerDecoration and the
-    # +return_callback+ parameter is assigned to it's +on_answer+ attribute (not
-    # directly as there are cleanup actions to be taken before the
-    # +return_callback+ can be invoked, hence we wrap it in the OnAnswer class).
-    # Then a Delegate decoration is added to the calling component (self), which
-    # delegates to the component to be called (+component+). 
-    #
-    # Then we unwind the calling stack back to the Session by throwing
-    # <i>:wee_abort_callback_processing</i>. This means, that there is only ever
-    # one action callback invoked per request. This is not neccessary, we could
-    # simply omit this, but then we'd break compatibility with the implementation
-    # using continuations.
+    # The component to be called is wrapped with an AnswerDecoration and a
+    # Delegate decoration. The latter is used to redirect to the called
+    # component. Once the decorations are installed, we end the processing of
+    # callbacks prematurely.
     #
     # When at a later point in time the called component invokes #answer, this
-    # will throw a <i>:wee_answer</i> exception which is catched in the
-    # AnswerDecoration. The AnswerDecoration then invokes the +on_answer+
-    # callback which cleans up the decorations we added during #call, and finally
-    # passes control to the +return_callback+. 
+    # will raise a AnswerDecoration::Answer exception which is catched by the
+    # AnswerDecoration we installed before calling this component, and as such,
+    # whose process_callbacks method was called before we gained control.
+    #
+    # The AnswerDecoration then invokes the <tt>answer_callback</tt> to cleanup
+    # the decorations we added during #call and finally passes control to the
+    # <tt>return_callback</tt>.
     #
     def call(component, &return_callback)
       delegate = Wee::Delegate.new(component)
-      answer = Wee::AnswerDecoration.new
-      answer.on_answer = OnAnswer.new(self, component, delegate, answer, return_callback)
-
+      answer = Wee::AnswerDecoration.new {|args|
+        remove_decoration(delegate)
+        component.remove_decoration(answer)       
+        return_callback.call(*args) if return_callback
+      }
       add_decoration(delegate)
       component.add_decoration(answer)
       session.send_response(nil)
     end
 
-    class OnAnswer < Struct.new(:calling_component, :called_component, 
-                                :delegate, :answer, :return_callback)
-
-      def call(*answer_args)
-        calling_component.remove_decoration(delegate)
-        called_component.remove_decoration(answer)
-        return_callback.call(*answer_args) if return_callback
-      end
-    end
-
+    #
     # Return from a called component.
     # 
     # NOTE that #answer never returns.
     #
     # See #call for a detailed description of the call/answer mechanism.
-
+    #
     def answer(*args)
-      throw :wee_answer, args 
+      raise AnswerDecoration::Answer.new(args)
     end
 
   end # module CallAnswerMixin
