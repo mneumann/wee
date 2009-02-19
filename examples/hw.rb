@@ -1,8 +1,6 @@
 $LOAD_PATH.unshift "../lib"
 require 'rubygems'
 require 'wee'
-require 'wee/components/page_decoration'
-require 'rack'
 
 class HelloWorld < Wee::Component
   def initialize
@@ -15,14 +13,4 @@ class HelloWorld < Wee::Component
   end
 end
 
-if __FILE__ == $0
-  require 'rack/handler/webrick'
-  app = Rack::Builder.app do
-    map '/' do
-      run Wee::Application.new {
-        Wee::Session.new(HelloWorld.new)
-      }
-    end
-  end
-  Rack::Handler::WEBrick.run(app, :Port => 2000)
-end
+Wee.run(HelloWorld) if __FILE__ == $0

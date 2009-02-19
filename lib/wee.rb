@@ -25,3 +25,13 @@ require 'wee/components/form_decoration'
 require 'wee/components/page_decoration'
 
 Wee::DefaultRenderer = Wee::HtmlCanvas
+
+def Wee.run(component_class, mount_path='/', port=2000)
+  require 'rack/handler/webrick'
+  app = Rack::Builder.app do
+    map mount_path do
+      run Wee::Application.new { Wee::Session.new(component_class.new) }
+    end
+  end
+  Rack::Handler::WEBrick.run(app, :Port => port)
+end
