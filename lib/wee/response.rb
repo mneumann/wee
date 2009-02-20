@@ -9,18 +9,21 @@ module Wee
 
   class GenericResponse < Response
     EXPIRE_OFFSET = 3600*24*365*20   # 20 years
+    EXPIRES_HEADER = 'Expires'.freeze
 
     def initialize(*args)
       super
-      self['Expires'] ||= (Time.now + EXPIRE_OFFSET).rfc822
+      self[EXPIRES_HEADER] ||= (Time.now + EXPIRE_OFFSET).rfc822
     end
   end
 
   class RedirectResponse < GenericResponse
+    LOCATION_HEADER = 'Location'.freeze
+
     def initialize(location)
       super(['<title>302 - Redirect</title><h1>302 - Redirect</h1>',
              '<p>You are being redirected to <a href="', location, '">', 
-             location, '</a>'], 302, 'Location' => location)
+             location, '</a>'], 302, LOCATION_HEADER => location)
     end
   end
 
@@ -45,11 +48,11 @@ module Wee
 
     def initialize(exception)
       super()
-      write "<html><head><title>Error occured</title></head><body>"
-      write "<p>#{ escape_html(@exception.inspect) }<br/>"
-      write exception.backtrace.map{|s| escape_html(s)}.join("<br/>") 
-      write "</p>"
-      write "</body></html>"
+      self << "<html><head><title>Error occured</title></head><body>"
+      self << "<p>#{ escape_html(@exception.inspect) }<br/>"
+      self << exception.backtrace.map{|s| escape_html(s)}.join("<br/>") 
+      self << "</p>"
+      self << "</body></html>"
     end
   end
 
