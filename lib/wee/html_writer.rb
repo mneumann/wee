@@ -20,13 +20,18 @@ module Wee
   #
   class HtmlWriter
 
-    def initialize(port)
-      @port = port 
+    attr_accessor :port
+
+    def initialize(port=[])
+      @port = port
     end
 
-    def start_tag(tag, attributes=nil)
+    CLOSING = ">".freeze
+    SINGLE_CLOSING = " />".freeze
+
+    def start_tag(tag, attributes=nil, single=false)
       if attributes
-        @port << "<#{ tag }"
+        @port << "<#{tag}"
         attributes.each {|k, v| 
           if v
             @port << %[ #{ k }="#{ v }"] 
@@ -34,49 +39,26 @@ module Wee
             @port << %[ #{ k }] 
           end
         }
-        @port << ">"
+        @port << (single ? SINGLE_CLOSING : CLOSING)
       else
-        @port << "<#{ tag }>"
+        @port << (single ? "<#{tag} />" : "<#{tag}>")
       end
-
-      self
     end
 
     def single_tag(tag, attributes=nil)
-      if attributes
-        @port << "<#{ tag }"
-        attributes.each {|k, v| 
-          if v
-            @port << %[ #{ k }="#{ v }"] 
-          else
-            @port << %[ #{ k }] 
-          end
-        }
-        @port << " />"
-      else
-        @port << "<#{ tag } />"
-      end
-
-      self
+      start_tag(tag, attributes, true)
     end
 
     def end_tag(tag)
-      @port << "</#{ tag }>"
-
-      self
+      @port << "</#{tag}>"
     end
 
     def text(str)
       @port << str.to_s
-
-      self
     end
-    alias << text
 
     def encode_text(str)
       @port << Rack::Utils.escape_html(str.to_s)
-
-      self
     end
 
   end # class HtmlWriter
