@@ -20,10 +20,6 @@ require 'wee/html_writer'
 require 'wee/html_brushes'
 require 'wee/html_canvas'
 
-require 'wee/components/messagebox'
-require 'wee/components/form_decoration'
-require 'wee/components/page_decoration'
-
 Wee::DefaultRenderer = Wee::HtmlCanvas
 
 def Wee.run(component_class, mount_path='/', port=2000)
