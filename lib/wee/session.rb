@@ -207,9 +207,9 @@ module Wee
     def render(request, page)
       r = Wee::Renderer.new
       r.request   = request
-      r.response  = Wee::GenericResponse.new
-      r.callbacks = Wee::Callbacks.new
+      r.response = Wee::GenericResponse.new
       r.document  = Wee::HtmlWriter.new(r.response)
+      r.callbacks = Wee::Callbacks.new
 
       begin
         @root_component.decoration.render_on(r)
