@@ -2,11 +2,6 @@ require 'rack'
 
 module Wee
   
-  #
-  # NOTE that if fields named "xxx" and "xxx.yyy" occur, the value of 
-  # @fields['xxx'] is { nil => ..., 'yyy' => ... }. This is required
-  # to make image buttons work correctly.
-  #
   class Request < Rack::Request
 
     def self.new(env)
@@ -19,24 +14,7 @@ module Wee
 
     def initialize(env)
       super(env)
-      @fields = {}
-      self.params.each {|key, val|
-        if key.index(".") 
-          prefix, postfix = key.split(".", 2)
-          if @fields[prefix].kind_of?(Hash)
-            @fields[prefix][postfix] = val
-          else
-            @fields[prefix] = { nil => @fields[prefix], postfix => val }
-          end
-        else
-          if @fields[key].kind_of?(Hash)
-            @fields[key][nil] = val
-          else
-            @fields[key] = val
-          end
-        end
-      }
-
+      @fields = self.params
       @session_id = @fields.delete("_s")
       @page_id = @fields.delete("_p")
     end

@@ -15,17 +15,30 @@ module Wee
       return "#{@prefix}#{id}"
     end
 
-    def with_triggered(ids_and_values)
+    #
+    # NOTE that if fields named "xxx" and "xxx.yyy" occur, the value of 
+    # @fields['xxx'] is { nil => ..., 'yyy' => ... }. This is required
+    # to make image buttons work correctly.
+    #
+    def prepare_triggered(ids_and_values)
       @triggered = {}
       ids_and_values.each do |id, value|
-        if id =~ /^#{@prefix}(\d+)$/
-          id = Integer($1)
+        if id =~ /^#{@prefix}(\d+)([.](.*))?$/
+          id, suffix = Integer($1), $3
           next if id > @callbacks.size
-          @triggered[id] = value 
+
+          if @triggered[id].kind_of?(Hash)
+            @triggered[id][suffix] = value
+          elsif suffix
+            @triggered[id] = {nil => @triggered[id], suffix => value}
+          else
+            @triggered[id] = value
+          end
         end
       end
-      yield self
-    ensure
+    end
+
+    def reset_triggered
       @triggered = nil
     end
 
@@ -48,10 +61,13 @@ module Wee
       @action_callbacks = CallbackRegistry.new("a")
     end
 
-    def with_triggered(ids_and_values, &block)
-      @input_callbacks.with_triggered(ids_and_values) do
-        @action_callbacks.with_triggered(ids_and_values, &block)
-      end
+    def with_triggered(ids_and_values)
+      @input_callbacks.prepare_triggered(ids_and_values)
+      @action_callbacks.prepare_triggered(ids_and_values)
+      yield
+    ensure
+      @input_callbacks.reset_triggered
+      @action_callbacks.reset_triggered
     end
 
   end # class Callbacks
