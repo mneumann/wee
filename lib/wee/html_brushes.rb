@@ -127,24 +127,6 @@ module Wee
       @document = @canvas = nil
     end
 
-    def __input_callback(&block)
-      name(@canvas.register_callback(:input, block))
-    end
-
-    def __action_callback(&block)
-      name(@canvas.register_callback(:action, block))
-    end
-
-    #
-    # The callback id is listed in the URL (not as a form-data field)
-    #
-    def __actionurl_callback(&block)
-      __set_url(@canvas.url_for_callback(block))
-    end
-
-    def __set_url(url)
-      raise
-    end
   end
 
   class Brush::GenericSingleTagBrush < Brush::GenericTagBrush
@@ -274,6 +256,36 @@ module Wee
   end
 
   #---------------------------------------------------------------------
+  # Callback Mixin
+  #---------------------------------------------------------------------
+
+  module CallbackMixin
+
+    def callback(id=nil, *args, &block)
+      if id
+        raise ArgumentError if block
+        @callback = self
+        @callback_object = @canvas.current_component 
+        @callback_id = id
+        @callback_args = args
+      else
+        raise ArgumentError unless args.empty?
+        @callback = block
+      end
+
+      __callback()
+
+      return self
+    end
+
+    def call(*args)
+      args.push(*@callback_args)
+      @callback_object.send(@callback_id, *args)
+    end
+
+  end
+
+  #---------------------------------------------------------------------
   # Form
   #---------------------------------------------------------------------
 
@@ -297,8 +309,9 @@ module Wee
       super
     end
 
-    alias __set_url action
-    alias callback __actionurl_callback
+    include CallbackMixin
+
+    def __callback; action(@canvas.url_for_callback(@callback)) end
 
 =begin
     def onsubmit_update(update_id, &block)
@@ -331,7 +344,9 @@ module Wee
       type(_type)
     end
 
-    alias callback __input_callback
+    include CallbackMixin
+
+    def __callback; name(@canvas.register_callback(:input, @callback)) end
   end
 
   class Brush::TextInputTag < Brush::InputTag
@@ -379,7 +394,9 @@ module Wee
   #---------------------------------------------------------------------
 
   class Brush::ActionInputTag < Brush::InputTag
-    alias callback __action_callback
+    include CallbackMixin
+
+    def __callback; name(@canvas.register_callback(:action, @callback)) end
   end
 
   class Brush::SubmitButtonTag < Brush::ActionInputTag
@@ -441,7 +458,9 @@ module Wee
       super(value || @value)
     end
 
-    alias callback __input_callback
+    include CallbackMixin
+
+    def __callback; name(@canvas.register_callback(:input, @callback)) end
   end
   
   #---------------------------------------------------------------------
@@ -482,48 +501,48 @@ module Wee
       self
     end
 
-    def callback(&block)
-      @callback = block 
-      self
+    include CallbackMixin
+
+    def __callback
+      #
+      # A callback was specified. We have to wrap it inside another
+      # callback, as we want to perform some additional actions.
+      #
+      name(@canvas.register_callback(:input, proc {|input|
+        input = [input] unless input.kind_of?(Array)
+
+        choosen = input.map {|idx|
+          idx = Integer(idx)
+          raise IndexError if idx < 0 or idx > @items.size
+          @items[idx]
+        }
+
+        if @attributes.has_key?(:multiple)
+          @callback.call(choosen)
+        else
+          if choosen.size > 1
+            raise "more than one element was choosen from a not-multiple SelectListTag" 
+          end
+          @callback.call(choosen.first)
+        end
+      }))
     end
 
-    # XXX
     def with
       @labels ||= @items.collect {|i| i.to_s}
 
-      is_multiple = @attributes.has_key?(:multiple)
-
-      if @callback
-        # A callback was specified. We have to wrap it inside another
-        # callback, as we want to perform some additional actions.
-        __input_callback {|input|
-          input = [input] unless input.kind_of?(Array)
-
-          choosen = input.map {|idx|
-            idx = Integer(idx)
-            raise "invalid index in select list" if idx < 0 or idx > @items.size
-            @items[idx]
-          }
-          if choosen.size > 1 and not is_multiple
-            raise "choosen more than one element from a non-multiple select list" 
-          end
-          @callback.call(is_multiple ? choosen : choosen.first)
-        }
+      if @attributes.has_key?(:multiple)
+        @selected ||= Array.new
+        meth = @selected.kind_of?(Proc) ? (:call) : (:include?)
+      else
+        meth = @selected.kind_of?(Proc) ? (:call) : (:==)
       end
 
-      super do
-        meth = 
-        if is_multiple 
-          @selected ||= Array.new
-          @selected.kind_of?(Proc) ? (:call) : (:include?)
-        else
-          @selected.kind_of?(Proc) ? (:call) : (:==)
-        end
-
-        @items.each_index {|i|
+      super {
+        @items.each_index do |i|
           @canvas.option.value(i).selected(@selected.send(meth, @items[i])).with(@labels[i])
-        }
-      end
+        end 
+      }
     end
   end
 
@@ -545,7 +564,7 @@ module Wee
   class Brush::RadioGroup
     def initialize(canvas)
       @name = canvas.register_callback(:input, self)
-      @callbacks = {} 
+      @callbacks = {}
       @ids = Wee::SequentialIdGenerator.new 
     end
 
@@ -577,10 +596,9 @@ module Wee
       self
     end
 
-    def callback(&block)
-      @callback = block
-      self
-    end
+    include CallbackMixin
+
+    def __callback; end # do nothing
 
     def with
       if @group
@@ -611,15 +629,11 @@ module Wee
       self
     end
 
-    def callback(&block)
-      if @info
-        __set_url(@canvas.url_for_callback(block, :action, :info => @info))
-      else
-        __set_url(@canvas.url_for_callback(block))
-      end
-    end
+    include CallbackMixin
 
-    alias __set_url url
+    def __callback
+      url(@canvas.url_for_callback(@callback, :action, @info ? {:info => @info} : {}))
+    end
   end
 
   class Brush::Page < Brush
