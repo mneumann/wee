@@ -7,6 +7,44 @@ module Wee
 
   class Session
 
+    #
+    # The default serializer, when no continuation are going to be used.
+    # Ensures that only one request of the same session is executed at
+    # the same time.
+    #
+    class MutexSerializer < Mutex
+      def call(env)
+        synchronize { env['wee.session'].call(env) }
+      end
+    end
+
+    #
+    # This serializer ensures that all requests of a session are
+    # executed within the same thread. This is required if continuations 
+    # are going to be used.
+    #
+    # You can run multiple sessions within the same ThreadSerializer, or
+    # allocate one ThreadSerializer (and as such one Thread) per session
+    # as you want.
+    #
+    class ThreadSerializer
+      def initialize
+        @in, @out = Queue.new, Queue.new
+        @thread = Thread.new {
+          Thread.abort_on_exception = true
+          while true 
+            env = @in.pop
+            @out.push(env['wee.session'].call(env))
+          end
+        }
+      end
+
+      def call(env)
+        @in.push(env)
+        @out.pop
+      end
+    end
+
     class Page < Struct.new(:id, :state, :callbacks); end
 
     class AbortCallbackProcessing < Exception
@@ -54,7 +92,7 @@ module Wee
     #
     # Creates a new session.
     #
-    def initialize(root_component, page_cache_capacity=20)
+    def initialize(root_component, serializer=nil, page_cache_capacity=20)
       @root_component = root_component
       @page_cache = Wee::LRUCache.new(page_cache_capacity)
       @page_ids = Wee::IdGenerator::Sequential.new
@@ -69,8 +107,7 @@ module Wee
       @last_access = @creation_time = Time.now 
       @request_count = 0
       
-      # to serialize the requests we need a mutex
-      @mutex = Mutex.new    
+      @serializer = serializer || MutexSerializer.new
     end
 
     #
@@ -127,19 +164,24 @@ module Wee
     # Handles a web request.
     #
     def call(env)
-      @mutex.synchronize {
+      if env['wee.session']
+        # we are already serialized
+        raise if env['wee.session'] != self
         begin
           Thread.current[:wee_session] = self
           @request_count += 1
           @last_access = Time.now
           awake
-          response = process_request(env)
+          response = handle(env)
           sleep
           return response
         ensure
           Thread.current[:wee_session] = nil
         end
-      }
+      else
+        env['wee.session'] = self
+        @serializer.call(env)
+      end
     end
 
     #
@@ -170,8 +212,9 @@ module Wee
     #
     # The main routine where the request is processed.
     #
-    def process_request(env)
+    def handle(env)
       request = Wee::Request.new(env)
+      @request = request # CONTINUATIONS!
       page = @page_cache.fetch(request.page_id)
 
       if page
@@ -225,22 +268,25 @@ module Wee
       @current_page = nil
 
       begin
+        @page = page # CONTINUATIONS!
         page.callbacks.with_triggered(request.fields) do
           @root_component.decoration.process_callbacks(page.callbacks)
         end
       rescue AbortCallbackProcessing => abort
+        page = @page # CONTINUATIONS!
         if abort.response
           #
           # replace the state of the current page
           #
           @current_page = page
-          page.state = take_snapshot() 
+          page.state = take_snapshot()
           @page_cache[page.id] = page
           return abort.response
         else
           # pass on - this is a premature response from Component#call
         end
       end
+      request = @request # CONTINUATIONS!
 
       #
       # create new page (state)

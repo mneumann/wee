@@ -16,22 +16,24 @@ module Wee
       def initialize(args) @args = args end
     end
 
+    attr_accessor :answer_callback
+
     def initialize(&answer_callback)
       super()
       @answer_callback = answer_callback
     end
 
     #
-    # When a component answers, <tt>@answer_callback.call(args)</tt> will be
-    # executed (unless nil), where +args+ are the arguments passed to
-    # Component#answer.
+    # When a component answers, <tt>@answer_callback.call(answer)</tt>
+    # will be executed, where +answer+ is of class Answer which includes the
+    # arguments passed to Component#answer.
     #
     def process_callbacks(callbacks)
       begin
         super
       rescue Answer => answer
         # return to the calling component 
-        @answer_callback.call(answer.args) if @answer_callback
+        @answer_callback.call(answer)
       end
     end
 
@@ -70,14 +72,34 @@ module Wee
     #
     def call(component, &return_callback)
       delegate = Wee::Delegate.new(component)
-      answer = Wee::AnswerDecoration.new {|args|
+      answer = Wee::AnswerDecoration.new {|answ|
         remove_decoration(delegate)
         component.remove_decoration(answer)       
-        return_callback.call(*args) if return_callback
+        return_callback.call(*answ.args) if return_callback
       }
       add_decoration(delegate)
       component.add_decoration(answer)
       session.send_response(nil)
+    end
+
+    #
+    # Similar to method #call, but using continuations.
+    #
+    def callcc(component)
+      delegate = Wee::Delegate.new(component)
+      answer = Wee::AnswerDecoration.new
+
+      add_decoration(delegate)
+      component.add_decoration(answer)
+
+      answ = Kernel.callcc {|cc|
+        answer.answer_callback = cc
+        session.send_response(nil)
+      }
+
+      remove_decoration(delegate)
+      component.remove_decoration(answer)
+      return *answ.args
     end
 
     #
