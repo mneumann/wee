@@ -42,6 +42,8 @@ end
 # Like Wee.run, but for use with continuations.
 #
 def Wee.runcc(component_class, *args)
+  begin; require 'continuation'; rescue LoadError; end
+
   Wee.run(nil, *args) {
     Wee::Session.new(component_class.new, Wee::Session::ThreadSerializer.new)
   }
