@@ -2,6 +2,11 @@ $LOAD_PATH.unshift "../lib"
 require 'rubygems'
 require 'wee'
 require 'rack'
+require 'wee/components/messagebox'
+
+class String
+  def each() yield self end
+end
 
 class Wee::Application
   attr_accessor :path, :description
@@ -52,17 +57,19 @@ Wee::Application.register('/example', 'Misc Components') do
   MainPage.new
 end
 
+if __FILE__ == $0
 app = Rack::Builder.app do
   use Rack::CommonLogger
   use Rack::ShowExceptions
   #use Rack::ShowStatus
 
-  Wee::Application.applications.each do |a|
+  Wee::Application.applications.each {|a|
     map a.path do
       run a
     end
-  end
+  }
 end
 
 require 'rack/handler/webrick'
 Rack::Handler::WEBrick.run(app, :Port => 2000)
+end
