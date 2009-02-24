@@ -49,7 +49,7 @@ module Wee
 
       callbacks.action_callbacks.each_triggered(self) do |callback, value|
         callback.call
-        # TODO: return to main loop
+        session.send_response(nil) # prematurely end callback processing
       end
     end
 
