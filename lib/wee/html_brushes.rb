@@ -261,23 +261,24 @@ module Wee
 
   module CallbackMixin
 
-    def callback(id=nil, *args, &block)
-      if id
-        raise ArgumentError if block
-        @callback = self
-        @callback_object = @canvas.current_component 
-        @callback_id = id
-        @callback_args = args
-      else
-        raise ArgumentError unless args.empty?
-        @callback = block
-      end
-
+    def callback_method(id, *args)
+      @callback = self
+      @callback_object = @canvas.current_component 
+      @callback_id = id
+      @callback_args = args
       __callback()
-
       return self
     end
 
+    def callback(&block)
+      @callback = block
+      __callback()
+      return self
+    end
+
+    #
+    # Is called when #callback_method was used.
+    #
     def call(*args)
       args.push(*@callback_args)
       @callback_object.send(@callback_id, *args)

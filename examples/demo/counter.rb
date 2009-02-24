@@ -20,11 +20,11 @@ class Counter < Wee::Component
   end
 
   def render(r)
-    r.anchor.callback { dec }.with("--")
+    r.anchor.callback_method(:dec).with("--")
     r.space
     render_count(r)
     r.space 
-    r.anchor.callback { inc }.with("++")
+    r.anchor.callback_method(:inc).with("++")
   end
 
   def render_count(r)
