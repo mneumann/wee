@@ -73,19 +73,20 @@ module Wee
     #     backtrack_children(state)
     #   end
     #
-    # Or, those components that dynamically add decorations or make use of the 
-    # call/answer mechanism should backtrack decorations as well: 
+    # By default only the decoration chain is backtracked. This is
+    # required to correctly backtrack called components. To disable
+    # backtracking of the decorations, change method
+    # Component#backtrack_decoration to a no-operation:
     #
-    #   def backtrack(state)
-    #     super
-    #     backtrack_children(state)
-    #     backtrack_decoration(state)
+    #   def backtrack_decoration(state)
+    #     # nothing here
     #   end
     #
     # [+state+]
     #    An object of class State
     #
     def backtrack(state)
+      backtrack_decoration(state)
       each_child do |child|
         child.decoration.backtrack(state)
       end
