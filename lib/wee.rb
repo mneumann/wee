@@ -22,11 +22,17 @@ require 'wee/html_canvas'
 
 Wee::DefaultRenderer = Wee::HtmlCanvas
 
-def Wee.run(component_class, mount_path='/', port=2000)
+def Wee.run(component_class=nil, mount_path='/', port=2000, &block)
+  raise ArgumentError if component_class and block
+
   require 'rack/handler/webrick'
   app = Rack::Builder.app do
     map mount_path do
-      run Wee::Application.new { Wee::Session.new(component_class.new) }
+      if block
+        run Wee::Application.new(&block)
+      else
+        run Wee::Application.new { Wee::Session.new(component_class.new) }
+      end
     end
   end
   Rack::Handler::WEBrick.run(app, :Port => port)
