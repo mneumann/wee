@@ -37,3 +37,12 @@ def Wee.run(component_class=nil, mount_path='/', port=2000, &block)
   end
   Rack::Handler::WEBrick.run(app, :Port => port)
 end
+
+#
+# Like Wee.run, but for use with continuations.
+#
+def Wee.runcc(component_class, *args)
+  Wee.run(nil, *args) {
+    Wee::Session.new(component_class.new, Wee::Session::ThreadSerializer.new)
+  }
+end
