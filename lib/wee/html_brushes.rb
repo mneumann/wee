@@ -511,23 +511,25 @@ module Wee
       #
       name(@canvas.register_callback(:input, proc {|input|
         input = [input] unless input.kind_of?(Array)
-
-        choosen = input.map {|idx|
-          idx = Integer(idx)
-          raise IndexError if idx < 0 or idx > @items.size
-          @items[idx]
-        }
+        choosen = input.map {|idx| get_item(idx) }
 
         if @attributes.has_key?(:multiple)
           @callback.call(choosen)
+        elsif choosen.size > 1
+          raise "more than one element was choosen from a not-multiple SelectListTag" 
         else
-          if choosen.size > 1
-            raise "more than one element was choosen from a not-multiple SelectListTag" 
-          end
           @callback.call(choosen.first)
         end
       }))
     end
+
+    def get_item(idx)
+      idx = Integer(idx)
+      raise IndexError if idx < 0 or idx > @items.size
+      @items[idx]
+    end
+
+    protected :get_item
 
     def with
       @labels ||= @items.collect {|i| i.to_s}
@@ -566,7 +568,7 @@ module Wee
     def initialize(canvas)
       @name = canvas.register_callback(:input, self)
       @callbacks = {}
-      @ids = Wee::SequentialIdGenerator.new 
+      @ids = Wee::IdGenerator::Sequential.new 
     end
 
     def add_callback(callback)
