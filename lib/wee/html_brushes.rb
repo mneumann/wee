@@ -297,6 +297,13 @@ module Wee
     html_attr :action
     html_attr :enctype
 
+    #
+    # Use this enctype when you have a FileUploadTag field.
+    #
+    def enctype_multipart
+      enctype('multipart/form-data')
+    end
+
     def initialize
       super(HTML_TAG)
       @attributes[:method] = HTML_METHOD_POST
@@ -382,6 +389,9 @@ module Wee
     end
   end
 
+  #
+  # Use a <form> tag with enctype_multipart!
+  #
   class Brush::FileUploadTag < Brush::InputTag
     HTML_TYPE = 'file'.freeze
 
