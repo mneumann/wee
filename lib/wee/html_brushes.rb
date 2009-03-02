@@ -173,6 +173,7 @@ module Wee
     HTML_TAG = 'table'.freeze
 
     html_attr :cellspacing
+    html_attr :border
 
     def initialize
       super(HTML_TAG)
