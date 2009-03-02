@@ -388,6 +388,20 @@ module Wee
     def initialize
       super(HTML_TYPE)
     end
+
+    def __callback; end # do nothing
+
+    def with
+      if @callback
+        n = @canvas.register_callback(:input, proc {|input|
+          @callback.call(input.send(input.kind_of?(Array) ? :include? : :==, '1'))
+        })
+        @document.single_tag('input', :type => 'hidden', :name => n, :value => '0')
+        name(n)
+        value('1')
+      end
+      super
+    end
   end
 
   #
