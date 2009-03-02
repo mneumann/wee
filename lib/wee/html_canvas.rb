@@ -57,7 +57,7 @@ module Wee
 
     generic_tag :html, :head, :body, :title, :style, :label
     generic_tag :h1, :h2, :h3, :h4, :h5
-    generic_tag :div, :span, :ul, :ol, :li
+    generic_tag :div, :span, :ul, :ol, :li, :pre
     generic_single_tag :link, :hr
 
     brush_tag :table, Brush::TableTag
