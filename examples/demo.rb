@@ -1,70 +1,45 @@
 $LOAD_PATH.unshift "../lib"
 require 'rubygems'
 require 'wee'
-require 'messagebox'
 
-class Wee::Application
-  attr_accessor :path, :description
-
-  def self.applications
-    @@applications ||= [] 
-  end
-
-  def self.register(path=nil, description=nil)
-    app = new { Wee::Session.new(yield, 20) } 
-    app.path = path if path
-    app.description = description if description
-    self.applications << app 
-  end
-end
+$LOAD_PATH.unshift "./demo"
+require 'demo/calculator'
+require 'demo/counter'
+require 'demo/calendar'
 
 class Demo < Wee::Component
+  class E < Struct.new(:component, :title, :file); end
+
+  def initialize
+    super
+    add_decoration Wee::PageDecoration.new('Wee Demos')
+    add_decoration Wee::FormDecoration.new
+
+    @components = [] 
+    @components << E.new(Counter.new, "Counter", 'demo/counter.rb')
+    @components << E.new(Calculator.new, "Calculator", 'demo/calculator.rb')
+    @components << E.new(CustomCalendarDemo.new, "Calendar", 'demo/calendar.rb')
+
+    @selected_component = @components.first
+
+    @components.each {|c| add_child c.component }
+  end
+
   def render(r)
-    r.h1 'Wee Demos' 
-    r.ul {
-      Wee::Application.applications.each do |app|
-        r.li {
-          r.anchor.href(app.path).with("#{ app.path }: #{ app.description }")
-        }
-      end
+    r.h1 'Wee Component Demos' 
+    r.div.style('float: left; width: 100px;').with {
+      r.select_list(@components).
+        labels(@components.map {|c| c.title}).
+        selected(@selected_component).
+        size(10).
+        onclick_javascript("this.form.submit()").
+        callback {|ch| @selected_component = ch }
+    }
+
+    r.div.style('float: left; left: 20px; height: 200px; width: 600px; background: #EFEFEF; border: 1px dotted red; padding: 10px').with {
+      r.render @selected_component.component
     }
   end
 end
 
-Wee::Application.register('/demo', 'This demo application') do 
-  Demo.new.add_decoration Wee::PageDecoration.new('Demo')
-end
-
-Wee::Application.register('/calc', 'RPN Calculator') do
-  require File.join(File.dirname(__FILE__), 'demo', 'calculator')
-  Calculator.new.
-  add_decoration(Wee::FormDecoration.new).
-  add_decoration(Wee::PageDecoration.new('RPN Calculator'))
-end
-
-Wee::Application.register('/calendar', 'Calendar') do
-  require File.join(File.dirname(__FILE__), 'demo', 'calendar')
-  CustomCalendarDemo.new
-end
-
-Wee::Application.register('/example', 'Misc Components') do
-  require File.join(File.dirname(__FILE__), 'demo', 'example')
-  MainPage.new
-end
-
-if __FILE__ == $0
-app = Rack::Builder.app do
-  use Rack::CommonLogger
-  use Rack::ShowExceptions
-  #use Rack::ShowStatus
-
-  Wee::Application.applications.each {|a|
-    map a.path do
-      run a
-    end
-  }
-end
-
-require 'rack/handler/webrick'
-Rack::Handler::WEBrick.run(app, :Port => 2000)
-end
+Wee.run(Demo) if __FILE__ == $0

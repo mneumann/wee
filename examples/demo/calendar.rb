@@ -196,23 +196,21 @@ class MiniCalendar < Wee::Component
   # Render Calendar
   #
   def render(r)
-    r.html do
-      r.head { r.title('Calendar'); render_styles(r) }
-      r.body do
-        r.text(sprintf('<!--Month: %s, Day: %s-->', @month, @day))
-        r.table { r.table_row { r.table_header {
-          r.table do
-            render_header(r)
-            r.table_row { Date::ABBR_DAYNAMES.each { |day| r.table_header(day) } }
-            @month.calendar.each do |week|
-              r.table_row do
-                week.each { |day| render_day(r, day) }
-              end
+    render_styles(r)
+    r.div.css_class("cal").with do 
+      r.text(sprintf('<!--Month: %s, Day: %s-->', @month, @day))
+      r.table { r.table_row { r.table_header {
+        r.table do
+          render_header(r)
+          r.table_row { Date::ABBR_DAYNAMES.each { |day| r.table_header(day) } }
+          @month.calendar.each do |week|
+            r.table_row do
+              week.each { |day| render_day(r, day) }
             end
-            render_footer(r)
           end
-        }}}
-      end
+          render_footer(r)
+        end
+      }}}
     end
   end
   
@@ -248,15 +246,15 @@ end
 module StyleMixin
   def render_styles(r)
     r.style("
-      a {
-        text-decoration: none;
-      }
-      body {
+      .cal {
         font-size : 11px;
         font-family : Arial, Helvetica, sans-serif;
         text-align: center;
       }
-      td {
+      .cal a {
+        text-decoration: none;
+      }
+      .cal td {
         font-family: Arial, Helvetica, sans-serif;
         font-size: 11px;
         border: 1px solid;
@@ -264,7 +262,7 @@ module StyleMixin
         vertical-align: top;
         text-align: center;
       }
-      th {
+      .cal th {
         font-family: Arial, Helvetica, sans-serif;
         font-size: 11px;
         font-style: normal;
@@ -316,22 +314,9 @@ class CustomCalendarDemo < Wee::Component
   # Render Calendar demo
   #
   def render(r)
-    r.html do
-      r.head { r.title('Calendar Demo'); render_styles(r) }
-      r.body do
-        r.break
-        r.table { r.table_row { r.table_header {
-          r.table do
-            r.table_row { r.table_header('Calendar Demo') }
-            r.table_row { r.table_data {
-              r.text_input.value(@date).callback{|val| @date = val}
-              r.space
-              r.anchor.callback { calendar }.with { render_icon(r) }
-            }}
-          end
-        }}}
-      end
-    end
+    r.text_input.value(@date.to_s).callback{|val| @date } #@date = val}
+    r.space
+    r.anchor.callback { calendar }.with { render_icon(r) }
   end
   
   # Call the calendar component

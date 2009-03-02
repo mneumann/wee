@@ -9,6 +9,11 @@ class Window < Wee::Component
     block.call(self) if block
   end
 
+  def backtrack(state)
+    super
+    state.add_ivar(self, :@status, @status)
+  end
+
   def process_callbacks(callbacks)
     return if @status == :closed
     super

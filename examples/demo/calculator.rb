@@ -1,65 +1,58 @@
-# NEEDS: FormDecoration
+require 'demo/messagebox'
 
 class Calculator < Wee::Component
   def initialize
     super()
-
     @number_stack = []
     @input = "" 
   end
 
+  def backtrack(state)
+    super
+    state.add(@number_stack)
+    state.add(@input)
+  end
+
   def render(r)
-    # the number stack
-
-    r.ul { @number_stack.each {|num| r.li(num)} }
-
-    # the display
+    r.ul { @number_stack.each {|num| r.li(num) } }
 
     r.text_input.value(@input).readonly
 
     r.space
 
     r.submit_button.value("Enter").callback { enter }
-
     r.submit_button.value("C").callback { clear }
 
     r.break
 
-    # the number buttons
-
     (0..9).each {|num|
-      r.submit_button.value(num).callback { append(num.to_s) }
+      r.submit_button.value(num.to_s).callback { append(num.to_s) }
     }
 
-    # the decimal point
-
     r.submit_button.value(".").disabled(@input.include?(".")).callback { append(".") }
-
-    # binary operators
 
     ['+', '-', '*', '/'].each { |op|
       r.submit_button.value(op).callback { operation(op) }
     }
   end
 
+  protected
+
   def enter
     @number_stack << @input.to_f
-    @input = "" 
+    clear()
   end
 
   def clear
-    @input = ""
+    @input.replace("")
   end
 
   def append(str)
-    @input << str 
+    @input << str
   end
 
   def operation(op)
-    unless @input.empty?
-      @number_stack << @input.to_f
-      @input = ""
-    end
+    enter unless @input.empty?
     if @number_stack.size < 2
       call Wee::MessageBox.new('Stack underflow!')
     else
