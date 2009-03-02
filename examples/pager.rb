@@ -1,4 +1,4 @@
-class Wee::Pager < Wee::Component
+class Pager < Wee::Component
   attr_accessor :num_entries, :entries_per_page
   attr_reader :current_page
 
@@ -73,7 +73,7 @@ class Wee::Pager < Wee::Component
   private
 
   def render_arrow(r, sym, text, tooltip=text)
-    r.anchor.callback(&method(sym)).tooltip(tooltip).with { r.encode_text(text) }
+    r.anchor.callback_method(sym).tooltip(tooltip).with { r.encode_text(text) }
   end
 
   def render_index(r)

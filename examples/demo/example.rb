@@ -1,6 +1,6 @@
 require 'demo/window'
 require 'demo/editable_counter'
-require 'wee/components/messagebox'
+require 'demo/messagebox'
 
 class RegexpValidatedInput < Wee::Component
 
