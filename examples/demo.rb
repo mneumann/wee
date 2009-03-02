@@ -1,11 +1,7 @@
 $LOAD_PATH.unshift "../lib"
 require 'rubygems'
 require 'wee'
-require 'wee/components/messagebox'
-
-class String
-  def each() yield self end
-end
+require 'messagebox'
 
 class Wee::Application
   attr_accessor :path, :description
