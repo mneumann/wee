@@ -88,6 +88,7 @@ module Wee
     html_attr :css_class, :html_name => :class
     html_attr :css_style, :html_name => :style, :aliases => [:style] 
     html_attr :onclick
+    html_attr :ondblclick
 
     def initialize(tag)
       super()
@@ -97,12 +98,16 @@ module Wee
 
     def onclick_javascript(v)
       onclick("javascript: #{v};")
-      self
     end
 
     def onclick_callback(&block)
       url = @canvas.url_for_callback(block)
       onclick_javascript("document.location.href='#{ url }'")
+    end
+
+    def ondblclick_callback(&block)
+      url = @canvas.url_for_callback(block)
+      ondblclick("javascript: document.location.href='#{ url }'")
     end
 
     def onclick_update(update_id, &block)
