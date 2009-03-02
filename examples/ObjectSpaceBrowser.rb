@@ -1,7 +1,7 @@
 $LOAD_PATH.unshift << "../lib"
 require 'rubygems'
 require 'wee'
-require 'wee/components/messagebox'
+require 'messagebox'
 require 'enumerator'
 
 module ObjectSpaceBrowser
