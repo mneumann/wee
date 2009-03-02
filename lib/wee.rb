@@ -20,6 +20,19 @@ require 'wee/html_writer'
 require 'wee/html_brushes'
 require 'wee/html_canvas'
 
+if RUBY_VERSION >= "1.9"
+  begin
+    require 'continuation'
+  rescue LoadError
+  end
+  unless String.instance_methods.include?(:each)
+    # required by Rack
+    class String
+      def each() yield self end
+    end
+  end
+end
+
 Wee::DefaultRenderer = Wee::HtmlCanvas
 
 def Wee.run(component_class=nil, mount_path='/', port=2000, &block)
@@ -42,8 +55,6 @@ end
 # Like Wee.run, but for use with continuations.
 #
 def Wee.runcc(component_class, *args)
-  begin; require 'continuation'; rescue LoadError; end
-
   Wee.run(nil, *args) {
     Wee::Session.new(component_class.new, Wee::Session::ThreadSerializer.new)
   }
