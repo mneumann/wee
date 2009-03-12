@@ -111,6 +111,16 @@ module Wee
       nil
     end
 
+    def css(str)
+      @current_brush.close if @current_brush
+      @current_brush = nil
+      @document.start_tag(:style, 'type' => 'text/css')
+      @document.write("<!--\n")
+      @document.text(str)
+      @document.write("-->\n")
+      @document.end_tag(:style)
+    end
+
     #
     # converts \n into <br/>
     #
@@ -131,8 +141,22 @@ module Wee
       end 
     end
 
+    #
+    # Define a divert location or change into an existing divert
+    # location (and append +txt+ or the contents of +block+).
+    #
     def divert(tag, txt=nil, &block)
       @document.divert(tag, txt, &block)
+    end
+
+    #
+    # Render specific markup only once. For example style and/or
+    # javascript of a component which has many instances.
+    #
+    def once(tag)
+      return if  @document.set.has_key?(tag)
+      @document.set[tag] = true
+      yield if block_given? 
     end
 
     HTML_TYPE_CSS = 'text/css'.freeze

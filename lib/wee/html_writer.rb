@@ -61,6 +61,11 @@ module Wee
       @port << Rack::Utils.escape_html(str.to_s)
     end
 
+    def write(str)
+      @port << str
+    end
+    alias << write
+
   end # class HtmlWriter
 
 end # module Wee

@@ -8,11 +8,15 @@ module Wee
   class HtmlDocument < HtmlWriter
     def initialize
       super([])
-      @divert = {}
+    end
+
+    def set
+      @set ||= {}
     end
 
     def divert(tag, txt=nil, &block)
       raise ArgumentError if txt and block
+      @divert ||= {}
 
       unless divert = @divert[tag]
         @divert[tag] = divert = []
