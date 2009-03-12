@@ -16,7 +16,7 @@ require 'wee/request'
 require 'wee/response'
 require 'wee/session'
 
-require 'wee/html_writer'
+require 'wee/html_document'
 require 'wee/html_brushes'
 require 'wee/html_canvas'
 

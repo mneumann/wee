@@ -251,7 +251,7 @@ module Wee
       r = Wee::Renderer.new
       r.request   = request
       r.response = Wee::GenericResponse.new
-      r.document  = Wee::HtmlWriter.new(r.response)
+      r.document  = Wee::HtmlDocument.new
       r.callbacks = Wee::Callbacks.new
 
       begin
@@ -259,6 +259,8 @@ module Wee
       ensure
         r.close
       end
+
+      r.response << r.document.to_s
 
       page.callbacks = r.callbacks
       return r.response

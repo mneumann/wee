@@ -131,6 +131,10 @@ module Wee
       end 
     end
 
+    def divert(tag, txt=nil, &block)
+      @document.divert(tag, txt, &block)
+    end
+
     HTML_TYPE_CSS = 'text/css'.freeze
     HTML_REL_STYLESHEET = 'stylesheet'.freeze
 
