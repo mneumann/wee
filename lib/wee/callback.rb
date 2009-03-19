@@ -3,16 +3,24 @@ module Wee
   class CallbackRegistry
     def initialize(prefix="")
       @prefix = prefix
-      @callbacks = []    # [callback1, callback2, ...]
+      @next_id = 0
+      @callbacks = {}    # {callback_id1 => callback1, callback_id2 => callback2}
       @triggered = nil
       @obj_map = {}      # obj => [callback_id1, callback_id2, ...]
     end
 
     def register(object, callback)
-      id = @callbacks.size
-      @callbacks << callback
+      id = @next_id
+      @next_id += 1
+      @callbacks[id] = callback
       (@obj_map[object] ||= []) << id
       return "#{@prefix}#{id}"
+    end
+
+    def unregister(object)
+      if arr = @obj_map.delete(object)
+        arr.each {|id| @callbacks.delete(id) }
+      end
     end
 
     #
@@ -25,7 +33,7 @@ module Wee
       ids_and_values.each do |id, value|
         if id =~ /^#{@prefix}(\d+)([.](.*))?$/
           id, suffix = Integer($1), $3
-          next if id > @callbacks.size
+          next unless @callbacks[id]
 
           if @triggered[id].kind_of?(Hash)
             @triggered[id][suffix] = value
@@ -59,6 +67,11 @@ module Wee
     def initialize
       @input_callbacks = CallbackRegistry.new("")
       @action_callbacks = CallbackRegistry.new("a")
+    end
+
+    def unregister(object)
+      @input_callbacks.unregister(object)
+      @action_callbacks.unregister(object)
     end
 
     def with_triggered(ids_and_values)
