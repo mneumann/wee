@@ -1,0 +1,1 @@
+require 'wee/jquery/jquery'
