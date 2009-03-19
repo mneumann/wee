@@ -245,12 +245,37 @@ module Wee
           return Wee::RedirectResponse.new(url).finish
         end
       end
+    ensure
+      @request = nil
     end
+
+    def render_ajax_proc(block, component)
+      proc {
+        r = component.renderer_class.new
+        r.session   = self
+        r.request   = @request
+        r.response  = Wee::Response.new
+        r.document  = Wee::HtmlDocument.new
+        r.callbacks = @page.callbacks
+
+        begin
+          block.call(r)
+        ensure
+          r.close
+        end
+
+        r.response << r.document.to_s
+        send_response(r.response)
+      }
+    end
+
+    public :render_ajax_proc
 
     def render(request, page)
       r = Wee::Renderer.new
+      r.session   = self
       r.request   = request
-      r.response = Wee::GenericResponse.new
+      r.response  = Wee::GenericResponse.new
       r.document  = Wee::HtmlDocument.new
       r.callbacks = Wee::Callbacks.new
 

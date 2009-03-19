@@ -97,12 +97,12 @@ module Wee
     end
 
     def onclick_javascript(v)
-      onclick("javascript: #{v};")
+      onclick("javascript: #{v}")
     end
 
     def onclick_callback(&block)
       url = @canvas.url_for_callback(block)
-      onclick_javascript("document.location.href='#{ url }'")
+      onclick("javascript: document.location.href='#{ url }'")
     end
 
     def ondblclick_callback(&block)
@@ -110,18 +110,10 @@ module Wee
       ondblclick("javascript: document.location.href='#{ url }'")
     end
 
-    def onclick_update(update_id, &block)
-      url = @canvas.url_for_callback(block)
-      onclick_javascript("jQuery.get('#{url}', {}, function(data) {jQuery('##{update_id}').html(data);}, 'html'); return false")
-    end
-
-    def onclick_update_multi(&block)
-      url = @canvas.url_for_callback(block)
-      onclick_javascript("jQuery.get('#{url}', {}, function(data) {" +
-        "jQuery(data).each(function(i,j){
-         var e = jQuery(j); jQuery('#'+e.attr('id')).html(e.html());
-         }); 
-       }, 'html'); return false")
+    def onclick_update_callback(&block)
+      raise ArgumentError unless block
+      url = @canvas.url_for_callback(@canvas.session.render_ajax_proc(block, @canvas.current_component))
+      onclick("javascript: wee.update('#{url}')")
     end
 
     def with(text=nil, &block)

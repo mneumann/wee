@@ -150,6 +150,16 @@ module Wee
     end
 
     #
+    # To update components in an AJAX request.
+    #
+    def update(*components)
+      components.each {|c|
+        self.callbacks.unregister(c)
+        self.render_decoration(c)
+      }
+    end
+
+    #
     # Render specific markup only once. For example style and/or
     # javascript of a component which has many instances.
     #
@@ -226,6 +236,6 @@ module Wee
 
     alias handle3 set_brush
 
-  end # class HtmlCanvasRenderer
+  end # class HtmlCanvas
 
 end # module Wee
