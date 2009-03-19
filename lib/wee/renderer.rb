@@ -4,13 +4,15 @@ module Wee
   # Base class of all Renderer classes.
   #
   class Renderer
+    attr_accessor :session
     attr_accessor :request
     attr_accessor :response
     attr_accessor :callbacks
     attr_accessor :document
     attr_accessor :current_component
 
-    def initialize(request=nil, response=nil, callbacks=nil, document=nil, current_component=nil)
+    def initialize(session=nil, request=nil, response=nil, callbacks=nil, document=nil, current_component=nil)
+      @session = session
       @request = request
       @response = response
       @callbacks = callbacks
@@ -31,7 +33,7 @@ module Wee
         end
       else
         close
-        r = rclass.new(@request, @response, @callbacks, @document, component)
+        r = rclass.new(@session, @request, @response, @callbacks, @document, component)
         begin
           yield r
         ensure
