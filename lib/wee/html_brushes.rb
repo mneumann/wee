@@ -96,6 +96,20 @@ module Wee
       @attributes = Hash.new
     end
 
+    #
+    # Assigns a unique DOM id
+    #
+    def oid
+      id(get_oid())
+    end
+
+    #
+    # Returns a unique DOM id for the underlying component
+    #
+    def get_oid
+      "wee_#{@canvas.current_component.object_id}"
+    end
+
     def onclick_javascript(v)
       onclick("javascript: #{v}")
     end
@@ -108,6 +122,15 @@ module Wee
     def ondblclick_callback(&block)
       url = @canvas.url_for_callback(block)
       ondblclick("javascript: document.location.href='#{ url }'")
+    end
+
+    def onclick_update_self_callback(&block)
+      raise ArgumentError unless block
+      current_component = @canvas.current_component
+      onclick_update_callback {|r|
+        block.call(r)
+        r.update(current_component)
+      }
     end
 
     def onclick_update_callback(&block)

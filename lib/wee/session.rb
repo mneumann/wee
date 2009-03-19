@@ -257,6 +257,7 @@ module Wee
         r.response  = Wee::Response.new
         r.document  = Wee::HtmlDocument.new
         r.callbacks = @page.callbacks
+        r.current_component = component
 
         begin
           block.call(r)
