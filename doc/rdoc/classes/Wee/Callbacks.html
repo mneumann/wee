@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::Callbacks</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Class: Wee::Callbacks [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -25,7 +22,7 @@
       return false;
 
     elemStyle = elem.style;
-    
+
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -34,16 +31,15 @@
 
     return true;
   }
-  
+
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
-  
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
   // ]]>
   </script>
 
 </head>
 <body>
-
 
 
     <div id="classHeader">
@@ -55,52 +51,64 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
+
+
                 <a href="../../files/lib/wee/callback_rb.html">
+
                 lib/wee/callback.rb
+
                 </a>
+
+
         <br />
+
             </td>
         </tr>
+
 
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
+
                 <a href="../Object.html">
+
                 Object
+
                </a>
+
             </td>
         </tr>
+
         </table>
     </div>
   <!-- banner header -->
 
   <div id="bodyContent">
 
-
-
   <div id="contextContent">
 
-
-
    </div>
+
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000112">new</a>&nbsp;&nbsp;
-      <a href="#M000113">with_triggered</a>&nbsp;&nbsp;
+
+        <a href="#M000221">new</a>&nbsp;&nbsp;
+
+        <a href="#M000222">unregister</a>&nbsp;&nbsp;
+
+        <a href="#M000223">with_triggered</a>&nbsp;&nbsp;
+
       </div>
     </div>
 
   </div>
 
-
     <!-- if includes -->
 
     <div id="section">
-
-
 
 
 
@@ -109,83 +117,142 @@
 
       <div class="name-list">
         <table>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">action_callbacks</td>
+
           <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">input_callbacks</td>
+
           <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         </table>
       </div>
     </div>
-      
 
 
     <!-- if method_list -->
+
     <div id="methods">
+
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000112" class="method-detail">
-        <a name="M000112"></a>
+
+      <div id="method-M000221" class="method-detail">
+        <a name="M000221"></a>
 
         <div class="method-heading">
-          <a href="#M000112" class="method-signature">
+
+          <a href="#M000221" class="method-signature">
+
           <span class="method-name">new</span><span class="method-args">()</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000112-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000112-source">
+            onclick="toggleCode('M000221-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000221-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/callback.rb, line 46</span>
+<span class="ruby-comment cmt"># File lib/wee/callback.rb, line 67</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
       <span class="ruby-ivar">@input_callbacks</span> = <span class="ruby-constant">CallbackRegistry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;&quot;</span>)
       <span class="ruby-ivar">@action_callbacks</span> = <span class="ruby-constant">CallbackRegistry</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;a&quot;</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000113" class="method-detail">
-        <a name="M000113"></a>
+
+      <div id="method-M000222" class="method-detail">
+        <a name="M000222"></a>
 
         <div class="method-heading">
-          <a href="#M000113" class="method-signature">
-          <span class="method-name">with_triggered</span><span class="method-args">(ids_and_values, &amp;block)</span>
+
+          <a href="#M000222" class="method-signature">
+
+          <span class="method-name">unregister</span><span class="method-args">(object)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000113-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000113-source">
+            onclick="toggleCode('M000222-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000222-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/callback.rb, line 51</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with_triggered</span>(<span class="ruby-identifier">ids_and_values</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-      <span class="ruby-ivar">@input_callbacks</span>.<span class="ruby-identifier">with_triggered</span>(<span class="ruby-identifier">ids_and_values</span>) <span class="ruby-keyword kw">do</span>
-        <span class="ruby-ivar">@action_callbacks</span>.<span class="ruby-identifier">with_triggered</span>(<span class="ruby-identifier">ids_and_values</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-      <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/wee/callback.rb, line 72</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unregister</span>(<span class="ruby-identifier">object</span>)
+      <span class="ruby-ivar">@input_callbacks</span>.<span class="ruby-identifier">unregister</span>(<span class="ruby-identifier">object</span>)
+      <span class="ruby-ivar">@action_callbacks</span>.<span class="ruby-identifier">unregister</span>(<span class="ruby-identifier">object</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
+
+      <div id="method-M000223" class="method-detail">
+        <a name="M000223"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000223" class="method-signature">
+
+          <span class="method-name">with_triggered</span><span class="method-args">(ids_and_values) {|| ...}</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000223-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000223-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/callback.rb, line 77</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with_triggered</span>(<span class="ruby-identifier">ids_and_values</span>)
+      <span class="ruby-ivar">@input_callbacks</span>.<span class="ruby-identifier">prepare_triggered</span>(<span class="ruby-identifier">ids_and_values</span>)
+      <span class="ruby-ivar">@action_callbacks</span>.<span class="ruby-identifier">prepare_triggered</span>(<span class="ruby-identifier">ids_and_values</span>)
+      <span class="ruby-keyword kw">yield</span>
+    <span class="ruby-keyword kw">ensure</span>
+      <span class="ruby-ivar">@input_callbacks</span>.<span class="ruby-identifier">reset_triggered</span>
+      <span class="ruby-ivar">@action_callbacks</span>.<span class="ruby-identifier">reset_triggered</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
 
 
     </div>
 
 
-  </div>
 
+
+  </div>
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

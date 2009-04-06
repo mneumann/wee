@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::Decoration</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Class: Wee::Decoration [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -25,7 +22,7 @@
       return false;
 
     elemStyle = elem.style;
-    
+
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -34,16 +31,15 @@
 
     return true;
   }
-  
+
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
-  
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
   // ]]>
   </script>
 
 </head>
 <body>
-
 
 
     <div id="classHeader">
@@ -55,37 +51,48 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
+
+
                 <a href="../../files/lib/wee/decoration_rb.html">
+
                 lib/wee/decoration.rb
+
                 </a>
+
+
         <br />
+
             </td>
         </tr>
+
 
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
+
                 <a href="Presenter.html">
-                Presenter
+
+                Wee::Presenter
+
                </a>
+
             </td>
         </tr>
+
         </table>
     </div>
   <!-- banner header -->
 
   <div id="bodyContent">
 
-
-
   <div id="contextContent">
 
     <div id="description">
       <p>
 Abstract base class of all decorations. Forwards the methods <a
-href="Decoration.html#M000118">process_callbacks</a>, <a
-href="Decoration.html#M000119">render_on</a> and <a
-href="Decoration.html#M000120">backtrack</a> to the next decoration in the
+href="Decoration.html#M000194">process_callbacks</a>, <a
+href="Decoration.html#M000195">render_on</a> and <a
+href="Decoration.html#M000197">backtrack</a> to the next decoration in the
 chain. Subclasses should provide special behaviour in these methods,
 otherwise the decoration does not make sense.
 </p>
@@ -106,22 +113,28 @@ around the decorations or components below itself:
 
     </div>
 
-
    </div>
+
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000120">backtrack</a>&nbsp;&nbsp;
-      <a href="#M000117">global?</a>&nbsp;&nbsp;
-      <a href="#M000118">process_callbacks</a>&nbsp;&nbsp;
-      <a href="#M000119">render_on</a>&nbsp;&nbsp;
+
+        <a href="#M000197">backtrack</a>&nbsp;&nbsp;
+
+        <a href="#M000193">global?</a>&nbsp;&nbsp;
+
+        <a href="#M000194">process_callbacks</a>&nbsp;&nbsp;
+
+        <a href="#M000195">render_on</a>&nbsp;&nbsp;
+
+        <a href="#M000196">render_presenter_on</a>&nbsp;&nbsp;
+
       </div>
     </div>
 
   </div>
-
 
     <!-- if includes -->
 
@@ -129,68 +142,64 @@ around the decorations or components below itself:
 
 
 
-    <div id="aliases-list">
-      <h3 class="section-bar">External Aliases</h3>
-
-      <div class="name-list">
-                        <table summary="aliases">
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">render_on</td>
-          <td>-&gt;</td>
-          <td class="context-item-value">render_presenter_on</td>
-        </tr>
-                        </table>
-      </div>
-    </div>
-
-
     <div id="attribute-list">
       <h3 class="section-bar">Attributes</h3>
 
       <div class="name-list">
         <table>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">next</td>
+
           <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+
           <td class="context-item-desc">
 Points to the next decoration in the chain. A decoration is responsible for
-all decorations or components &quot;below&quot; it (everything that follows
-this decoration in the chain). In other words, it&#8216;s the owner of
-everything &quot;below&quot; itself.
+all decorations or components &#8220;below&#8221; it (everything that
+follows this decoration in the chain). In other words, it&#8217;s the owner
+of everything &#8220;below&#8221; itself.
 
 </td>
         </tr>
+
         </table>
       </div>
     </div>
-      
 
 
     <!-- if method_list -->
+
     <div id="methods">
+
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000120" class="method-detail">
-        <a name="M000120"></a>
+
+      <div id="method-M000197" class="method-detail">
+        <a name="M000197"></a>
 
         <div class="method-heading">
-          <a href="#M000120" class="method-signature">
+
+          <a href="#M000197" class="method-signature">
+
           <span class="method-name">backtrack</span><span class="method-args">(state)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
-We have to save the @next attribute to be able to correctly <a
-href="Decoration.html#M000120">backtrack</a> calls, as method
-Wee::Component#call modifies it in the call to
+We have to save the @next attribute to be able to correctly backtrack
+calls, as method Wee::Component#call modifies it in the call to
 <tt>component.remove_decoration(answer)</tt>. Removing the
 answer-decoration has the advantage to be able to call a component more
 than once!
 </p>
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000120-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000120-source">
+            onclick="toggleCode('M000197-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000197-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 65</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">backtrack</span>(<span class="ruby-identifier">state</span>)
@@ -199,19 +208,26 @@ than once!
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000117" class="method-detail">
-        <a name="M000117"></a>
+
+      <div id="method-M000193" class="method-detail">
+        <a name="M000193"></a>
 
         <div class="method-heading">
-          <a href="#M000117" class="method-signature">
+
+          <a href="#M000193" class="method-signature">
+
           <span class="method-name">global?</span><span class="method-args">()</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
 Is this decoration a global or a local one? By default all decorations are
 local unless this method is overwritten.
@@ -221,33 +237,42 @@ A global decoration is added in front of the decoration chain, a local
 decoration is added in front of all other local decorations but after all
 global decorations.
 </p>
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000117-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000117-source">
+            onclick="toggleCode('M000193-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000193-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 41</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">global?</span>() <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000118" class="method-detail">
-        <a name="M000118"></a>
+
+      <div id="method-M000194" class="method-detail">
+        <a name="M000194"></a>
 
         <div class="method-heading">
-          <a href="#M000118" class="method-signature">
+
+          <a href="#M000194" class="method-signature">
+
           <span class="method-name">process_callbacks</span><span class="method-args">(callbacks)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
 Forwards method call to the next decoration in the chain.
 </p>
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000118-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000118-source">
+            onclick="toggleCode('M000194-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000194-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 46</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callbacks</span>(<span class="ruby-identifier">callbacks</span>)
@@ -255,25 +280,33 @@ Forwards method call to the next decoration in the chain.
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000119" class="method-detail">
-        <a name="M000119"></a>
+
+      <div id="method-M000195" class="method-detail">
+        <a name="M000195"></a>
 
         <div class="method-heading">
-          <a href="#M000119" class="method-signature">
+
+          <a href="#M000195" class="method-signature">
+
           <span class="method-name">render_on</span><span class="method-args">(r)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
 Forwards method call to the next decoration in the chain.
 </p>
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000119-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000119-source">
+            onclick="toggleCode('M000195-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000195-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 54</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_on</span>(<span class="ruby-identifier">r</span>)
@@ -281,15 +314,37 @@ Forwards method call to the next decoration in the chain.
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
+
+      <div id="method-M000196" class="method-detail">
+        <a name="M000196"></a>
+
+        <div class="method-heading">
+
+          <span class="method-name">render_presenter_on</span><span class="method-args">(r)</span>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Alias for <a href="Decoration.html#M000195">render_on</a>
+</p>
+
+        </div>
+      </div>
+
 
 
     </div>
 
 
-  </div>
 
+
+  </div>
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

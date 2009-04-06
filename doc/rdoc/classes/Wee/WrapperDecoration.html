@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::WrapperDecoration</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Class: Wee::WrapperDecoration [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -25,7 +22,7 @@
       return false;
 
     elemStyle = elem.style;
-    
+
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -34,16 +31,15 @@
 
     return true;
   }
-  
+
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
-  
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
   // ]]>
   </script>
 
 </head>
 <body>
-
 
 
     <div id="classHeader">
@@ -55,132 +51,162 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../files/lib/wee/components/wrapper_decoration_rb.html">
-                lib/wee/components/wrapper_decoration.rb
+
+
+                <a href="../../files/lib/wee/decoration_rb.html">
+
+                lib/wee/decoration.rb
+
                 </a>
+
+
         <br />
+
             </td>
         </tr>
+
 
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
+
                 <a href="Decoration.html">
-                Decoration
+
+                Wee::Decoration
+
                </a>
+
             </td>
         </tr>
+
         </table>
     </div>
   <!-- banner header -->
 
   <div id="bodyContent">
 
-
-
   <div id="contextContent">
 
-
-
    </div>
+
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000110">render</a>&nbsp;&nbsp;
-      <a href="#M000111">render_inner</a>&nbsp;&nbsp;
+
+        <a href="#M000202">render</a>&nbsp;&nbsp;
+
+        <a href="#M000203">render_inner</a>&nbsp;&nbsp;
+
       </div>
     </div>
 
   </div>
-
 
     <!-- if includes -->
 
     <div id="section">
 
-
-
     <div id="aliases-list">
       <h3 class="section-bar">External Aliases</h3>
 
       <div class="name-list">
-                        <table summary="aliases">
+      <table summary="aliases">
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">render_presenter_on</td>
           <td>-&gt;</td>
           <td class="context-item-value">render_on</td>
         </tr>
-                        </table>
+
+        </table>
       </div>
     </div>
 
 
-      
 
 
     <!-- if method_list -->
+
     <div id="methods">
+
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000110" class="method-detail">
-        <a name="M000110"></a>
+
+      <div id="method-M000202" class="method-detail">
+        <a name="M000202"></a>
 
         <div class="method-heading">
-          <a href="#M000110" class="method-signature">
+
+          <a href="#M000202" class="method-signature">
+
           <span class="method-name">render</span><span class="method-args">(r)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
 Overwrite this method, and call <a
-href="WrapperDecoration.html#M000111">render_inner</a>(r) where you want
+href="WrapperDecoration.html#M000203">render_inner</a>&#174; where you want
 the inner content to be drawn.
 </p>
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000110-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000110-source">
+            onclick="toggleCode('M000202-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000202-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/components/wrapper_decoration.rb, line 12</span>
+<span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 209</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">r</span>)
       <span class="ruby-identifier">render_inner</span>(<span class="ruby-identifier">r</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000111" class="method-detail">
-        <a name="M000111"></a>
+
+      <div id="method-M000203" class="method-detail">
+        <a name="M000203"></a>
 
         <div class="method-heading">
-          <a href="#M000111" class="method-signature">
+
+          <a href="#M000203" class="method-signature">
+
           <span class="method-name">render_inner</span><span class="method-args">(r)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000111-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000111-source">
+            onclick="toggleCode('M000203-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000203-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/components/wrapper_decoration.rb, line 16</span>
+<span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 213</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_inner</span>(<span class="ruby-identifier">r</span>)
       <span class="ruby-identifier">r</span>.<span class="ruby-identifier">render_decoration</span>(<span class="ruby-ivar">@next</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
 
 
     </div>
 
 
-  </div>
 
+
+  </div>
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

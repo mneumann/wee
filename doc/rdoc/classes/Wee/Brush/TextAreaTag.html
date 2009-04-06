@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::Brush::TextAreaTag</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Class: Wee::Brush::TextAreaTag [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -25,7 +22,7 @@
       return false;
 
     elemStyle = elem.style;
-    
+
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -34,16 +31,15 @@
 
     return true;
   }
-  
+
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
-  
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
   // ]]>
   </script>
 
 </head>
 <body>
-
 
 
     <div id="classHeader">
@@ -55,78 +51,97 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
+
+
                 <a href="../../../files/lib/wee/html_brushes_rb.html">
+
                 lib/wee/html_brushes.rb
+
                 </a>
+
+
         <br />
+
             </td>
         </tr>
+
 
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
+
                 Brush::GenericTagBrush
+
             </td>
         </tr>
+
         </table>
     </div>
   <!-- banner header -->
 
   <div id="bodyContent">
 
-
-
   <div id="contextContent">
 
-
+    <div id="description">
+      <hr size="10"></hr><pre>
+ Form - Textarea
+</pre>
+<hr size="10"></hr>
+    </div>
 
    </div>
+
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000139">new</a>&nbsp;&nbsp;
-      <a href="#M000140">value</a>&nbsp;&nbsp;
-      <a href="#M000141">with</a>&nbsp;&nbsp;
+
+        <a href="#M000164">__callback</a>&nbsp;&nbsp;
+
+        <a href="#M000161">new</a>&nbsp;&nbsp;
+
+        <a href="#M000162">value</a>&nbsp;&nbsp;
+
+        <a href="#M000163">with</a>&nbsp;&nbsp;
+
       </div>
     </div>
 
   </div>
 
-
     <!-- if includes -->
 
-    <div id="section">
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
 
+      <div id="includes-list">
+
+        <span class="include-name"><a href="../CallbackMixin.html">CallbackMixin</a></span>
+
+      </div>
+    </div>
+
+    <div id="section">
 
     <div id="constants-list">
       <h3 class="section-bar">Constants</h3>
 
       <div class="name-list">
         <table summary="Constants">
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">HTML_TAG</td>
           <td>=</td>
           <td class="context-item-value">'textarea'.freeze</td>
+
         </tr>
+
         </table>
       </div>
     </div>
 
-    <div id="aliases-list">
-      <h3 class="section-bar">External Aliases</h3>
-
-      <div class="name-list">
-                        <table summary="aliases">
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">__input_callback</td>
-          <td>-&gt;</td>
-          <td class="context-item-value">callback</td>
-        </tr>
-                        </table>
-      </div>
-    </div>
 
 
     <div id="attribute-list">
@@ -134,159 +149,252 @@
 
       <div class="name-list">
         <table>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">accesskey</td>
+
           <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">cols</td>
+
           <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">disabled</td>
+
           <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">name</td>
+
           <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">onblur</td>
+
           <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">onchange</td>
+
           <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">onfocus</td>
+
           <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">onselect</td>
+
           <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">readonly</td>
+
           <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">rows</td>
+
           <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">tabindex</td>
+
           <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">type</td>
+
           <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">type</td>
+
           <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         </table>
       </div>
     </div>
-      
 
 
     <!-- if method_list -->
+
     <div id="methods">
+
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000139" class="method-detail">
-        <a name="M000139"></a>
+
+      <div id="method-M000161" class="method-detail">
+        <a name="M000161"></a>
 
         <div class="method-heading">
-          <a href="#M000139" class="method-signature">
+
+          <a href="#M000161" class="method-signature">
+
           <span class="method-name">new</span><span class="method-args">()</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000139-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000139-source">
+            onclick="toggleCode('M000161-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000161-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 431</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 494</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
       <span class="ruby-keyword kw">super</span>(<span class="ruby-constant">HTML_TAG</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
+
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000140" class="method-detail">
-        <a name="M000140"></a>
+
+      <div id="method-M000164" class="method-detail">
+        <a name="M000164"></a>
 
         <div class="method-heading">
-          <a href="#M000140" class="method-signature">
-          <span class="method-name">value</span><span class="method-args">(val)</span>
+
+          <a href="#M000164" class="method-signature">
+
+          <span class="method-name">__callback</span><span class="method-args">()</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000140-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000140-source">
+            onclick="toggleCode('M000164-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000164-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 435</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 509</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">__callback</span>; <span class="ruby-identifier">name</span>(<span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">register_callback</span>(<span class="ruby-identifier">:input</span>, <span class="ruby-ivar">@callback</span>)) <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000162" class="method-detail">
+        <a name="M000162"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000162" class="method-signature">
+
+          <span class="method-name">value</span><span class="method-args">(val)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000162-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000162-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 498</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">value</span>(<span class="ruby-identifier">val</span>)
       <span class="ruby-ivar">@value</span> = <span class="ruby-identifier">val</span>
       <span class="ruby-keyword kw">self</span>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000141" class="method-detail">
-        <a name="M000141"></a>
+
+      <div id="method-M000163" class="method-detail">
+        <a name="M000163"></a>
 
         <div class="method-heading">
-          <a href="#M000141" class="method-signature">
+
+          <a href="#M000163" class="method-signature">
+
           <span class="method-name">with</span><span class="method-args">(value=nil)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000141-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000141-source">
+            onclick="toggleCode('M000163-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000163-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 440</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 503</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with</span>(<span class="ruby-identifier">value</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">value</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@value</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
 
 
     </div>
 
 
-  </div>
 
+
+  </div>
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

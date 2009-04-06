@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::GenericResponse</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Class: Wee::GenericResponse [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -25,7 +22,7 @@
       return false;
 
     elemStyle = elem.style;
-    
+
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -34,16 +31,15 @@
 
     return true;
   }
-  
+
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
-  
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
   // ]]>
   </script>
 
 </head>
 <body>
-
 
 
     <div id="classHeader">
@@ -55,104 +51,133 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
+
+
                 <a href="../../files/lib/wee/response_rb.html">
+
                 lib/wee/response.rb
+
                 </a>
+
+
         <br />
+
             </td>
         </tr>
+
 
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
+
                 <a href="Response.html">
-                Response
+
+                Wee::Response
+
                </a>
+
             </td>
         </tr>
+
         </table>
     </div>
   <!-- banner header -->
 
   <div id="bodyContent">
 
-
-
   <div id="contextContent">
 
-
-
    </div>
+
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000019">new</a>&nbsp;&nbsp;
+
+        <a href="#M000112">new</a>&nbsp;&nbsp;
+
       </div>
     </div>
 
   </div>
 
-
     <!-- if includes -->
 
     <div id="section">
-
 
     <div id="constants-list">
       <h3 class="section-bar">Constants</h3>
 
       <div class="name-list">
         <table summary="Constants">
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">EXPIRE_OFFSET</td>
           <td>=</td>
           <td class="context-item-value">3600*24*365*20</td>
+
         </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">EXPIRES_HEADER</td>
+          <td>=</td>
+          <td class="context-item-value">'Expires'.freeze</td>
+
+        </tr>
+
         </table>
       </div>
     </div>
 
 
 
-      
-
 
     <!-- if method_list -->
+
     <div id="methods">
+
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000019" class="method-detail">
-        <a name="M000019"></a>
+
+      <div id="method-M000112" class="method-detail">
+        <a name="M000112"></a>
 
         <div class="method-heading">
-          <a href="#M000019" class="method-signature">
+
+          <a href="#M000112" class="method-signature">
+
           <span class="method-name">new</span><span class="method-args">(*args)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000019-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000019-source">
+            onclick="toggleCode('M000112-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000112-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/response.rb, line 13</span>
+<span class="ruby-comment cmt"># File lib/wee/response.rb, line 14</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
       <span class="ruby-keyword kw">super</span>
-      <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'Expires'</span>] <span class="ruby-operator">||=</span> (<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">+</span> <span class="ruby-constant">EXPIRE_OFFSET</span>).<span class="ruby-identifier">rfc822</span>
+      <span class="ruby-keyword kw">self</span>[<span class="ruby-constant">EXPIRES_HEADER</span>] <span class="ruby-operator">||=</span> (<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">+</span> <span class="ruby-constant">EXPIRE_OFFSET</span>).<span class="ruby-identifier">rfc822</span>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
 
 
     </div>
 
 
-  </div>
 
+
+  </div>
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

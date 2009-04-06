@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::Application</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Class: Wee::Application [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -25,7 +22,7 @@
       return false;
 
     elemStyle = elem.style;
-    
+
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -34,16 +31,15 @@
 
     return true;
   }
-  
+
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
-  
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
   // ]]>
   </script>
 
 </head>
 <body>
-
 
 
     <div id="classHeader">
@@ -55,57 +51,73 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
+
+
                 <a href="../../files/lib/wee/application_rb.html">
+
                 lib/wee/application.rb
+
                 </a>
+
+
         <br />
+
             </td>
         </tr>
+
 
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
+
                 <a href="../Object.html">
+
                 Object
+
                </a>
+
             </td>
         </tr>
+
         </table>
     </div>
   <!-- banner header -->
 
   <div id="bodyContent">
 
-
-
   <div id="contextContent">
 
     <div id="description">
       <p>
-A <a href="Application.html">Wee::Application</a> manages all <a
-href="Session.html">Session</a>&#8216;s of a single application. It
-dispatches the request to the correct handler by examining the request.
+A <a href="Application.html">Wee::Application</a> manages all
+Session&#8217;s of a single application. It dispatches the request to the
+correct handler by examining the request.
 </p>
 
     </div>
 
-
    </div>
+
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000101">call</a>&nbsp;&nbsp;
-      <a href="#M000100">cleanup_sessions</a>&nbsp;&nbsp;
-      <a href="#M000103">insert_session</a>&nbsp;&nbsp;
-      <a href="#M000099">new</a>&nbsp;&nbsp;
-      <a href="#M000102">new_session</a>&nbsp;&nbsp;
+
+        <a href="#M000096">call</a>&nbsp;&nbsp;
+
+        <a href="#M000095">cleanup_sessions</a>&nbsp;&nbsp;
+
+        <a href="#M000098">insert_session</a>&nbsp;&nbsp;
+
+        <a href="#M000094">new</a>&nbsp;&nbsp;
+
+        <a href="#M000097">new_session</a>&nbsp;&nbsp;
+
       </div>
     </div>
 
   </div>
-
 
     <!-- if includes -->
 
@@ -121,35 +133,39 @@ dispatches the request to the correct handler by examining the request.
 
 
 
-      
-
-
     <!-- if method_list -->
+
     <div id="methods">
+
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000099" class="method-detail">
-        <a name="M000099"></a>
+
+      <div id="method-M000094" class="method-detail">
+        <a name="M000094"></a>
 
         <div class="method-heading">
-          <a href="#M000099" class="method-signature">
+
+          <a href="#M000094" class="method-signature">
+
           <span class="method-name">new</span><span class="method-args">(max_sessions=10_000, &amp;block)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
-Creates a <a href="Application.html#M000099">new</a> application. The
-block, when called, must return a <a
-href="Application.html#M000099">new</a> <a href="Session.html">Session</a>
-instance.
+Creates a new application. The block, when called, must return a new <a
+href="Session.html">Session</a> instance.
 </p>
 <pre>
   Wee::Application.new { Wee::Session.new(root_component) }
 </pre>
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000099-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000099-source">
+            onclick="toggleCode('M000094-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000094-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/application.rb, line 25</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">max_sessions</span>=<span class="ruby-value">10_000</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
@@ -160,27 +176,36 @@ instance.
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
+
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000101" class="method-detail">
-        <a name="M000101"></a>
+
+      <div id="method-M000096" class="method-detail">
+        <a name="M000096"></a>
 
         <div class="method-heading">
-          <a href="#M000101" class="method-signature">
+
+          <a href="#M000096" class="method-signature">
+
           <span class="method-name">call</span><span class="method-args">(env)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
 Handles a web request
 </p>
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000101-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000101-source">
+            onclick="toggleCode('M000096-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000096-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/application.rb, line 42</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
@@ -202,25 +227,33 @@ Handles a web request
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000100" class="method-detail">
-        <a name="M000100"></a>
+
+      <div id="method-M000095" class="method-detail">
+        <a name="M000095"></a>
 
         <div class="method-heading">
-          <a href="#M000100" class="method-signature">
+
+          <a href="#M000095" class="method-signature">
+
           <span class="method-name">cleanup_sessions</span><span class="method-args">()</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
 Garbage collect dead sessions
 </p>
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000100-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000100-source">
+            onclick="toggleCode('M000095-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000095-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/application.rb, line 35</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cleanup_sessions</span>
@@ -228,24 +261,32 @@ Garbage collect dead sessions
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
+
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000103" class="method-detail">
-        <a name="M000103"></a>
+
+      <div id="method-M000098" class="method-detail">
+        <a name="M000098"></a>
 
         <div class="method-heading">
-          <a href="#M000103" class="method-signature">
+
+          <a href="#M000098" class="method-signature">
+
           <span class="method-name">insert_session</span><span class="method-args">(session, retries=3)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000103-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000103-source">
+            onclick="toggleCode('M000098-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000098-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/application.rb, line 69</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">insert_session</span>(<span class="ruby-identifier">session</span>, <span class="ruby-identifier">retries</span>=<span class="ruby-value">3</span>)
@@ -263,22 +304,29 @@ Garbage collect dead sessions
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000102" class="method-detail">
-        <a name="M000102"></a>
+
+      <div id="method-M000097" class="method-detail">
+        <a name="M000097"></a>
 
         <div class="method-heading">
-          <a href="#M000102" class="method-signature">
+
+          <a href="#M000097" class="method-signature">
+
           <span class="method-name">new_session</span><span class="method-args">()</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000102-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000102-source">
+            onclick="toggleCode('M000097-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000097-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/application.rb, line 62</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new_session</span>
@@ -289,15 +337,18 @@ Garbage collect dead sessions
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
 
 
     </div>
 
 
-  </div>
 
+
+  </div>
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

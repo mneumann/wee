@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::Brush::ImageButtonTag [RDoc Documentation]</title>
+  <title>Class: Wee::Session::MutexSerializer [RDoc Documentation]</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
@@ -46,16 +46,16 @@
         <table class="header-table">
         <tr class="top-aligned-row">
           <td><strong>Class</strong></td>
-          <td class="class-name-in-header">Wee::Brush::ImageButtonTag</td>
+          <td class="class-name-in-header">Wee::Session::MutexSerializer</td>
         </tr>
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
 
 
-                <a href="../../../files/lib/wee/html_brushes_rb.html">
+                <a href="../../../files/lib/wee/session_rb.html">
 
-                lib/wee/html_brushes.rb
+                lib/wee/session.rb
 
                 </a>
 
@@ -70,7 +70,7 @@
             <td><strong>Parent:</strong></td>
             <td>
 
-                Brush::ActionInputTag
+                Mutex
 
             </td>
         </tr>
@@ -85,14 +85,8 @@
 
     <div id="description">
       <p>
-NOTE: The form-fields returned by a image-button-tag is browser-specific.
-Most browsers do not send the &#8220;name&#8221; key together with the
-value specified by &#8220;value&#8221;, only &#8220;name.x&#8220; and
-&#8220;name.y&#8220;. This conforms to the standard. But Firefox also sends
-&#8220;name&#8221;=&#8220;value&#8221;. This is why I raise an exception
-from the value method. Note that it&#8217;s neccessary to parse the passed
-form-fields and generate a &#8220;name&#8221; fields in the request, to
-make this image-button work.
+The default serializer, when no continuation are going to be used. Ensures
+that only one request of the same session is executed at the same time.
 </p>
 
     </div>
@@ -105,7 +99,7 @@ make this image-button work.
 
       <div class="name-list">
 
-        <a href="#M000160">new</a>&nbsp;&nbsp;
+        <a href="#M000035">call</a>&nbsp;&nbsp;
 
       </div>
     </div>
@@ -116,23 +110,6 @@ make this image-button work.
 
     <div id="section">
 
-    <div id="constants-list">
-      <h3 class="section-bar">Constants</h3>
-
-      <div class="name-list">
-        <table summary="Constants">
-
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">HTML_TYPE</td>
-          <td>=</td>
-          <td class="context-item-value">'image'.freeze</td>
-
-        </tr>
-
-        </table>
-      </div>
-    </div>
-
 
 
 
@@ -140,17 +117,17 @@ make this image-button work.
 
     <div id="methods">
 
-      <h3 class="section-bar">Public Class methods</h3>
+      <h3 class="section-bar">Public Instance methods</h3>
 
 
-      <div id="method-M000160" class="method-detail">
-        <a name="M000160"></a>
+      <div id="method-M000035" class="method-detail">
+        <a name="M000035"></a>
 
         <div class="method-heading">
 
-          <a href="#M000160" class="method-signature">
+          <a href="#M000035" class="method-signature">
 
-          <span class="method-name">new</span><span class="method-args">()</span>
+          <span class="method-name">call</span><span class="method-args">(env)</span>
 
           </a>
 
@@ -159,13 +136,13 @@ make this image-button work.
         <div class="method-description">
 
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000160-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000160-source">
+            onclick="toggleCode('M000035-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000035-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 468</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
-      <span class="ruby-keyword kw">super</span>(<span class="ruby-constant">HTML_TYPE</span>)
-    <span class="ruby-keyword kw">end</span>
+<span class="ruby-comment cmt"># File lib/wee/session.rb, line 16</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>)
+        <span class="ruby-identifier">synchronize</span> { <span class="ruby-identifier">env</span>[<span class="ruby-value str">'wee.session'</span>].<span class="ruby-identifier">call</span>(<span class="ruby-identifier">env</span>) }
+      <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
 

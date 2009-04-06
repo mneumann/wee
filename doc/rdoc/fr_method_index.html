@@ -1,247 +1,486 @@
-
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <!--
 
-    Methods
+    Methods [RDoc Documentation]
 
   -->
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Methods</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Methods [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="stylesheet" href="rdoc-style.css" type="text/css" />
   <base target="docwin" />
 </head>
 <body>
-<div id="index">
+<div class="index">
   <h1 class="section-bar">Methods</h1>
   <div id="index-entries">
-    <a href="classes/Wee/State.html#M000197"><< (Wee::State)</a><br />
-    <a href="classes/Wee/HtmlWriter.html#M000221"><< (Wee::HtmlWriter)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000055"><< (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/LRUCache/Item.html#M000031"><=> (Wee::LRUCache::Item)</a><br />
-    <a href="classes/Wee/LRUCache.html#M000028">[] (Wee::LRUCache)</a><br />
-    <a href="classes/Wee/LRUCache.html#M000029">[]= (Wee::LRUCache)</a><br />
-    <a href="classes/Wee/Brush/GenericTagBrush.html#M000158">__action_callback (Wee::Brush::GenericTagBrush)</a><br />
-    <a href="classes/Wee/Brush/GenericTagBrush.html#M000159">__actionurl_callback (Wee::Brush::GenericTagBrush)</a><br />
-    <a href="classes/Wee/Brush/GenericTagBrush.html#M000157">__input_callback (Wee::Brush::GenericTagBrush)</a><br />
-    <a href="classes/Wee/Brush/GenericTagBrush.html#M000160">__set_url (Wee::Brush::GenericTagBrush)</a><br />
-    <a href="classes/Wee/Session.html#M000087">action (Wee::Session)</a><br />
-    <a href="classes/Wee/Request.html#M000201">action? (Wee::Request)</a><br />
-    <a href="classes/Wee/State.html#M000195">add (Wee::State)</a><br />
-    <a href="classes/Wee/Brush/RadioGroup.html#M000175">add_callback (Wee::Brush::RadioGroup)</a><br />
-    <a href="classes/Wee/Component.html#M000211">add_child (Wee::Component)</a><br />
+
+    <a href="classes/Wee/HtmlWriter.html#M000192"><< (Wee::HtmlWriter)</a><br />
+
+    <a href="classes/Wee/State.html#M000227"><< (Wee::State)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000077"><< (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/LRUCache/Item.html#M000111"><=> (Wee::LRUCache::Item)</a><br />
+
+    <a href="classes/Wee/LRUCache.html#M000108">[] (Wee::LRUCache)</a><br />
+
+    <a href="classes/Wee/LRUCache.html#M000109">[]= (Wee::LRUCache)</a><br />
+
+    <a href="classes/Wee/Brush/RadioButtonTag.html#M000178">__callback (Wee::Brush::RadioButtonTag)</a><br />
+
+    <a href="classes/Wee/Brush/InputTag.html#M000150">__callback (Wee::Brush::InputTag)</a><br />
+
+    <a href="classes/Wee/Brush/AnchorTag.html#M000182">__callback (Wee::Brush::AnchorTag)</a><br />
+
+    <a href="classes/Wee/Brush/SelectListTag.html#M000169">__callback (Wee::Brush::SelectListTag)</a><br />
+
+    <a href="classes/Wee/Brush/CheckboxTag.html#M000155">__callback (Wee::Brush::CheckboxTag)</a><br />
+
+    <a href="classes/Wee/Brush/TextAreaTag.html#M000164">__callback (Wee::Brush::TextAreaTag)</a><br />
+
+    <a href="classes/Wee/Brush/ActionInputTag.html#M000158">__callback (Wee::Brush::ActionInputTag)</a><br />
+
+    <a href="classes/Wee/Brush/FormTag.html#M000148">__callback (Wee::Brush::FormTag)</a><br />
+
+    <a href="classes/Wee/Session.html#M000033">action (Wee::Session)</a><br />
+
+    <a href="classes/Wee/Request.html#M000041">action? (Wee::Request)</a><br />
+
+    <a href="classes/Wee/State.html#M000225">add (Wee::State)</a><br />
+
+    <a href="classes/Wee/Brush/RadioGroup.html#M000174">add_callback (Wee::Brush::RadioGroup)</a><br />
+
+    <a href="classes/Wee/Component.html#M000051">add_child (Wee::Component)</a><br />
+
     <a href="classes/Wee/DecorationMixin.html#M000011">add_decoration (Wee::DecorationMixin)</a><br />
-    <a href="classes/Wee/State.html#M000196">add_ivar (Wee::State)</a><br />
-    <a href="classes/Wee/Session.html#M000077">alive? (Wee::Session)</a><br />
-    <a href="classes/Wee/CallAnswerMixin.html#M000005">answer (Wee::CallAnswerMixin)</a><br />
-    <a href="classes/Wee/Session.html#M000083">awake (Wee::Session)</a><br />
-    <a href="classes/Wee/Delegate.html#M000215">backtrack (Wee::Delegate)</a><br />
-    <a href="classes/Wee/MessageBox.html#M000122">backtrack (Wee::MessageBox)</a><br />
-    <a href="classes/Wee/Component.html#M000207">backtrack (Wee::Component)</a><br />
-    <a href="classes/Wee/LoginDecoration.html#M000108">backtrack (Wee::LoginDecoration)</a><br />
-    <a href="classes/Wee/Decoration.html#M000120">backtrack (Wee::Decoration)</a><br />
-    <a href="classes/Wee/Presenter.html#M000190">backtrack (Wee::Presenter)</a><br />
-    <a href="classes/Wee/Component.html#M000209">backtrack_children (Wee::Component)</a><br />
-    <a href="classes/Wee/Component.html#M000208">backtrack_decoration (Wee::Component)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000049">brush_tag (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/Request.html#M000203">build_url (Wee::Request)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000062">build_url (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/Application.html#M000101">call (Wee::Application)</a><br />
+
+    <a href="classes/Wee/State.html#M000226">add_ivar (Wee::State)</a><br />
+
+    <a href="classes/Wee/Session.html#M000022">alive? (Wee::Session)</a><br />
+
+    <a href="classes/Wee/CallAnswerMixin.html#M000006">answer (Wee::CallAnswerMixin)</a><br />
+
+    <a href="classes/Wee/Session.html#M000028">awake (Wee::Session)</a><br />
+
+    <a href="classes/Wee/Component.html#M000047">backtrack (Wee::Component)</a><br />
+
+    <a href="classes/Wee/Decoration.html#M000197">backtrack (Wee::Decoration)</a><br />
+
+    <a href="classes/Wee/Presenter.html#M000061">backtrack (Wee::Presenter)</a><br />
+
+    <a href="classes/Wee/Delegate.html#M000201">backtrack (Wee::Delegate)</a><br />
+
+    <a href="classes/Wee/Component.html#M000049">backtrack_children (Wee::Component)</a><br />
+
+    <a href="classes/Wee/Component.html#M000048">backtrack_decoration (Wee::Component)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000071">brush_tag (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000088">build_url (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/Request.html#M000043">build_url (Wee::Request)</a><br />
+
+    <a href="classes/Wee/Session.html#M000026">call (Wee::Session)</a><br />
+
+    <a href="classes/Wee/Session/MutexSerializer.html#M000035">call (Wee::Session::MutexSerializer)</a><br />
+
+    <a href="classes/Wee/Brush/RadioGroup.html#M000175">call (Wee::Brush::RadioGroup)</a><br />
+
+    <a href="classes/Wee/Session/ThreadSerializer.html#M000037">call (Wee::Session::ThreadSerializer)</a><br />
+
+    <a href="classes/Wee/Application.html#M000096">call (Wee::Application)</a><br />
+
     <a href="classes/Wee/CallAnswerMixin.html#M000004">call (Wee::CallAnswerMixin)</a><br />
-    <a href="classes/Wee/Brush/RadioGroup.html#M000176">call (Wee::Brush::RadioGroup)</a><br />
-    <a href="classes/Wee/Session.html#M000081">call (Wee::Session)</a><br />
-    <a href="classes/Wee/Brush/AnchorTag.html#M000183">callback (Wee::Brush::AnchorTag)</a><br />
-    <a href="classes/Wee/Brush/SelectListTag.html#M000137">callback (Wee::Brush::SelectListTag)</a><br />
-    <a href="classes/Wee/Brush/RadioButtonTag.html#M000172">callback (Wee::Brush::RadioButtonTag)</a><br />
-    <a href="classes/Wee/Application.html#M000100">cleanup_sessions (Wee::Application)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000047">close (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/Brush.html#M000127">close (Wee::Brush)</a><br />
-    <a href="classes/Wee/Renderer.html#M000098">close (Wee::Renderer)</a><br />
-    <a href="classes/Wee/Brush/TableRowTag.html#M000164">columns (Wee::Brush::TableRowTag)</a><br />
-    <a href="classes/Wee/Session.html#M000080">current (Wee::Session)</a><br />
-    <a href="classes/Wee/Pager.html#M000034">current_start_index (Wee::Pager)</a><br />
-    <a href="classes/Wee/Session.html#M000078">dead? (Wee::Session)</a><br />
-    <a href="classes/Wee/LRUCache.html#M000022">delete (Wee::LRUCache)</a><br />
-    <a href="classes/Wee/LRUCache.html#M000023">delete_if (Wee::LRUCache)</a><br />
-    <a href="classes/Wee/LRUCache.html#M000027">each (Wee::LRUCache)</a><br />
-    <a href="classes/Wee/Component.html#M000210">each_child (Wee::Component)</a><br />
+
+    <a href="classes/Wee/CallbackMixin.html#M000009">call (Wee::CallbackMixin)</a><br />
+
+    <a href="classes/Wee/CallbackMixin.html#M000008">callback (Wee::CallbackMixin)</a><br />
+
+    <a href="classes/Wee/CallbackMixin.html#M000007">callback_method (Wee::CallbackMixin)</a><br />
+
+    <a href="classes/Wee/CallAnswerMixin.html#M000005">callcc (Wee::CallAnswerMixin)</a><br />
+
+    <a href="classes/Wee/Application.html#M000095">cleanup_sessions (Wee::Application)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000069">close (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/Brush.html#M000118">close (Wee::Brush)</a><br />
+
+    <a href="classes/Wee/Renderer.html#M000056">close (Wee::Renderer)</a><br />
+
+    <a href="classes/Wee/Brush/TableRowTag.html#M000139">columns (Wee::Brush::TableRowTag)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000079">css (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/Session.html#M000025">current (Wee::Session)</a><br />
+
+    <a href="classes/Wee/Session.html#M000023">dead? (Wee::Session)</a><br />
+
+    <a href="classes/Wee/LRUCache.html#M000102">delete (Wee::LRUCache)</a><br />
+
+    <a href="classes/Wee/LRUCache.html#M000103">delete_if (Wee::LRUCache)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000081">divert (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/HtmlDocument.html#M000231">divert (Wee::HtmlDocument)</a><br />
+
+    <a href="classes/Wee/LRUCache.html#M000107">each (Wee::LRUCache)</a><br />
+
+    <a href="classes/String.html#M000001">each (String)</a><br />
+
+    <a href="classes/Wee/Component.html#M000050">each_child (Wee::Component)</a><br />
+
     <a href="classes/Wee/DecorationMixin.html#M000010">each_decoration (Wee::DecorationMixin)</a><br />
-    <a href="classes/Wee/CallbackRegistry.html#M000093">each_triggered (Wee::CallbackRegistry)</a><br />
-    <a href="classes/Wee/HtmlWriter.html#M000222">encode_text (Wee::HtmlWriter)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000056">encode_text (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/HtmlWriter.html#M000219">end_tag (Wee::HtmlWriter)</a><br />
-    <a href="classes/Wee/LRUCache.html#M000024">fetch (Wee::LRUCache)</a><br />
-    <a href="classes/Wee/Pager.html#M000036">first (Wee::Pager)</a><br />
-    <a href="classes/Wee/LRUCache.html#M000026">garbage_collect (Wee::LRUCache)</a><br />
-    <a href="classes/Wee/Application/SessionCache.html#M000104">garbage_collect (Wee::Application::SessionCache)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000051">generic_single_tag (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000050">generic_tag (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/PageDecoration.html#M000015">global? (Wee::PageDecoration)</a><br />
-    <a href="classes/Wee/Decoration.html#M000117">global? (Wee::Decoration)</a><br />
-    <a href="classes/Wee/Pager.html#M000040">goto (Wee::Pager)</a><br />
-    <a href="classes/Wee/Brush/RadioButtonTag.html#M000171">group (Wee::Brush::RadioButtonTag)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000065">handle (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000066">handle2 (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000067">handle3 (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/LRUCache.html#M000021">has_key? (Wee::LRUCache)</a><br />
-    <a href="classes/Wee/Brush/TableRowTag.html#M000165">headings (Wee::Brush::TableRowTag)</a><br />
-    <a href="classes/Wee/Brush/GenericTagBrush.html#M000150">html_attr (Wee::Brush::GenericTagBrush)</a><br />
-    <a href="classes/Wee/Brush/AnchorTag.html#M000182">info (Wee::Brush::AnchorTag)</a><br />
-    <a href="classes/Wee/Component.html#M000204">initialize (Wee::Component)</a><br />
-    <a href="classes/Wee/Application.html#M000103">insert_session (Wee::Application)</a><br />
-    <a href="classes/Wee/Brush/SelectListTag.html#M000134">items (Wee::Brush::SelectListTag)</a><br />
-    <a href="classes/Wee/Brush/SelectListTag.html#M000136">labels (Wee::Brush::SelectListTag)</a><br />
-    <a href="classes/Wee/Pager.html#M000037">last (Wee::Pager)</a><br />
-    <a href="classes/Wee/Pager.html#M000035">last_page_index (Wee::Pager)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000058">link_css (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/LoginDecoration.html#M000109">logged_in? (Wee::LoginDecoration)</a><br />
-    <a href="classes/Wee/LRUCache.html#M000030">min_key (Wee::LRUCache)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000057">multiline_text (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000048">nest (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/Brush.html#M000128">nesting? (Wee::Brush)</a><br />
-    <a href="classes/Wee/Brush/GenericSingleTagBrush.html#M000186">nesting? (Wee::Brush::GenericSingleTagBrush)</a><br />
-    <a href="classes/Wee/Brush/GenericTextBrush.html#M000132">nesting? (Wee::Brush::GenericTextBrush)</a><br />
-    <a href="classes/Wee/Pager.html#M000032">new (Wee::Pager)</a><br />
-    <a href="classes/Wee/Brush/TableRowTag.html#M000163">new (Wee::Brush::TableRowTag)</a><br />
-    <a href="classes/Wee/Session/AbortCallbackProcessing.html#M000089">new (Wee::Session::AbortCallbackProcessing)</a><br />
-    <a href="classes/Wee/CallbackRegistry.html#M000090">new (Wee::CallbackRegistry)</a><br />
-    <a href="classes/Wee/Brush/TableDataTag.html#M000162">new (Wee::Brush::TableDataTag)</a><br />
-    <a href="classes/Wee/Brush/ImageButtonTag.html#M000161">new (Wee::Brush::ImageButtonTag)</a><br />
-    <a href="classes/Wee/RedirectResponse.html#M000187">new (Wee::RedirectResponse)</a><br />
-    <a href="classes/Wee/Renderer.html#M000094">new (Wee::Renderer)</a><br />
-    <a href="classes/Wee/Brush/RadioButtonTag.html#M000170">new (Wee::Brush::RadioButtonTag)</a><br />
-    <a href="classes/Wee/Request.html#M000200">new (Wee::Request)</a><br />
-    <a href="classes/Wee/Request.html#M000199">new (Wee::Request)</a><br />
-    <a href="classes/Wee/Brush/RadioGroup.html#M000174">new (Wee::Brush::RadioGroup)</a><br />
-    <a href="classes/Wee/Application.html#M000099">new (Wee::Application)</a><br />
-    <a href="classes/Wee/LRUCache.html#M000020">new (Wee::LRUCache)</a><br />
-    <a href="classes/Wee/GenericResponse.html#M000019">new (Wee::GenericResponse)</a><br />
-    <a href="classes/Wee/ErrorResponse.html#M000018">new (Wee::ErrorResponse)</a><br />
-    <a href="classes/Wee/Session.html#M000075">new (Wee::Session)</a><br />
-    <a href="classes/Wee/State.html#M000194">new (Wee::State)</a><br />
-    <a href="classes/Wee/LoginDecoration.html#M000105">new (Wee::LoginDecoration)</a><br />
-    <a href="classes/Wee/Brush/GenericTagBrush.html#M000151">new (Wee::Brush::GenericTagBrush)</a><br />
-    <a href="classes/Wee/IdGenerator/Sequential.html#M000073">new (Wee::IdGenerator::Sequential)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000046">new (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/Brush/HiddenInputTag.html#M000177">new (Wee::Brush::HiddenInputTag)</a><br />
-    <a href="classes/Wee/Brush/TableTag.html#M000149">new (Wee::Brush::TableTag)</a><br />
-    <a href="classes/Wee/Brush/CheckboxTag.html#M000148">new (Wee::Brush::CheckboxTag)</a><br />
-    <a href="classes/Wee/Brush/JavascriptTag.html#M000178">new (Wee::Brush::JavascriptTag)</a><br />
-    <a href="classes/Wee/Brush/SubmitButtonTag.html#M000147">new (Wee::Brush::SubmitButtonTag)</a><br />
-    <a href="classes/Wee/AnswerDecoration.html#M000114">new (Wee::AnswerDecoration)</a><br />
-    <a href="classes/Wee/Brush/ImageTag.html#M000145">new (Wee::Brush::ImageTag)</a><br />
-    <a href="classes/Wee/AnswerDecoration/Answer.html#M000116">new (Wee::AnswerDecoration::Answer)</a><br />
-    <a href="classes/Wee/IdGenerator/Secure.html#M000069">new (Wee::IdGenerator::Secure)</a><br />
-    <a href="classes/Wee/Brush/FormTag.html#M000143">new (Wee::Brush::FormTag)</a><br />
-    <a href="classes/Wee/Brush/PasswordInputTag.html#M000142">new (Wee::Brush::PasswordInputTag)</a><br />
-    <a href="classes/Wee/PageDecoration.html#M000014">new (Wee::PageDecoration)</a><br />
-    <a href="classes/Wee/MessageBox.html#M000121">new (Wee::MessageBox)</a><br />
-    <a href="classes/Wee/Delegate.html#M000212">new (Wee::Delegate)</a><br />
-    <a href="classes/Wee/Brush/TextAreaTag.html#M000139">new (Wee::Brush::TextAreaTag)</a><br />
-    <a href="classes/Wee/RefreshResponse.html#M000124">new (Wee::RefreshResponse)</a><br />
-    <a href="classes/Wee/HtmlWriter.html#M000216">new (Wee::HtmlWriter)</a><br />
-    <a href="classes/Wee/Brush/FileUploadTag.html#M000179">new (Wee::Brush::FileUploadTag)</a><br />
-    <a href="classes/Wee/Brush/TextInputTag.html#M000180">new (Wee::Brush::TextInputTag)</a><br />
-    <a href="classes/Wee/Brush/AnchorTag.html#M000181">new (Wee::Brush::AnchorTag)</a><br />
-    <a href="classes/Wee/Brush/InputTag.html#M000129">new (Wee::Brush::InputTag)</a><br />
-    <a href="classes/Wee/Brush/TableHeaderTag.html#M000130">new (Wee::Brush::TableHeaderTag)</a><br />
-    <a href="classes/Wee/Brush/SelectOptionTag.html#M000184">new (Wee::Brush::SelectOptionTag)</a><br />
-    <a href="classes/Wee/Brush/SelectListTag.html#M000133">new (Wee::Brush::SelectListTag)</a><br />
-    <a href="classes/Wee/Callbacks.html#M000112">new (Wee::Callbacks)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000059">new_radio_group (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/Application.html#M000102">new_session (Wee::Application)</a><br />
-    <a href="classes/Wee/IdGenerator.html#M000068">next (Wee::IdGenerator)</a><br />
-    <a href="classes/Wee/IdGenerator/Secure.html#M000072">next (Wee::IdGenerator::Secure)</a><br />
-    <a href="classes/Wee/Pager.html#M000039">next (Wee::Pager)</a><br />
-    <a href="classes/Wee/IdGenerator/Sequential.html#M000074">next (Wee::IdGenerator::Sequential)</a><br />
-    <a href="classes/Wee/IdGenerator/Secure.html#M000070">next_md5 (Wee::IdGenerator::Secure)</a><br />
-    <a href="classes/Wee/IdGenerator/Secure.html#M000071">next_secure (Wee::IdGenerator::Secure)</a><br />
-    <a href="classes/Wee/Pager.html#M000033">num_pages (Wee::Pager)</a><br />
-    <a href="classes/Wee/Brush/GenericTagBrush.html#M000153">onclick_callback (Wee::Brush::GenericTagBrush)</a><br />
-    <a href="classes/Wee/Brush/GenericTagBrush.html#M000152">onclick_javascript (Wee::Brush::GenericTagBrush)</a><br />
-    <a href="classes/Wee/Brush/GenericTagBrush.html#M000154">onclick_update (Wee::Brush::GenericTagBrush)</a><br />
-    <a href="classes/Wee/Brush/GenericTagBrush.html#M000155">onclick_update_multi (Wee::Brush::GenericTagBrush)</a><br />
-    <a href="classes/Wee/Pager.html#M000038">prev (Wee::Pager)</a><br />
-    <a href="classes/Wee/Component.html#M000206">process_callbacks (Wee::Component)</a><br />
-    <a href="classes/Wee/Presenter.html#M000191">process_callbacks (Wee::Presenter)</a><br />
-    <a href="classes/Wee/Decoration.html#M000118">process_callbacks (Wee::Decoration)</a><br />
-    <a href="classes/Wee/LoginDecoration.html#M000106">process_callbacks (Wee::LoginDecoration)</a><br />
-    <a href="classes/Wee/AnswerDecoration.html#M000115">process_callbacks (Wee::AnswerDecoration)</a><br />
-    <a href="classes/Wee/Delegate.html#M000213">process_callbacks (Wee::Delegate)</a><br />
-    <a href="classes/Wee/Session.html#M000085">process_request (Wee::Session)</a><br />
-    <a href="classes/Wee/CallbackRegistry.html#M000091">register (Wee::CallbackRegistry)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000063">register_callback (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/CallbackRegistry.html#M000220">each_triggered (Wee::CallbackRegistry)</a><br />
+
+    <a href="classes/Wee/HtmlWriter.html#M000190">encode_text (Wee::HtmlWriter)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000078">encode_text (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/Brush/FormTag.html#M000145">enctype_multipart (Wee::Brush::FormTag)</a><br />
+
+    <a href="classes/Wee/HtmlWriter.html#M000188">end_tag (Wee::HtmlWriter)</a><br />
+
+    <a href="classes/Wee/LRUCache.html#M000104">fetch (Wee::LRUCache)</a><br />
+
+    <a href="classes/Wee/Application/SessionCache.html#M000099">garbage_collect (Wee::Application::SessionCache)</a><br />
+
+    <a href="classes/Wee/LRUCache.html#M000106">garbage_collect (Wee::LRUCache)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000073">generic_single_tag (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000072">generic_tag (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/Brush/SelectListTag.html#M000170">get_item (Wee::Brush::SelectListTag)</a><br />
+
+    <a href="classes/Wee/Brush/GenericTagBrush.html#M000126">get_oid (Wee::Brush::GenericTagBrush)</a><br />
+
+    <a href="classes/Wee/Decoration.html#M000193">global? (Wee::Decoration)</a><br />
+
+    <a href="classes/Wee/PageDecoration.html#M000206">global? (Wee::PageDecoration)</a><br />
+
+    <a href="classes/Wee/Brush/RadioButtonTag.html#M000177">group (Wee::Brush::RadioButtonTag)</a><br />
+
+    <a href="classes/Wee/Session.html#M000030">handle (Wee::Session)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000091">handle (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000092">handle2 (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000093">handle3 (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/LRUCache.html#M000101">has_key? (Wee::LRUCache)</a><br />
+
+    <a href="classes/Wee/Brush/TableRowTag.html#M000140">headings (Wee::Brush::TableRowTag)</a><br />
+
+    <a href="classes/Wee/Brush/GenericTagBrush.html#M000123">html_attr (Wee::Brush::GenericTagBrush)</a><br />
+
+    <a href="classes/Wee/Brush/AnchorTag.html#M000181">info (Wee::Brush::AnchorTag)</a><br />
+
+    <a href="classes/Wee/Component.html#M000044">initialize (Wee::Component)</a><br />
+
+    <a href="classes/Wee/Application.html#M000098">insert_session (Wee::Application)</a><br />
+
+    <a href="classes/Wee/JQuery.html#M000057">install (Wee::JQuery)</a><br />
+
+    <a href="classes/Wee/Brush/SelectListTag.html#M000166">items (Wee::Brush::SelectListTag)</a><br />
+
+    <a href="classes/Wee/JQuery.html#M000058">javascript_includes (Wee::JQuery)</a><br />
+
+    <a href="classes/Wee/Brush/SelectListTag.html#M000168">labels (Wee::Brush::SelectListTag)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000084">link_css (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/LRUCache.html#M000110">min_key (Wee::LRUCache)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000080">multiline_text (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000070">nest (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/Brush/GenericSingleTagBrush.html#M000134">nesting? (Wee::Brush::GenericSingleTagBrush)</a><br />
+
+    <a href="classes/Wee/Brush/GenericTextBrush.html#M000121">nesting? (Wee::Brush::GenericTextBrush)</a><br />
+
+    <a href="classes/Wee/Brush.html#M000119">nesting? (Wee::Brush)</a><br />
+
+    <a href="classes/Wee/Brush/PasswordInputTag.html#M000153">new (Wee::Brush::PasswordInputTag)</a><br />
+
+    <a href="classes/Wee/Brush/SubmitButtonTag.html#M000159">new (Wee::Brush::SubmitButtonTag)</a><br />
+
+    <a href="classes/Wee/Application.html#M000094">new (Wee::Application)</a><br />
+
+    <a href="classes/Wee/Request.html#M000040">new (Wee::Request)</a><br />
+
+    <a href="classes/Wee/LRUCache.html#M000100">new (Wee::LRUCache)</a><br />
+
+    <a href="classes/Wee/Brush/ImageButtonTag.html#M000160">new (Wee::Brush::ImageButtonTag)</a><br />
+
+    <a href="classes/Wee/Request.html#M000039">new (Wee::Request)</a><br />
+
+    <a href="classes/Wee/Session/AbortCallbackProcessing.html#M000038">new (Wee::Session::AbortCallbackProcessing)</a><br />
+
+    <a href="classes/Wee/Session/ThreadSerializer.html#M000036">new (Wee::Session::ThreadSerializer)</a><br />
+
+    <a href="classes/Wee/Brush/TextAreaTag.html#M000161">new (Wee::Brush::TextAreaTag)</a><br />
+
+    <a href="classes/Wee/Delegate.html#M000198">new (Wee::Delegate)</a><br />
+
+    <a href="classes/Wee/HtmlWriter.html#M000185">new (Wee::HtmlWriter)</a><br />
+
+    <a href="classes/Wee/PageDecoration.html#M000205">new (Wee::PageDecoration)</a><br />
+
+    <a href="classes/Wee/Brush/SelectListTag.html#M000165">new (Wee::Brush::SelectListTag)</a><br />
+
+    <a href="classes/Wee/Brush/AnchorTag.html#M000180">new (Wee::Brush::AnchorTag)</a><br />
+
+    <a href="classes/Wee/IdGenerator/Sequential.html#M000209">new (Wee::IdGenerator::Sequential)</a><br />
+
+    <a href="classes/Wee/GenericResponse.html#M000112">new (Wee::GenericResponse)</a><br />
+
+    <a href="classes/Wee/RedirectResponse.html#M000113">new (Wee::RedirectResponse)</a><br />
+
+    <a href="classes/Wee/RefreshResponse.html#M000114">new (Wee::RefreshResponse)</a><br />
+
+    <a href="classes/Wee/ErrorResponse.html#M000115">new (Wee::ErrorResponse)</a><br />
+
+    <a href="classes/Wee/Brush/FileUploadTag.html#M000157">new (Wee::Brush::FileUploadTag)</a><br />
+
+    <a href="classes/Wee/Session.html#M000020">new (Wee::Session)</a><br />
+
+    <a href="classes/Wee/IdGenerator/Secure.html#M000211">new (Wee::IdGenerator::Secure)</a><br />
+
+    <a href="classes/Wee/Brush/RadioButtonTag.html#M000176">new (Wee::Brush::RadioButtonTag)</a><br />
+
+    <a href="classes/Wee/Brush/CheckboxTag.html#M000154">new (Wee::Brush::CheckboxTag)</a><br />
+
+    <a href="classes/Wee/Brush/SelectOptionTag.html#M000172">new (Wee::Brush::SelectOptionTag)</a><br />
+
+    <a href="classes/Wee/Renderer.html#M000052">new (Wee::Renderer)</a><br />
+
+    <a href="classes/Wee/Brush/RadioGroup.html#M000173">new (Wee::Brush::RadioGroup)</a><br />
+
+    <a href="classes/Wee/Brush/GenericTagBrush.html#M000124">new (Wee::Brush::GenericTagBrush)</a><br />
+
+    <a href="classes/Wee/Brush/HiddenInputTag.html#M000152">new (Wee::Brush::HiddenInputTag)</a><br />
+
+    <a href="classes/Wee/AnswerDecoration.html#M000065">new (Wee::AnswerDecoration)</a><br />
+
+    <a href="classes/Wee/Brush/TextInputTag.html#M000151">new (Wee::Brush::TextInputTag)</a><br />
+
+    <a href="classes/Wee/CallbackRegistry.html#M000215">new (Wee::CallbackRegistry)</a><br />
+
+    <a href="classes/Wee/Brush/InputTag.html#M000149">new (Wee::Brush::InputTag)</a><br />
+
+    <a href="classes/Wee/Callbacks.html#M000221">new (Wee::Callbacks)</a><br />
+
+    <a href="classes/Wee/Brush/TableDataTag.html#M000143">new (Wee::Brush::TableDataTag)</a><br />
+
+    <a href="classes/Wee/State.html#M000224">new (Wee::State)</a><br />
+
+    <a href="classes/Wee/Brush/TableHeaderTag.html#M000144">new (Wee::Brush::TableHeaderTag)</a><br />
+
+    <a href="classes/Wee/AnswerDecoration/Answer.html#M000067">new (Wee::AnswerDecoration::Answer)</a><br />
+
+    <a href="classes/Wee/Brush/ImageTag.html#M000135">new (Wee::Brush::ImageTag)</a><br />
+
+    <a href="classes/Wee/Brush/JavascriptTag.html#M000136">new (Wee::Brush::JavascriptTag)</a><br />
+
+    <a href="classes/Wee/Brush/TableTag.html#M000137">new (Wee::Brush::TableTag)</a><br />
+
+    <a href="classes/Wee/Brush/TableRowTag.html#M000138">new (Wee::Brush::TableRowTag)</a><br />
+
+    <a href="classes/Wee/HtmlDocument.html#M000229">new (Wee::HtmlDocument)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000068">new (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/Brush/FormTag.html#M000146">new (Wee::Brush::FormTag)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000085">new_radio_group (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/Application.html#M000097">new_session (Wee::Application)</a><br />
+
+    <a href="classes/Wee/IdGenerator.html#M000208">next (Wee::IdGenerator)</a><br />
+
+    <a href="classes/Wee/IdGenerator/Sequential.html#M000210">next (Wee::IdGenerator::Sequential)</a><br />
+
+    <a href="classes/Wee/IdGenerator/Secure.html#M000214">next (Wee::IdGenerator::Secure)</a><br />
+
+    <a href="classes/Wee/IdGenerator/Secure.html#M000212">next_md5 (Wee::IdGenerator::Secure)</a><br />
+
+    <a href="classes/Wee/IdGenerator/Secure.html#M000213">next_secure (Wee::IdGenerator::Secure)</a><br />
+
+    <a href="classes/Wee/Brush/GenericTagBrush.html#M000125">oid (Wee::Brush::GenericTagBrush)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000083">once (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/Brush/GenericTagBrush.html#M000128">onclick_callback (Wee::Brush::GenericTagBrush)</a><br />
+
+    <a href="classes/Wee/Brush/GenericTagBrush.html#M000127">onclick_javascript (Wee::Brush::GenericTagBrush)</a><br />
+
+    <a href="classes/Wee/Brush/GenericTagBrush.html#M000131">onclick_update_callback (Wee::Brush::GenericTagBrush)</a><br />
+
+    <a href="classes/Wee/Brush/GenericTagBrush.html#M000130">onclick_update_self_callback (Wee::Brush::GenericTagBrush)</a><br />
+
+    <a href="classes/Wee/Brush/GenericTagBrush.html#M000129">ondblclick_callback (Wee::Brush::GenericTagBrush)</a><br />
+
+    <a href="classes/Wee/CallbackRegistry.html#M000218">prepare_triggered (Wee::CallbackRegistry)</a><br />
+
+    <a href="classes/Wee/Component.html#M000046">process_callbacks (Wee::Component)</a><br />
+
+    <a href="classes/Wee/Decoration.html#M000194">process_callbacks (Wee::Decoration)</a><br />
+
+    <a href="classes/Wee/AnswerDecoration.html#M000066">process_callbacks (Wee::AnswerDecoration)</a><br />
+
+    <a href="classes/Wee/Delegate.html#M000199">process_callbacks (Wee::Delegate)</a><br />
+
+    <a href="classes/Wee/Presenter.html#M000062">process_callbacks (Wee::Presenter)</a><br />
+
+    <a href="classes/Wee/CallbackRegistry.html#M000216">register (Wee::CallbackRegistry)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000089">register_callback (Wee::HtmlCanvas)</a><br />
+
     <a href="classes/Wee/DecorationMixin.html#M000012">remove_decoration (Wee::DecorationMixin)</a><br />
+
     <a href="classes/Wee/DecorationMixin.html#M000013">remove_decoration_if (Wee::DecorationMixin)</a><br />
-    <a href="classes/Wee/MessageBox.html#M000123">render (Wee::MessageBox)</a><br />
-    <a href="classes/Wee/Component.html#M000205">render (Wee::Component)</a><br />
-    <a href="classes/Wee/Presenter.html#M000189">render (Wee::Presenter)</a><br />
-    <a href="classes/Wee/Renderer.html#M000096">render (Wee::Renderer)</a><br />
-    <a href="classes/Wee/Pager.html#M000041">render (Wee::Pager)</a><br />
-    <a href="classes/Wee/Session.html#M000086">render (Wee::Session)</a><br />
-    <a href="classes/Wee/WrapperDecoration.html#M000110">render (Wee::WrapperDecoration)</a><br />
-    <a href="classes/Wee/FormDecoration.html#M000017">render (Wee::FormDecoration)</a><br />
-    <a href="classes/Wee/PageDecoration.html#M000016">render (Wee::PageDecoration)</a><br />
-    <a href="classes/Wee/Request.html#M000202">render? (Wee::Request)</a><br />
-    <a href="classes/Wee/Pager.html#M000042">render_arrow (Wee::Pager)</a><br />
-    <a href="classes/Wee/Renderer.html#M000097">render_decoration (Wee::Renderer)</a><br />
-    <a href="classes/Wee/Pager.html#M000043">render_index (Wee::Pager)</a><br />
-    <a href="classes/Wee/WrapperDecoration.html#M000111">render_inner (Wee::WrapperDecoration)</a><br />
-    <a href="classes/Wee/Decoration.html#M000119">render_on (Wee::Decoration)</a><br />
-    <a href="classes/Wee/Presenter.html#M000188">render_on (Wee::Presenter)</a><br />
-    <a href="classes/Wee/LoginDecoration.html#M000107">render_on (Wee::LoginDecoration)</a><br />
-    <a href="classes/Wee/Delegate.html#M000214">render_on (Wee::Delegate)</a><br />
-    <a href="classes/Wee/Pager.html#M000044">render_page_num (Wee::Pager)</a><br />
-    <a href="classes/Wee/Presenter.html#M000192">renderer_class (Wee::Presenter)</a><br />
-    <a href="classes/Wee/State.html#M000198">restore (Wee::State)</a><br />
-    <a href="classes/Wee/DupReplaceSnapshotMixin.html#M000007">restore_snapshot (Wee::DupReplaceSnapshotMixin)</a><br />
-    <a href="classes/Wee/ObjectSnapshotMixin.html#M000003">restore_snapshot (Wee::ObjectSnapshotMixin)</a><br />
-    <a href="classes/Wee/StructSnapshotMixin.html#M000009">restore_snapshot (Wee::StructSnapshotMixin)</a><br />
-    <a href="classes/Wee.html#M000001">run (Wee)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000052">select_list (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/Brush/SelectListTag.html#M000135">selected (Wee::Brush::SelectListTag)</a><br />
-    <a href="classes/Wee/Session.html#M000082">send_response (Wee::Session)</a><br />
-    <a href="classes/Wee/Presenter.html#M000193">session (Wee::Presenter)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000064">set_brush (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/Brush.html#M000125">setup (Wee::Brush)</a><br />
-    <a href="classes/Wee/HtmlWriter.html#M000218">single_tag (Wee::HtmlWriter)</a><br />
-    <a href="classes/Wee/Session.html#M000084">sleep (Wee::Session)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000053">space (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/Brush/TableRowTag.html#M000167">spacer (Wee::Brush::TableRowTag)</a><br />
-    <a href="classes/Wee/Brush/TableRowTag.html#M000166">spanning_column (Wee::Brush::TableRowTag)</a><br />
-    <a href="classes/Wee/HtmlWriter.html#M000217">start_tag (Wee::HtmlWriter)</a><br />
-    <a href="classes/Wee/Session.html#M000079">statistics (Wee::Session)</a><br />
-    <a href="classes/Wee/LRUCache.html#M000025">store (Wee::LRUCache)</a><br />
-    <a href="classes/Wee/ObjectSnapshotMixin.html#M000002">take_snapshot (Wee::ObjectSnapshotMixin)</a><br />
-    <a href="classes/Wee/DupReplaceSnapshotMixin.html#M000006">take_snapshot (Wee::DupReplaceSnapshotMixin)</a><br />
-    <a href="classes/Wee/StructSnapshotMixin.html#M000008">take_snapshot (Wee::StructSnapshotMixin)</a><br />
-    <a href="classes/Wee/Session.html#M000088">take_snapshot (Wee::Session)</a><br />
-    <a href="classes/Wee/Session.html#M000076">terminate (Wee::Session)</a><br />
-    <a href="classes/Wee/HtmlWriter.html#M000220">text (Wee::HtmlWriter)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000054">text (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/Brush/Page.html#M000169">title (Wee::Brush::Page)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000060">url_for_callback (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/HtmlCanvas.html#M000061">url_for_callback_id (Wee::HtmlCanvas)</a><br />
-    <a href="classes/Wee/Pager.html#M000045">validate (Wee::Pager)</a><br />
-    <a href="classes/Wee/Brush/TextAreaTag.html#M000140">value (Wee::Brush::TextAreaTag)</a><br />
-    <a href="classes/Wee/Brush/TextAreaTag.html#M000141">with (Wee::Brush::TextAreaTag)</a><br />
-    <a href="classes/Wee/Brush/FormTag.html#M000144">with (Wee::Brush::FormTag)</a><br />
-    <a href="classes/Wee/Brush/RadioButtonTag.html#M000173">with (Wee::Brush::RadioButtonTag)</a><br />
-    <a href="classes/Wee/Brush/SelectListTag.html#M000138">with (Wee::Brush::SelectListTag)</a><br />
-    <a href="classes/Wee/Brush/GenericEncodedTextBrush.html#M000146">with (Wee::Brush::GenericEncodedTextBrush)</a><br />
-    <a href="classes/Wee/Brush.html#M000126">with (Wee::Brush)</a><br />
-    <a href="classes/Wee/Brush/GenericTagBrush.html#M000156">with (Wee::Brush::GenericTagBrush)</a><br />
-    <a href="classes/Wee/Renderer.html#M000095">with (Wee::Renderer)</a><br />
-    <a href="classes/Wee/Brush/GenericSingleTagBrush.html#M000185">with (Wee::Brush::GenericSingleTagBrush)</a><br />
-    <a href="classes/Wee/Brush/Page.html#M000168">with (Wee::Brush::Page)</a><br />
-    <a href="classes/Wee/Brush/GenericTextBrush.html#M000131">with (Wee::Brush::GenericTextBrush)</a><br />
-    <a href="classes/Wee/Callbacks.html#M000113">with_triggered (Wee::Callbacks)</a><br />
-    <a href="classes/Wee/CallbackRegistry.html#M000092">with_triggered (Wee::CallbackRegistry)</a><br />
+
+    <a href="classes/Wee/WrapperDecoration.html#M000202">render (Wee::WrapperDecoration)</a><br />
+
+    <a href="classes/Wee/Renderer.html#M000054">render (Wee::Renderer)</a><br />
+
+    <a href="classes/Wee/Presenter.html#M000060">render (Wee::Presenter)</a><br />
+
+    <a href="classes/Wee/FormDecoration.html#M000204">render (Wee::FormDecoration)</a><br />
+
+    <a href="classes/Wee/Component.html#M000045">render (Wee::Component)</a><br />
+
+    <a href="classes/Wee/Session.html#M000032">render (Wee::Session)</a><br />
+
+    <a href="classes/Wee/PageDecoration.html#M000207">render (Wee::PageDecoration)</a><br />
+
+    <a href="classes/Wee/Request.html#M000042">render? (Wee::Request)</a><br />
+
+    <a href="classes/Wee/Session.html#M000031">render_ajax_proc (Wee::Session)</a><br />
+
+    <a href="classes/Wee/Renderer.html#M000055">render_decoration (Wee::Renderer)</a><br />
+
+    <a href="classes/Wee/WrapperDecoration.html#M000203">render_inner (Wee::WrapperDecoration)</a><br />
+
+    <a href="classes/Wee/Presenter.html#M000059">render_on (Wee::Presenter)</a><br />
+
+    <a href="classes/Wee/Decoration.html#M000195">render_on (Wee::Decoration)</a><br />
+
+    <a href="classes/Wee/Delegate.html#M000200">render_on (Wee::Delegate)</a><br />
+
+    <a href="classes/Wee/Decoration.html#M000196">render_presenter_on (Wee::Decoration)</a><br />
+
+    <a href="classes/Wee/Presenter.html#M000063">renderer_class (Wee::Presenter)</a><br />
+
+    <a href="classes/Wee/CallbackRegistry.html#M000219">reset_triggered (Wee::CallbackRegistry)</a><br />
+
+    <a href="classes/Wee/State.html#M000228">restore (Wee::State)</a><br />
+
+    <a href="classes/Wee/DupReplaceSnapshotMixin.html#M000015">restore_snapshot (Wee::DupReplaceSnapshotMixin)</a><br />
+
+    <a href="classes/Wee/StructSnapshotMixin.html#M000019">restore_snapshot (Wee::StructSnapshotMixin)</a><br />
+
+    <a href="classes/Wee/ObjectSnapshotMixin.html#M000017">restore_snapshot (Wee::ObjectSnapshotMixin)</a><br />
+
+    <a href="classes/Wee.html#M000002">run (Wee)</a><br />
+
+    <a href="classes/Wee.html#M000003">runcc (Wee)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000074">select_list (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/Brush/SelectListTag.html#M000167">selected (Wee::Brush::SelectListTag)</a><br />
+
+    <a href="classes/Wee/Session.html#M000027">send_response (Wee::Session)</a><br />
+
+    <a href="classes/Wee/Presenter.html#M000064">session (Wee::Presenter)</a><br />
+
+    <a href="classes/Wee/HtmlDocument.html#M000230">set (Wee::HtmlDocument)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000090">set_brush (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/Brush.html#M000116">setup (Wee::Brush)</a><br />
+
+    <a href="classes/Wee/HtmlWriter.html#M000187">single_tag (Wee::HtmlWriter)</a><br />
+
+    <a href="classes/Wee/Session.html#M000029">sleep (Wee::Session)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000075">space (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/Brush/TableRowTag.html#M000142">spacer (Wee::Brush::TableRowTag)</a><br />
+
+    <a href="classes/Wee/Brush/TableRowTag.html#M000141">spanning_column (Wee::Brush::TableRowTag)</a><br />
+
+    <a href="classes/Wee/HtmlWriter.html#M000186">start_tag (Wee::HtmlWriter)</a><br />
+
+    <a href="classes/Wee/Session.html#M000024">statistics (Wee::Session)</a><br />
+
+    <a href="classes/Wee/LRUCache.html#M000105">store (Wee::LRUCache)</a><br />
+
+    <a href="classes/Wee/DupReplaceSnapshotMixin.html#M000014">take_snapshot (Wee::DupReplaceSnapshotMixin)</a><br />
+
+    <a href="classes/Wee/ObjectSnapshotMixin.html#M000016">take_snapshot (Wee::ObjectSnapshotMixin)</a><br />
+
+    <a href="classes/Wee/StructSnapshotMixin.html#M000018">take_snapshot (Wee::StructSnapshotMixin)</a><br />
+
+    <a href="classes/Wee/Session.html#M000034">take_snapshot (Wee::Session)</a><br />
+
+    <a href="classes/Wee/Session.html#M000021">terminate (Wee::Session)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000076">text (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/HtmlWriter.html#M000189">text (Wee::HtmlWriter)</a><br />
+
+    <a href="classes/Wee/Brush/Page.html#M000184">title (Wee::Brush::Page)</a><br />
+
+    <a href="classes/Wee/HtmlDocument.html#M000232">to_s (Wee::HtmlDocument)</a><br />
+
+    <a href="classes/Wee/Callbacks.html#M000222">unregister (Wee::Callbacks)</a><br />
+
+    <a href="classes/Wee/CallbackRegistry.html#M000217">unregister (Wee::CallbackRegistry)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000082">update (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000086">url_for_callback (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/HtmlCanvas.html#M000087">url_for_callback_id (Wee::HtmlCanvas)</a><br />
+
+    <a href="classes/Wee/Brush/TextAreaTag.html#M000162">value (Wee::Brush::TextAreaTag)</a><br />
+
+    <a href="classes/Wee/Brush/GenericSingleTagBrush.html#M000133">with (Wee::Brush::GenericSingleTagBrush)</a><br />
+
+    <a href="classes/Wee/Brush/SelectListTag.html#M000171">with (Wee::Brush::SelectListTag)</a><br />
+
+    <a href="classes/Wee/Brush/GenericTagBrush.html#M000132">with (Wee::Brush::GenericTagBrush)</a><br />
+
+    <a href="classes/Wee/Renderer.html#M000053">with (Wee::Renderer)</a><br />
+
+    <a href="classes/Wee/Brush/Page.html#M000183">with (Wee::Brush::Page)</a><br />
+
+    <a href="classes/Wee/Brush/RadioButtonTag.html#M000179">with (Wee::Brush::RadioButtonTag)</a><br />
+
+    <a href="classes/Wee/Brush/CheckboxTag.html#M000156">with (Wee::Brush::CheckboxTag)</a><br />
+
+    <a href="classes/Wee/Brush.html#M000117">with (Wee::Brush)</a><br />
+
+    <a href="classes/Wee/Brush/GenericTextBrush.html#M000120">with (Wee::Brush::GenericTextBrush)</a><br />
+
+    <a href="classes/Wee/Brush/GenericEncodedTextBrush.html#M000122">with (Wee::Brush::GenericEncodedTextBrush)</a><br />
+
+    <a href="classes/Wee/Brush/FormTag.html#M000147">with (Wee::Brush::FormTag)</a><br />
+
+    <a href="classes/Wee/Brush/TextAreaTag.html#M000163">with (Wee::Brush::TextAreaTag)</a><br />
+
+    <a href="classes/Wee/Callbacks.html#M000223">with_triggered (Wee::Callbacks)</a><br />
+
+    <a href="classes/Wee/HtmlWriter.html#M000191">write (Wee::HtmlWriter)</a><br />
+
   </div>
 </div>
 </body>

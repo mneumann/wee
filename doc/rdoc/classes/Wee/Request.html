@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::Request</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Class: Wee::Request [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -25,7 +22,7 @@
       return false;
 
     elemStyle = elem.style;
-    
+
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -34,16 +31,15 @@
 
     return true;
   }
-  
+
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
-  
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
   // ]]>
   </script>
 
 </head>
 <body>
-
 
 
     <div id="classHeader">
@@ -55,62 +51,64 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
+
+
                 <a href="../../files/lib/wee/request_rb.html">
+
                 lib/wee/request.rb
+
                 </a>
+
+
         <br />
+
             </td>
         </tr>
+
 
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
+
                 Rack::Request
+
             </td>
         </tr>
+
         </table>
     </div>
   <!-- banner header -->
 
   <div id="bodyContent">
 
-
-
   <div id="contextContent">
 
-    <div id="description">
-      <p>
-NOTE that if fields named &quot;xxx&quot; and &quot;xxx.yyy&quot; occur,
-the value of @fields[&#8216;xxx&#8217;] is { nil =&gt; &#8230;,
-&#8216;yyy&#8217; =&gt; &#8230; }. This is required to make image buttons
-work correctly.
-</p>
-
-    </div>
-
-
    </div>
+
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000201">action?</a>&nbsp;&nbsp;
-      <a href="#M000203">build_url</a>&nbsp;&nbsp;
-      <a href="#M000200">new</a>&nbsp;&nbsp;
-      <a href="#M000199">new</a>&nbsp;&nbsp;
-      <a href="#M000202">render?</a>&nbsp;&nbsp;
+
+        <a href="#M000041">action?</a>&nbsp;&nbsp;
+
+        <a href="#M000043">build_url</a>&nbsp;&nbsp;
+
+        <a href="#M000040">new</a>&nbsp;&nbsp;
+
+        <a href="#M000039">new</a>&nbsp;&nbsp;
+
+        <a href="#M000042">render?</a>&nbsp;&nbsp;
+
       </div>
     </div>
 
   </div>
 
-
     <!-- if includes -->
 
     <div id="section">
-
-
 
 
 
@@ -119,140 +117,163 @@ work correctly.
 
       <div class="name-list">
         <table>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">fields</td>
+
           <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">page_id</td>
+
           <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">session_id</td>
+
           <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         </table>
       </div>
     </div>
-      
 
 
     <!-- if method_list -->
+
     <div id="methods">
+
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000200" class="method-detail">
-        <a name="M000200"></a>
+
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
 
         <div class="method-heading">
-          <a href="#M000200" class="method-signature">
+
+          <a href="#M000040" class="method-signature">
+
           <span class="method-name">new</span><span class="method-args">(env)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000200-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000200-source">
+            onclick="toggleCode('M000040-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000040-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/request.rb, line 20</span>
+<span class="ruby-comment cmt"># File lib/wee/request.rb, line 15</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">env</span>)
       <span class="ruby-keyword kw">super</span>(<span class="ruby-identifier">env</span>)
-      <span class="ruby-ivar">@fields</span> = {}
-      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">params</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">val</span><span class="ruby-operator">|</span>
-        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">key</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">&quot;.&quot;</span>) 
-          <span class="ruby-identifier">prefix</span>, <span class="ruby-identifier">postfix</span> = <span class="ruby-identifier">key</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;.&quot;</span>, <span class="ruby-value">2</span>)
-          <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@fields</span>[<span class="ruby-identifier">prefix</span>].<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hash</span>)
-            <span class="ruby-ivar">@fields</span>[<span class="ruby-identifier">prefix</span>][<span class="ruby-identifier">postfix</span>] = <span class="ruby-identifier">val</span>
-          <span class="ruby-keyword kw">else</span>
-            <span class="ruby-ivar">@fields</span>[<span class="ruby-identifier">prefix</span>] = { <span class="ruby-keyword kw">nil</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@fields</span>[<span class="ruby-identifier">prefix</span>], <span class="ruby-identifier">postfix</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">val</span> }
-          <span class="ruby-keyword kw">end</span>
-        <span class="ruby-keyword kw">else</span>
-          <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@fields</span>[<span class="ruby-identifier">key</span>].<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Hash</span>)
-            <span class="ruby-ivar">@fields</span>[<span class="ruby-identifier">key</span>][<span class="ruby-keyword kw">nil</span>] = <span class="ruby-identifier">val</span>
-          <span class="ruby-keyword kw">else</span>
-            <span class="ruby-ivar">@fields</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">val</span>
-          <span class="ruby-keyword kw">end</span>
-        <span class="ruby-keyword kw">end</span>
-      }
-
+      <span class="ruby-ivar">@fields</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">params</span>
       <span class="ruby-ivar">@session_id</span> = <span class="ruby-ivar">@fields</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">&quot;_s&quot;</span>)
       <span class="ruby-ivar">@page_id</span> = <span class="ruby-ivar">@fields</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">&quot;_p&quot;</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000199" class="method-detail">
-        <a name="M000199"></a>
+
+      <div id="method-M000039" class="method-detail">
+        <a name="M000039"></a>
 
         <div class="method-heading">
-          <a href="#M000199" class="method-signature">
+
+          <a href="#M000039" class="method-signature">
+
           <span class="method-name">new</span><span class="method-args">(env)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000199-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000199-source">
+            onclick="toggleCode('M000039-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000039-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/request.rb, line 12</span>
+<span class="ruby-comment cmt"># File lib/wee/request.rb, line 7</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">env</span>)
       <span class="ruby-identifier">env</span>[<span class="ruby-value str">'wee.request'</span>] <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">super</span> 
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
+
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000201" class="method-detail">
-        <a name="M000201"></a>
+
+      <div id="method-M000041" class="method-detail">
+        <a name="M000041"></a>
 
         <div class="method-heading">
-          <a href="#M000201" class="method-signature">
+
+          <a href="#M000041" class="method-signature">
+
           <span class="method-name">action?</span><span class="method-args">()</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
 Is this an action request?
 </p>
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000201-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000201-source">
+            onclick="toggleCode('M000041-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000041-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/request.rb, line 45</span>
+<span class="ruby-comment cmt"># File lib/wee/request.rb, line 23</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">action?</span>
       <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">render?</span>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000203" class="method-detail">
-        <a name="M000203"></a>
+
+      <div id="method-M000043" class="method-detail">
+        <a name="M000043"></a>
 
         <div class="method-heading">
-          <a href="#M000203" class="method-signature">
+
+          <a href="#M000043" class="method-signature">
+
           <span class="method-name">build_url</span><span class="method-args">(hash={})</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000203-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000203-source">
+            onclick="toggleCode('M000043-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000043-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/request.rb, line 54</span>
+<span class="ruby-comment cmt"># File lib/wee/request.rb, line 32</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_url</span>(<span class="ruby-identifier">hash</span>={})
       <span class="ruby-identifier">session_id</span> = <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">:session_id</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">:session_id</span>] <span class="ruby-operator">:</span> <span class="ruby-ivar">@session_id</span>
       <span class="ruby-identifier">page_id</span> = <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">:page_id</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">:page_id</span>] <span class="ruby-operator">:</span> <span class="ruby-ivar">@page_id</span>
@@ -274,41 +295,52 @@ Is this an action request?
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000202" class="method-detail">
-        <a name="M000202"></a>
+
+      <div id="method-M000042" class="method-detail">
+        <a name="M000042"></a>
 
         <div class="method-heading">
-          <a href="#M000202" class="method-signature">
+
+          <a href="#M000042" class="method-signature">
+
           <span class="method-name">render?</span><span class="method-args">()</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
 Is this a render request?
 </p>
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000202-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000202-source">
+            onclick="toggleCode('M000042-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000042-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/request.rb, line 50</span>
+<span class="ruby-comment cmt"># File lib/wee/request.rb, line 28</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render?</span>
       <span class="ruby-ivar">@fields</span>.<span class="ruby-identifier">empty?</span>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
 
 
     </div>
 
 
-  </div>
 
+
+  </div>
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

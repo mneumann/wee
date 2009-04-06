@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::LRUCache</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Class: Wee::LRUCache [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -25,7 +22,7 @@
       return false;
 
     elemStyle = elem.style;
-    
+
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -34,16 +31,15 @@
 
     return true;
   }
-  
+
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
-  
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
   // ]]>
   </script>
 
 </head>
 <body>
-
 
 
     <div id="classHeader">
@@ -55,28 +51,39 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
+
+
                 <a href="../../files/lib/wee/lru_cache_rb.html">
+
                 lib/wee/lru_cache.rb
+
                 </a>
+
+
         <br />
+
             </td>
         </tr>
+
 
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
+
                 <a href="../Object.html">
+
                 Object
+
                </a>
+
             </td>
         </tr>
+
         </table>
     </div>
   <!-- banner header -->
 
   <div id="bodyContent">
-
-
 
   <div id="contextContent">
 
@@ -87,29 +94,40 @@ Implementation of a Least Recently Used (LRU) Cache
 
     </div>
 
-
    </div>
+
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000028">[]</a>&nbsp;&nbsp;
-      <a href="#M000029">[]=</a>&nbsp;&nbsp;
-      <a href="#M000022">delete</a>&nbsp;&nbsp;
-      <a href="#M000023">delete_if</a>&nbsp;&nbsp;
-      <a href="#M000027">each</a>&nbsp;&nbsp;
-      <a href="#M000024">fetch</a>&nbsp;&nbsp;
-      <a href="#M000026">garbage_collect</a>&nbsp;&nbsp;
-      <a href="#M000021">has_key?</a>&nbsp;&nbsp;
-      <a href="#M000030">min_key</a>&nbsp;&nbsp;
-      <a href="#M000020">new</a>&nbsp;&nbsp;
-      <a href="#M000025">store</a>&nbsp;&nbsp;
+
+        <a href="#M000108">[]</a>&nbsp;&nbsp;
+
+        <a href="#M000109">[]=</a>&nbsp;&nbsp;
+
+        <a href="#M000102">delete</a>&nbsp;&nbsp;
+
+        <a href="#M000103">delete_if</a>&nbsp;&nbsp;
+
+        <a href="#M000107">each</a>&nbsp;&nbsp;
+
+        <a href="#M000104">fetch</a>&nbsp;&nbsp;
+
+        <a href="#M000106">garbage_collect</a>&nbsp;&nbsp;
+
+        <a href="#M000101">has_key?</a>&nbsp;&nbsp;
+
+        <a href="#M000110">min_key</a>&nbsp;&nbsp;
+
+        <a href="#M000100">new</a>&nbsp;&nbsp;
+
+        <a href="#M000105">store</a>&nbsp;&nbsp;
+
       </div>
     </div>
 
   </div>
-
 
     <!-- if includes -->
 
@@ -125,26 +143,31 @@ Implementation of a Least Recently Used (LRU) Cache
 
 
 
-      
-
-
     <!-- if method_list -->
+
     <div id="methods">
+
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000020" class="method-detail">
-        <a name="M000020"></a>
+
+      <div id="method-M000100" class="method-detail">
+        <a name="M000100"></a>
 
         <div class="method-heading">
-          <a href="#M000020" class="method-signature">
+
+          <a href="#M000100" class="method-signature">
+
           <span class="method-name">new</span><span class="method-args">(capacity=20, &amp;replace_callback)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000020-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000020-source">
+            onclick="toggleCode('M000100-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000100-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/lru_cache.rb, line 13</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">capacity</span>=<span class="ruby-value">20</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">replace_callback</span>)
@@ -155,52 +178,70 @@ Implementation of a Least Recently Used (LRU) Cache
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000028" class="method-detail">
-        <a name="M000028"></a>
+
+      <div id="method-M000108" class="method-detail">
+        <a name="M000108"></a>
 
         <div class="method-heading">
+
           <span class="method-name">[]</span><span class="method-args">(key, default_value=nil)</span>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
-Alias for <a href="LRUCache.html#M000024">fetch</a>
+Alias for <a href="LRUCache.html#M000104">fetch</a>
 </p>
+
         </div>
       </div>
 
-      <div id="method-M000029" class="method-detail">
-        <a name="M000029"></a>
+
+      <div id="method-M000109" class="method-detail">
+        <a name="M000109"></a>
 
         <div class="method-heading">
+
           <span class="method-name">[]=</span><span class="method-args">(key, value)</span>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
-Alias for <a href="LRUCache.html#M000025">store</a>
+Alias for <a href="LRUCache.html#M000105">store</a>
 </p>
+
         </div>
       </div>
 
-      <div id="method-M000022" class="method-detail">
-        <a name="M000022"></a>
+
+      <div id="method-M000102" class="method-detail">
+        <a name="M000102"></a>
 
         <div class="method-heading">
-          <a href="#M000022" class="method-signature">
+
+          <a href="#M000102" class="method-signature">
+
           <span class="method-name">delete</span><span class="method-args">(key)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000022-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000022-source">
+            onclick="toggleCode('M000102-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000102-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/lru_cache.rb, line 24</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">key</span>)
@@ -208,22 +249,29 @@ Alias for <a href="LRUCache.html#M000025">store</a>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000023" class="method-detail">
-        <a name="M000023"></a>
+
+      <div id="method-M000103" class="method-detail">
+        <a name="M000103"></a>
 
         <div class="method-heading">
-          <a href="#M000023" class="method-signature">
+
+          <a href="#M000103" class="method-signature">
+
           <span class="method-name">delete_if</span><span class="method-args">() {|id, item.value| ...}</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000023-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000023-source">
+            onclick="toggleCode('M000103-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000103-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/lru_cache.rb, line 28</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_if</span>
@@ -233,22 +281,29 @@ Alias for <a href="LRUCache.html#M000025">store</a>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000027" class="method-detail">
-        <a name="M000027"></a>
+
+      <div id="method-M000107" class="method-detail">
+        <a name="M000107"></a>
 
         <div class="method-heading">
-          <a href="#M000027" class="method-signature">
+
+          <a href="#M000107" class="method-signature">
+
           <span class="method-name">each</span><span class="method-args">(&amp;block)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000027-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000027-source">
+            onclick="toggleCode('M000107-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000107-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/lru_cache.rb, line 65</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
@@ -256,22 +311,29 @@ Alias for <a href="LRUCache.html#M000025">store</a>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000024" class="method-detail">
-        <a name="M000024"></a>
+
+      <div id="method-M000104" class="method-detail">
+        <a name="M000104"></a>
 
         <div class="method-heading">
-          <a href="#M000024" class="method-signature">
+
+          <a href="#M000104" class="method-signature">
+
           <span class="method-name">fetch</span><span class="method-args">(key, default_value=nil)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000024-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000024-source">
+            onclick="toggleCode('M000104-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000104-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/lru_cache.rb, line 34</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fetch</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">default_value</span>=<span class="ruby-keyword kw">nil</span>)
@@ -284,44 +346,58 @@ Alias for <a href="LRUCache.html#M000025">store</a>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000026" class="method-detail">
-        <a name="M000026"></a>
+
+      <div id="method-M000106" class="method-detail">
+        <a name="M000106"></a>
 
         <div class="method-heading">
-          <a href="#M000026" class="method-signature">
+
+          <a href="#M000106" class="method-signature">
+
           <span class="method-name">garbage_collect</span><span class="method-args">()</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000026-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000026-source">
+            onclick="toggleCode('M000106-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000106-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/lru_cache.rb, line 62</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">garbage_collect</span>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000021" class="method-detail">
-        <a name="M000021"></a>
+
+      <div id="method-M000101" class="method-detail">
+        <a name="M000101"></a>
 
         <div class="method-heading">
-          <a href="#M000021" class="method-signature">
+
+          <a href="#M000101" class="method-signature">
+
           <span class="method-name">has_key?</span><span class="method-args">(key)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000021-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000021-source">
+            onclick="toggleCode('M000101-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000101-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/lru_cache.rb, line 20</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">key</span>)
@@ -329,22 +405,29 @@ Alias for <a href="LRUCache.html#M000025">store</a>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000025" class="method-detail">
-        <a name="M000025"></a>
+
+      <div id="method-M000105" class="method-detail">
+        <a name="M000105"></a>
 
         <div class="method-heading">
-          <a href="#M000025" class="method-signature">
+
+          <a href="#M000105" class="method-signature">
+
           <span class="method-name">store</span><span class="method-args">(key, value)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000025-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000025-source">
+            onclick="toggleCode('M000105-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000105-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/lru_cache.rb, line 43</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">store</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
@@ -367,27 +450,36 @@ Alias for <a href="LRUCache.html#M000025">store</a>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
+
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000030" class="method-detail">
-        <a name="M000030"></a>
+
+      <div id="method-M000110" class="method-detail">
+        <a name="M000110"></a>
 
         <div class="method-heading">
-          <a href="#M000030" class="method-signature">
+
+          <a href="#M000110" class="method-signature">
+
           <span class="method-name">min_key</span><span class="method-args">()</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
 Returns the key of the minimum item
 </p>
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000030-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000030-source">
+            onclick="toggleCode('M000110-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000110-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/lru_cache.rb, line 77</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">min_key</span>
@@ -401,15 +493,18 @@ Returns the key of the minimum item
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
 
 
     </div>
 
 
-  </div>
 
+
+  </div>
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

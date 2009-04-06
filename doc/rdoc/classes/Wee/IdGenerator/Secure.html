@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::IdGenerator::Secure</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Class: Wee::IdGenerator::Secure [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -25,7 +22,7 @@
       return false;
 
     elemStyle = elem.style;
-    
+
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -34,16 +31,15 @@
 
     return true;
   }
-  
+
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
-  
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
   // ]]>
   </script>
 
 </head>
 <body>
-
 
 
     <div id="classHeader">
@@ -55,53 +51,70 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
+
+
                 <a href="../../../files/lib/wee/id_generator_rb.html">
+
                 lib/wee/id_generator.rb
+
                 </a>
+
+
         <br />
+
             </td>
         </tr>
+
 
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
-                IdGenerator
+
+                <a href="../IdGenerator.html">
+
+                Wee::IdGenerator
+
+               </a>
+
             </td>
         </tr>
+
         </table>
     </div>
   <!-- banner header -->
 
   <div id="bodyContent">
 
-
-
   <div id="contextContent">
 
     <div id="description">
       <p>
-Returned ids are unique with a very high probability and it&#8216;s very
-hard to guess the <a href="Secure.html#M000072">next</a> or any used id.
+Returned ids are unique with a very high probability and it&#8217;s very
+hard to guess the next or any used id.
 </p>
 
     </div>
 
-
    </div>
+
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000069">new</a>&nbsp;&nbsp;
-      <a href="#M000072">next</a>&nbsp;&nbsp;
-      <a href="#M000070">next_md5</a>&nbsp;&nbsp;
-      <a href="#M000071">next_secure</a>&nbsp;&nbsp;
+
+        <a href="#M000211">new</a>&nbsp;&nbsp;
+
+        <a href="#M000214">next</a>&nbsp;&nbsp;
+
+        <a href="#M000212">next_md5</a>&nbsp;&nbsp;
+
+        <a href="#M000213">next_secure</a>&nbsp;&nbsp;
+
       </div>
     </div>
 
   </div>
-
 
     <!-- if includes -->
 
@@ -110,27 +123,31 @@ hard to guess the <a href="Secure.html#M000072">next</a> or any used id.
 
 
 
-
-      
-
-
     <!-- if method_list -->
+
     <div id="methods">
+
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000069" class="method-detail">
-        <a name="M000069"></a>
+
+      <div id="method-M000211" class="method-detail">
+        <a name="M000211"></a>
 
         <div class="method-heading">
-          <a href="#M000069" class="method-signature">
+
+          <a href="#M000211" class="method-signature">
+
           <span class="method-name">new</span><span class="method-args">(salt='wee')</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000069-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000069-source">
+            onclick="toggleCode('M000211-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000211-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/id_generator.rb, line 39</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">salt</span>=<span class="ruby-value str">'wee'</span>)
@@ -138,24 +155,32 @@ hard to guess the <a href="Secure.html#M000072">next</a> or any used id.
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
+
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000072" class="method-detail">
-        <a name="M000072"></a>
+
+      <div id="method-M000214" class="method-detail">
+        <a name="M000214"></a>
 
         <div class="method-heading">
-          <a href="#M000072" class="method-signature">
+
+          <a href="#M000214" class="method-signature">
+
           <span class="method-name">next</span><span class="method-args">()</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000072-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000072-source">
+            onclick="toggleCode('M000214-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000214-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/id_generator.rb, line 60</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">next</span>
@@ -167,22 +192,29 @@ hard to guess the <a href="Secure.html#M000072">next</a> or any used id.
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000070" class="method-detail">
-        <a name="M000070"></a>
+
+      <div id="method-M000212" class="method-detail">
+        <a name="M000212"></a>
 
         <div class="method-heading">
-          <a href="#M000070" class="method-signature">
+
+          <a href="#M000212" class="method-signature">
+
           <span class="method-name">next_md5</span><span class="method-args">()</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000070-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000070-source">
+            onclick="toggleCode('M000212-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000212-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/id_generator.rb, line 43</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">next_md5</span>
@@ -197,22 +229,29 @@ hard to guess the <a href="Secure.html#M000072">next</a> or any used id.
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000071" class="method-detail">
-        <a name="M000071"></a>
+
+      <div id="method-M000213" class="method-detail">
+        <a name="M000213"></a>
 
         <div class="method-heading">
-          <a href="#M000071" class="method-signature">
+
+          <a href="#M000213" class="method-signature">
+
           <span class="method-name">next_secure</span><span class="method-args">()</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000071-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000071-source">
+            onclick="toggleCode('M000213-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000213-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/id_generator.rb, line 54</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">next_secure</span>
@@ -222,15 +261,18 @@ hard to guess the <a href="Secure.html#M000072">next</a> or any used id.
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
 
 
     </div>
 
 
-  </div>
 
+
+  </div>
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

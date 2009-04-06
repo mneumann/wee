@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Module: Wee::DecorationMixin</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Module: Wee::DecorationMixin [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -25,7 +22,7 @@
       return false;
 
     elemStyle = elem.style;
-    
+
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -34,16 +31,15 @@
 
     return true;
   }
-  
+
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
-  
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
   // ]]>
   </script>
 
 </head>
 <body>
-
 
 
     <div id="classHeader">
@@ -55,12 +51,20 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
+
+
                 <a href="../../files/lib/wee/decoration_rb.html">
+
                 lib/wee/decoration.rb
+
                 </a>
+
+
         <br />
+
             </td>
         </tr>
+
 
         </table>
     </div>
@@ -68,33 +72,32 @@
 
   <div id="bodyContent">
 
-
-
   <div id="contextContent">
 
-
-
    </div>
+
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000011">add_decoration</a>&nbsp;&nbsp;
-      <a href="#M000010">each_decoration</a>&nbsp;&nbsp;
-      <a href="#M000012">remove_decoration</a>&nbsp;&nbsp;
-      <a href="#M000013">remove_decoration_if</a>&nbsp;&nbsp;
+
+        <a href="#M000011">add_decoration</a>&nbsp;&nbsp;
+
+        <a href="#M000010">each_decoration</a>&nbsp;&nbsp;
+
+        <a href="#M000012">remove_decoration</a>&nbsp;&nbsp;
+
+        <a href="#M000013">remove_decoration_if</a>&nbsp;&nbsp;
+
       </div>
     </div>
 
   </div>
 
-
     <!-- if includes -->
 
     <div id="section">
-
-
 
 
 
@@ -103,31 +106,42 @@
 
       <div class="name-list">
         <table>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">decoration</td>
+
           <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         </table>
       </div>
     </div>
-      
 
 
     <!-- if method_list -->
+
     <div id="methods">
+
       <h3 class="section-bar">Public Instance methods</h3>
+
 
       <div id="method-M000011" class="method-detail">
         <a name="M000011"></a>
 
         <div class="method-heading">
+
           <a href="#M000011" class="method-signature">
+
           <span class="method-name">add_decoration</span><span class="method-args">(d)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
 Adds decoration <tt>d</tt> to the decoration chain.
 </p>
@@ -139,6 +153,7 @@ global decorations.
 <p>
 Returns: <tt>self</tt>
 </p>
+
           <p><a class="source-toggle" href="#"
             onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000011-source">
@@ -172,22 +187,30 @@ Returns: <tt>self</tt>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
 
       <div id="method-M000010" class="method-detail">
         <a name="M000010"></a>
 
         <div class="method-heading">
+
           <a href="#M000010" class="method-signature">
+
           <span class="method-name">each_decoration</span><span class="method-args">( {|decoration| ...}</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
 Iterates over all decorations (note that the component itself is excluded).
 </p>
+
           <p><a class="source-toggle" href="#"
             onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000010-source">
@@ -202,19 +225,26 @@ Iterates over all decorations (note that the component itself is excluded).
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
 
       <div id="method-M000012" class="method-detail">
         <a name="M000012"></a>
 
         <div class="method-heading">
+
           <a href="#M000012" class="method-signature">
+
           <span class="method-name">remove_decoration</span><span class="method-args">(d)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
 Remove decoration <tt>d</tt> from the decoration chain.
 </p>
@@ -222,6 +252,7 @@ Remove decoration <tt>d</tt> from the decoration chain.
 Returns the removed decoration or <tt>nil</tt> if it did not exist in the
 decoration chain.
 </p>
+
           <p><a class="source-toggle" href="#"
             onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000012-source">
@@ -246,19 +277,26 @@ decoration chain.
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
 
       <div id="method-M000013" class="method-detail">
         <a name="M000013"></a>
 
         <div class="method-heading">
+
           <a href="#M000013" class="method-signature">
+
           <span class="method-name">remove_decoration_if</span><span class="method-args">( {|decoration| ...}</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
 Remove all decorations that match the block condition.
 </p>
@@ -268,6 +306,7 @@ Example (removes all decorations of class <tt>HaloDecoration</tt>):
 <pre>
   remove_decoration_if {|d| d.class == HaloDecoration}
 </pre>
+
           <p><a class="source-toggle" href="#"
             onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000013-source">
@@ -280,15 +319,18 @@ Example (removes all decorations of class <tt>HaloDecoration</tt>):
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
 
 
     </div>
 
 
-  </div>
 
+
+  </div>
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

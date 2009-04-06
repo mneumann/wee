@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::ErrorResponse</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Class: Wee::ErrorResponse [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -25,7 +22,7 @@
       return false;
 
     elemStyle = elem.style;
-    
+
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -34,16 +31,15 @@
 
     return true;
   }
-  
+
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
-  
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
   // ]]>
   </script>
 
 </head>
 <body>
-
 
 
     <div id="classHeader">
@@ -55,52 +51,66 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
+
+
                 <a href="../../files/lib/wee/response_rb.html">
+
                 lib/wee/response.rb
+
                 </a>
+
+
         <br />
+
             </td>
         </tr>
+
 
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
+
                 <a href="Response.html">
-                Response
+
+                Wee::Response
+
                </a>
+
             </td>
         </tr>
+
         </table>
     </div>
   <!-- banner header -->
 
   <div id="bodyContent">
 
-
-
   <div id="contextContent">
 
-
-
    </div>
+
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000018">new</a>&nbsp;&nbsp;
+
+        <a href="#M000115">new</a>&nbsp;&nbsp;
+
       </div>
     </div>
 
   </div>
 
-
     <!-- if includes -->
+
     <div id="includes">
       <h3 class="section-bar">Included Modules</h3>
 
       <div id="includes-list">
+
         <span class="include-name">Rack::Utils</span>
+
       </div>
     </div>
 
@@ -109,48 +119,55 @@
 
 
 
-
-      
-
-
     <!-- if method_list -->
+
     <div id="methods">
+
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000018" class="method-detail">
-        <a name="M000018"></a>
+
+      <div id="method-M000115" class="method-detail">
+        <a name="M000115"></a>
 
         <div class="method-heading">
-          <a href="#M000018" class="method-signature">
+
+          <a href="#M000115" class="method-signature">
+
           <span class="method-name">new</span><span class="method-args">(exception)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000018-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000018-source">
+            onclick="toggleCode('M000115-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000115-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/response.rb, line 46</span>
+<span class="ruby-comment cmt"># File lib/wee/response.rb, line 49</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">exception</span>)
       <span class="ruby-keyword kw">super</span>()
-      <span class="ruby-identifier">write</span> <span class="ruby-value str">&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Error occured&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;</span>
-      <span class="ruby-identifier">write</span> <span class="ruby-node">&quot;&lt;p&gt;#{ escape_html(@exception.inspect) }&lt;br/&gt;&quot;</span>
-      <span class="ruby-identifier">write</span> <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">backtrace</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">escape_html</span>(<span class="ruby-identifier">s</span>)}.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;&lt;br/&gt;&quot;</span>) 
-      <span class="ruby-identifier">write</span> <span class="ruby-value str">&quot;&lt;/p&gt;&quot;</span>
-      <span class="ruby-identifier">write</span> <span class="ruby-value str">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span>
+      <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Error occured&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;</span>
+      <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&lt;p&gt;#{ escape_html(@exception.inspect) }&lt;br/&gt;&quot;</span>
+      <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">exception</span>.<span class="ruby-identifier">backtrace</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">escape_html</span>(<span class="ruby-identifier">s</span>)}.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;&lt;br/&gt;&quot;</span>) 
+      <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;/p&gt;&quot;</span>
+      <span class="ruby-keyword kw">self</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
 
 
     </div>
 
 
-  </div>
 
+
+  </div>
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

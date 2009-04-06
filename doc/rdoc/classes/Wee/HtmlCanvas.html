@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::HtmlCanvas</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>Class: Wee::HtmlCanvas [RDoc Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -25,7 +22,7 @@
       return false;
 
     elemStyle = elem.style;
-    
+
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -34,16 +31,15 @@
 
     return true;
   }
-  
+
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
-  
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
   // ]]>
   </script>
 
 </head>
 <body>
-
 
 
     <div id="classHeader">
@@ -55,92 +51,138 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
+
+
                 <a href="../../files/lib/wee/html_canvas_rb.html">
+
                 lib/wee/html_canvas.rb
+
                 </a>
+
+
         <br />
+
             </td>
         </tr>
+
 
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
+
                 <a href="Renderer.html">
-                Renderer
+
+                Wee::Renderer
+
                </a>
+
             </td>
         </tr>
+
         </table>
     </div>
   <!-- banner header -->
 
   <div id="bodyContent">
 
-
-
   <div id="contextContent">
 
-
-
    </div>
+
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000055">&lt;&lt;</a>&nbsp;&nbsp;
-      <a href="#M000049">brush_tag</a>&nbsp;&nbsp;
-      <a href="#M000062">build_url</a>&nbsp;&nbsp;
-      <a href="#M000047">close</a>&nbsp;&nbsp;
-      <a href="#M000056">encode_text</a>&nbsp;&nbsp;
-      <a href="#M000051">generic_single_tag</a>&nbsp;&nbsp;
-      <a href="#M000050">generic_tag</a>&nbsp;&nbsp;
-      <a href="#M000065">handle</a>&nbsp;&nbsp;
-      <a href="#M000066">handle2</a>&nbsp;&nbsp;
-      <a href="#M000067">handle3</a>&nbsp;&nbsp;
-      <a href="#M000058">link_css</a>&nbsp;&nbsp;
-      <a href="#M000057">multiline_text</a>&nbsp;&nbsp;
-      <a href="#M000048">nest</a>&nbsp;&nbsp;
-      <a href="#M000046">new</a>&nbsp;&nbsp;
-      <a href="#M000059">new_radio_group</a>&nbsp;&nbsp;
-      <a href="#M000063">register_callback</a>&nbsp;&nbsp;
-      <a href="#M000052">select_list</a>&nbsp;&nbsp;
-      <a href="#M000064">set_brush</a>&nbsp;&nbsp;
-      <a href="#M000053">space</a>&nbsp;&nbsp;
-      <a href="#M000054">text</a>&nbsp;&nbsp;
-      <a href="#M000060">url_for_callback</a>&nbsp;&nbsp;
-      <a href="#M000061">url_for_callback_id</a>&nbsp;&nbsp;
+
+        <a href="#M000077">&lt;&lt;</a>&nbsp;&nbsp;
+
+        <a href="#M000071">brush_tag</a>&nbsp;&nbsp;
+
+        <a href="#M000088">build_url</a>&nbsp;&nbsp;
+
+        <a href="#M000069">close</a>&nbsp;&nbsp;
+
+        <a href="#M000079">css</a>&nbsp;&nbsp;
+
+        <a href="#M000081">divert</a>&nbsp;&nbsp;
+
+        <a href="#M000078">encode_text</a>&nbsp;&nbsp;
+
+        <a href="#M000073">generic_single_tag</a>&nbsp;&nbsp;
+
+        <a href="#M000072">generic_tag</a>&nbsp;&nbsp;
+
+        <a href="#M000091">handle</a>&nbsp;&nbsp;
+
+        <a href="#M000092">handle2</a>&nbsp;&nbsp;
+
+        <a href="#M000093">handle3</a>&nbsp;&nbsp;
+
+        <a href="#M000084">link_css</a>&nbsp;&nbsp;
+
+        <a href="#M000080">multiline_text</a>&nbsp;&nbsp;
+
+        <a href="#M000070">nest</a>&nbsp;&nbsp;
+
+        <a href="#M000068">new</a>&nbsp;&nbsp;
+
+        <a href="#M000085">new_radio_group</a>&nbsp;&nbsp;
+
+        <a href="#M000083">once</a>&nbsp;&nbsp;
+
+        <a href="#M000089">register_callback</a>&nbsp;&nbsp;
+
+        <a href="#M000074">select_list</a>&nbsp;&nbsp;
+
+        <a href="#M000090">set_brush</a>&nbsp;&nbsp;
+
+        <a href="#M000075">space</a>&nbsp;&nbsp;
+
+        <a href="#M000076">text</a>&nbsp;&nbsp;
+
+        <a href="#M000082">update</a>&nbsp;&nbsp;
+
+        <a href="#M000086">url_for_callback</a>&nbsp;&nbsp;
+
+        <a href="#M000087">url_for_callback_id</a>&nbsp;&nbsp;
+
       </div>
     </div>
 
   </div>
 
-
     <!-- if includes -->
 
     <div id="section">
-
 
     <div id="constants-list">
       <h3 class="section-bar">Constants</h3>
 
       <div class="name-list">
         <table summary="Constants">
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">HTML_NBSP</td>
           <td>=</td>
           <td class="context-item-value">&quot;&amp;nbsp;&quot;.freeze</td>
+
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">HTML_TYPE_CSS</td>
           <td>=</td>
           <td class="context-item-value">'text/css'.freeze</td>
+
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">HTML_REL_STYLESHEET</td>
           <td>=</td>
           <td class="context-item-value">'stylesheet'.freeze</td>
+
         </tr>
+
         </table>
       </div>
     </div>
@@ -149,15 +191,18 @@
       <h3 class="section-bar">External Aliases</h3>
 
       <div class="name-list">
-                        <table summary="aliases">
+      <table summary="aliases">
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">check_box</td>
           <td>-&gt;</td>
           <td class="context-item-value">checkbox</td>
         </tr>
-                        </table>
+
+        </table>
       </div>
     </div>
+
 
 
     <div id="attribute-list">
@@ -165,234 +210,373 @@
 
       <div class="name-list">
         <table>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">anchor</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">body</td>
+
           <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">bold</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">break</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">check_box</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">div</td>
+
           <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">file_upload</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">form</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">h1</td>
+
           <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">h2</td>
+
           <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">h3</td>
+
           <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">h4</td>
+
           <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">h5</td>
+
           <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">head</td>
+
           <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">hidden_input</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">hr</td>
+
           <td class="context-item-value">&nbsp;[GenericSingleTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">html</td>
+
           <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">image</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">image_button</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">input</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">javascript</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">label</td>
+
           <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">li</td>
+
           <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">link</td>
+
           <td class="context-item-value">&nbsp;[GenericSingleTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">ol</td>
+
           <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">option</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">page</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">paragraph</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">password_input</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">pre</td>
+
+          <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">radio_button</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">span</td>
+
           <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">style</td>
+
           <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">submit_button</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">table</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">table_data</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">table_header</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">table_row</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">text_area</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">text_input</td>
+
           <td class="context-item-value">&nbsp;[Brush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">title</td>
+
           <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">ul</td>
+
           <td class="context-item-value">&nbsp;[GenericTagBrush]&nbsp;</td>
+
           <td class="context-item-desc"></td>
         </tr>
+
         </table>
       </div>
     </div>
-      
 
 
     <!-- if method_list -->
+
     <div id="methods">
+
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000049" class="method-detail">
-        <a name="M000049"></a>
+
+      <div id="method-M000071" class="method-detail">
+        <a name="M000071"></a>
 
         <div class="method-heading">
-          <a href="#M000049" class="method-signature">
+
+          <a href="#M000071" class="method-signature">
+
           <span class="method-name">brush_tag</span><span class="method-args">(attr, klass, *args_to_new)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000049-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000049-source">
+            onclick="toggleCode('M000071-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000071-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 27</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">brush_tag</span>(<span class="ruby-identifier">attr</span>, <span class="ruby-identifier">klass</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args_to_new</span>)
@@ -419,22 +603,29 @@
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000051" class="method-detail">
-        <a name="M000051"></a>
+
+      <div id="method-M000073" class="method-detail">
+        <a name="M000073"></a>
 
         <div class="method-heading">
-          <a href="#M000051" class="method-signature">
+
+          <a href="#M000073" class="method-signature">
+
           <span class="method-name">generic_single_tag</span><span class="method-args">(*attrs)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000051-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000051-source">
+            onclick="toggleCode('M000073-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000073-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 54</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">generic_single_tag</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">attrs</span>)
@@ -442,22 +633,29 @@
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000050" class="method-detail">
-        <a name="M000050"></a>
+
+      <div id="method-M000072" class="method-detail">
+        <a name="M000072"></a>
 
         <div class="method-heading">
-          <a href="#M000050" class="method-signature">
+
+          <a href="#M000072" class="method-signature">
+
           <span class="method-name">generic_tag</span><span class="method-args">(*attrs)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000050-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000050-source">
+            onclick="toggleCode('M000072-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000072-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 50</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">generic_tag</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">attrs</span>)
@@ -465,22 +663,29 @@
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000046" class="method-detail">
-        <a name="M000046"></a>
+
+      <div id="method-M000068" class="method-detail">
+        <a name="M000068"></a>
 
         <div class="method-heading">
-          <a href="#M000046" class="method-signature">
+
+          <a href="#M000068" class="method-signature">
+
           <span class="method-name">new</span><span class="method-args">(*args)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000046-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000046-source">
+            onclick="toggleCode('M000068-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000068-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 7</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
@@ -489,61 +694,81 @@
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000055" class="method-detail">
-        <a name="M000055"></a>
+
+      <div id="method-M000077" class="method-detail">
+        <a name="M000077"></a>
 
         <div class="method-heading">
+
           <span class="method-name">&lt;&lt;</span><span class="method-args">(str)</span>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
-Alias for <a href="HtmlCanvas.html#M000054">text</a>
+Alias for <a href="HtmlCanvas.html#M000076">text</a>
 </p>
+
         </div>
       </div>
 
-      <div id="method-M000062" class="method-detail">
-        <a name="M000062"></a>
+
+      <div id="method-M000088" class="method-detail">
+        <a name="M000088"></a>
 
         <div class="method-heading">
-          <a href="#M000062" class="method-signature">
+
+          <a href="#M000088" class="method-signature">
+
           <span class="method-name">build_url</span><span class="method-args">(*args)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000062-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000062-source">
+            onclick="toggleCode('M000088-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000088-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 157</span>
+<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 195</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_url</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
       <span class="ruby-ivar">@request</span>.<span class="ruby-identifier">build_url</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000047" class="method-detail">
-        <a name="M000047"></a>
+
+      <div id="method-M000069" class="method-detail">
+        <a name="M000069"></a>
 
         <div class="method-heading">
-          <a href="#M000047" class="method-signature">
+
+          <a href="#M000069" class="method-signature">
+
           <span class="method-name">close</span><span class="method-args">()</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000047-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000047-source">
+            onclick="toggleCode('M000069-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000069-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 12</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
@@ -552,22 +777,100 @@ Alias for <a href="HtmlCanvas.html#M000054">text</a>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000056" class="method-detail">
-        <a name="M000056"></a>
+
+      <div id="method-M000079" class="method-detail">
+        <a name="M000079"></a>
 
         <div class="method-heading">
-          <a href="#M000056" class="method-signature">
-          <span class="method-name">encode_text</span><span class="method-args">(str)</span>
+
+          <a href="#M000079" class="method-signature">
+
+          <span class="method-name">css</span><span class="method-args">(str)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000056-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000056-source">
+            onclick="toggleCode('M000079-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000079-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 114</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">css</span>(<span class="ruby-identifier">str</span>)
+      <span class="ruby-ivar">@current_brush</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@current_brush</span>
+      <span class="ruby-ivar">@current_brush</span> = <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-ivar">@document</span>.<span class="ruby-identifier">start_tag</span>(<span class="ruby-identifier">:style</span>, <span class="ruby-value str">'type'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'text/css'</span>)
+      <span class="ruby-ivar">@document</span>.<span class="ruby-identifier">write</span>(<span class="ruby-value str">&quot;&lt;!--\n&quot;</span>)
+      <span class="ruby-ivar">@document</span>.<span class="ruby-identifier">text</span>(<span class="ruby-identifier">str</span>)
+      <span class="ruby-ivar">@document</span>.<span class="ruby-identifier">write</span>(<span class="ruby-value str">&quot;--&gt;\n&quot;</span>)
+      <span class="ruby-ivar">@document</span>.<span class="ruby-identifier">end_tag</span>(<span class="ruby-identifier">:style</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000081" class="method-detail">
+        <a name="M000081"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000081" class="method-signature">
+
+          <span class="method-name">divert</span><span class="method-args">(tag, txt=nil, &amp;block)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Define a divert location or change into an existing divert location (and
+append <tt>txt</tt> or the contents of <tt>block</tt>).
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000081-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000081-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 148</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">divert</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">txt</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-ivar">@document</span>.<span class="ruby-identifier">divert</span>(<span class="ruby-identifier">tag</span>, <span class="ruby-identifier">txt</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000078" class="method-detail">
+        <a name="M000078"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000078" class="method-signature">
+
+          <span class="method-name">encode_text</span><span class="method-args">(str)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000078-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000078-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 107</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">encode_text</span>(<span class="ruby-identifier">str</span>)
@@ -578,50 +881,65 @@ Alias for <a href="HtmlCanvas.html#M000054">text</a>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000058" class="method-detail">
-        <a name="M000058"></a>
+
+      <div id="method-M000084" class="method-detail">
+        <a name="M000084"></a>
 
         <div class="method-heading">
-          <a href="#M000058" class="method-signature">
+
+          <a href="#M000084" class="method-signature">
+
           <span class="method-name">link_css</span><span class="method-args">(url)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000058-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000058-source">
+            onclick="toggleCode('M000084-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000084-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 137</span>
+<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 175</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">link_css</span>(<span class="ruby-identifier">url</span>)
       <span class="ruby-identifier">link</span>.<span class="ruby-identifier">type</span>(<span class="ruby-constant">HTML_TYPE_CSS</span>).<span class="ruby-identifier">rel</span>(<span class="ruby-constant">HTML_REL_STYLESHEET</span>).<span class="ruby-identifier">href</span>(<span class="ruby-identifier">url</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000057" class="method-detail">
-        <a name="M000057"></a>
+
+      <div id="method-M000080" class="method-detail">
+        <a name="M000080"></a>
 
         <div class="method-heading">
-          <a href="#M000057" class="method-signature">
+
+          <a href="#M000080" class="method-signature">
+
           <span class="method-name">multiline_text</span><span class="method-args">(str, encode=true)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
-converts \n into &lt;br/&gt;
+converts n into <br/>
 </p>
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000057-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000057-source">
+            onclick="toggleCode('M000080-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000080-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 117</span>
+<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 127</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">multiline_text</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">encode</span>=<span class="ruby-keyword kw">true</span>)
       <span class="ruby-ivar">@current_brush</span>.<span class="ruby-identifier">close</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@current_brush</span>
       <span class="ruby-ivar">@current_brush</span> = <span class="ruby-keyword kw">nil</span>
@@ -640,22 +958,29 @@ converts \n into &lt;br/&gt;
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000048" class="method-detail">
-        <a name="M000048"></a>
+
+      <div id="method-M000070" class="method-detail">
+        <a name="M000070"></a>
 
         <div class="method-heading">
-          <a href="#M000048" class="method-signature">
+
+          <a href="#M000070" class="method-signature">
+
           <span class="method-name">nest</span><span class="method-args">() {|| ...}</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000048-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000048-source">
+            onclick="toggleCode('M000070-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000070-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 17</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">nest</span>
@@ -669,47 +994,98 @@ converts \n into &lt;br/&gt;
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000059" class="method-detail">
-        <a name="M000059"></a>
+
+      <div id="method-M000085" class="method-detail">
+        <a name="M000085"></a>
 
         <div class="method-heading">
-          <a href="#M000059" class="method-signature">
+
+          <a href="#M000085" class="method-signature">
+
           <span class="method-name">new_radio_group</span><span class="method-args">()</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000059-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000059-source">
+            onclick="toggleCode('M000085-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000085-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 141</span>
+<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 179</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new_radio_group</span>
       <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Brush</span><span class="ruby-operator">::</span><span class="ruby-constant">RadioButtonTag</span><span class="ruby-operator">::</span><span class="ruby-constant">RadioGroup</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000063" class="method-detail">
-        <a name="M000063"></a>
+
+      <div id="method-M000083" class="method-detail">
+        <a name="M000083"></a>
 
         <div class="method-heading">
-          <a href="#M000063" class="method-signature">
-          <span class="method-name">register_callback</span><span class="method-args">(type, callback)</span>
+
+          <a href="#M000083" class="method-signature">
+
+          <span class="method-name">once</span><span class="method-args">(tag) {|if block_given?| ...}</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
+          <p>
+Render specific markup only once. For example style and/or javascript of a
+component which has many instances.
+</p>
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000063-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000063-source">
+            onclick="toggleCode('M000083-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000083-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 161</span>
+<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 166</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">once</span>(<span class="ruby-identifier">tag</span>)
+      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span>  <span class="ruby-ivar">@document</span>.<span class="ruby-identifier">set</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">tag</span>)
+      <span class="ruby-ivar">@document</span>.<span class="ruby-identifier">set</span>[<span class="ruby-identifier">tag</span>] = <span class="ruby-keyword kw">true</span>
+      <span class="ruby-keyword kw">yield</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block_given?</span> 
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000089" class="method-detail">
+        <a name="M000089"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000089" class="method-signature">
+
+          <span class="method-name">register_callback</span><span class="method-args">(type, callback)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000089-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000089-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 199</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">register_callback</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">callback</span>)
       <span class="ruby-identifier">cbs</span> = <span class="ruby-ivar">@callbacks</span>
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cbs</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-node">&quot;#{type}_callbacks&quot;</span>)
@@ -720,22 +1096,29 @@ converts \n into &lt;br/&gt;
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000052" class="method-detail">
-        <a name="M000052"></a>
+
+      <div id="method-M000074" class="method-detail">
+        <a name="M000074"></a>
 
         <div class="method-heading">
-          <a href="#M000052" class="method-signature">
+
+          <a href="#M000074" class="method-signature">
+
           <span class="method-name">select_list</span><span class="method-args">(items, &amp;block)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000052-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000052-source">
+            onclick="toggleCode('M000074-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000074-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 88</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">select_list</span>(<span class="ruby-identifier">items</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
@@ -743,22 +1126,29 @@ converts \n into &lt;br/&gt;
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000053" class="method-detail">
-        <a name="M000053"></a>
+
+      <div id="method-M000075" class="method-detail">
+        <a name="M000075"></a>
 
         <div class="method-heading">
-          <a href="#M000053" class="method-signature">
+
+          <a href="#M000075" class="method-signature">
+
           <span class="method-name">space</span><span class="method-args">(n=1)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000053-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000053-source">
+            onclick="toggleCode('M000075-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000075-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 94</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">space</span>(<span class="ruby-identifier">n</span>=<span class="ruby-value">1</span>)
@@ -766,22 +1156,29 @@ converts \n into &lt;br/&gt;
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000054" class="method-detail">
-        <a name="M000054"></a>
+
+      <div id="method-M000076" class="method-detail">
+        <a name="M000076"></a>
 
         <div class="method-heading">
-          <a href="#M000054" class="method-signature">
+
+          <a href="#M000076" class="method-signature">
+
           <span class="method-name">text</span><span class="method-args">(str)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000054-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000054-source">
+            onclick="toggleCode('M000076-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000076-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 98</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">text</span>(<span class="ruby-identifier">str</span>)
@@ -792,47 +1189,98 @@ converts \n into &lt;br/&gt;
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000060" class="method-detail">
-        <a name="M000060"></a>
+
+      <div id="method-M000082" class="method-detail">
+        <a name="M000082"></a>
 
         <div class="method-heading">
-          <a href="#M000060" class="method-signature">
-          <span class="method-name">url_for_callback</span><span class="method-args">(callback, type=:action, hash=nil)</span>
+
+          <a href="#M000082" class="method-signature">
+
+          <span class="method-name">update</span><span class="method-args">(*components)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
+          <p>
+To update components in an AJAX request.
+</p>
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000060-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000060-source">
+            onclick="toggleCode('M000082-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000082-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 145</span>
+<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 155</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">components</span>)
+      <span class="ruby-identifier">components</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">callbacks</span>.<span class="ruby-identifier">unregister</span>(<span class="ruby-identifier">c</span>)
+        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">render_decoration</span>(<span class="ruby-identifier">c</span>)
+      }
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000086" class="method-detail">
+        <a name="M000086"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000086" class="method-signature">
+
+          <span class="method-name">url_for_callback</span><span class="method-args">(callback, type=:action, hash=nil)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000086-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000086-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 183</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">url_for_callback</span>(<span class="ruby-identifier">callback</span>, <span class="ruby-identifier">type</span>=<span class="ruby-identifier">:action</span>, <span class="ruby-identifier">hash</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-identifier">url_for_callback_id</span>(<span class="ruby-identifier">register_callback</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">callback</span>), <span class="ruby-identifier">hash</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000061" class="method-detail">
-        <a name="M000061"></a>
+
+      <div id="method-M000087" class="method-detail">
+        <a name="M000087"></a>
 
         <div class="method-heading">
-          <a href="#M000061" class="method-signature">
+
+          <a href="#M000087" class="method-signature">
+
           <span class="method-name">url_for_callback_id</span><span class="method-args">(callback_id, hash=nil)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000061-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000061-source">
+            onclick="toggleCode('M000087-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000087-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 149</span>
+<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 187</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">url_for_callback_id</span>(<span class="ruby-identifier">callback_id</span>, <span class="ruby-identifier">hash</span>=<span class="ruby-keyword kw">nil</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">hash</span>
         <span class="ruby-identifier">build_url</span>(<span class="ruby-identifier">hash</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">:callback_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">callback_id</span>))
@@ -842,26 +1290,34 @@ converts \n into &lt;br/&gt;
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
+
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000065" class="method-detail">
-        <a name="M000065"></a>
+
+      <div id="method-M000091" class="method-detail">
+        <a name="M000091"></a>
 
         <div class="method-heading">
-          <a href="#M000065" class="method-signature">
+
+          <a href="#M000091" class="method-signature">
+
           <span class="method-name">handle</span><span class="method-args">(brush, *args, &amp;block)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000065-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000065-source">
+            onclick="toggleCode('M000091-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000091-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 181</span>
+<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 219</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle</span>(<span class="ruby-identifier">brush</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span> <span class="ruby-keyword kw">or</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">empty?</span>
         <span class="ruby-identifier">set_brush</span>(<span class="ruby-identifier">brush</span>)
@@ -872,24 +1328,31 @@ converts \n into &lt;br/&gt;
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000066" class="method-detail">
-        <a name="M000066"></a>
+
+      <div id="method-M000092" class="method-detail">
+        <a name="M000092"></a>
 
         <div class="method-heading">
-          <a href="#M000066" class="method-signature">
+
+          <a href="#M000092" class="method-signature">
+
           <span class="method-name">handle2</span><span class="method-args">(brush, &amp;block)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000066-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000066-source">
+            onclick="toggleCode('M000092-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000092-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 190</span>
+<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 228</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle2</span>(<span class="ruby-identifier">brush</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>
         <span class="ruby-identifier">set_brush</span>(<span class="ruby-identifier">brush</span>)
@@ -900,38 +1363,50 @@ converts \n into &lt;br/&gt;
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
 
-      <div id="method-M000067" class="method-detail">
-        <a name="M000067"></a>
+
+      <div id="method-M000093" class="method-detail">
+        <a name="M000093"></a>
 
         <div class="method-heading">
+
           <span class="method-name">handle3</span><span class="method-args">(brush)</span>
+
         </div>
-      
+
         <div class="method-description">
+
           <p>
-Alias for <a href="HtmlCanvas.html#M000064">set_brush</a>
+Alias for <a href="HtmlCanvas.html#M000090">set_brush</a>
 </p>
+
         </div>
       </div>
 
-      <div id="method-M000064" class="method-detail">
-        <a name="M000064"></a>
+
+      <div id="method-M000090" class="method-detail">
+        <a name="M000090"></a>
 
         <div class="method-heading">
-          <a href="#M000064" class="method-signature">
+
+          <a href="#M000090" class="method-signature">
+
           <span class="method-name">set_brush</span><span class="method-args">(brush)</span>
+
           </a>
+
         </div>
-      
+
         <div class="method-description">
+
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000064-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000064-source">
+            onclick="toggleCode('M000090-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000090-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 172</span>
+<span class="ruby-comment cmt"># File lib/wee/html_canvas.rb, line 210</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_brush</span>(<span class="ruby-identifier">brush</span>)
       <span class="ruby-identifier">brush</span>.<span class="ruby-identifier">setup</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-ivar">@document</span>)
 
@@ -942,15 +1417,18 @@ Alias for <a href="HtmlCanvas.html#M000064">set_brush</a>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
+
         </div>
       </div>
+
 
 
     </div>
 
 
-  </div>
 
+
+  </div>
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
