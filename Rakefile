@@ -1,9 +1,9 @@
 require 'rake/rdoctask'
 
 Rake::RDocTask.new do |rd|
-  rd.main = "README"
+  rd.main = "README.rdoc"
   rd.rdoc_dir = 'doc/rdoc'
-  rd.rdoc_files.include('lib/**/*.rb', 'README')
+  rd.rdoc_files.include('lib/**/*.rb', 'README.rdoc')
   rd.options << '--inline-source' 
   rd.options << '--all' 
   rd.options << '--accessor=html_attr=HtmlAttribute'
