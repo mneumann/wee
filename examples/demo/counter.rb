@@ -20,11 +20,16 @@ class Counter < Wee::Component
   end
 
   def render(r)
-    r.anchor.callback_method(:dec).with("--")
-    r.space
-    render_count(r)
-    r.space 
-    r.anchor.callback_method(:inc).with("++")
+    r.once(self.class) {
+      r.css ".wee-Counter a { border: 1px dotted blue; margin: 2px; }"
+    }
+    r.div.id("wee-#{object_id.to_s(36)}").css_class('wee-Counter').with {
+      r.anchor.callback_method(:dec).with("--")
+      r.space
+      render_count(r)
+      r.space
+      r.anchor.callback_method(:inc).with("++")
+    }
   end
 
   def render_count(r)
