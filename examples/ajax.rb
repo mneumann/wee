@@ -16,7 +16,12 @@ class AjaxCounter < Wee::Component
   end
 
   def render(r)
-    r.div.oid.onclick_update_self_callback { @counter += 1 }.with(@counter.to_s)
+    r.once(self.class) {
+      r.css "div.wee-AjaxCounter a { border: 1px solid blue; padding: 5px; background-color: #ABABAB; };"
+    }
+    r.div.css_class('wee-AjaxCounter').oid.with {
+      r.anchor.onclick_update_self_callback { @counter += 1 }.with(@counter.to_s)
+    }
   end
 end
 
@@ -33,10 +38,19 @@ class HelloWorld < Wee::Component
         Wee::JQuery.javascript_includes(r)
       }
       r.body {
+        render_hello(r)
         r.div.onclick_callback { p "refresh" }.with("Refresh")
         @cs.each {|c| r.render(c); r.break}
       }
     }
+  end
+
+  def render_hello(r)
+    @hello ||= "Hello"
+    r.div.id("hello").onclick_update_callback {|r|
+      @hello.reverse!
+      render_hello(r)
+    }.with(@hello)
   end
 end
 
@@ -50,5 +64,8 @@ if __FILE__ == $0
       }
     end
   end
+  puts
+  puts "Open your browser at: http://localhost:2000/ajax"
+  puts
   Rack::Handler::WEBrick.run(app, :Port => 2000)
 end
