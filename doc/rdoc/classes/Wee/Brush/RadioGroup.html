@@ -1,9 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::Brush::RadioGroup [RDoc Documentation]</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Class: Wee::Brush::RadioGroup</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -22,7 +25,7 @@
       return false;
 
     elemStyle = elem.style;
-
+    
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -31,15 +34,16 @@
 
     return true;
   }
-
+  
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
-
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
   // ]]>
   </script>
 
 </head>
 <body>
+
 
 
     <div id="classHeader">
@@ -51,67 +55,47 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-
-
                 <a href="../../../files/lib/wee/html_brushes_rb.html">
-
                 lib/wee/html_brushes.rb
-
                 </a>
-
-
         <br />
-
             </td>
         </tr>
-
 
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
-
                 <a href="../../Object.html">
-
                 Object
-
                </a>
-
             </td>
         </tr>
-
         </table>
     </div>
   <!-- banner header -->
 
   <div id="bodyContent">
 
+
+
   <div id="contextContent">
 
-    <div id="description">
-      <hr size="10"></hr><pre>
- Form - Radio
-</pre>
-<hr size="10"></hr>
-    </div>
+
 
    </div>
-
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-
-        <a href="#M000174">add_callback</a>&nbsp;&nbsp;
-
-        <a href="#M000175">call</a>&nbsp;&nbsp;
-
-        <a href="#M000173">new</a>&nbsp;&nbsp;
-
+      <a href="#M000177">add_callback</a>&nbsp;&nbsp;
+      <a href="#M000178">call</a>&nbsp;&nbsp;
+      <a href="#M000176">new</a>&nbsp;&nbsp;
       </div>
     </div>
 
   </div>
+
 
     <!-- if includes -->
 
@@ -120,33 +104,29 @@
 
 
 
+
+      
+
+
     <!-- if method_list -->
-
     <div id="methods">
-
       <h3 class="section-bar">Public Class methods</h3>
 
-
-      <div id="method-M000173" class="method-detail">
-        <a name="M000173"></a>
+      <div id="method-M000176" class="method-detail">
+        <a name="M000176"></a>
 
         <div class="method-heading">
-
-          <a href="#M000173" class="method-signature">
-
+          <a href="#M000176" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(canvas)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000173-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000173-source">
+            onclick="toggleCode('M000176-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000176-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 613</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 612</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">canvas</span>)
       <span class="ruby-ivar">@name</span> = <span class="ruby-identifier">canvas</span>.<span class="ruby-identifier">register_callback</span>(<span class="ruby-identifier">:input</span>, <span class="ruby-keyword kw">self</span>)
       <span class="ruby-ivar">@callbacks</span> = {}
@@ -154,34 +134,26 @@
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
 
-
       <h3 class="section-bar">Public Instance methods</h3>
 
-
-      <div id="method-M000174" class="method-detail">
-        <a name="M000174"></a>
+      <div id="method-M000177" class="method-detail">
+        <a name="M000177"></a>
 
         <div class="method-heading">
-
-          <a href="#M000174" class="method-signature">
-
+          <a href="#M000177" class="method-signature">
           <span class="method-name">add_callback</span><span class="method-args">(callback)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000174-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000174-source">
+            onclick="toggleCode('M000177-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000177-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 619</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 618</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_callback</span>(<span class="ruby-identifier">callback</span>)
       <span class="ruby-identifier">value</span> = <span class="ruby-ivar">@ids</span>.<span class="ruby-identifier">next</span>.<span class="ruby-identifier">to_s</span>
       <span class="ruby-ivar">@callbacks</span>[<span class="ruby-identifier">value</span>] = <span class="ruby-identifier">callback</span>
@@ -189,31 +161,24 @@
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
 
-
-      <div id="method-M000175" class="method-detail">
-        <a name="M000175"></a>
+      <div id="method-M000178" class="method-detail">
+        <a name="M000178"></a>
 
         <div class="method-heading">
-
-          <a href="#M000175" class="method-signature">
-
+          <a href="#M000178" class="method-signature">
           <span class="method-name">call</span><span class="method-args">(value)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000175-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000175-source">
+            onclick="toggleCode('M000178-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000178-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 625</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 624</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">value</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@callbacks</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">value</span>)
         <span class="ruby-identifier">cb</span> = <span class="ruby-ivar">@callbacks</span>[<span class="ruby-identifier">value</span>]
@@ -224,18 +189,15 @@
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
-
 
 
     </div>
 
 
-
-
   </div>
+
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

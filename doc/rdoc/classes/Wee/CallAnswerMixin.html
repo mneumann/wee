@@ -1,9 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Module: Wee::CallAnswerMixin [RDoc Documentation]</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Module: Wee::CallAnswerMixin</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -22,7 +25,7 @@
       return false;
 
     elemStyle = elem.style;
-
+    
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -31,15 +34,16 @@
 
     return true;
   }
-
+  
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
-
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
   // ]]>
   </script>
 
 </head>
 <body>
+
 
 
     <div id="classHeader">
@@ -51,20 +55,12 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-
-
                 <a href="../../files/lib/wee/call_answer_rb.html">
-
                 lib/wee/call_answer.rb
-
                 </a>
-
-
         <br />
-
             </td>
         </tr>
-
 
         </table>
     </div>
@@ -72,26 +68,26 @@
 
   <div id="bodyContent">
 
+
+
   <div id="contextContent">
 
-   </div>
 
+
+   </div>
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-
-        <a href="#M000006">answer</a>&nbsp;&nbsp;
-
-        <a href="#M000004">call</a>&nbsp;&nbsp;
-
-        <a href="#M000005">callcc</a>&nbsp;&nbsp;
-
+      <a href="#M000010">answer</a>&nbsp;&nbsp;
+      <a href="#M000008">call</a>&nbsp;&nbsp;
+      <a href="#M000009">callcc</a>&nbsp;&nbsp;
       </div>
     </div>
 
   </div>
+
 
     <!-- if includes -->
 
@@ -100,42 +96,37 @@
 
 
 
+
+      
+
+
     <!-- if method_list -->
-
     <div id="methods">
-
       <h3 class="section-bar">Protected Instance methods</h3>
 
-
-      <div id="method-M000006" class="method-detail">
-        <a name="M000006"></a>
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
 
         <div class="method-heading">
-
-          <a href="#M000006" class="method-signature">
-
+          <a href="#M000010" class="method-signature">
           <span class="method-name">answer</span><span class="method-args">(*args)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p>
 Return from a called component.
 </p>
 <p>
-NOTE that <a href="CallAnswerMixin.html#M000006">answer</a> never returns.
+NOTE that <a href="CallAnswerMixin.html#M000010">answer</a> never returns.
 </p>
 <p>
-See <a href="CallAnswerMixin.html#M000004">call</a> for a detailed
+See <a href="CallAnswerMixin.html#M000008">call</a> for a detailed
 description of the call/answer mechanism.
 </p>
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000006-source">
+            onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000010-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/call_answer.rb, line 112</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">answer</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
@@ -143,30 +134,23 @@ description of the call/answer mechanism.
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
 
-
-      <div id="method-M000004" class="method-detail">
-        <a name="M000004"></a>
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
 
         <div class="method-heading">
-
-          <a href="#M000004" class="method-signature">
-
+          <a href="#M000008" class="method-signature">
           <span class="method-name">call</span><span class="method-args">(component, &amp;return_callback)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p>
 Call another component. The calling component is neither rendered nor are
-it&#8217;s callbacks processed until the called component answers using
-method <a href="CallAnswerMixin.html#M000006">answer</a>.
+it&#8216;s callbacks processed until the called component answers using
+method <a href="CallAnswerMixin.html#M000010">answer</a>.
 </p>
 <dl>
 <dt><tt>component</tt></dt><dd>The component to be called.
@@ -188,7 +172,7 @@ end the processing of callbacks prematurely.
 </p>
 <p>
 When at a later point in time the called component invokes <a
-href="CallAnswerMixin.html#M000006">answer</a>, this will raise a <a
+href="CallAnswerMixin.html#M000010">answer</a>, this will raise a <a
 href="AnswerDecoration/Answer.html">AnswerDecoration::Answer</a> exception
 which is catched by the <a
 href="AnswerDecoration.html">AnswerDecoration</a> we installed before
@@ -198,13 +182,12 @@ called before we gained control.
 <p>
 The <a href="AnswerDecoration.html">AnswerDecoration</a> then invokes the
 <tt>answer_callback</tt> to cleanup the decorations we added during <a
-href="CallAnswerMixin.html#M000004">call</a> and finally passes control to
+href="CallAnswerMixin.html#M000008">call</a> and finally passes control to
 the <tt>return_callback</tt>.
 </p>
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000004-source">
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/call_answer.rb, line 73</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">component</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">return_callback</span>)
@@ -220,34 +203,26 @@ the <tt>return_callback</tt>.
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
 
-
-      <div id="method-M000005" class="method-detail">
-        <a name="M000005"></a>
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
 
         <div class="method-heading">
-
-          <a href="#M000005" class="method-signature">
-
+          <a href="#M000009" class="method-signature">
           <span class="method-name">callcc</span><span class="method-args">(component)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p>
-Similar to method <a href="CallAnswerMixin.html#M000004">call</a>, but
+Similar to method <a href="CallAnswerMixin.html#M000008">call</a>, but
 using continuations.
 </p>
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000005-source">
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/call_answer.rb, line 88</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">callcc</span>(<span class="ruby-identifier">component</span>)
@@ -268,18 +243,15 @@ using continuations.
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
-
 
 
     </div>
 
 
-
-
   </div>
+
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

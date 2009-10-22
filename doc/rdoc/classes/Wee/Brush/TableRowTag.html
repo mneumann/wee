@@ -1,9 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::Brush::TableRowTag [RDoc Documentation]</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Class: Wee::Brush::TableRowTag</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -22,7 +25,7 @@
       return false;
 
     elemStyle = elem.style;
-
+    
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -31,15 +34,16 @@
 
     return true;
   }
-
+  
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
-
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
   // ]]>
   </script>
 
 </head>
 <body>
+
 
 
     <div id="classHeader">
@@ -51,78 +55,63 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-
-
                 <a href="../../../files/lib/wee/html_brushes_rb.html">
-
                 lib/wee/html_brushes.rb
-
                 </a>
-
-
         <br />
-
             </td>
         </tr>
-
 
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
-
                 Brush::GenericTagBrush
-
             </td>
         </tr>
-
         </table>
     </div>
   <!-- banner header -->
 
   <div id="bodyContent">
 
+
+
   <div id="contextContent">
 
-   </div>
 
+
+   </div>
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-
-        <a href="#M000139">columns</a>&nbsp;&nbsp;
-
-        <a href="#M000140">headings</a>&nbsp;&nbsp;
-
-        <a href="#M000138">new</a>&nbsp;&nbsp;
-
-        <a href="#M000142">spacer</a>&nbsp;&nbsp;
-
-        <a href="#M000141">spanning_column</a>&nbsp;&nbsp;
-
+      <a href="#M000166">columns</a>&nbsp;&nbsp;
+      <a href="#M000167">headings</a>&nbsp;&nbsp;
+      <a href="#M000165">new</a>&nbsp;&nbsp;
+      <a href="#M000169">spacer</a>&nbsp;&nbsp;
+      <a href="#M000168">spanning_column</a>&nbsp;&nbsp;
       </div>
     </div>
 
   </div>
 
+
     <!-- if includes -->
 
     <div id="section">
+
 
     <div id="constants-list">
       <h3 class="section-bar">Constants</h3>
 
       <div class="name-list">
         <table summary="Constants">
-
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">HTML_TAG</td>
           <td>=</td>
           <td class="context-item-value">'tr'.freeze</td>
-
         </tr>
-
         </table>
       </div>
     </div>
@@ -134,53 +123,39 @@
 
       <div class="name-list">
         <table>
-
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">align</td>
-
           <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
-
           <td class="context-item-desc"></td>
         </tr>
-
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">shortcuts</td>
-
           <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
-
           <td class="context-item-desc"></td>
         </tr>
-
         </table>
       </div>
     </div>
+      
 
 
     <!-- if method_list -->
-
     <div id="methods">
-
       <h3 class="section-bar">Public Class methods</h3>
 
-
-      <div id="method-M000138" class="method-detail">
-        <a name="M000138"></a>
+      <div id="method-M000165" class="method-detail">
+        <a name="M000165"></a>
 
         <div class="method-heading">
-
-          <a href="#M000138" class="method-signature">
-
+          <a href="#M000165" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000138-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000138-source">
+            onclick="toggleCode('M000165-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000165-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 210</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
@@ -188,32 +163,24 @@
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
 
-
       <h3 class="section-bar">Public Instance methods</h3>
 
-
-      <div id="method-M000139" class="method-detail">
-        <a name="M000139"></a>
+      <div id="method-M000166" class="method-detail">
+        <a name="M000166"></a>
 
         <div class="method-heading">
-
-          <a href="#M000139" class="method-signature">
-
+          <a href="#M000166" class="method-signature">
           <span class="method-name">columns</span><span class="method-args">(*cols, &amp;block)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000139-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000139-source">
+            onclick="toggleCode('M000166-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000166-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 214</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">columns</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">cols</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
@@ -231,29 +198,22 @@
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
 
-
-      <div id="method-M000140" class="method-detail">
-        <a name="M000140"></a>
+      <div id="method-M000167" class="method-detail">
+        <a name="M000167"></a>
 
         <div class="method-heading">
-
-          <a href="#M000140" class="method-signature">
-
+          <a href="#M000167" class="method-signature">
           <span class="method-name">headings</span><span class="method-args">(*headers, &amp;block)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000140-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000140-source">
+            onclick="toggleCode('M000167-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000167-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 228</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">headings</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">headers</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
@@ -271,29 +231,22 @@
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
 
-
-      <div id="method-M000142" class="method-detail">
-        <a name="M000142"></a>
+      <div id="method-M000169" class="method-detail">
+        <a name="M000169"></a>
 
         <div class="method-heading">
-
-          <a href="#M000142" class="method-signature">
-
+          <a href="#M000169" class="method-signature">
           <span class="method-name">spacer</span><span class="method-args">()</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000142-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000142-source">
+            onclick="toggleCode('M000169-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000169-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 246</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">spacer</span>
@@ -301,29 +254,22 @@
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
 
-
-      <div id="method-M000141" class="method-detail">
-        <a name="M000141"></a>
+      <div id="method-M000168" class="method-detail">
+        <a name="M000168"></a>
 
         <div class="method-heading">
-
-          <a href="#M000141" class="method-signature">
-
+          <a href="#M000168" class="method-signature">
           <span class="method-name">spanning_column</span><span class="method-args">(str, colspan)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000141-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000141-source">
+            onclick="toggleCode('M000168-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000168-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 242</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">spanning_column</span>(<span class="ruby-identifier">str</span>, <span class="ruby-identifier">colspan</span>)
@@ -331,18 +277,15 @@
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
-
 
 
     </div>
 
 
-
-
   </div>
+
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

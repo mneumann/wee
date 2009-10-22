@@ -1,9 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::State [RDoc Documentation]</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Class: Wee::State</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -22,7 +25,7 @@
       return false;
 
     elemStyle = elem.style;
-
+    
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -31,15 +34,16 @@
 
     return true;
   }
-
+  
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
-
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
   // ]]>
   </script>
 
 </head>
 <body>
+
 
 
     <div id="classHeader">
@@ -51,39 +55,28 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-
-
                 <a href="../../files/lib/wee/state_rb.html">
-
                 lib/wee/state.rb
-
                 </a>
-
-
         <br />
-
             </td>
         </tr>
-
 
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
-
                 <a href="../Object.html">
-
                 Object
-
                </a>
-
             </td>
         </tr>
-
         </table>
     </div>
   <!-- banner header -->
 
   <div id="bodyContent">
+
+
 
   <div id="contextContent">
 
@@ -92,36 +85,30 @@
 This class is for backtracking the state of components (or
 decorations/presenters). Components that want an undo-facility to be
 implemented (triggered for example by a browsers back-button), have to
-overwrite the <a href="Component.html#M000047">Component#backtrack</a>
-method. Class <a href="State.html">Wee::State</a> simply represents a
-collection of objects from which snapshots were taken via methods
-take_snapshot.
+overwrite the <a href="Component.html#M000217">Component#state</a> method.
+Class <a href="State.html">Wee::State</a> simply represents a collection of
+objects from which snapshots were taken via methods take_snapshot.
 </p>
 
     </div>
 
-   </div>
 
+   </div>
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-
-        <a href="#M000227">&lt;&lt;</a>&nbsp;&nbsp;
-
-        <a href="#M000225">add</a>&nbsp;&nbsp;
-
-        <a href="#M000226">add_ivar</a>&nbsp;&nbsp;
-
-        <a href="#M000224">new</a>&nbsp;&nbsp;
-
-        <a href="#M000228">restore</a>&nbsp;&nbsp;
-
+      <a href="#M000209">&lt;&lt;</a>&nbsp;&nbsp;
+      <a href="#M000207">add</a>&nbsp;&nbsp;
+      <a href="#M000208">add_ivar</a>&nbsp;&nbsp;
+      <a href="#M000206">new</a>&nbsp;&nbsp;
+      <a href="#M000210">restore</a>&nbsp;&nbsp;
       </div>
     </div>
 
   </div>
+
 
     <!-- if includes -->
 
@@ -138,31 +125,26 @@ Class <a href="State/SnapshotIVars.html" class="link">Wee::State::SnapshotIVars<
 
 
 
+      
+
+
     <!-- if method_list -->
-
     <div id="methods">
-
       <h3 class="section-bar">Public Class methods</h3>
 
-
-      <div id="method-M000224" class="method-detail">
-        <a name="M000224"></a>
+      <div id="method-M000206" class="method-detail">
+        <a name="M000206"></a>
 
         <div class="method-heading">
-
-          <a href="#M000224" class="method-signature">
-
+          <a href="#M000206" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000224-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000224-source">
+            onclick="toggleCode('M000206-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000206-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/state.rb, line 15</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
@@ -171,51 +153,38 @@ Class <a href="State/SnapshotIVars.html" class="link">Wee::State::SnapshotIVars<
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
-
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-
-      <div id="method-M000227" class="method-detail">
-        <a name="M000227"></a>
+      <div id="method-M000209" class="method-detail">
+        <a name="M000209"></a>
 
         <div class="method-heading">
-
           <span class="method-name">&lt;&lt;</span><span class="method-args">(object)</span>
-
         </div>
-
+      
         <div class="method-description">
-
           <p>
-Alias for <a href="State.html#M000225">add</a>
+Alias for <a href="State.html#M000207">add</a>
 </p>
-
         </div>
       </div>
 
-
-      <div id="method-M000225" class="method-detail">
-        <a name="M000225"></a>
+      <div id="method-M000207" class="method-detail">
+        <a name="M000207"></a>
 
         <div class="method-heading">
-
-          <a href="#M000225" class="method-signature">
-
+          <a href="#M000207" class="method-signature">
           <span class="method-name">add</span><span class="method-args">(object)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000225-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000225-source">
+            onclick="toggleCode('M000207-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000207-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/state.rb, line 20</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">object</span>)
@@ -223,29 +192,22 @@ Alias for <a href="State.html#M000225">add</a>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
 
-
-      <div id="method-M000226" class="method-detail">
-        <a name="M000226"></a>
+      <div id="method-M000208" class="method-detail">
+        <a name="M000208"></a>
 
         <div class="method-heading">
-
-          <a href="#M000226" class="method-signature">
-
+          <a href="#M000208" class="method-signature">
           <span class="method-name">add_ivar</span><span class="method-args">(object, ivar, value)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000226-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000226-source">
+            onclick="toggleCode('M000208-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000208-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/state.rb, line 24</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_ivar</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">ivar</span>, <span class="ruby-identifier">value</span>)
@@ -253,29 +215,22 @@ Alias for <a href="State.html#M000225">add</a>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
 
-
-      <div id="method-M000228" class="method-detail">
-        <a name="M000228"></a>
+      <div id="method-M000210" class="method-detail">
+        <a name="M000210"></a>
 
         <div class="method-heading">
-
-          <a href="#M000228" class="method-signature">
-
+          <a href="#M000210" class="method-signature">
           <span class="method-name">restore</span><span class="method-args">()</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000228-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000228-source">
+            onclick="toggleCode('M000210-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000210-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/state.rb, line 30</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">restore</span>
@@ -286,18 +241,15 @@ Alias for <a href="State.html#M000225">add</a>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
-
 
 
     </div>
 
 
-
-
   </div>
+
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

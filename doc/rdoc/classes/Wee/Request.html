@@ -1,9 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::Request [RDoc Documentation]</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Class: Wee::Request</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -22,7 +25,7 @@
       return false;
 
     elemStyle = elem.style;
-
+    
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -31,15 +34,16 @@
 
     return true;
   }
-
+  
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
-
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
   // ]]>
   </script>
 
 </head>
 <body>
+
 
 
     <div id="classHeader">
@@ -51,64 +55,53 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-
-
                 <a href="../../files/lib/wee/request_rb.html">
-
                 lib/wee/request.rb
-
                 </a>
-
-
         <br />
-
             </td>
         </tr>
-
 
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
-
                 Rack::Request
-
             </td>
         </tr>
-
         </table>
     </div>
   <!-- banner header -->
 
   <div id="bodyContent">
 
+
+
   <div id="contextContent">
 
-   </div>
 
+
+   </div>
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-
-        <a href="#M000041">action?</a>&nbsp;&nbsp;
-
-        <a href="#M000043">build_url</a>&nbsp;&nbsp;
-
-        <a href="#M000040">new</a>&nbsp;&nbsp;
-
-        <a href="#M000039">new</a>&nbsp;&nbsp;
-
-        <a href="#M000042">render?</a>&nbsp;&nbsp;
-
+      <a href="#M000199">action?</a>&nbsp;&nbsp;
+      <a href="#M000201">build_url</a>&nbsp;&nbsp;
+      <a href="#M000198">new</a>&nbsp;&nbsp;
+      <a href="#M000197">new</a>&nbsp;&nbsp;
+      <a href="#M000200">render?</a>&nbsp;&nbsp;
       </div>
     </div>
 
   </div>
 
+
     <!-- if includes -->
 
     <div id="section">
+
+
 
 
 
@@ -117,61 +110,44 @@
 
       <div class="name-list">
         <table>
-
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">fields</td>
-
           <td class="context-item-value">&nbsp;[R]&nbsp;</td>
-
           <td class="context-item-desc"></td>
         </tr>
-
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">page_id</td>
-
           <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-
           <td class="context-item-desc"></td>
         </tr>
-
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">session_id</td>
-
           <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-
           <td class="context-item-desc"></td>
         </tr>
-
         </table>
       </div>
     </div>
+      
 
 
     <!-- if method_list -->
-
     <div id="methods">
-
       <h3 class="section-bar">Public Class methods</h3>
 
-
-      <div id="method-M000040" class="method-detail">
-        <a name="M000040"></a>
+      <div id="method-M000198" class="method-detail">
+        <a name="M000198"></a>
 
         <div class="method-heading">
-
-          <a href="#M000040" class="method-signature">
-
+          <a href="#M000198" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(env)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000040-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000040-source">
+            onclick="toggleCode('M000198-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000198-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/request.rb, line 15</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">env</span>)
@@ -182,29 +158,22 @@
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
 
-
-      <div id="method-M000039" class="method-detail">
-        <a name="M000039"></a>
+      <div id="method-M000197" class="method-detail">
+        <a name="M000197"></a>
 
         <div class="method-heading">
-
-          <a href="#M000039" class="method-signature">
-
+          <a href="#M000197" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(env)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000039-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000039-source">
+            onclick="toggleCode('M000197-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000197-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/request.rb, line 7</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">env</span>)
@@ -212,36 +181,27 @@
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
 
-
       <h3 class="section-bar">Public Instance methods</h3>
 
-
-      <div id="method-M000041" class="method-detail">
-        <a name="M000041"></a>
+      <div id="method-M000199" class="method-detail">
+        <a name="M000199"></a>
 
         <div class="method-heading">
-
-          <a href="#M000041" class="method-signature">
-
+          <a href="#M000199" class="method-signature">
           <span class="method-name">action?</span><span class="method-args">()</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p>
 Is this an action request?
 </p>
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000041-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000041-source">
+            onclick="toggleCode('M000199-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000199-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/request.rb, line 23</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">action?</span>
@@ -249,29 +209,22 @@ Is this an action request?
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
 
-
-      <div id="method-M000043" class="method-detail">
-        <a name="M000043"></a>
+      <div id="method-M000201" class="method-detail">
+        <a name="M000201"></a>
 
         <div class="method-heading">
-
-          <a href="#M000043" class="method-signature">
-
+          <a href="#M000201" class="method-signature">
           <span class="method-name">build_url</span><span class="method-args">(hash={})</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000043-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000043-source">
+            onclick="toggleCode('M000201-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000201-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/request.rb, line 32</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_url</span>(<span class="ruby-identifier">hash</span>={})
@@ -295,33 +248,25 @@ Is this an action request?
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
 
-
-      <div id="method-M000042" class="method-detail">
-        <a name="M000042"></a>
+      <div id="method-M000200" class="method-detail">
+        <a name="M000200"></a>
 
         <div class="method-heading">
-
-          <a href="#M000042" class="method-signature">
-
+          <a href="#M000200" class="method-signature">
           <span class="method-name">render?</span><span class="method-args">()</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p>
 Is this a render request?
 </p>
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000042-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000042-source">
+            onclick="toggleCode('M000200-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000200-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/request.rb, line 28</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render?</span>
@@ -329,18 +274,15 @@ Is this a render request?
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
-
 
 
     </div>
 
 
-
-
   </div>
+
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

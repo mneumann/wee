@@ -1,9 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>File: README.rdoc [RDoc Documentation]</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>File: README.rdoc</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -22,7 +25,7 @@
       return false;
 
     elemStyle = elem.style;
-
+    
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -31,15 +34,16 @@
 
     return true;
   }
-
+  
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
-
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
   // ]]>
   </script>
 
 </head>
 <body>
+
 
 
   <div id="fileHeader">
@@ -48,12 +52,11 @@
     <tr class="top-aligned-row">
       <td><strong>Path:</strong></td>
       <td>README.rdoc
-
       </td>
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>2009-02-24 14:28:38 +0100</td>
+      <td>Tue Feb 24 14:28:38 +0100 2009</td>
     </tr>
     </table>
   </div>
@@ -61,13 +64,15 @@
 
   <div id="bodyContent">
 
+
+
   <div id="contextContent">
 
     <div id="description">
       <h1><a href="../classes/Wee.html">Wee</a> Web Framework</h1>
 <h2>Copyright and License</h2>
 <p>
-Copyright &#169; 2004, 2005, 2009 by Michael Neumann (mneumann@ntecs.de).
+Copyright (c) 2004, 2005, 2009 by Michael Neumann (mneumann@ntecs.de).
 </p>
 <p>
 Released under the same terms of license as Ruby.
@@ -93,7 +98,7 @@ external model or use templates for rendering.
 <h3>Backtracking</h3>
 <p>
 See the <em>What is backtracking?</em> section below. In short,
-backtracking lets the browser&#8217;s back and forward-button play well
+backtracking lets the browser&#8216;s back and forward-button play well
 together with your application.
 </p>
 <h3>Clean and concise</h3>
@@ -151,7 +156,7 @@ application, which shows the current count and two links <em>inc</em> and
 <em>dec</em> with which you can increase or decrease the current count.
 Starting with an inital count of 0 you increase the counter up to 8, then
 click three times the back button of your browser (now displays 5). Finally
-you decrease by one and your counter shows what you&#8217;d have expected:
+you decrease by one and your counter shows what you&#8216;d have expected:
 4. In contrast, traditional web applications would have shown 7, because
 the back button usually does not trigger a HTTP request and as such the
 server-side state still has a value of 8 for the counter when the request
@@ -203,8 +208,7 @@ callbacks might depend on values of input-fields being assigned to instance
 variables of the controlling component. Hence, <a
 href="../classes/Wee.html">Wee</a> first invokes all input callbacks before
 any action callback is triggered. Callback processing is performed by
-method <a
-href="../classes/Wee/Component.html#M000046">Wee::Component#process_callbacks</a>.
+method Wee::Component#process_callbacks.
 </p>
 <p>
 The result of the action phase is an updated components state. As such, a
@@ -216,10 +220,12 @@ of the new page.
 
     </div>
 
+
    </div>
 
 
   </div>
+
 
     <!-- if includes -->
 
@@ -228,12 +234,15 @@ of the new page.
 
 
 
+
+      
+
+
     <!-- if method_list -->
 
 
-
-
   </div>
+
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

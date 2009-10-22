@@ -1,9 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::JQuery [RDoc Documentation]</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Class: Wee::JQuery</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -22,7 +25,7 @@
       return false;
 
     elemStyle = elem.style;
-
+    
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -31,15 +34,16 @@
 
     return true;
   }
-
+  
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
-
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
   // ]]>
   </script>
 
 </head>
 <body>
+
 
 
     <div id="classHeader">
@@ -51,115 +55,93 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-
-
                 <a href="../../files/lib/wee/jquery/jquery_rb.html">
-
                 lib/wee/jquery/jquery.rb
-
                 </a>
-
-
         <br />
-
             </td>
         </tr>
-
 
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
-
                 <a href="../Object.html">
-
                 Object
-
                </a>
-
             </td>
         </tr>
-
         </table>
     </div>
   <!-- banner header -->
 
   <div id="bodyContent">
 
+
+
   <div id="contextContent">
 
-   </div>
 
+
+   </div>
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-
-        <a href="#M000057">install</a>&nbsp;&nbsp;
-
-        <a href="#M000058">javascript_includes</a>&nbsp;&nbsp;
-
+      <a href="#M000221">install</a>&nbsp;&nbsp;
+      <a href="#M000222">javascript_includes</a>&nbsp;&nbsp;
       </div>
     </div>
 
   </div>
 
+
     <!-- if includes -->
 
     <div id="section">
+
 
     <div id="constants-list">
       <h3 class="section-bar">Constants</h3>
 
       <div class="name-list">
         <table summary="Constants">
-
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">FILES</td>
           <td>=</td>
           <td class="context-item-value">%w(jquery-1.3.2.min.js wee-jquery.js)</td>
-
         </tr>
-
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">PUBLIC_DIR</td>
           <td>=</td>
           <td class="context-item-value">File.expand_path(File.join(File.dirname(__FILE__), 'public'))</td>
-
         </tr>
-
         </table>
       </div>
     </div>
 
 
 
+      
+
 
     <!-- if method_list -->
-
     <div id="methods">
-
       <h3 class="section-bar">Public Class methods</h3>
 
-
-      <div id="method-M000057" class="method-detail">
-        <a name="M000057"></a>
+      <div id="method-M000221" class="method-detail">
+        <a name="M000221"></a>
 
         <div class="method-heading">
-
-          <a href="#M000057" class="method-signature">
-
+          <a href="#M000221" class="method-signature">
           <span class="method-name">install</span><span class="method-args">(mount_path, builder)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000057-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000057-source">
+            onclick="toggleCode('M000221-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000221-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/jquery/jquery.rb, line 6</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">install</span>(<span class="ruby-identifier">mount_path</span>, <span class="ruby-identifier">builder</span>)
@@ -169,29 +151,22 @@
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
 
-
-      <div id="method-M000058" class="method-detail">
-        <a name="M000058"></a>
+      <div id="method-M000222" class="method-detail">
+        <a name="M000222"></a>
 
         <div class="method-heading">
-
-          <a href="#M000058" class="method-signature">
-
+          <a href="#M000222" class="method-signature">
           <span class="method-name">javascript_includes</span><span class="method-args">(r)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000058-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000058-source">
+            onclick="toggleCode('M000222-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000222-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/jquery/jquery.rb, line 12</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">javascript_includes</span>(<span class="ruby-identifier">r</span>)
@@ -200,18 +175,15 @@
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
-
 
 
     </div>
 
 
-
-
   </div>
+
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>

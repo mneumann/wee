@@ -1,9 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Module: Wee [RDoc Documentation]</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Module: Wee</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
@@ -22,7 +25,7 @@
       return false;
 
     elemStyle = elem.style;
-
+    
     if ( elemStyle.display != "block" ) {
       elemStyle.display = "block"
     } else {
@@ -31,15 +34,16 @@
 
     return true;
   }
-
+  
   // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
-
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
   // ]]>
   </script>
 
 </head>
 <body>
+
 
 
     <div id="classHeader">
@@ -51,200 +55,84 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-
-
-                <a href="../files/lib/wee/session_rb.html">
-
-                lib/wee/session.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/request_rb.html">
-
-                lib/wee/request.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/component_rb.html">
-
-                lib/wee/component.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/renderer_rb.html">
-
-                lib/wee/renderer.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/jquery/jquery_rb.html">
-
-                lib/wee/jquery/jquery.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/presenter_rb.html">
-
-                lib/wee/presenter.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/call_answer_rb.html">
-
-                lib/wee/call_answer.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/html_canvas_rb.html">
-
-                lib/wee/html_canvas.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/application_rb.html">
-
-                lib/wee/application.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/lru_cache_rb.html">
-
-                lib/wee/lru_cache.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/response_rb.html">
-
-                lib/wee/response.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/html_brushes_rb.html">
-
-                lib/wee/html_brushes.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/html_writer_rb.html">
-
-                lib/wee/html_writer.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/decoration_rb.html">
-
-                lib/wee/decoration.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/id_generator_rb.html">
-
-                lib/wee/id_generator.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/callback_rb.html">
-
-                lib/wee/callback.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/state_rb.html">
-
-                lib/wee/state.rb
-
-                </a>
-
-
-        <br />
-
-
-                <a href="../files/lib/wee/html_document_rb.html">
-
-                lib/wee/html_document.rb
-
-                </a>
-
-
-        <br />
-
-
                 <a href="../files/lib/wee_rb.html">
-
                 lib/wee.rb
-
                 </a>
-
-
         <br />
-
+                <a href="../files/lib/wee/lru_cache_rb.html">
+                lib/wee/lru_cache.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/state_rb.html">
+                lib/wee/state.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/html_brushes_rb.html">
+                lib/wee/html_brushes.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/component_rb.html">
+                lib/wee/component.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/session_rb.html">
+                lib/wee/session.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/callback_rb.html">
+                lib/wee/callback.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/html_document_rb.html">
+                lib/wee/html_document.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/application_rb.html">
+                lib/wee/application.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/decoration_rb.html">
+                lib/wee/decoration.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/html_writer_rb.html">
+                lib/wee/html_writer.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/id_generator_rb.html">
+                lib/wee/id_generator.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/call_answer_rb.html">
+                lib/wee/call_answer.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/request_rb.html">
+                lib/wee/request.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/html_canvas_rb.html">
+                lib/wee/html_canvas.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/jquery/jquery_rb.html">
+                lib/wee/jquery/jquery.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/response_rb.html">
+                lib/wee/response.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/renderer_rb.html">
+                lib/wee/renderer.rb
+                </a>
+        <br />
+                <a href="../files/lib/wee/presenter_rb.html">
+                lib/wee/presenter.rb
+                </a>
+        <br />
             </td>
         </tr>
-
 
         </table>
     </div>
@@ -252,24 +140,25 @@
 
   <div id="bodyContent">
 
+
+
   <div id="contextContent">
 
-   </div>
 
+
+   </div>
 
     <div id="method-list">
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-
-        <a href="#M000002">run</a>&nbsp;&nbsp;
-
-        <a href="#M000003">runcc</a>&nbsp;&nbsp;
-
+      <a href="#M000001">run</a>&nbsp;&nbsp;
+      <a href="#M000002">runcc</a>&nbsp;&nbsp;
       </div>
     </div>
 
   </div>
+
 
     <!-- if includes -->
 
@@ -319,48 +208,39 @@ Class <a href="Wee/WrapperDecoration.html" class="link">Wee::WrapperDecoration</
 
       <div class="name-list">
         <table summary="Constants">
-
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">Version</td>
           <td>=</td>
-          <td class="context-item-value">&quot;2.0.0&quot;</td>
-
+          <td class="context-item-value">&quot;2.1.0&quot;</td>
         </tr>
-
         </table>
       </div>
     </div>
 
 
 
+      
+
 
     <!-- if method_list -->
-
     <div id="methods">
-
       <h3 class="section-bar">Public Class methods</h3>
 
-
-      <div id="method-M000002" class="method-detail">
-        <a name="M000002"></a>
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
 
         <div class="method-heading">
-
-          <a href="#M000002" class="method-signature">
-
+          <a href="#M000001" class="method-signature">
           <span class="method-name">run</span><span class="method-args">(component_class=nil, mount_path='/', port=2000, &amp;block)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000002-source">
+            onclick="toggleCode('M000001-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000001-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee.rb, line 38</span>
+<span class="ruby-comment cmt"># File lib/wee.rb, line 32</span>
 <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Wee</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">component_class</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">mount_path</span>=<span class="ruby-value str">'/'</span>, <span class="ruby-identifier">port</span>=<span class="ruby-value">2000</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">component_class</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">block</span>
 
@@ -378,36 +258,28 @@ Class <a href="Wee/WrapperDecoration.html" class="link">Wee::WrapperDecoration</
 <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
 
-
-      <div id="method-M000003" class="method-detail">
-        <a name="M000003"></a>
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
 
         <div class="method-heading">
-
-          <a href="#M000003" class="method-signature">
-
+          <a href="#M000002" class="method-signature">
           <span class="method-name">runcc</span><span class="method-args">(component_class, *args)</span>
-
           </a>
-
         </div>
-
+      
         <div class="method-description">
-
           <p>
-Like <a href="Wee.html#M000002">Wee.run</a>, but for use with
+Like <a href="Wee.html#M000001">Wee.run</a>, but for use with
 continuations.
 </p>
-
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000003-source">
+            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000002-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee.rb, line 57</span>
+<span class="ruby-comment cmt"># File lib/wee.rb, line 51</span>
 <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Wee</span>.<span class="ruby-identifier">runcc</span>(<span class="ruby-identifier">component_class</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
   <span class="ruby-constant">Wee</span>.<span class="ruby-identifier">run</span>(<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>) {
     <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Session</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">component_class</span>.<span class="ruby-identifier">new</span>, <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Session</span><span class="ruby-operator">::</span><span class="ruby-constant">ThreadSerializer</span>.<span class="ruby-identifier">new</span>)
@@ -415,18 +287,15 @@ continuations.
 <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
-
         </div>
       </div>
-
 
 
     </div>
 
 
-
-
   </div>
+
 
 <div id="validator-badges">
   <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
