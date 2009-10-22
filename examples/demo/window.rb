@@ -6,8 +6,15 @@ class Window < Wee::Component
     super()
     @status = :normal  
     @pos_x, @pos_y = "0px", "0px"
+    @children = []
     block.call(self) if block
   end
+
+  def <<(c)
+    @children << c
+  end
+
+  def children() @children end
 
   def state(s)
     super
@@ -38,7 +45,7 @@ class Window < Wee::Component
       r.table_row do
         r.table_data.colspan(2).with do
           if @status == :normal
-            each_child do |child|
+            for child in self.children do
               r.render(child)
             end
           end

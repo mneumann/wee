@@ -1,3 +1,7 @@
+$LOAD_PATH.unshift "../lib"
+require 'rubygems'
+require 'wee'
+
 require 'demo/window'
 require 'demo/editable_counter'
 require 'demo/messagebox'
@@ -57,7 +61,7 @@ class MainPage < Wee::Component
         w.title = "Cnt #{ i }"
         w.pos_x = "200px"
         w.pos_y = "#{i*50}px"
-	w.add_child EditableCounter.new(i)
+	w << EditableCounter.new(i)
       }
     }
 
@@ -73,7 +77,7 @@ class MainPage < Wee::Component
   end
 
   def children
-    [val_inp, *@counters]
+    [@val_inp, *@counters]
   end
 
   def state(s)
@@ -134,3 +138,5 @@ class MainPage < Wee::Component
     end 
   end
 end
+
+Wee.run(MainPage) if __FILE__ == $0
