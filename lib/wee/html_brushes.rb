@@ -554,27 +554,26 @@ module Wee
       # A callback was specified. We have to wrap it inside another
       # callback, as we want to perform some additional actions.
       #
-      name(@canvas.register_callback(:input, proc {|input|
-        input = [input] unless input.kind_of?(Array)
-        choosen = input.map {|idx| get_item(idx) }
-
-        if @attributes.has_key?(:multiple)
-          @callback.call(choosen)
-        elsif choosen.size > 1
-          raise "more than one element was choosen from a not-multiple SelectListTag" 
-        else
-          @callback.call(choosen.first)
-        end
-      }))
+      name(@canvas.register_callback(:input, method(:handler)) + "[]") 
     end
 
-    def get_item(idx)
-      idx = Integer(idx)
-      raise IndexError if idx < 0 or idx > @items.size
-      @items[idx]
+    def handler(input)
+      choosen = input.map {|idx|
+        idx = Integer(idx)
+        raise IndexError if idx < 0 or idx > @items.size
+        @items[idx]
+      }
+
+      if @attributes.has_key?(:multiple)
+        @callback.call(choosen)
+      elsif choosen.size > 1
+        raise "more than one element was choosen from a not-multiple SelectListTag" 
+      else
+        @callback.call(choosen.first)
+      end
     end
 
-    protected :get_item
+    protected :handler
 
     def with
       @labels ||= @items.collect {|i| i.to_s}
