@@ -18,7 +18,6 @@ module Wee
     #
     def initialize() # :notnew:
       @decoration = self
-      @children = nil
     end
 
     #
@@ -34,26 +33,6 @@ module Wee
     end
 
     #
-    # Process and invoke all callbacks specified for this component and all of
-    # it's child components. 
-    #
-    def process_callbacks(callbacks)
-      callbacks.input_callbacks.each_triggered(self) do |callback, value|
-        callback.call(value)
-      end
-
-      # process callbacks of all children
-      each_child do |child|
-        child.decoration.process_callbacks(callbacks)
-      end
-
-      callbacks.action_callbacks.each_triggered(self) do |callback, value|
-        callback.call
-        session.send_response(nil) # prematurely end callback processing
-      end
-    end
-
-    #
     # Take snapshots of objects that should correctly be backtracked.
     #
     # Backtracking means that you can go back in time of the components' state.
@@ -64,14 +43,6 @@ module Wee
     # objects to take the snapshot (they behave like <i>marshal_dump</i> and
     # <i>marshal_load</i>). Overwrite them if you want to define special
     # behaviour. 
-    #
-    # For example if you dynamically add children to your component, you might
-    # want to backtrack the children array: 
-    #
-    #   def backtrack(state)
-    #     super
-    #     backtrack_children(state)
-    #   end
     #
     # By default only the decoration chain is backtracked. This is
     # required to correctly backtrack called components. To disable
@@ -87,8 +58,39 @@ module Wee
     #
     def backtrack(state)
       backtrack_decoration(state)
-      each_child do |child|
+      for child in self.children
         child.decoration.backtrack(state)
+      end
+    end
+
+    NO_CHILDREN = [].freeze
+    #
+    # Return all child components.
+    #
+    # *OVERWRITE* this method and return all child components
+    # collected in an array.
+    #
+    def children
+      return NO_CHILDREN
+    end
+
+    #
+    # Process and invoke all callbacks specified for this component and all of
+    # it's child components. 
+    #
+    def process_callbacks(callbacks)
+      callbacks.input_callbacks.each_triggered(self) do |callback, value|
+        callback.call(value)
+      end
+
+      # process callbacks of all children
+      for child in self.children
+        child.decoration.process_callbacks(callbacks)
+      end
+
+      callbacks.action_callbacks.each_triggered(self) do |callback, value|
+        callback.call
+        session.send_response(nil) # prematurely end callback processing
       end
     end
 
@@ -96,41 +98,6 @@ module Wee
 
     def backtrack_decoration(state)
       state.add_ivar(self, :@decoration, @decoration)
-    end
-
-    def backtrack_children(state)
-      state.add_ivar(self, :@children, (@children and @children.dup))
-    end
-
-    #
-    # Iterates over all direct child components. 
-    #
-    def each_child(&block)
-      @children.each(&block) if @children
-    end
-
-    #
-    # Add a child to the component. Example:
-    # 
-    #   class YourComponent < Wee::Component
-    #     def initialize
-    #       super()
-    #       add_child ChildComponent.new
-    #     end
-    #   end
-    #
-    # If you dynamically add child components to a component at run-time (not in
-    # initialize), then you should consider to backtrack the children array (of
-    # course only if you want backtracking at all): 
-    #   
-    #   def backtrack(state)
-    #     super
-    #     state.add(self.children)
-    #   end
-    #
-    def add_child(child)
-      (@children ||= []) << child
-      child
     end
 
     include Wee::DecorationMixin

@@ -28,8 +28,10 @@ end
 class HelloWorld < Wee::Component
   def initialize
     super
-    @cs = (1..10).map { add_child AjaxCounter.new }
+    @counters = (1..10).map { AjaxCounter.new }
   end
+
+  def children() @counters end
 
   def render(r)
     r.html {
@@ -40,7 +42,7 @@ class HelloWorld < Wee::Component
       r.body {
         render_hello(r)
         r.div.onclick_callback { p "refresh" }.with("Refresh")
-        @cs.each {|c| r.render(c); r.break}
+        @counters.each {|c| r.render(c); r.break}
       }
     }
   end

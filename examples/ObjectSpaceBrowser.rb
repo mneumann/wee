@@ -177,13 +177,11 @@ if $0 == __FILE__ then
     def initialize
       super
       add_decoration(Wee::PageDecoration.new("Hello World"))
-      add_child ObjectSpaceBrowser::Instance.new(OBJ)   
+      @instance = ObjectSpaceBrowser::Instance.new(OBJ)
     end 
 
     def render(r)
-      each_child do |c|
-        r.render(c)
-      end
+      r.render(@instance)
     end
   end
 

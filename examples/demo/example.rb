@@ -53,7 +53,7 @@ class MainPage < Wee::Component
   def initialize
     super()
     @counters = (1..10).map {|i|
-      add_child Window.new {|w| 
+      Window.new {|w|
         w.title = "Cnt #{ i }"
         w.pos_x = "200px"
         w.pos_y = "#{i*50}px"
@@ -61,8 +61,7 @@ class MainPage < Wee::Component
       }
     }
 
-
-    add_child(@val_inp = RegexpValidatedInput.new('Michael Neumann', /^\w+\s+\w+$/))
+    @val_inp = RegexpValidatedInput.new('Michael Neumann', /^\w+\s+\w+$/)
 
     @arr = []
     @text = ""
@@ -73,9 +72,13 @@ class MainPage < Wee::Component
     @selected2 = []
   end
 
+  def children
+    [val_inp, *@counters]
+  end
+
   def backtrack(state)
     super
-    backtrack_children(state)
+    state.add(@counters)
     backtrack_decoration(state)
     state.add(@arr)
     state.add(@text)

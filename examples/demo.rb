@@ -23,11 +23,13 @@ class Demo < Wee::Component
     @components << E.new(RadioTest.new, "Radio Buttons", 'demo/radio.rb')
     @components << E.new(FileUploadTest.new, "File Upload", 'demo/file_upload.rb')
 
-    @components.each {|c| add_child c.component }
-
-    @editor = add_child Editor.new
+    @editor = Editor.new
 
     select_component(@components.first)
+  end
+
+  def children
+    @components.map {|c| c.component} + [@editor]
   end
 
   def select_component(component)
