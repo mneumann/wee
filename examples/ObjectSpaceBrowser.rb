@@ -180,6 +180,8 @@ if $0 == __FILE__ then
       @instance = ObjectSpaceBrowser::Instance.new(OBJ)
     end 
 
+    def children() [@instance] end
+
     def render(r)
       r.render(@instance)
     end
