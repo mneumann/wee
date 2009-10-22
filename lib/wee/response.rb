@@ -17,7 +17,7 @@ module Wee
     end
   end
 
-  class RedirectResponse < GenericResponse
+  class RedirectResponse < Response
     LOCATION_HEADER = 'Location'.freeze
 
     def initialize(location)
@@ -27,7 +27,7 @@ module Wee
     end
   end
 
-  class RefreshResponse < GenericResponse
+  class RefreshResponse < Response
     def initialize(message, location, seconds=5)
       super([%[<html>
         <head>
