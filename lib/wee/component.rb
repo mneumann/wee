@@ -13,11 +13,7 @@ module Wee
     #
     # Initializes a newly created component.
     #
-    # Call this method from your own components' <i>initialize</i> method using
-    # +super+, before setting up anything else! 
-    #
-    def initialize() # :notnew:
-      @decoration = self
+    def initialize
     end
 
     #

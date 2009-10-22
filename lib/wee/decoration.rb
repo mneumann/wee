@@ -71,7 +71,8 @@ module Wee
 
   module DecorationMixin
 
-    attr_accessor :decoration
+    def decoration=(d) @decoration = d end
+    def decoration() @decoration || self end 
 
     #
     # Iterates over all decorations (note that the component itself is excluded). 
@@ -95,8 +96,8 @@ module Wee
     #
     def add_decoration(d)
       if d.global?
-        d.next = @decoration
-        @decoration = d
+        d.next = self.decoration
+        self.decoration = d
       else
         last_global = nil
         each_decoration {|i| 
@@ -108,8 +109,8 @@ module Wee
         }
         if last_global.nil?
           # no global decorations specified -> add in front
-          d.next = @decoration
-          @decoration = d
+          d.next = self.decoration
+          self.decoration = d
         else
           # add after last_global
           d.next = last_global.next
@@ -127,10 +128,10 @@ module Wee
     # decoration chain.
     #
     def remove_decoration(d)
-      if d == @decoration  # 'd' is in front
-        @decoration = d.next
+      if d == self.decoration  # 'd' is in front
+        self.decoration = d.next
       else
-        last_decoration = @decoration
+        last_decoration = self.decoration
         next_decoration = nil
         loop do
           return nil if last_decoration == self or last_decoration.nil?
