@@ -25,12 +25,6 @@ if RUBY_VERSION >= "1.9"
     require 'continuation'
   rescue LoadError
   end
-  unless String.instance_methods.include?(:each)
-    # required by Rack
-    class String
-      def each() yield self end
-    end
-  end
 end
 
 Wee::DefaultRenderer = Wee::HtmlCanvas
