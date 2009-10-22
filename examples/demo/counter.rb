@@ -6,9 +6,9 @@ class Counter < Wee::Component
     @count = initial_count 
   end
 
-  def backtrack(state)
+  def state(s)
     super
-    state.add_ivar(self, :@count, @count)
+    s.add_ivar(self, :@count, @count)
   end
 
   def dec

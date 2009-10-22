@@ -9,9 +9,9 @@ class EditableCounter < Counter
     @show_edit_field = false
   end
 
-  def backtrack(state)
+  def state(s)
     super
-    state.add_ivar(self, :@show_edit_field, @show_edit_field)
+    s.add_ivar(self, :@show_edit_field, @show_edit_field)
   end
 
   def render_count(r)

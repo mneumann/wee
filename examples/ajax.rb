@@ -10,9 +10,9 @@ class AjaxCounter < Wee::Component
     @counter = 0
   end
 
-  def backtrack(state)
+  def state(s)
     super
-    state.add_ivar(self, :@counter, @counter)
+    s.add_ivar(self, :@counter, @counter)
   end
 
   def render(r)

@@ -14,7 +14,8 @@ module Wee
     end
 
     def render(r); raise end
-    def backtrack(state); raise end
+    def state(s); raise end
+
     def process_callbacks(callbacks); raise end
 
     #

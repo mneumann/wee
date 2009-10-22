@@ -332,8 +332,8 @@ module Wee
     # and returns it.
     #
     def take_snapshot
-      @root_component.decoration.backtrack(state = Wee::State.new)
-      return state.freeze
+      @root_component.decoration.state(s = Wee::State.new)
+      return s.freeze
     end
 
   end # class Session

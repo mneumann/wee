@@ -11,9 +11,9 @@ class RegexpValidatedInput < Wee::Component
     @error = false
   end
 
-  def backtrack(state)
+  def state(s)
     super
-    state.add(self)
+    s.add(self)
   end
 
   def value
@@ -76,17 +76,17 @@ class MainPage < Wee::Component
     [val_inp, *@counters]
   end
 
-  def backtrack(state)
+  def state(s)
     super
-    state.add(@counters)
-    backtrack_decoration(state)
-    state.add(@arr)
-    state.add(@text)
+    s.add(@counters)
+    state_decoration(s)
+    s.add(@arr)
+    s.add(@text)
 
-    state.add(@list1)
-    state.add(@selected1)
-    state.add(@list2)
-    state.add(@selected2)
+    s.add(@list1)
+    s.add(@selected1)
+    s.add(@list2)
+    s.add(@selected2)
   end
 
   attr_accessor :text

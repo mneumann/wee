@@ -4,9 +4,9 @@ module Wee
   # This class is for backtracking the state of components (or
   # decorations/presenters).  Components that want an undo-facility to be
   # implemented (triggered for example by a browsers back-button), have to
-  # overwrite the Component#backtrack method. Class Wee::State simply
+  # overwrite the Component#state method. Class Wee::State simply
   # represents a collection of objects from which snapshots were taken via
-  # methods take_snapshot. 
+  # methods take_snapshot.
   #
   class State
     class Snapshot < Struct.new(:object, :snapshot); end

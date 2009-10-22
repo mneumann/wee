@@ -69,9 +69,9 @@ class MiniCalendar < Wee::Component
 
   # Backtrack state
   #
-  def backtrack(state)
+  def state(s)
     super
-    state.add(self)
+    s.add(self)
   end
 
   # Set to browse-only (no answer will be given)
@@ -299,9 +299,9 @@ class CustomCalendarDemo < Wee::Component
   
   # Backtrack state
   #
-  def backtrack(state)
+  def state(s)
     super
-    state.add(self)
+    s.add(self)
   end
 
   # Render calendar icon

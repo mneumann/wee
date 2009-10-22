@@ -7,10 +7,10 @@ class Calculator < Wee::Component
     @input = "" 
   end
 
-  def backtrack(state)
+  def state(s)
     super
-    state.add(@number_stack)
-    state.add(@input)
+    s.add(@number_stack)
+    s.add(@input)
   end
 
   def render(r)

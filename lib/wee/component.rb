@@ -43,19 +43,19 @@ module Wee
     # By default only the decoration chain is backtracked. This is
     # required to correctly backtrack called components. To disable
     # backtracking of the decorations, change method
-    # Component#backtrack_decoration to a no-operation:
+    # Component#state_decoration to a no-operation:
     #
-    #   def backtrack_decoration(state)
+    #   def state_decoration(s)
     #     # nothing here
     #   end
     #
-    # [+state+]
+    # [+s+]
     #    An object of class State
     #
-    def backtrack(state)
-      backtrack_decoration(state)
+    def state(s)
+      state_decoration(s)
       for child in self.children
-        child.decoration.backtrack(state)
+        child.decoration.state(s)
       end
     end
 
@@ -92,8 +92,8 @@ module Wee
 
     protected
 
-    def backtrack_decoration(state)
-      state.add_ivar(self, :@decoration, @decoration)
+    def state_decoration(s)
+      s.add_ivar(self, :@decoration, @decoration)
     end
 
     include Wee::DecorationMixin
