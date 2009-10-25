@@ -5,7 +5,7 @@ module Wee
 
     def self.install(mount_path, builder)
       builder.map(@mount_path = mount_path) do
-        run Rack::File.new(PUBLIC_DIR)
+        run Rack::File.new(Wee::JQuery::PUBLIC_DIR)
       end
     end
 
