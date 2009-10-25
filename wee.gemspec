@@ -10,6 +10,9 @@ spec = Gem::Specification.new do |s|
   s.name = 'wee'
   s.version = version 
   s.summary = 'Wee is a framework for building highly dynamic web applications.'
+  s.description = "Wee is a stateful component-orient web framework which supports "
+                  "continuations as well as multiple page-states, aka backtracking."
+                  "It is largely inspired by Smalltalk's Seaside framework."
 
   s.add_dependency('rack', '>= 1.0.0')
   s.add_dependency('mspec', '>= 1.5.9')
