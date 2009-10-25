@@ -29,16 +29,21 @@ end
 
 Wee::DefaultRenderer = Wee::HtmlCanvas
 
-def Wee.run(component_class=nil, mount_path='/', port=2000, &block)
+def Wee.run(component_class=nil, mount_path='/', port=2000, public_local_path=nil, &block)
   raise ArgumentError if component_class and block
 
   require 'rack/handler/webrick'
   app = Rack::Builder.app do
     map mount_path do
       if block
-        run Wee::Application.new(&block)
+        a = Wee::Application.new(&block)
       else
-        run Wee::Application.new { Wee::Session.new(component_class.new) }
+        a = Wee::Application.new { Wee::Session.new(component_class.new) }
+      end
+      if public_local_path
+        run Rack::Cascade.new([Rack::File.new(public_local_path), a])
+      else
+        run a
       end
     end
   end
