@@ -10,6 +10,10 @@ module Wee
   #
   class Application
 
+    def self.for(component_class, session_class=Wee::Session, *component_args)
+      new { session_class.new(component_class.new(*component_args)) }
+    end
+
     class SessionCache < Wee::LRUCache
       def garbage_collect
         delete_if {|id, session| session.dead? }
