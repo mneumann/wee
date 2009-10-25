@@ -58,8 +58,9 @@ module Wee
     generic_tag :html, :head, :body, :title, :style, :label
     generic_tag :h1, :h2, :h3, :h4, :h5
     generic_tag :div, :span, :ul, :ol, :li, :pre
-    generic_single_tag :link, :hr
+    generic_single_tag :hr
 
+    brush_tag :link, Brush::LinkTag
     brush_tag :table, Brush::TableTag
     brush_tag :table_row, Brush::TableRowTag
     brush_tag :table_data, Brush::TableDataTag
@@ -147,16 +148,6 @@ module Wee
     #
     def divert(tag, txt=nil, &block)
       @document.divert(tag, txt, &block)
-    end
-
-    #
-    # To update components in an AJAX request.
-    #
-    def update(*components)
-      components.each {|c|
-        self.callbacks.unregister(c)
-        self.render_decoration(c)
-      }
     end
 
     #

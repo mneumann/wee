@@ -110,33 +110,59 @@ module Wee
       "wee_#{@canvas.current_component.object_id}"
     end
 
+    #
+    # generic support for onXXX events
+    #
+
+    EVENTS = {:click => 'onclick'.freeze,
+              :dblclick => 'ondblclick'.freeze,
+              :mouseover => 'onmouseover'.freeze,
+              :mouseout => 'onmouseout'.freeze}.freeze
+
+    def javascript_on(event, javascript)
+      ev = EVENTS[event] 
+      raise ArgumentError unless ev
+      @attributes[ev] = "javascript: #{javascript};"
+      self
+    end
+
+    def callback_on(event, &block)
+      raise ArgumentError unless block
+      url = @canvas.url_for_callback(block)
+      javascript_on(event, "document.location.href='#{ url }'")
+      self
+    end
+
+    def update_on(event, &render_block)
+      raise ArgumentError unless render_block
+      url = @canvas.url_for_callback(@canvas.session.render_ajax_proc(render_block, @canvas.current_component))
+      javascript_on(event, "wee.update('#{ url }')")
+      self
+    end
+
+    def update_component_on(event, component=nil, &callback_block)
+      component ||= @canvas.current_component
+
+      render_block = proc {|r|
+        callback_block.call if callback_block
+        r.render(component)
+      }
+
+      url = @canvas.url_for_callback(@canvas.session.render_ajax_proc(render_block, component))
+      javascript_on(event, "wee.update('#{ url }')")
+      self
+    end
+
     def onclick_javascript(v)
-      onclick("javascript: #{v}")
+      javascript_on(:click, v)
     end
 
     def onclick_callback(&block)
-      url = @canvas.url_for_callback(block)
-      onclick("javascript: document.location.href='#{ url }'")
+      callback_on(:click, &block)
     end
 
     def ondblclick_callback(&block)
-      url = @canvas.url_for_callback(block)
-      ondblclick("javascript: document.location.href='#{ url }'")
-    end
-
-    def onclick_update_self_callback(&block)
-      raise ArgumentError unless block
-      current_component = @canvas.current_component
-      onclick_update_callback {|r|
-        block.call(r)
-        r.update(current_component)
-      }
-    end
-
-    def onclick_update_callback(&block)
-      raise ArgumentError unless block
-      url = @canvas.url_for_callback(@canvas.session.render_ajax_proc(block, @canvas.current_component))
-      onclick("javascript: wee.update('#{url}')")
+      callback_on(:dblclick, &block)
     end
 
     def with(text=nil, &block)
@@ -661,6 +687,18 @@ module Wee
   # Misc
   #---------------------------------------------------------------------
 
+  class Brush::LinkTag < Brush::GenericTagBrush
+    HTML_TAG = 'link'.freeze
+
+    html_attr :href,  :aliases => [:url]
+    html_attr :type
+    html_attr :rel
+
+    def initialize
+      super(HTML_TAG)
+    end
+  end
+
   class Brush::AnchorTag < Brush::GenericTagBrush
     HTML_TAG = 'a'.freeze
 
@@ -699,6 +737,10 @@ module Wee
         @document.end_tag(HTML_TITLE)
       end
 
+      if @head
+        @canvas.nest(&@head)
+      end
+
       @document.end_tag(HTML_HEAD)
       @document.start_tag(HTML_BODY)
 
@@ -719,6 +761,13 @@ module Wee
       @title = t
       self
     end
+
+    def head(&block)
+      raise ArgumentError unless block
+      @head = block
+      self
+    end
+
   end
 
 end # module Wee

@@ -20,7 +20,7 @@ class AjaxCounter < Wee::Component
       r.css "div.wee-AjaxCounter a { border: 1px solid blue; padding: 5px; background-color: #ABABAB; };"
     }
     r.div.css_class('wee-AjaxCounter').oid.with {
-      r.anchor.onclick_update_self_callback { @counter += 1 }.with(@counter.to_s)
+      r.anchor.update_component_on(:click) { @counter += 1 }.with(@counter.to_s)
     }
   end
 end
@@ -41,7 +41,7 @@ class HelloWorld < Wee::Component
       }
       r.body {
         render_hello(r)
-        r.div.onclick_callback { p "refresh" }.with("Refresh")
+        r.div.callback_on(:click) { p "refresh" }.with("Refresh")
         @counters.each {|c| r.render(c); r.break}
       }
     }
@@ -49,7 +49,7 @@ class HelloWorld < Wee::Component
 
   def render_hello(r)
     @hello ||= "Hello"
-    r.div.id("hello").onclick_update_callback {|r|
+    r.div.id("hello").update_on(:click) {|r|
       @hello.reverse!
       render_hello(r)
     }.with(@hello)

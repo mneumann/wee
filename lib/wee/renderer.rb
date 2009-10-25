@@ -42,14 +42,21 @@ module Wee
       end
     end
 
+    #
+    # NOTE: unregister will do nothing for a regular request, only
+    # for an AJAX request. Only if you would render one and the
+    # same component twice it would behave differently.
+    #
     def render(component)
       close
+      self.callbacks.unregister(component)
       component.decoration.render_on(self)
       nil
     end
 
     def render_decoration(decoration)
       close
+      self.callbacks.unregister(decoration)
       decoration.render_on(self)
       nil
     end
