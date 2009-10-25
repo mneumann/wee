@@ -217,6 +217,18 @@ module Wee
 
   end # class WrapperDecoration
 
+
+  #
+  # Renders a <div> tag with a unique "id" around the wrapped component. 
+  # Useful for components that want to update their content in-place using
+  # AJAX. 
+  #  
+  class OidDecoration < WrapperDecoration
+    def render(r)
+      r.div.oid.with { render_inner(r) }
+    end
+  end # class OidDecoration
+
   class FormDecoration < WrapperDecoration
 
     def render(r)
@@ -227,15 +239,22 @@ module Wee
 
   class PageDecoration < WrapperDecoration
 
-    def initialize(title='')
+    def initialize(title='', stylesheets=[], javascripts=[])
       @title = title
+      @stylesheets = stylesheets
+      @javascripts = javascripts
       super()
     end
 
     def global?() true end
 
     def render(r)
-      r.page.title(@title).with { render_inner(r) }
+      r.page.title(@title).head {
+        @stylesheets.each {|s| r.link_css(s) }
+        @javascripts.each {|j| r.javascript.src(j) }
+      }.with {
+        render_inner(r)
+      }
     end
 
   end # class PageDecoration
