@@ -9,8 +9,24 @@ module Wee
   # methods take_snapshot.
   #
   class State
-    class Snapshot < Struct.new(:object, :snapshot); end
-    class SnapshotIVars < Struct.new(:object, :ivars); end
+    class Snapshot
+      attr_accessor :object, :snapshot
+      def initialize(object, snapshot)
+        @object, @snapshot = object, snapshot
+      end
+    end
+    class SnapshotIVars
+      attr_accessor :object, :ivars
+      def initialize(object, ivars)
+        @object, @ivars = object, ivars
+      end
+      def add(ivar, value)
+        @ivars[ivar] = value
+      end
+      def restore
+        @ivars.each_pair {|k,v| @object.instance_variable_set(k, v) }
+      end
+    end
 
     def initialize
       @objects = Hash.new
@@ -22,16 +38,14 @@ module Wee
     end
 
     def add_ivar(object, ivar, value)
-      (@objects_ivars[object.object_id] ||= SnapshotIVars.new(object, {})).ivars[ivar] = value
+      (@objects_ivars[object.object_id] ||= SnapshotIVars.new(object, {})).add(ivar, value)
     end
 
     alias << add
 
     def restore
       @objects.each_value {|s| s.object.restore_snapshot(s.snapshot) }
-      @objects_ivars.each_value {|s|
-        s.ivars.each {|k,v| s.object.instance_variable_set(k, v) }
-      }
+      @objects_ivars.each_value {|s| s.restore }
     end
   end # class State
 
