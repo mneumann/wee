@@ -4,9 +4,15 @@ module Wee
   # Implementation of a Least Recently Used (LRU) Cache
   #
   class LRUCache
-    class Item < Struct.new(:value, :time)
+    class Item
+      attr_accessor :value, :time
+
+      def initialize(value=nil, time=nil)
+        @value, @time = value, time
+      end
+
       def <=>(other)
-        self.time <=> other.time
+        @time <=> other.time
       end
     end
 
