@@ -96,10 +96,18 @@ module Wee
         answer.answer_callback = cc
         session.send_response(nil)
       }
-
       remove_decoration(delegate)
       component.remove_decoration(answer)
-      return *answ.args
+
+      args = answ.args
+      case args.size
+      when 0
+        return
+      when 1
+        return args.first
+      else
+        return *args
+      end
     end
 
     #
