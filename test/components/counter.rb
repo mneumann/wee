@@ -1,12 +1,11 @@
 class Counter < Wee::Component
   def initialize(cnt=0)
-    super()
-    @cnt = ValueHolder.new(cnt) 
+    @cnt = cnt
   end
 
-  def backtrack_state(snap)
+  def state(s)
     super
-    snap.add(@cnt)
+    s.add_ivar(:@cnt, @cnt)
   end
 
   def render
