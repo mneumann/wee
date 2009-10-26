@@ -45,7 +45,12 @@ module Wee
       end
     end
 
-    class Page < Struct.new(:id, :state, :callbacks); end
+    class Page
+      attr_accessor :id, :state, :callbacks
+      def initialize(id=nil, state=nil, callbacks=nil)
+        @id, @state, @callbacks = id, state, callbacks
+      end
+    end
 
     class AbortCallbackProcessing < Exception
       attr_reader :response
