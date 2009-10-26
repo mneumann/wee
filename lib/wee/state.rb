@@ -15,6 +15,7 @@ module Wee
         @object, @snapshot = object, snapshot
       end
     end
+
     class SnapshotIVars
       attr_accessor :object, :ivars
       def initialize(object, ivars)
