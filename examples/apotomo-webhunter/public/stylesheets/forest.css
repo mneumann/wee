@@ -1,0 +1,33 @@
+/*
+  all images were stolen and may be licensed.
+  thanks to felix, the best programmer i've ever met, for helping me out with my rusty css.
+*/
+body {
+  
+}
+
+#forest {
+  background: transparent url('/images/dark_forest.jpg') top left no-repeat;
+  
+  width: 540px;
+  height: 450px;
+  position: relative;
+}
+
+#bear_trap {
+  position: absolute;
+  left:     180px;
+  top:      240px;
+  width:    220px; 
+  height:   180px;
+}
+
+#cheese {
+  padding-top:    36px;
+  padding-left:   60px;
+}
+
+#mouse {
+  padding-top:    36px;
+  padding-left:   36px;
+}
