@@ -57,7 +57,7 @@ module Wee
         item.time = (@time += 1)
         item.value = value
         garbage_collect() if @store.size >= @capacity
-        while @store.size >= @capacity 
+        while @store.size >= @capacity
           old_item = @store.delete(min_key()) || raise
           @replace_callback.call(old_item) if @replace_callback
         end
