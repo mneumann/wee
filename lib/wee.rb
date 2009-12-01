@@ -38,7 +38,7 @@ def Wee.run(component_class=nil, mount_path='/', port=2000, public_local_path=ni
       if block
         a = Wee::Application.new(&block)
       else
-        a = Wee::Application.new { Wee::Session.new(component_class.new) }
+        a = Wee::Application.new { Wee::Session.new(component_class.instanciate) }
       end
       if public_local_path
         run Rack::Cascade.new([Rack::File.new(public_local_path), a])
@@ -55,6 +55,6 @@ end
 #
 def Wee.runcc(component_class, *args)
   Wee.run(nil, *args) {
-    Wee::Session.new(component_class.new, Wee::Session::ThreadSerializer.new)
+    Wee::Session.new(component_class.instanciate, Wee::Session::ThreadSerializer.new)
   }
 end

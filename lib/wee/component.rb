@@ -11,6 +11,27 @@ module Wee
   class Component < Presenter
 
     #
+    # Constructs a new instance of the component and adds neccessary
+    # decorations.
+    #
+    def self.instanciate(*args, &block)
+      obj = new(*args, &block)
+      unless obj.respond_to?(:root?) and obj.root?
+        obj.add_decoration Wee::PageDecoration.new
+        obj.add_decoration Wee::FormDecoration.new
+      end
+      obj
+    end
+
+    #
+    # Is this a root component, which doesn't need to be wrapped with a
+    # PageDecoration and FormDecoration.
+    #
+    def root?
+      false
+    end
+
+    #
     # Initializes a newly created component.
     #
     def initialize
