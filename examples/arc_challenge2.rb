@@ -32,7 +32,7 @@ class Wee::IO
   end
 end
 
-class Conversation < Wee::Task
+class ArcChallenge < Wee::Task
   def go
     io = Wee::IO.new(self)
     text = io.ask
@@ -41,4 +41,4 @@ class Conversation < Wee::Task
   end
 end
 
-Wee.runcc(Conversation) if __FILE__ == $0
+Wee.runcc(ArcChallenge) if __FILE__ == $0

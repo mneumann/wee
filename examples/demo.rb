@@ -8,6 +8,8 @@ require 'demo/counter'
 require 'demo/calendar'
 require 'demo/radio'
 require 'demo/file_upload'
+require 'arc_challenge2'
+require 'cheese_task'
 
 class Demo < Wee::Component
   class E < Struct.new(:component, :title, :file); end
@@ -22,6 +24,9 @@ class Demo < Wee::Component
     @components << E.new(CustomCalendarDemo.new, "Calendar", 'demo/calendar.rb')
     @components << E.new(RadioTest.new, "Radio Buttons", 'demo/radio.rb')
     @components << E.new(FileUploadTest.new, "File Upload", 'demo/file_upload.rb')
+
+    @components << E.new(ArcChallenge.new, "Arc Challenge", 'arc_challenge2.rb') if $cc
+    @components << E.new(CheeseTask.new, "Cheese Task", 'cheese_task.rb') if $cc
 
     @editor = Editor.new
 
@@ -102,4 +107,12 @@ class Demo < Wee::Component
 
 end
 
-Wee.run(Demo) if __FILE__ == $0
+if __FILE__ == $0
+  if ARGV[0] == "cc"
+    # Enable continuation demos
+    $cc = true 
+    Wee.runcc(Demo)
+  else
+    Wee.run(Demo)
+  end
+end
