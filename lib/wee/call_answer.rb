@@ -41,8 +41,6 @@ module Wee
 
   module CallAnswerMixin
 
-    protected
-
     #
     # Call another component. The calling component is neither rendered nor are
     # it's callbacks processed until the called component answers using method
