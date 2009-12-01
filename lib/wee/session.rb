@@ -52,7 +52,7 @@ module Wee
       end
     end
 
-    class AbortCallbackProcessing < Exception
+    class AbortProcessing < Exception
       attr_reader :response
       def initialize(response)
         @response = response
@@ -193,7 +193,7 @@ module Wee
     # Send a premature response
     #
     def send_response(response)
-      raise AbortCallbackProcessing.new(response)
+      raise AbortProcessing.new(response)
     end
 
     protected
@@ -287,11 +287,11 @@ module Wee
 
       begin
         @root_component.decoration.render_on(r)
-      ensure
         r.close
+        r.response << r.document.to_s
+      rescue AbortProcessing => abort
+        r.response = abort.response
       end
-
-      r.response << r.document.to_s
 
       page.callbacks = r.callbacks
       return r.response
@@ -305,7 +305,7 @@ module Wee
         page.callbacks.with_triggered(request.fields) do
           @root_component.decoration.process_callbacks(page.callbacks)
         end
-      rescue AbortCallbackProcessing => abort
+      rescue AbortProcessing => abort
         page = @page # CONTINUATIONS!
         if abort.response
           #
