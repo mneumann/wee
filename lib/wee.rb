@@ -10,6 +10,7 @@ require 'wee/callback'
 require 'wee/presenter'
 require 'wee/decoration'
 require 'wee/component'
+require 'wee/task'
 
 require 'wee/application'
 require 'wee/request'
