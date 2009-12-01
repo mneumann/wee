@@ -231,6 +231,8 @@ module Wee
 
   class FormDecoration < WrapperDecoration
 
+    def global?() true end
+
     def render(r)
       r.form { render_inner(r) }
     end
