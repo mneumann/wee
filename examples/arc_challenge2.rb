@@ -12,7 +12,7 @@ require 'wee'
 require "io"
 
 class Conversation < Wee::Task
-  def run
+  def go
     io = Wee::IO.new(self)
     text = io.ask
     io.pause("click here")

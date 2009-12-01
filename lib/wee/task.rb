@@ -4,11 +4,11 @@ module Wee
 
   class Task < Component
 
-    def run
+    def go
     end
 
     def render(r)
-      r.session.send_response(RedirectResponse.new(r.url_for_callback(method(:run))))
+      r.session.send_response(RedirectResponse.new(r.url_for_callback(method(:go))))
     end
 
   end # class Task

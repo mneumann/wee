@@ -1,14 +1,6 @@
+require "wee/conversation"
+
 module Wee
-
-  class BlockComponent < Component
-    def initialize(&block)
-      @block = block
-    end
-
-    def render(r)
-      instance_exec(r, &@block)
-    end
-  end
 
   class IO
     def initialize(component)
@@ -16,25 +8,18 @@ module Wee
     end
 
     def ask
-      render do |r|
+      @component.display do |r|
         r.text_input.callback {|text| answer(text)}
         r.submit_button.value("Enter")
       end 
     end
 
     def pause(text)
-      render {|r| r.anchor.callback { answer }.with(text) }
+      @component.display {|r| r.anchor.callback { answer }.with(text) }
     end
 
     def tell(text)
-      render {|r| r.text text.to_s; r.break }
+      @component.display {|r| r.text text.to_s }
     end
-
-    protected
-
-    def render(&block)
-      @component.callcc BlockComponent.new(&block) 
-    end
-
   end
 end
