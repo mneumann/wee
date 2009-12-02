@@ -11,8 +11,24 @@ require 'demo/file_upload'
 require 'arc_challenge2'
 require 'cheese_task'
 
+class ArcChallengeWrapper < Wee::WrapperDecoration
+  def global?; true end
+
+  def render(r)
+    r.paragraph
+    url = "http://onestepback.org/index.cgi/Tech/Ruby/ArcChallenge.red"
+    r.anchor.url(url).with(url)
+    r.paragraph
+    render_inner(r)
+  end
+end
+
 class Demo < Wee::Component
   class E < Struct.new(:component, :title, :file); end
+
+  def root?
+    true
+  end
 
   def initialize
     super
@@ -25,8 +41,13 @@ class Demo < Wee::Component
     @components << E.new(RadioTest.new, "Radio Buttons", 'demo/radio.rb')
     @components << E.new(FileUploadTest.new, "File Upload", 'demo/file_upload.rb')
 
-    @components << E.new(ArcChallenge.new, "Arc Challenge", 'arc_challenge2.rb') if $cc
-    @components << E.new(CheeseTask.new, "Cheese Task", 'cheese_task.rb') if $cc
+    if $cc
+      # these components need continuations
+      arc = ArcChallenge.new
+      arc.add_decoration(ArcChallengeWrapper.new)
+      @components << E.new(arc, "Arc Challenge", 'arc_challenge2.rb')
+      @components << E.new(CheeseTask.new, "Cheese Task", 'cheese_task.rb')
+    end
 
     @editor = Editor.new
 
