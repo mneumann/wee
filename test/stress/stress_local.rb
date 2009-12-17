@@ -1,6 +1,7 @@
 $LOAD_PATH.unshift "../../lib"
 require 'rubygems'
 require 'wee'
+require 'rack/mock'
 
 class HelloWorld < Wee::Component
 
