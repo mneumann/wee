@@ -92,23 +92,36 @@ module Wee
     end
 
     #
-    # Process and invoke all callbacks specified for this component and all of
-    # it's child components. 
+    # Process and invoke all input callbacks specified for this component and all of
+    # it's child components.
+    #
+    # Returns the action callback to be invoked.
     #
     def process_callbacks(callbacks)
-      callbacks.input_callbacks.each_triggered(self) do |callback, value|
-        callback.call(value)
-      end
+      callbacks.input_callbacks.each_triggered_call_with_value(self)
+
+      action_callback = nil
 
       # process callbacks of all children
       for child in self.children
-        child.decoration.process_callbacks(callbacks)
+        if act = child.decoration.process_callbacks(callbacks)
+          if action_callback
+            raise "Duplicate action callback"
+          else
+            action_callback = act
+          end
+        end
       end
 
-      callbacks.action_callbacks.each_triggered(self) do |callback, value|
-        callback.call
-        session.send_response(nil) # prematurely end callback processing
+      if act = callbacks.action_callbacks.first_triggered(self)
+        if action_callback
+          raise "Duplicate action callback"
+        else
+          action_callback = act
+        end
       end
+
+      return action_callback
     end
 
     protected

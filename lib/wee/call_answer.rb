@@ -23,17 +23,31 @@ module Wee
       @answer_callback = answer_callback
     end
 
+    class Interceptor
+      attr_accessor :action_callback, :answer_callback
+
+      def initialize(action_callback, answer_callback)
+        @action_callback, @answer_callback = action_callback, answer_callback
+      end
+
+      def call
+        @action_callback.call
+      rescue Answer => answer
+        # return to the calling component 
+        @answer_callback.call(answer)
+      end
+    end
+
     #
     # When a component answers, <tt>@answer_callback.call(answer)</tt>
     # will be executed, where +answer+ is of class Answer which includes the
     # arguments passed to Component#answer.
     #
     def process_callbacks(callbacks)
-      begin
-        super
-      rescue Answer => answer
-        # return to the calling component 
-        @answer_callback.call(answer)
+      if action_callback = super
+        Interceptor.new(action_callback, @answer_callback)
+      else
+        nil
       end
     end
 

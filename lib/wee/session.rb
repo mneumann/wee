@@ -302,9 +302,10 @@ module Wee
 
       begin
         @page = page # CONTINUATIONS!
-        page.callbacks.with_triggered(request.fields) do
+        action_callback = page.callbacks.with_triggered(request.fields) do
           @root_component.decoration.process_callbacks(page.callbacks)
         end
+        action_callback.call if action_callback
       rescue AbortProcessing => abort
         page = @page # CONTINUATIONS!
         if abort.response

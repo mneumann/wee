@@ -18,8 +18,9 @@ class Wee::IO
 
   def ask
     @component.display do |r|
-      r.text_input.callback {|text| answer(text)}
-      r.submit_button.value("Enter")
+      text = nil
+      r.text_input.callback {|t| text = t}
+      r.submit_button.callback { answer(text) }.value("Enter")
     end 
   end
 

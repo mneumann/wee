@@ -52,10 +52,27 @@ module Wee
 
     def each_triggered(object)
       if ary = @obj_map[object]
-        ary.each do |id|
+        for id in ary
           yield @callbacks[id], @triggered[id] if @triggered.has_key?(id)
         end
       end
+    end
+
+    def each_triggered_call_with_value(object)
+      if ary = @obj_map[object]
+        for id in ary
+          @callbacks[id].call(@triggered[id]) if @triggered.has_key?(id)
+        end
+      end
+    end
+
+    def first_triggered(object)
+      if ary = @obj_map[object]
+        for id in ary
+	  return @callbacks[id] if @triggered.has_key?(id)
+        end
+      end
+      return nil
     end
 
   end # class CallbackRegistry
