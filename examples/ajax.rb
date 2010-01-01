@@ -2,9 +2,13 @@ $LOAD_PATH.unshift "../lib"
 require 'rubygems'
 require 'wee'
 require 'rack'
-require 'wee/jquery'
 
 class AjaxCounter < Wee::Component
+
+  require 'wee/jquery'
+
+  def self.depends; [Wee::JQuery] end
+
   def initialize
     super
     @counter = 0
@@ -15,23 +19,25 @@ class AjaxCounter < Wee::Component
     s.add_ivar(self, :@counter, @counter)
   end
 
+  def style
+    "div.wee-AjaxCounter a { border: 1px solid blue; padding: 5px; background-color: #ABABAB; };"
+  end
+
   def render(r)
-    r.once(self.class) {
-      r.css "div.wee-AjaxCounter a { border: 1px solid blue; padding: 5px; background-color: #ABABAB; };"
-    }
+    r.once(self.class) { r.css self.style() }
     r.div.css_class('wee-AjaxCounter').oid.with {
       r.anchor.update_component_on(:click) { @counter += 1 }.with(@counter.to_s)
     }
   end
+
 end
 
 class HelloWorld < Wee::RootComponent
+
+  def self.depends; [AjaxCounter.depends] end
+
   def title
     'Wee + Ajax'
-  end
-
-  def javascripts
-    Wee::JQuery.javascript_includes
   end
 
   def initialize
@@ -56,8 +62,5 @@ class HelloWorld < Wee::RootComponent
 end
 
 if __FILE__ == $0
-  puts
-  puts "Open your browser at: http://localhost:2000/ajax"
-  puts
-  Wee.run HelloWorld, :mount_path => '/ajax', :additional_mounts => {'/jquery' => Wee::JQuery.method(:install)}
+  Wee.run HelloWorld, :mount_path => '/ajax', :print_message => true
 end

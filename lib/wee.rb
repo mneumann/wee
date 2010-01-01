@@ -10,6 +10,7 @@ require 'wee/callback'
 require 'wee/presenter'
 require 'wee/decoration'
 require 'wee/component'
+require 'wee/root_component'
 require 'wee/task'
 
 require 'wee/application'
@@ -38,11 +39,13 @@ def Wee.run(component_class=nil, params=nil, &block)
   params[:port] ||= 2000
   params[:public_path] ||= nil
   params[:additional_builder_procs] ||= []
-  params[:additional_mounts] ||= {} 
-  params[:use_continuations] = false
+  params[:use_continuations] ||= false
+  params[:print_message] ||= false
 
-  params[:additional_mounts].each do |path, prc|
-    params[:additional_builder_procs] << proc {|builder| prc.call(path, builder)}
+  if component_class <= Wee::RootComponent
+    component_class.external_resources.each do |ext_res|  
+      params[:additional_builder_procs] << proc {|builder| ext_res.install(builder)}
+    end
   end
 
   raise ArgumentError if params[:use_continuations] and block 
@@ -70,6 +73,15 @@ def Wee.run(component_class=nil, params=nil, &block)
   end
 
   require 'rack/handler/webrick'
+
+  if params[:print_message]
+    url = "http://localhost:#{params[:port]}#{params[:mount_path]}"
+    io = params[:print_message].kind_of?(IO) ? params[:print_message] : STDERR
+    io.puts
+    io.puts "Open your browser at: #{url}"
+    io.puts
+  end
+
   Rack::Handler::WEBrick.run(app, :Port => params[:port])
 end
 

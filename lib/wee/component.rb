@@ -27,6 +27,14 @@ module Wee
     end
 
     #
+    # Return an array of classes onto which the current component depends. 
+    # Right now this is only used to determine the required ExternalResources.
+    #
+    def self.depends
+      []
+    end
+
+    #
     # Initializes a newly created component.
     #
     def initialize
@@ -123,27 +131,5 @@ module Wee
     include Wee::CallAnswerMixin
 
   end # class Component
-
-  #
-  # A RootComponent has a special instanciate class method that
-  # makes it more comfortable for root components.
-  #
-  class RootComponent < Component
-    def title
-      self.class.name.to_s
-    end
-    def stylesheets; [] end
-    def javascripts; [] end
-
-    def self.instanciate(*args, &block)
-      obj = new(*args, &block)
-      unless obj.find_decoration {|d| d.kind_of?(Wee::FormDecoration)}
-        obj.add_decoration Wee::FormDecoration.new
-      end
-      unless obj.find_decoration {|d| d.kind_of?(Wee::PageDecoration)}
-        obj.add_decoration Wee::PageDecoration.new(obj.title, obj.stylesheets, obj.javascripts)
-      end
-    end
-  end # class RootComponent
 
 end # module Wee
