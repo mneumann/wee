@@ -60,7 +60,6 @@ module Wee
     generic_tag :div, :span, :ul, :ol, :li, :pre
     generic_single_tag :hr
 
-    brush_tag :style, Brush::StyleTag
     brush_tag :link, Brush::LinkTag
     brush_tag :table, Brush::TableTag
     brush_tag :table_row, Brush::TableRowTag
