@@ -5,9 +5,11 @@ require 'rack'
 
 class AjaxCounter < Wee::Component
 
-  require 'wee/jquery'
+  #require 'wee/jquery'
+  #def self.depends; [Wee::JQuery] end
 
-  def self.depends; [Wee::JQuery] end
+  require 'wee/rightjs'
+  def self.depends; [Wee::RightJS] end
 
   def initialize
     super
