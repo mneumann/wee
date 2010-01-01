@@ -88,12 +88,14 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000077">each_triggered</a>&nbsp;&nbsp;
-      <a href="#M000072">new</a>&nbsp;&nbsp;
-      <a href="#M000075">prepare_triggered</a>&nbsp;&nbsp;
-      <a href="#M000073">register</a>&nbsp;&nbsp;
-      <a href="#M000076">reset_triggered</a>&nbsp;&nbsp;
-      <a href="#M000074">unregister</a>&nbsp;&nbsp;
+      <a href="#M000071">each_triggered</a>&nbsp;&nbsp;
+      <a href="#M000072">each_triggered_call_with_value</a>&nbsp;&nbsp;
+      <a href="#M000073">first_triggered</a>&nbsp;&nbsp;
+      <a href="#M000066">new</a>&nbsp;&nbsp;
+      <a href="#M000069">prepare_triggered</a>&nbsp;&nbsp;
+      <a href="#M000067">register</a>&nbsp;&nbsp;
+      <a href="#M000070">reset_triggered</a>&nbsp;&nbsp;
+      <a href="#M000068">unregister</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -115,19 +117,19 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000072" class="method-detail">
-        <a name="M000072"></a>
+      <div id="method-M000066" class="method-detail">
+        <a name="M000066"></a>
 
         <div class="method-heading">
-          <a href="#M000072" class="method-signature">
+          <a href="#M000066" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(prefix=&quot;&quot;)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000072-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000072-source">
+            onclick="toggleCode('M000066-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000066-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/callback.rb, line 4</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">prefix</span>=<span class="ruby-value str">&quot;&quot;</span>)
@@ -144,24 +146,24 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000077" class="method-detail">
-        <a name="M000077"></a>
+      <div id="method-M000071" class="method-detail">
+        <a name="M000071"></a>
 
         <div class="method-heading">
-          <a href="#M000077" class="method-signature">
+          <a href="#M000071" class="method-signature">
           <span class="method-name">each_triggered</span><span class="method-args">(object) {|@callbacks[id], @triggered[id] if @triggered.has_key?(id)| ...}</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000077-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000077-source">
+            onclick="toggleCode('M000071-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000071-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/callback.rb, line 53</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_triggered</span>(<span class="ruby-identifier">object</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ary</span> = <span class="ruby-ivar">@obj_map</span>[<span class="ruby-identifier">object</span>]
-        <span class="ruby-identifier">ary</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">id</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">id</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">ary</span>
           <span class="ruby-keyword kw">yield</span> <span class="ruby-ivar">@callbacks</span>[<span class="ruby-identifier">id</span>], <span class="ruby-ivar">@triggered</span>[<span class="ruby-identifier">id</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@triggered</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">id</span>)
         <span class="ruby-keyword kw">end</span>
       <span class="ruby-keyword kw">end</span>
@@ -171,11 +173,66 @@
         </div>
       </div>
 
-      <div id="method-M000075" class="method-detail">
-        <a name="M000075"></a>
+      <div id="method-M000072" class="method-detail">
+        <a name="M000072"></a>
 
         <div class="method-heading">
-          <a href="#M000075" class="method-signature">
+          <a href="#M000072" class="method-signature">
+          <span class="method-name">each_triggered_call_with_value</span><span class="method-args">(object)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000072-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000072-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/callback.rb, line 61</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">each_triggered_call_with_value</span>(<span class="ruby-identifier">object</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ary</span> = <span class="ruby-ivar">@obj_map</span>[<span class="ruby-identifier">object</span>]
+        <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">id</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">ary</span>
+          <span class="ruby-ivar">@callbacks</span>[<span class="ruby-identifier">id</span>].<span class="ruby-identifier">call</span>(<span class="ruby-ivar">@triggered</span>[<span class="ruby-identifier">id</span>]) <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@triggered</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">id</span>)
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000073" class="method-detail">
+        <a name="M000073"></a>
+
+        <div class="method-heading">
+          <a href="#M000073" class="method-signature">
+          <span class="method-name">first_triggered</span><span class="method-args">(object)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000073-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000073-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/callback.rb, line 69</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">first_triggered</span>(<span class="ruby-identifier">object</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ary</span> = <span class="ruby-ivar">@obj_map</span>[<span class="ruby-identifier">object</span>]
+        <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">id</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">ary</span>
+          <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@callbacks</span>[<span class="ruby-identifier">id</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@triggered</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">id</span>)
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000069" class="method-detail">
+        <a name="M000069"></a>
+
+        <div class="method-heading">
+          <a href="#M000069" class="method-signature">
           <span class="method-name">prepare_triggered</span><span class="method-args">(ids_and_values)</span>
           </a>
         </div>
@@ -188,8 +245,8 @@ the value of @fields[&#8216;xxx&#8217;] is { nil =&gt; &#8230;,
 work correctly.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000075-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000075-source">
+            onclick="toggleCode('M000069-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000069-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/callback.rb, line 31</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prepare_triggered</span>(<span class="ruby-identifier">ids_and_values</span>)
@@ -214,19 +271,19 @@ work correctly.
         </div>
       </div>
 
-      <div id="method-M000073" class="method-detail">
-        <a name="M000073"></a>
+      <div id="method-M000067" class="method-detail">
+        <a name="M000067"></a>
 
         <div class="method-heading">
-          <a href="#M000073" class="method-signature">
+          <a href="#M000067" class="method-signature">
           <span class="method-name">register</span><span class="method-args">(object, callback)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000073-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000073-source">
+            onclick="toggleCode('M000067-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000067-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/callback.rb, line 12</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">register</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">callback</span>)
@@ -241,19 +298,19 @@ work correctly.
         </div>
       </div>
 
-      <div id="method-M000076" class="method-detail">
-        <a name="M000076"></a>
+      <div id="method-M000070" class="method-detail">
+        <a name="M000070"></a>
 
         <div class="method-heading">
-          <a href="#M000076" class="method-signature">
+          <a href="#M000070" class="method-signature">
           <span class="method-name">reset_triggered</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000076-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000076-source">
+            onclick="toggleCode('M000070-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000070-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/callback.rb, line 49</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reset_triggered</span>
@@ -264,19 +321,19 @@ work correctly.
         </div>
       </div>
 
-      <div id="method-M000074" class="method-detail">
-        <a name="M000074"></a>
+      <div id="method-M000068" class="method-detail">
+        <a name="M000068"></a>
 
         <div class="method-heading">
-          <a href="#M000074" class="method-signature">
+          <a href="#M000068" class="method-signature">
           <span class="method-name">unregister</span><span class="method-args">(object)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000074-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000074-source">
+            onclick="toggleCode('M000068-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000068-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/callback.rb, line 20</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unregister</span>(<span class="ruby-identifier">object</span>)

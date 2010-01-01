@@ -86,16 +86,18 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000156">get_oid</a>&nbsp;&nbsp;
-      <a href="#M000153">html_attr</a>&nbsp;&nbsp;
-      <a href="#M000154">new</a>&nbsp;&nbsp;
-      <a href="#M000155">oid</a>&nbsp;&nbsp;
-      <a href="#M000158">onclick_callback</a>&nbsp;&nbsp;
-      <a href="#M000157">onclick_javascript</a>&nbsp;&nbsp;
-      <a href="#M000161">onclick_update_callback</a>&nbsp;&nbsp;
-      <a href="#M000160">onclick_update_self_callback</a>&nbsp;&nbsp;
-      <a href="#M000159">ondblclick_callback</a>&nbsp;&nbsp;
-      <a href="#M000162">with</a>&nbsp;&nbsp;
+      <a href="#M000166">callback_on</a>&nbsp;&nbsp;
+      <a href="#M000164">get_oid</a>&nbsp;&nbsp;
+      <a href="#M000161">html_attr</a>&nbsp;&nbsp;
+      <a href="#M000165">javascript_on</a>&nbsp;&nbsp;
+      <a href="#M000162">new</a>&nbsp;&nbsp;
+      <a href="#M000163">oid</a>&nbsp;&nbsp;
+      <a href="#M000170">onclick_callback</a>&nbsp;&nbsp;
+      <a href="#M000169">onclick_javascript</a>&nbsp;&nbsp;
+      <a href="#M000171">ondblclick_callback</a>&nbsp;&nbsp;
+      <a href="#M000168">update_component_on</a>&nbsp;&nbsp;
+      <a href="#M000167">update_on</a>&nbsp;&nbsp;
+      <a href="#M000172">with</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -107,6 +109,24 @@
     <div id="section">
 
 
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">EVENTS</td>
+          <td>=</td>
+          <td class="context-item-value">{:click =&gt; 'onclick'.freeze,               :dblclick =&gt; 'ondblclick'.freeze,               :mouseover =&gt; 'onmouseover'.freeze,               :mouseout =&gt; 'onmouseout'.freeze}.freeze</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+generic support for onXXX events
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
 
 
 
@@ -165,19 +185,19 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000153" class="method-detail">
-        <a name="M000153"></a>
+      <div id="method-M000161" class="method-detail">
+        <a name="M000161"></a>
 
         <div class="method-heading">
-          <a href="#M000153" class="method-signature">
+          <a href="#M000161" class="method-signature">
           <span class="method-name">html_attr</span><span class="method-args">(attr, hash={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000153-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000153-source">
+            onclick="toggleCode('M000161-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000161-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 49</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">html_attr</span>(<span class="ruby-identifier">attr</span>, <span class="ruby-identifier">hash</span>={})
@@ -219,19 +239,19 @@
         </div>
       </div>
 
-      <div id="method-M000154" class="method-detail">
-        <a name="M000154"></a>
+      <div id="method-M000162" class="method-detail">
+        <a name="M000162"></a>
 
         <div class="method-heading">
-          <a href="#M000154" class="method-signature">
+          <a href="#M000162" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(tag)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000154-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000154-source">
+            onclick="toggleCode('M000162-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000162-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 93</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">tag</span>)
@@ -246,11 +266,37 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000156" class="method-detail">
-        <a name="M000156"></a>
+      <div id="method-M000166" class="method-detail">
+        <a name="M000166"></a>
 
         <div class="method-heading">
-          <a href="#M000156" class="method-signature">
+          <a href="#M000166" class="method-signature">
+          <span class="method-name">callback_on</span><span class="method-args">(event, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000166-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000166-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 129</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">callback_on</span>(<span class="ruby-identifier">event</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block</span>
+      <span class="ruby-identifier">url</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">url_for_callback</span>(<span class="ruby-identifier">block</span>)
+      <span class="ruby-identifier">javascript_on</span>(<span class="ruby-identifier">event</span>, <span class="ruby-node">&quot;document.location.href='#{ url }'&quot;</span>)
+      <span class="ruby-keyword kw">self</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000164" class="method-detail">
+        <a name="M000164"></a>
+
+        <div class="method-heading">
+          <a href="#M000164" class="method-signature">
           <span class="method-name">get_oid</span><span class="method-args">()</span>
           </a>
         </div>
@@ -260,8 +306,8 @@
 Returns a unique DOM id for the underlying component
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000156-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000156-source">
+            onclick="toggleCode('M000164-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000164-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 109</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_oid</span>
@@ -272,11 +318,37 @@ Returns a unique DOM id for the underlying component
         </div>
       </div>
 
-      <div id="method-M000155" class="method-detail">
-        <a name="M000155"></a>
+      <div id="method-M000165" class="method-detail">
+        <a name="M000165"></a>
 
         <div class="method-heading">
-          <a href="#M000155" class="method-signature">
+          <a href="#M000165" class="method-signature">
+          <span class="method-name">javascript_on</span><span class="method-args">(event, javascript)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000165-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000165-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 122</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">javascript_on</span>(<span class="ruby-identifier">event</span>, <span class="ruby-identifier">javascript</span>)
+      <span class="ruby-identifier">ev</span> = <span class="ruby-constant">EVENTS</span>[<span class="ruby-identifier">event</span>] 
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">ev</span>
+      <span class="ruby-ivar">@attributes</span>[<span class="ruby-identifier">ev</span>] = <span class="ruby-node">&quot;javascript: #{javascript};&quot;</span>
+      <span class="ruby-keyword kw">self</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000163" class="method-detail">
+        <a name="M000163"></a>
+
+        <div class="method-heading">
+          <a href="#M000163" class="method-signature">
           <span class="method-name">oid</span><span class="method-args">()</span>
           </a>
         </div>
@@ -286,8 +358,8 @@ Returns a unique DOM id for the underlying component
 Assigns a unique DOM id
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000155-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000155-source">
+            onclick="toggleCode('M000163-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000163-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 102</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">oid</span>
@@ -298,145 +370,148 @@ Assigns a unique DOM id
         </div>
       </div>
 
-      <div id="method-M000158" class="method-detail">
-        <a name="M000158"></a>
+      <div id="method-M000170" class="method-detail">
+        <a name="M000170"></a>
 
         <div class="method-heading">
-          <a href="#M000158" class="method-signature">
+          <a href="#M000170" class="method-signature">
           <span class="method-name">onclick_callback</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000158-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000158-source">
+            onclick="toggleCode('M000170-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000170-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 117</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 160</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">onclick_callback</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-      <span class="ruby-identifier">url</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">url_for_callback</span>(<span class="ruby-identifier">block</span>)
-      <span class="ruby-identifier">onclick</span>(<span class="ruby-node">&quot;javascript: document.location.href='#{ url }'&quot;</span>)
+      <span class="ruby-identifier">callback_on</span>(<span class="ruby-identifier">:click</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000157" class="method-detail">
-        <a name="M000157"></a>
+      <div id="method-M000169" class="method-detail">
+        <a name="M000169"></a>
 
         <div class="method-heading">
-          <a href="#M000157" class="method-signature">
+          <a href="#M000169" class="method-signature">
           <span class="method-name">onclick_javascript</span><span class="method-args">(v)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000157-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000157-source">
+            onclick="toggleCode('M000169-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000169-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 113</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 156</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">onclick_javascript</span>(<span class="ruby-identifier">v</span>)
-      <span class="ruby-identifier">onclick</span>(<span class="ruby-node">&quot;javascript: #{v}&quot;</span>)
+      <span class="ruby-identifier">javascript_on</span>(<span class="ruby-identifier">:click</span>, <span class="ruby-identifier">v</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000161" class="method-detail">
-        <a name="M000161"></a>
+      <div id="method-M000171" class="method-detail">
+        <a name="M000171"></a>
 
         <div class="method-heading">
-          <a href="#M000161" class="method-signature">
-          <span class="method-name">onclick_update_callback</span><span class="method-args">(&amp;block)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000161-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000161-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 136</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">onclick_update_callback</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block</span>
-      <span class="ruby-identifier">url</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">url_for_callback</span>(<span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">session</span>.<span class="ruby-identifier">render_ajax_proc</span>(<span class="ruby-identifier">block</span>, <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">current_component</span>))
-      <span class="ruby-identifier">onclick</span>(<span class="ruby-node">&quot;javascript: wee.update('#{url}')&quot;</span>)
-    <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000160" class="method-detail">
-        <a name="M000160"></a>
-
-        <div class="method-heading">
-          <a href="#M000160" class="method-signature">
-          <span class="method-name">onclick_update_self_callback</span><span class="method-args">(&amp;block)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000160-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000160-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 127</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">onclick_update_self_callback</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block</span>
-      <span class="ruby-identifier">current_component</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">current_component</span>
-      <span class="ruby-identifier">onclick_update_callback</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">r</span>)
-        <span class="ruby-identifier">r</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">current_component</span>)
-      }
-    <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000159" class="method-detail">
-        <a name="M000159"></a>
-
-        <div class="method-heading">
-          <a href="#M000159" class="method-signature">
+          <a href="#M000171" class="method-signature">
           <span class="method-name">ondblclick_callback</span><span class="method-args">(&amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000159-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000159-source">
+            onclick="toggleCode('M000171-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000171-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 122</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 164</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ondblclick_callback</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-      <span class="ruby-identifier">url</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">url_for_callback</span>(<span class="ruby-identifier">block</span>)
-      <span class="ruby-identifier">ondblclick</span>(<span class="ruby-node">&quot;javascript: document.location.href='#{ url }'&quot;</span>)
+      <span class="ruby-identifier">callback_on</span>(<span class="ruby-identifier">:dblclick</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000162" class="method-detail">
-        <a name="M000162"></a>
+      <div id="method-M000168" class="method-detail">
+        <a name="M000168"></a>
 
         <div class="method-heading">
-          <a href="#M000162" class="method-signature">
+          <a href="#M000168" class="method-signature">
+          <span class="method-name">update_component_on</span><span class="method-args">(event, component=nil, &amp;callback_block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000168-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000168-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 143</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_component_on</span>(<span class="ruby-identifier">event</span>, <span class="ruby-identifier">component</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">callback_block</span>)
+      <span class="ruby-identifier">component</span> <span class="ruby-operator">||=</span> <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">current_component</span>
+
+      <span class="ruby-identifier">render_block</span> = <span class="ruby-identifier">proc</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">callback_block</span>.<span class="ruby-identifier">call</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">callback_block</span>
+        <span class="ruby-identifier">r</span>.<span class="ruby-identifier">render</span>(<span class="ruby-identifier">component</span>)
+      }
+
+      <span class="ruby-identifier">url</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">url_for_callback</span>(<span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">session</span>.<span class="ruby-identifier">render_ajax_proc</span>(<span class="ruby-identifier">render_block</span>, <span class="ruby-identifier">component</span>))
+      <span class="ruby-identifier">javascript_on</span>(<span class="ruby-identifier">event</span>, <span class="ruby-node">&quot;wee.update('#{ url }')&quot;</span>)
+      <span class="ruby-keyword kw">self</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000167" class="method-detail">
+        <a name="M000167"></a>
+
+        <div class="method-heading">
+          <a href="#M000167" class="method-signature">
+          <span class="method-name">update_on</span><span class="method-args">(event, &amp;render_block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000167-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000167-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 136</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_on</span>(<span class="ruby-identifier">event</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">render_block</span>)
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">render_block</span>
+      <span class="ruby-identifier">url</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">url_for_callback</span>(<span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">session</span>.<span class="ruby-identifier">render_ajax_proc</span>(<span class="ruby-identifier">render_block</span>, <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">current_component</span>))
+      <span class="ruby-identifier">javascript_on</span>(<span class="ruby-identifier">event</span>, <span class="ruby-node">&quot;wee.update('#{ url }')&quot;</span>)
+      <span class="ruby-keyword kw">self</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000172" class="method-detail">
+        <a name="M000172"></a>
+
+        <div class="method-heading">
+          <a href="#M000172" class="method-signature">
           <span class="method-name">with</span><span class="method-args">(text=nil, &amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000162-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000162-source">
+            onclick="toggleCode('M000172-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000172-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 142</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 168</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with</span>(<span class="ruby-identifier">text</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
       <span class="ruby-ivar">@document</span>.<span class="ruby-identifier">start_tag</span>(<span class="ruby-ivar">@tag</span>, <span class="ruby-ivar">@attributes</span>)
       <span class="ruby-ivar">@document</span>.<span class="ruby-identifier">text</span>(<span class="ruby-identifier">text</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">text</span>

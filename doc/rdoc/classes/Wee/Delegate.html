@@ -83,9 +83,9 @@
     <div id="description">
       <p>
 A <a href="Delegate.html">Wee::Delegate</a> breaks the decoration chain and
-forwards the methods <a href="Delegate.html#M000212">process_callbacks</a>,
-<a href="Delegate.html#M000213">render_on</a> and <a
-href="Delegate.html#M000214">state</a> to the corresponding <b>chain</b>
+forwards the methods <a href="Delegate.html#M000230">process_callbacks</a>,
+<a href="Delegate.html#M000231">render_on</a> and <a
+href="Delegate.html#M000232">state</a> to the corresponding <b>chain</b>
 method of it&#8216;s <em>delegate</em> component (a <a
 href="Component.html">Wee::Component</a>).
 </p>
@@ -99,10 +99,10 @@ href="Component.html">Wee::Component</a>).
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000211">new</a>&nbsp;&nbsp;
-      <a href="#M000212">process_callbacks</a>&nbsp;&nbsp;
-      <a href="#M000213">render_on</a>&nbsp;&nbsp;
-      <a href="#M000214">state</a>&nbsp;&nbsp;
+      <a href="#M000229">new</a>&nbsp;&nbsp;
+      <a href="#M000230">process_callbacks</a>&nbsp;&nbsp;
+      <a href="#M000231">render_on</a>&nbsp;&nbsp;
+      <a href="#M000232">state</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -124,19 +124,19 @@ href="Component.html">Wee::Component</a>).
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000211" class="method-detail">
-        <a name="M000211"></a>
+      <div id="method-M000229" class="method-detail">
+        <a name="M000229"></a>
 
         <div class="method-heading">
-          <a href="#M000211" class="method-signature">
+          <a href="#M000229" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(delegate)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000211-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000211-source">
+            onclick="toggleCode('M000229-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000229-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 170</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">delegate</span>)
@@ -149,11 +149,11 @@ href="Component.html">Wee::Component</a>).
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000212" class="method-detail">
-        <a name="M000212"></a>
+      <div id="method-M000230" class="method-detail">
+        <a name="M000230"></a>
 
         <div class="method-heading">
-          <a href="#M000212" class="method-signature">
+          <a href="#M000230" class="method-signature">
           <span class="method-name">process_callbacks</span><span class="method-args">(callbacks)</span>
           </a>
         </div>
@@ -164,8 +164,8 @@ Forwards method to the corresponding top-level <b>chain</b> method of the
 <em>delegate</em> component.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000212-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000212-source">
+            onclick="toggleCode('M000230-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000230-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 178</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_callbacks</span>(<span class="ruby-identifier">callbacks</span>)
@@ -176,11 +176,11 @@ Forwards method to the corresponding top-level <b>chain</b> method of the
         </div>
       </div>
 
-      <div id="method-M000213" class="method-detail">
-        <a name="M000213"></a>
+      <div id="method-M000231" class="method-detail">
+        <a name="M000231"></a>
 
         <div class="method-heading">
-          <a href="#M000213" class="method-signature">
+          <a href="#M000231" class="method-signature">
           <span class="method-name">render_on</span><span class="method-args">(r)</span>
           </a>
         </div>
@@ -191,8 +191,8 @@ Forwards method to the corresponding top-level <b>chain</b> method of the
 <em>delegate</em> component.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000213-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000213-source">
+            onclick="toggleCode('M000231-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000231-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 186</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_on</span>(<span class="ruby-identifier">r</span>)
@@ -203,11 +203,11 @@ Forwards method to the corresponding top-level <b>chain</b> method of the
         </div>
       </div>
 
-      <div id="method-M000214" class="method-detail">
-        <a name="M000214"></a>
+      <div id="method-M000232" class="method-detail">
+        <a name="M000232"></a>
 
         <div class="method-heading">
-          <a href="#M000214" class="method-signature">
+          <a href="#M000232" class="method-signature">
           <span class="method-name">state</span><span class="method-args">(s)</span>
           </a>
         </div>
@@ -219,8 +219,8 @@ Forwards method to the corresponding top-level <b>chain</b> method of the
 components, thus we follow the @next decoration (via super).
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000214-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000214-source">
+            onclick="toggleCode('M000232-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000232-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 195</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">state</span>(<span class="ruby-identifier">s</span>)

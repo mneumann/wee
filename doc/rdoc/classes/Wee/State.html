@@ -85,7 +85,7 @@
 This class is for backtracking the state of components (or
 decorations/presenters). Components that want an undo-facility to be
 implemented (triggered for example by a browsers back-button), have to
-overwrite the <a href="Component.html#M000217">Component#state</a> method.
+overwrite the <a href="Component.html#M000241">Component#state</a> method.
 Class <a href="State.html">Wee::State</a> simply represents a collection of
 objects from which snapshots were taken via methods take_snapshot.
 </p>
@@ -99,11 +99,11 @@ objects from which snapshots were taken via methods take_snapshot.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000209">&lt;&lt;</a>&nbsp;&nbsp;
-      <a href="#M000207">add</a>&nbsp;&nbsp;
-      <a href="#M000208">add_ivar</a>&nbsp;&nbsp;
-      <a href="#M000206">new</a>&nbsp;&nbsp;
-      <a href="#M000210">restore</a>&nbsp;&nbsp;
+      <a href="#M000212">&lt;&lt;</a>&nbsp;&nbsp;
+      <a href="#M000210">add</a>&nbsp;&nbsp;
+      <a href="#M000211">add_ivar</a>&nbsp;&nbsp;
+      <a href="#M000209">new</a>&nbsp;&nbsp;
+      <a href="#M000213">restore</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -132,21 +132,21 @@ Class <a href="State/SnapshotIVars.html" class="link">Wee::State::SnapshotIVars<
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000206" class="method-detail">
-        <a name="M000206"></a>
+      <div id="method-M000209" class="method-detail">
+        <a name="M000209"></a>
 
         <div class="method-heading">
-          <a href="#M000206" class="method-signature">
+          <a href="#M000209" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000206-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000206-source">
+            onclick="toggleCode('M000209-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000209-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/state.rb, line 15</span>
+<span class="ruby-comment cmt"># File lib/wee/state.rb, line 32</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
       <span class="ruby-ivar">@objects</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
       <span class="ruby-ivar">@objects_ivars</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> 
@@ -158,8 +158,8 @@ Class <a href="State/SnapshotIVars.html" class="link">Wee::State::SnapshotIVars<
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000209" class="method-detail">
-        <a name="M000209"></a>
+      <div id="method-M000212" class="method-detail">
+        <a name="M000212"></a>
 
         <div class="method-heading">
           <span class="method-name">&lt;&lt;</span><span class="method-args">(object)</span>
@@ -167,54 +167,8 @@ Class <a href="State/SnapshotIVars.html" class="link">Wee::State::SnapshotIVars<
       
         <div class="method-description">
           <p>
-Alias for <a href="State.html#M000207">add</a>
+Alias for <a href="State.html#M000210">add</a>
 </p>
-        </div>
-      </div>
-
-      <div id="method-M000207" class="method-detail">
-        <a name="M000207"></a>
-
-        <div class="method-heading">
-          <a href="#M000207" class="method-signature">
-          <span class="method-name">add</span><span class="method-args">(object)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000207-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000207-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/state.rb, line 20</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">object</span>)
-      <span class="ruby-ivar">@objects</span>[<span class="ruby-identifier">object</span>.<span class="ruby-identifier">object_id</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">Snapshot</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">object</span>.<span class="ruby-identifier">take_snapshot</span>)
-    <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000208" class="method-detail">
-        <a name="M000208"></a>
-
-        <div class="method-heading">
-          <a href="#M000208" class="method-signature">
-          <span class="method-name">add_ivar</span><span class="method-args">(object, ivar, value)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000208-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000208-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/wee/state.rb, line 24</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_ivar</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">ivar</span>, <span class="ruby-identifier">value</span>)
-      (<span class="ruby-ivar">@objects_ivars</span>[<span class="ruby-identifier">object</span>.<span class="ruby-identifier">object_id</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">SnapshotIVars</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">object</span>, {})).<span class="ruby-identifier">ivars</span>[<span class="ruby-identifier">ivar</span>] = <span class="ruby-identifier">value</span>
-    <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
         </div>
       </div>
 
@@ -223,7 +177,7 @@ Alias for <a href="State.html#M000207">add</a>
 
         <div class="method-heading">
           <a href="#M000210" class="method-signature">
-          <span class="method-name">restore</span><span class="method-args">()</span>
+          <span class="method-name">add</span><span class="method-args">(object)</span>
           </a>
         </div>
       
@@ -232,12 +186,56 @@ Alias for <a href="State.html#M000207">add</a>
             onclick="toggleCode('M000210-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000210-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/state.rb, line 30</span>
+<span class="ruby-comment cmt"># File lib/wee/state.rb, line 37</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">object</span>)
+      <span class="ruby-ivar">@objects</span>[<span class="ruby-identifier">object</span>.<span class="ruby-identifier">object_id</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">Snapshot</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">object</span>.<span class="ruby-identifier">take_snapshot</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000211" class="method-detail">
+        <a name="M000211"></a>
+
+        <div class="method-heading">
+          <a href="#M000211" class="method-signature">
+          <span class="method-name">add_ivar</span><span class="method-args">(object, ivar, value)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000211-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000211-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/state.rb, line 41</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_ivar</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">ivar</span>, <span class="ruby-identifier">value</span>)
+      (<span class="ruby-ivar">@objects_ivars</span>[<span class="ruby-identifier">object</span>.<span class="ruby-identifier">object_id</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">SnapshotIVars</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">object</span>, {})).<span class="ruby-identifier">add</span>(<span class="ruby-identifier">ivar</span>, <span class="ruby-identifier">value</span>)
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000213" class="method-detail">
+        <a name="M000213"></a>
+
+        <div class="method-heading">
+          <a href="#M000213" class="method-signature">
+          <span class="method-name">restore</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000213-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000213-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/state.rb, line 47</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">restore</span>
       <span class="ruby-ivar">@objects</span>.<span class="ruby-identifier">each_value</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">object</span>.<span class="ruby-identifier">restore_snapshot</span>(<span class="ruby-identifier">s</span>.<span class="ruby-identifier">snapshot</span>) }
-      <span class="ruby-ivar">@objects_ivars</span>.<span class="ruby-identifier">each_value</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">s</span>.<span class="ruby-identifier">ivars</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">object</span>.<span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span>) }
-      }
+      <span class="ruby-ivar">@objects_ivars</span>.<span class="ruby-identifier">each_value</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">restore</span> }
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>

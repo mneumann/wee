@@ -2,7 +2,7 @@
 
 == Copyright and License
 
-Copyright (c) 2004, 2005, 2009 by Michael Neumann (mneumann@ntecs.de).
+Copyright (c) 2004, 2005, 2009, 2010 by Michael Neumann (mneumann@ntecs.de).
 
 Released under the same terms of license as Ruby.
 

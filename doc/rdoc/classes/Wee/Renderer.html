@@ -94,11 +94,11 @@ Base class of all <a href="Renderer.html">Renderer</a> classes.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000101">close</a>&nbsp;&nbsp;
-      <a href="#M000097">new</a>&nbsp;&nbsp;
-      <a href="#M000099">render</a>&nbsp;&nbsp;
-      <a href="#M000100">render_decoration</a>&nbsp;&nbsp;
-      <a href="#M000098">with</a>&nbsp;&nbsp;
+      <a href="#M000111">close</a>&nbsp;&nbsp;
+      <a href="#M000107">new</a>&nbsp;&nbsp;
+      <a href="#M000109">render</a>&nbsp;&nbsp;
+      <a href="#M000110">render_decoration</a>&nbsp;&nbsp;
+      <a href="#M000108">with</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -158,19 +158,19 @@ Base class of all <a href="Renderer.html">Renderer</a> classes.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000097" class="method-detail">
-        <a name="M000097"></a>
+      <div id="method-M000107" class="method-detail">
+        <a name="M000107"></a>
 
         <div class="method-heading">
-          <a href="#M000097" class="method-signature">
+          <a href="#M000107" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(session=nil, request=nil, response=nil, callbacks=nil, document=nil, current_component=nil)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000097-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000097-source">
+            onclick="toggleCode('M000107-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000107-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/renderer.rb, line 14</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">session</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">request</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">response</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">callbacks</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">document</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">current_component</span>=<span class="ruby-keyword kw">nil</span>)
@@ -188,11 +188,11 @@ Base class of all <a href="Renderer.html">Renderer</a> classes.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000101" class="method-detail">
-        <a name="M000101"></a>
+      <div id="method-M000111" class="method-detail">
+        <a name="M000111"></a>
 
         <div class="method-heading">
-          <a href="#M000101" class="method-signature">
+          <a href="#M000111" class="method-signature">
           <span class="method-name">close</span><span class="method-args">()</span>
           </a>
         </div>
@@ -202,10 +202,10 @@ Base class of all <a href="Renderer.html">Renderer</a> classes.
 Subclass responsibility.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000101-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000101-source">
+            onclick="toggleCode('M000111-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000111-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer.rb, line 60</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer.rb, line 67</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">close</span>
     <span class="ruby-keyword kw">end</span>
 </pre>
@@ -213,23 +213,29 @@ Subclass responsibility.
         </div>
       </div>
 
-      <div id="method-M000099" class="method-detail">
-        <a name="M000099"></a>
+      <div id="method-M000109" class="method-detail">
+        <a name="M000109"></a>
 
         <div class="method-heading">
-          <a href="#M000099" class="method-signature">
+          <a href="#M000109" class="method-signature">
           <span class="method-name">render</span><span class="method-args">(component)</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+NOTE: unregister will do nothing for a regular request, only for an AJAX
+request. Only if you would <a href="Renderer.html#M000109">render</a> one
+and the same component twice it would behave differently.
+</p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000099-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000099-source">
+            onclick="toggleCode('M000109-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000109-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer.rb, line 45</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer.rb, line 50</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">component</span>)
       <span class="ruby-identifier">close</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">callbacks</span>.<span class="ruby-identifier">unregister</span>(<span class="ruby-identifier">component</span>)
       <span class="ruby-identifier">component</span>.<span class="ruby-identifier">decoration</span>.<span class="ruby-identifier">render_on</span>(<span class="ruby-keyword kw">self</span>)
       <span class="ruby-keyword kw">nil</span>
     <span class="ruby-keyword kw">end</span>
@@ -238,23 +244,24 @@ Subclass responsibility.
         </div>
       </div>
 
-      <div id="method-M000100" class="method-detail">
-        <a name="M000100"></a>
+      <div id="method-M000110" class="method-detail">
+        <a name="M000110"></a>
 
         <div class="method-heading">
-          <a href="#M000100" class="method-signature">
+          <a href="#M000110" class="method-signature">
           <span class="method-name">render_decoration</span><span class="method-args">(decoration)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000100-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000100-source">
+            onclick="toggleCode('M000110-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000110-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/renderer.rb, line 51</span>
+<span class="ruby-comment cmt"># File lib/wee/renderer.rb, line 57</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_decoration</span>(<span class="ruby-identifier">decoration</span>)
       <span class="ruby-identifier">close</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">callbacks</span>.<span class="ruby-identifier">unregister</span>(<span class="ruby-identifier">decoration</span>)
       <span class="ruby-identifier">decoration</span>.<span class="ruby-identifier">render_on</span>(<span class="ruby-keyword kw">self</span>)
       <span class="ruby-keyword kw">nil</span>
     <span class="ruby-keyword kw">end</span>
@@ -263,19 +270,19 @@ Subclass responsibility.
         </div>
       </div>
 
-      <div id="method-M000098" class="method-detail">
-        <a name="M000098"></a>
+      <div id="method-M000108" class="method-detail">
+        <a name="M000108"></a>
 
         <div class="method-heading">
-          <a href="#M000098" class="method-signature">
+          <a href="#M000108" class="method-signature">
           <span class="method-name">with</span><span class="method-args">(component) {|self| ...}</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000098-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000098-source">
+            onclick="toggleCode('M000108-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000108-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/renderer.rb, line 23</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with</span>(<span class="ruby-identifier">component</span>)

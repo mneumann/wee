@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::Brush::JavascriptTag</title>
+  <title>Class: Wee::Brush::LinkTag</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
@@ -50,7 +50,7 @@
         <table class="header-table">
         <tr class="top-aligned-row">
           <td><strong>Class</strong></td>
-          <td class="class-name-in-header">Wee::Brush::JavascriptTag</td>
+          <td class="class-name-in-header">Wee::Brush::LinkTag</td>
         </tr>
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
@@ -86,7 +86,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000191">new</a>&nbsp;&nbsp;
+      <a href="#M000137">new</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -106,12 +106,7 @@
         <tr class="top-aligned-row context-row">
           <td class="context-item-name">HTML_TAG</td>
           <td>=</td>
-          <td class="context-item-value">'script'.freeze</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">HTML_TYPE</td>
-          <td>=</td>
-          <td class="context-item-value">'text/javascript'.freeze</td>
+          <td class="context-item-value">'link'.freeze</td>
         </tr>
         </table>
       </div>
@@ -125,7 +120,17 @@
       <div class="name-list">
         <table>
         <tr class="top-aligned-row context-row">
-          <td class="context-item-name">src</td>
+          <td class="context-item-name">aliases</td>
+          <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">href</td>
+          <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">rel</td>
           <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
           <td class="context-item-desc"></td>
         </tr>
@@ -144,24 +149,23 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000191" class="method-detail">
-        <a name="M000191"></a>
+      <div id="method-M000137" class="method-detail">
+        <a name="M000137"></a>
 
         <div class="method-heading">
-          <a href="#M000191" class="method-signature">
+          <a href="#M000137" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000191-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000191-source">
+            onclick="toggleCode('M000137-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000137-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 208</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 697</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
       <span class="ruby-keyword kw">super</span>(<span class="ruby-constant">HTML_TAG</span>)
-      <span class="ruby-identifier">type</span>(<span class="ruby-constant">HTML_TYPE</span>)
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>

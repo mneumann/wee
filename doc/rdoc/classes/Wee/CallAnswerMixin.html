@@ -102,7 +102,7 @@
 
     <!-- if method_list -->
     <div id="methods">
-      <h3 class="section-bar">Protected Instance methods</h3>
+      <h3 class="section-bar">Public Instance methods</h3>
 
       <div id="method-M000010" class="method-detail">
         <a name="M000010"></a>
@@ -128,7 +128,7 @@ description of the call/answer mechanism.
             onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000010-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/call_answer.rb, line 112</span>
+<span class="ruby-comment cmt"># File lib/wee/call_answer.rb, line 132</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">answer</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
       <span class="ruby-identifier">raise</span> <span class="ruby-constant">AnswerDecoration</span><span class="ruby-operator">::</span><span class="ruby-constant">Answer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">args</span>)
     <span class="ruby-keyword kw">end</span>
@@ -189,7 +189,7 @@ the <tt>return_callback</tt>.
             onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000008-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/call_answer.rb, line 73</span>
+<span class="ruby-comment cmt"># File lib/wee/call_answer.rb, line 85</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-identifier">component</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">return_callback</span>)
       <span class="ruby-identifier">delegate</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Delegate</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">component</span>)
       <span class="ruby-identifier">answer</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">AnswerDecoration</span>.<span class="ruby-identifier">new</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">answ</span><span class="ruby-operator">|</span>
@@ -224,7 +224,7 @@ using continuations.
             onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000009-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/call_answer.rb, line 88</span>
+<span class="ruby-comment cmt"># File lib/wee/call_answer.rb, line 100</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">callcc</span>(<span class="ruby-identifier">component</span>)
       <span class="ruby-identifier">delegate</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">Delegate</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">component</span>)
       <span class="ruby-identifier">answer</span> = <span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">AnswerDecoration</span>.<span class="ruby-identifier">new</span>
@@ -236,10 +236,18 @@ using continuations.
         <span class="ruby-identifier">answer</span>.<span class="ruby-identifier">answer_callback</span> = <span class="ruby-identifier">cc</span>
         <span class="ruby-identifier">session</span>.<span class="ruby-identifier">send_response</span>(<span class="ruby-keyword kw">nil</span>)
       }
-
       <span class="ruby-identifier">remove_decoration</span>(<span class="ruby-identifier">delegate</span>)
       <span class="ruby-identifier">component</span>.<span class="ruby-identifier">remove_decoration</span>(<span class="ruby-identifier">answer</span>)
-      <span class="ruby-keyword kw">return</span> <span class="ruby-operator">*</span><span class="ruby-identifier">answ</span>.<span class="ruby-identifier">args</span>
+
+      <span class="ruby-identifier">args</span> = <span class="ruby-identifier">answ</span>.<span class="ruby-identifier">args</span>
+      <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-value">0</span>
+        <span class="ruby-keyword kw">return</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-value">1</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+      <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>

@@ -88,7 +88,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000026">render</a>&nbsp;&nbsp;
+      <a href="#M000024">global?</a>&nbsp;&nbsp;
+      <a href="#M000025">render</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -110,21 +111,42 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000026" class="method-detail">
-        <a name="M000026"></a>
+      <div id="method-M000024" class="method-detail">
+        <a name="M000024"></a>
 
         <div class="method-heading">
-          <a href="#M000026" class="method-signature">
+          <a href="#M000024" class="method-signature">
+          <span class="method-name">global?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000024-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000024-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 234</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">global?</span>() <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000025" class="method-detail">
+        <a name="M000025"></a>
+
+        <div class="method-heading">
+          <a href="#M000025" class="method-signature">
           <span class="method-name">render</span><span class="method-args">(r)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000026-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000026-source">
+            onclick="toggleCode('M000025-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000025-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 222</span>
+<span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 236</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">r</span>)
       <span class="ruby-identifier">r</span>.<span class="ruby-identifier">form</span> { <span class="ruby-identifier">render_inner</span>(<span class="ruby-identifier">r</span>) }
     <span class="ruby-keyword kw">end</span>

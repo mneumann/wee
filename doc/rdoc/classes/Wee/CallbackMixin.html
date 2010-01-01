@@ -122,7 +122,7 @@ used.
             onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000007-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 303</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 329</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
       <span class="ruby-identifier">args</span>.<span class="ruby-identifier">push</span>(<span class="ruby-operator">*</span><span class="ruby-ivar">@callback_args</span>)
       <span class="ruby-ivar">@callback_object</span>.<span class="ruby-identifier">send</span>(<span class="ruby-ivar">@callback_id</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
@@ -146,7 +146,7 @@ used.
             onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000006-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 294</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 320</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">callback</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
       <span class="ruby-ivar">@callback</span> = <span class="ruby-identifier">block</span>
       <span class="ruby-identifier">__callback</span>()
@@ -171,7 +171,7 @@ used.
             onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000005-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 285</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 311</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">callback_method</span>(<span class="ruby-identifier">id</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
       <span class="ruby-ivar">@callback</span> = <span class="ruby-keyword kw">self</span>
       <span class="ruby-ivar">@callback_object</span> = <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">current_component</span> 

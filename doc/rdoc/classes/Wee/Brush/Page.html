@@ -86,8 +86,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000171">title</a>&nbsp;&nbsp;
-      <a href="#M000170">with</a>&nbsp;&nbsp;
+      <a href="#M000182">head</a>&nbsp;&nbsp;
+      <a href="#M000181">title</a>&nbsp;&nbsp;
+      <a href="#M000180">with</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -137,21 +138,46 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000171" class="method-detail">
-        <a name="M000171"></a>
+      <div id="method-M000182" class="method-detail">
+        <a name="M000182"></a>
 
         <div class="method-heading">
-          <a href="#M000171" class="method-signature">
+          <a href="#M000182" class="method-signature">
+          <span class="method-name">head</span><span class="method-args">(&amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000182-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000182-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 765</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">head</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block</span>
+      <span class="ruby-ivar">@head</span> = <span class="ruby-identifier">block</span>
+      <span class="ruby-keyword kw">self</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000181" class="method-detail">
+        <a name="M000181"></a>
+
+        <div class="method-heading">
+          <a href="#M000181" class="method-signature">
           <span class="method-name">title</span><span class="method-args">(t)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000171-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000171-source">
+            onclick="toggleCode('M000181-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000181-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 718</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 760</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">title</span>(<span class="ruby-identifier">t</span>)
       <span class="ruby-ivar">@title</span> = <span class="ruby-identifier">t</span>
       <span class="ruby-keyword kw">self</span>
@@ -161,21 +187,21 @@
         </div>
       </div>
 
-      <div id="method-M000170" class="method-detail">
-        <a name="M000170"></a>
+      <div id="method-M000180" class="method-detail">
+        <a name="M000180"></a>
 
         <div class="method-heading">
-          <a href="#M000170" class="method-signature">
+          <a href="#M000180" class="method-signature">
           <span class="method-name">with</span><span class="method-args">(text=nil, &amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000170-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000170-source">
+            onclick="toggleCode('M000180-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000180-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 692</span>
+<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 730</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">with</span>(<span class="ruby-identifier">text</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
       <span class="ruby-ivar">@document</span>.<span class="ruby-identifier">start_tag</span>(<span class="ruby-constant">HTML_HTML</span>)
       <span class="ruby-ivar">@document</span>.<span class="ruby-identifier">start_tag</span>(<span class="ruby-constant">HTML_HEAD</span>)
@@ -184,6 +210,10 @@
         <span class="ruby-ivar">@document</span>.<span class="ruby-identifier">start_tag</span>(<span class="ruby-constant">HTML_TITLE</span>)
         <span class="ruby-ivar">@document</span>.<span class="ruby-identifier">text</span>(<span class="ruby-ivar">@title</span>)
         <span class="ruby-ivar">@document</span>.<span class="ruby-identifier">end_tag</span>(<span class="ruby-constant">HTML_TITLE</span>)
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@head</span>
+        <span class="ruby-ivar">@canvas</span>.<span class="ruby-identifier">nest</span>(<span class="ruby-operator">&amp;</span><span class="ruby-ivar">@head</span>)
       <span class="ruby-keyword kw">end</span>
 
       <span class="ruby-ivar">@document</span>.<span class="ruby-identifier">end_tag</span>(<span class="ruby-constant">HTML_HEAD</span>)

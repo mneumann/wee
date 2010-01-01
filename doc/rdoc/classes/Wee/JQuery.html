@@ -88,8 +88,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000221">install</a>&nbsp;&nbsp;
-      <a href="#M000222">javascript_includes</a>&nbsp;&nbsp;
+      <a href="#M000255">install</a>&nbsp;&nbsp;
+      <a href="#M000256">javascript_includes</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -129,24 +129,24 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000221" class="method-detail">
-        <a name="M000221"></a>
+      <div id="method-M000255" class="method-detail">
+        <a name="M000255"></a>
 
         <div class="method-heading">
-          <a href="#M000221" class="method-signature">
+          <a href="#M000255" class="method-signature">
           <span class="method-name">install</span><span class="method-args">(mount_path, builder)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000221-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000221-source">
+            onclick="toggleCode('M000255-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000255-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/jquery/jquery.rb, line 6</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">install</span>(<span class="ruby-identifier">mount_path</span>, <span class="ruby-identifier">builder</span>)
       <span class="ruby-identifier">builder</span>.<span class="ruby-identifier">map</span>(<span class="ruby-ivar">@mount_path</span> = <span class="ruby-identifier">mount_path</span>) <span class="ruby-keyword kw">do</span>
-        <span class="ruby-identifier">run</span> <span class="ruby-constant">Rack</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">PUBLIC_DIR</span>)
+        <span class="ruby-identifier">run</span> <span class="ruby-constant">Rack</span><span class="ruby-operator">::</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Wee</span><span class="ruby-operator">::</span><span class="ruby-constant">JQuery</span><span class="ruby-operator">::</span><span class="ruby-constant">PUBLIC_DIR</span>)
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span>
 </pre>
@@ -154,19 +154,19 @@
         </div>
       </div>
 
-      <div id="method-M000222" class="method-detail">
-        <a name="M000222"></a>
+      <div id="method-M000256" class="method-detail">
+        <a name="M000256"></a>
 
         <div class="method-heading">
-          <a href="#M000222" class="method-signature">
+          <a href="#M000256" class="method-signature">
           <span class="method-name">javascript_includes</span><span class="method-args">(r)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000222-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000222-source">
+            onclick="toggleCode('M000256-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000256-source">
 <pre>
 <span class="ruby-comment cmt"># File lib/wee/jquery/jquery.rb, line 12</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">javascript_includes</span>(<span class="ruby-identifier">r</span>)

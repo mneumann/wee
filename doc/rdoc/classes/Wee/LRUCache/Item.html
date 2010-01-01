@@ -65,7 +65,9 @@
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
-                Struct.new(:value, :time)
+                <a href="../../Object.html">
+                Object
+               </a>
             </td>
         </tr>
         </table>
@@ -86,7 +88,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000038">&lt;=&gt;</a>&nbsp;&nbsp;
+      <a href="#M000040">&lt;=&gt;</a>&nbsp;&nbsp;
+      <a href="#M000039">new</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -101,30 +104,73 @@
 
 
 
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">time</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">value</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
       
 
 
     <!-- if method_list -->
     <div id="methods">
-      <h3 class="section-bar">Public Instance methods</h3>
+      <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000038" class="method-detail">
-        <a name="M000038"></a>
+      <div id="method-M000039" class="method-detail">
+        <a name="M000039"></a>
 
         <div class="method-heading">
-          <a href="#M000038" class="method-signature">
+          <a href="#M000039" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(value=nil, time=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000039-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000039-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/lru_cache.rb, line 10</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">value</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">time</span>=<span class="ruby-keyword kw">nil</span>)
+        <span class="ruby-ivar">@value</span>, <span class="ruby-ivar">@time</span> = <span class="ruby-identifier">value</span>, <span class="ruby-identifier">time</span>
+      <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
+
+        <div class="method-heading">
+          <a href="#M000040" class="method-signature">
           <span class="method-name">&lt;=&gt;</span><span class="method-args">(other)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000038-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000038-source">
+            onclick="toggleCode('M000040-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000040-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/lru_cache.rb, line 8</span>
+<span class="ruby-comment cmt"># File lib/wee/lru_cache.rb, line 14</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-operator">&lt;=&gt;</span>(<span class="ruby-identifier">other</span>)
-        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">time</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">time</span>
+        <span class="ruby-ivar">@time</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">time</span>
       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>

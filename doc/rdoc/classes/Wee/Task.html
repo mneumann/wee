@@ -5,10 +5,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Wee::Brush::JavascriptTag</title>
+  <title>Class: Wee::Task</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
   // <![CDATA[
 
@@ -50,13 +50,13 @@
         <table class="header-table">
         <tr class="top-aligned-row">
           <td><strong>Class</strong></td>
-          <td class="class-name-in-header">Wee::Brush::JavascriptTag</td>
+          <td class="class-name-in-header">Wee::Task</td>
         </tr>
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../../files/lib/wee/html_brushes_rb.html">
-                lib/wee/html_brushes.rb
+                <a href="../../files/lib/wee/task_rb.html">
+                lib/wee/task.rb
                 </a>
         <br />
             </td>
@@ -65,7 +65,9 @@
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
-                Brush::GenericTagBrush
+                <a href="Component.html">
+                Component
+               </a>
             </td>
         </tr>
         </table>
@@ -86,7 +88,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000191">new</a>&nbsp;&nbsp;
+      <a href="#M000202">go</a>&nbsp;&nbsp;
+      <a href="#M000203">render</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -98,70 +101,55 @@
     <div id="section">
 
 
-    <div id="constants-list">
-      <h3 class="section-bar">Constants</h3>
-
-      <div class="name-list">
-        <table summary="Constants">
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">HTML_TAG</td>
-          <td>=</td>
-          <td class="context-item-value">'script'.freeze</td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">HTML_TYPE</td>
-          <td>=</td>
-          <td class="context-item-value">'text/javascript'.freeze</td>
-        </tr>
-        </table>
-      </div>
-    </div>
 
 
 
-    <div id="attribute-list">
-      <h3 class="section-bar">Attributes</h3>
-
-      <div class="name-list">
-        <table>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">src</td>
-          <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">type</td>
-          <td class="context-item-value">&nbsp;[HtmlAttribute]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        </table>
-      </div>
-    </div>
       
 
 
     <!-- if method_list -->
     <div id="methods">
-      <h3 class="section-bar">Public Class methods</h3>
+      <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000191" class="method-detail">
-        <a name="M000191"></a>
+      <div id="method-M000202" class="method-detail">
+        <a name="M000202"></a>
 
         <div class="method-heading">
-          <a href="#M000191" class="method-signature">
-          <span class="method-name">new</span><span class="method-args">()</span>
+          <a href="#M000202" class="method-signature">
+          <span class="method-name">go</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000191-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000191-source">
+            onclick="toggleCode('M000202-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000202-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/html_brushes.rb, line 208</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
-      <span class="ruby-keyword kw">super</span>(<span class="ruby-constant">HTML_TAG</span>)
-      <span class="ruby-identifier">type</span>(<span class="ruby-constant">HTML_TYPE</span>)
+<span class="ruby-comment cmt"># File lib/wee/task.rb, line 7</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">go</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000203" class="method-detail">
+        <a name="M000203"></a>
+
+        <div class="method-heading">
+          <a href="#M000203" class="method-signature">
+          <span class="method-name">render</span><span class="method-args">(r)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000203-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000203-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/wee/task.rb, line 10</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">r</span>)
+      <span class="ruby-identifier">r</span>.<span class="ruby-identifier">session</span>.<span class="ruby-identifier">send_response</span>(<span class="ruby-constant">RedirectResponse</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">r</span>.<span class="ruby-identifier">url_for_callback</span>(<span class="ruby-identifier">method</span>(<span class="ruby-identifier">:go</span>))))
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>

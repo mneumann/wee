@@ -117,7 +117,7 @@
             onclick="toggleCode('M000020-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000020-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/state.rb, line 71</span>
+<span class="ruby-comment cmt"># File lib/wee/state.rb, line 86</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">restore_snapshot</span>(<span class="ruby-identifier">snap</span>)
       <span class="ruby-identifier">snap</span>.<span class="ruby-identifier">each_pair</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">send</span>(<span class="ruby-identifier">k</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;=&quot;</span>, <span class="ruby-identifier">v</span>)} 
     <span class="ruby-keyword kw">end</span>
@@ -140,7 +140,7 @@
             onclick="toggleCode('M000019-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000019-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/state.rb, line 65</span>
+<span class="ruby-comment cmt"># File lib/wee/state.rb, line 80</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">take_snapshot</span>
       <span class="ruby-identifier">snap</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
       <span class="ruby-identifier">each_pair</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">snap</span>[<span class="ruby-identifier">k</span>] = <span class="ruby-identifier">v</span>}

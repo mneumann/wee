@@ -88,9 +88,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000024">global?</a>&nbsp;&nbsp;
-      <a href="#M000023">new</a>&nbsp;&nbsp;
-      <a href="#M000025">render</a>&nbsp;&nbsp;
+      <a href="#M000022">global?</a>&nbsp;&nbsp;
+      <a href="#M000021">new</a>&nbsp;&nbsp;
+      <a href="#M000023">render</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -112,23 +112,25 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000023" class="method-detail">
-        <a name="M000023"></a>
+      <div id="method-M000021" class="method-detail">
+        <a name="M000021"></a>
 
         <div class="method-heading">
-          <a href="#M000023" class="method-signature">
-          <span class="method-name">new</span><span class="method-args">(title='')</span>
+          <a href="#M000021" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">(title='', stylesheets=[], javascripts=[])</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000023-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000023-source">
+            onclick="toggleCode('M000021-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000021-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 230</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">title</span>=<span class="ruby-value str">''</span>)
+<span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 244</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">title</span>=<span class="ruby-value str">''</span>, <span class="ruby-identifier">stylesheets</span>=[], <span class="ruby-identifier">javascripts</span>=[])
       <span class="ruby-ivar">@title</span> = <span class="ruby-identifier">title</span>
+      <span class="ruby-ivar">@stylesheets</span> = <span class="ruby-identifier">stylesheets</span>
+      <span class="ruby-ivar">@javascripts</span> = <span class="ruby-identifier">javascripts</span>
       <span class="ruby-keyword kw">super</span>()
     <span class="ruby-keyword kw">end</span>
 </pre>
@@ -138,44 +140,49 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000024" class="method-detail">
-        <a name="M000024"></a>
+      <div id="method-M000022" class="method-detail">
+        <a name="M000022"></a>
 
         <div class="method-heading">
-          <a href="#M000024" class="method-signature">
+          <a href="#M000022" class="method-signature">
           <span class="method-name">global?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000024-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000024-source">
+            onclick="toggleCode('M000022-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000022-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 235</span>
+<span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 251</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">global?</span>() <span class="ruby-keyword kw">true</span> <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000025" class="method-detail">
-        <a name="M000025"></a>
+      <div id="method-M000023" class="method-detail">
+        <a name="M000023"></a>
 
         <div class="method-heading">
-          <a href="#M000025" class="method-signature">
+          <a href="#M000023" class="method-signature">
           <span class="method-name">render</span><span class="method-args">(r)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000025-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000025-source">
+            onclick="toggleCode('M000023-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000023-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 237</span>
+<span class="ruby-comment cmt"># File lib/wee/decoration.rb, line 253</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">r</span>)
-      <span class="ruby-identifier">r</span>.<span class="ruby-identifier">page</span>.<span class="ruby-identifier">title</span>(<span class="ruby-ivar">@title</span>).<span class="ruby-identifier">with</span> { <span class="ruby-identifier">render_inner</span>(<span class="ruby-identifier">r</span>) }
+      <span class="ruby-identifier">r</span>.<span class="ruby-identifier">page</span>.<span class="ruby-identifier">title</span>(<span class="ruby-ivar">@title</span>).<span class="ruby-identifier">head</span> {
+        <span class="ruby-ivar">@stylesheets</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">link_css</span>(<span class="ruby-identifier">s</span>) }
+        <span class="ruby-ivar">@javascripts</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">j</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">javascript</span>.<span class="ruby-identifier">src</span>(<span class="ruby-identifier">j</span>) }
+      }.<span class="ruby-identifier">with</span> {
+        <span class="ruby-identifier">render_inner</span>(<span class="ruby-identifier">r</span>)
+      }
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
