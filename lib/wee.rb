@@ -30,32 +30,54 @@ end
 
 Wee::DefaultRenderer = Wee::HtmlCanvas
 
-def Wee.run(component_class=nil, mount_path='/', port=2000, public_local_path=nil, &block)
+def Wee.run(component_class=nil, params=nil, &block)
   raise ArgumentError if component_class and block
 
-  require 'rack/handler/webrick'
-  app = Rack::Builder.app do
-    map mount_path do
-      if block
-        a = Wee::Application.new(&block)
+  params ||= Hash.new
+  params[:mount_path] ||= '/'
+  params[:port] ||= 2000
+  params[:public_path] ||= nil
+  params[:additional_builder_procs] ||= []
+  params[:additional_mounts] ||= {} 
+  params[:use_continuations] = false
+
+  params[:additional_mounts].each do |path, prc|
+    params[:additional_builder_procs] << proc {|builder| prc.call(path, builder)}
+  end
+
+  raise ArgumentError if params[:use_continuations] and block 
+
+  unless block
+    block = proc do
+      if params[:use_continuations]
+        Wee::Session.new(component_class.instanciate, Wee::Session::ThreadSerializer.new)
       else
-        a = Wee::Application.new { Wee::Session.new(component_class.instanciate) }
+        Wee::Session.new(component_class.instanciate)
       end
-      if public_local_path
-        run Rack::Cascade.new([Rack::File.new(public_local_path), a])
+    end
+  end
+
+  app = Rack::Builder.app do
+    map params[:mount_path] do
+      a = Wee::Application.new(&block)
+      if params[:public_path]
+        run Rack::Cascade.new([Rack::File.new(params[:public_path]), a])
       else
         run a
       end
     end
+    params[:additional_builder_procs].each {|bproc| bproc.call(self)}
   end
-  Rack::Handler::WEBrick.run(app, :Port => port)
+
+  require 'rack/handler/webrick'
+  Rack::Handler::WEBrick.run(app, :Port => params[:port])
 end
 
 #
 # Like Wee.run, but for use with continuations.
 #
-def Wee.runcc(component_class, *args)
-  Wee.run(nil, *args) {
-    Wee::Session.new(component_class.instanciate, Wee::Session::ThreadSerializer.new)
-  }
+def Wee.runcc(component_class, params=nil)
+  params ||= Hash.new
+  params[:use_continuations] = true
+  Wee.run(component_class, params)
 end

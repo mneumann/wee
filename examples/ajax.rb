@@ -25,26 +25,25 @@ class AjaxCounter < Wee::Component
   end
 end
 
-class HelloWorld < Wee::Component
+class HelloWorld < Wee::RootComponent
+  def title
+    'Wee + Ajax'
+  end
+
+  def javascripts
+    Wee::JQuery.javascript_includes
+  end
+
   def initialize
-    super
     @counters = (1..10).map { AjaxCounter.new }
   end
 
   def children() @counters end
 
   def render(r)
-    r.html {
-      r.head {
-        r.title('Wee + Ajax')
-        Wee::JQuery.javascript_includes(r)
-      }
-      r.body {
-        render_hello(r)
-        r.div.callback_on(:click) { p "refresh" }.with("Refresh")
-        @counters.each {|c| r.render(c); r.break}
-      }
-    }
+    render_hello(r)
+    r.div.callback_on(:click) { p "refresh" }.with("Refresh")
+    @counters.each {|c| r.render(c); r.break}
   end
 
   def render_hello(r)
@@ -57,17 +56,8 @@ class HelloWorld < Wee::Component
 end
 
 if __FILE__ == $0
-  require 'rack/handler/webrick'
-  app = Rack::Builder.app do
-    Wee::JQuery.install('/jquery', self)
-    map '/ajax' do
-      run Wee::Application.new {
-        Wee::Session.new(HelloWorld.new)
-      }
-    end
-  end
   puts
   puts "Open your browser at: http://localhost:2000/ajax"
   puts
-  Rack::Handler::WEBrick.run(app, :Port => 2000)
+  Wee.run HelloWorld, :mount_path => '/ajax', :additional_mounts => {'/jquery' => Wee::JQuery.method(:install)}
 end

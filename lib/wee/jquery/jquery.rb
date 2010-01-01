@@ -9,9 +9,13 @@ module Wee
       end
     end
 
-    def self.javascript_includes(r)
+    def self.javascript_includes
       raise "JQuery.install needs to be called" unless @mount_path
-      FILES.each {|f| r.javascript.src("#{@mount_path}/#{f}") }
+      FILES.map {|f| "#{@mount_path}/#{f}" }
+    end
+
+    def self.render_javascript_includes(r)
+      javascript_includes.each {|src| r.javascript.src(src) }
     end
   end
 end

@@ -132,6 +132,8 @@ module Wee
     def title
       self.class.name.to_s
     end
+    def stylesheets; [] end
+    def javascripts; [] end
 
     def self.instanciate(*args, &block)
       obj = new(*args, &block)
@@ -139,7 +141,7 @@ module Wee
         obj.add_decoration Wee::FormDecoration.new
       end
       unless obj.find_decoration {|d| d.kind_of?(Wee::PageDecoration)}
-        obj.add_decoration Wee::PageDecoration.new(obj.title)
+        obj.add_decoration Wee::PageDecoration.new(obj.title, obj.stylesheets, obj.javascripts)
       end
     end
   end # class RootComponent

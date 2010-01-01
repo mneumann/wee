@@ -72,4 +72,4 @@ class Main < Wee::Component
   end
 end
 
-Wee.run(Main, '/', 2000, 'public') if __FILE__ == $0
+Wee.run(Main, :public_path => 'public') if __FILE__ == $0
