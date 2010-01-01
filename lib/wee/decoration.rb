@@ -238,6 +238,33 @@ module Wee
     end
   end # class OidDecoration
 
+  #
+  # Renders a CSS style for a component class.
+  #
+  # Only works when used together with a PageDecoration,
+  # or an existing :styles divert location.
+  #
+  # The style is not rendered when in an AJAX request.
+  # This is the desired behaviour as it is assumed that
+  # a component is first rendered via a regular request
+  # and then updated via AJAX requests.
+  #
+  # It is only rendered once for all instances of a given
+  # component.
+  #
+  # A method #style must exist returning the CSS style.
+  #
+  class StyleDecoration < WrapperDecoration
+    def initialize(component)
+      @component = component
+    end
+
+    def render(r)
+      r.render_style(@component)
+      render_inner(r)
+    end
+  end # class StyleDecoration
+
   class FormDecoration < WrapperDecoration
 
     def global?() true end
@@ -263,11 +290,14 @@ module Wee
       r.page.title(@title).head {
         @stylesheets.each {|s| r.link_css(s) }
         @javascripts.each {|j| r.javascript.src(j) }
+        r.style.type('text/css').with { r.define_divert(:styles) }
+        r.javascript.with { r.define_divert(:javascripts) }
       }.with {
         render_inner(r)
       }
     end
 
   end # class PageDecoration
+
 
 end # module Wee

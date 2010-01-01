@@ -14,14 +14,21 @@ module Wee
       @set ||= {}
     end
 
-    def divert(tag, txt=nil, &block)
-      raise ArgumentError if txt and block
-      @divert ||= {}
+    def has_divert?(tag)
+      @divert and @divert[tag]
+    end
 
-      unless divert = @divert[tag]
-        @divert[tag] = divert = []
-        @port << divert
-      end
+    def define_divert(tag)
+      raise ArgumentError if has_divert?(tag)
+      @divert ||= {}
+      @port << (@divert[tag] = [])
+    end
+
+    def divert(tag, txt=nil, &block)
+      raise ArgumentError unless has_divert?(tag)
+      raise ArgumentError if txt and block
+
+      divert = @divert[tag]
 
       if txt
         divert << txt

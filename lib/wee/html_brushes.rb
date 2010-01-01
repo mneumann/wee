@@ -211,6 +211,26 @@ module Wee
     end
   end
 
+  class Brush::StyleTag < Brush::GenericTagBrush
+    HTML_TAG = 'style'.freeze
+
+    html_attr :type
+
+    def initialize
+      super(HTML_TAG)
+    end
+
+    def with(text=nil, &block)
+      @document.start_tag(@tag, @attributes)
+      @document.write("<!--\n")
+      @document.text(text) if text
+      @canvas.nest(&block) if block
+      @document.write("-->\n")
+      @document.end_tag(@tag)
+      @document = @canvas = nil
+    end
+  end
+
   #---------------------------------------------------------------------
   # Table
   #---------------------------------------------------------------------

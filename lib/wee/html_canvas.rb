@@ -55,11 +55,12 @@ module Wee
       attrs.each {|attr| brush_tag attr, Brush::GenericSingleTagBrush, attr }
     end
 
-    generic_tag :html, :head, :body, :title, :style, :label
+    generic_tag :html, :head, :body, :title, :label
     generic_tag :h1, :h2, :h3, :h4, :h5
     generic_tag :div, :span, :ul, :ol, :li, :pre
     generic_single_tag :hr
 
+    brush_tag :style, Brush::StyleTag
     brush_tag :link, Brush::LinkTag
     brush_tag :table, Brush::TableTag
     brush_tag :table_row, Brush::TableRowTag
@@ -81,6 +82,7 @@ module Wee
     brush_tag :anchor, Brush::AnchorTag
     brush_tag :javascript, Brush::JavascriptTag
     brush_tag :image, Brush::ImageTag
+    brush_tag :style, Brush::StyleTag
 
     brush_tag :bold, Brush::GenericTagBrush, :b
     brush_tag :paragraph, Brush::GenericTagBrush, :p
@@ -113,13 +115,14 @@ module Wee
     end
 
     def css(str)
-      @current_brush.close if @current_brush
-      @current_brush = nil
-      @document.start_tag(:style, 'type' => 'text/css')
-      @document.write("<!--\n")
-      @document.text(str)
-      @document.write("-->\n")
-      @document.end_tag(:style)
+      style.type('text/css').with(str)
+    end
+
+    #
+    # Depends on an existing divert location :styles.
+    #
+    def render_style(component)
+      once(component.class) { try_divert(:styles, component.style) }
     end
 
     #
@@ -143,11 +146,31 @@ module Wee
     end
 
     #
-    # Define a divert location or change into an existing divert
-    # location (and append +txt+ or the contents of +block+).
+    # Define a divert location
+    #
+    def define_divert(tag)
+      @document.define_divert(tag)
+    end
+
+    #
+    # Change into an existing divert location and 
+    # append +txt+ or the contents of +block+.
     #
     def divert(tag, txt=nil, &block)
       @document.divert(tag, txt, &block)
+    end
+
+    #
+    # If the divert +tag+ exists, divert, otherwise
+    # do nothing.
+    #
+    def try_divert(tag, txt=nil, &block)
+      if @document.has_divert?(tag)
+        divert(tag, txt, &block)
+        true
+      else
+        false
+      end
     end
 
     #

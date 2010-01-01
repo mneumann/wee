@@ -12,7 +12,6 @@ class AjaxCounter < Wee::Component
   def self.depends; [Wee::RightJS] end
 
   def initialize
-    super
     @counter = 0
   end
 
@@ -26,7 +25,7 @@ class AjaxCounter < Wee::Component
   end
 
   def render(r)
-    r.once(self.class) { r.css self.style() }
+    r.render_style(self)
     r.div.css_class('wee-AjaxCounter').oid.with {
       r.anchor.update_component_on(:click) { @counter += 1 }.with(@counter.to_s)
     }
