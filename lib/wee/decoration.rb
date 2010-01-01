@@ -75,7 +75,8 @@ module Wee
     def decoration() @decoration || self end 
 
     #
-    # Iterates over all decorations (note that the component itself is excluded). 
+    # Iterates over all decorations
+    # (note that the component itself is excluded)
     #
     def each_decoration # :yields: decoration
       d = @decoration
@@ -84,7 +85,15 @@ module Wee
         d = d.next
       end
     end
-    
+
+    # 
+    # Searches a decoration in the decoration chain
+    #
+    def find_decoration
+       each_decoration {|d| yield d and return d }
+       return nil
+    end
+ 
     #
     # Adds decoration +d+ to the decoration chain.
     #

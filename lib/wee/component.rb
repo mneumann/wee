@@ -17,8 +17,13 @@ module Wee
     def self.instanciate(*args, &block)
       obj = new(*args, &block)
       unless obj.respond_to?(:root?) and obj.root?
-        obj.add_decoration Wee::PageDecoration.new
-        obj.add_decoration Wee::FormDecoration.new
+        unless obj.find_decoration {|d| d.kind_of?(Wee::FormDecoration)}
+          obj.add_decoration Wee::FormDecoration.new
+        end
+        unless obj.find_decoration {|d| d.kind_of?(Wee::PageDecoration)}
+          title = obj.class.respond_to?(:title) ? obj.class.title : nil
+          obj.add_decoration Wee::PageDecoration.new(title||'')
+        end
       end
       obj
     end
