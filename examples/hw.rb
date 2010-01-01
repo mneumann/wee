@@ -2,7 +2,7 @@ $LOAD_PATH.unshift "../lib"
 require 'rubygems'
 require 'wee'
 
-class HelloWorld < Wee::Component
+class HelloWorld < Wee::RootComponent
   def render(r)
     r.h1 "Hello World from Wee!"
   end

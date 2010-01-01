@@ -11,29 +11,19 @@ module Wee
   class Component < Presenter
 
     #
-    # Constructs a new instance of the component and adds neccessary
-    # decorations.
+    # Constructs a new instance of the component.
+    #
+    # Overwrite this method when you want to use it both as a root component
+    # and as a non-root component. Here you can add neccessary decorations
+    # when used as root component, as for example a PageDecoration or a
+    # FormDecoration. 
+    #
+    # By default this methods adds no decoration.
+    #
+    # See also class RootComponent.
     #
     def self.instanciate(*args, &block)
-      obj = new(*args, &block)
-      unless obj.respond_to?(:root?) and obj.root?
-        unless obj.find_decoration {|d| d.kind_of?(Wee::FormDecoration)}
-          obj.add_decoration Wee::FormDecoration.new
-        end
-        unless obj.find_decoration {|d| d.kind_of?(Wee::PageDecoration)}
-          title = obj.class.respond_to?(:title) ? obj.class.title : nil
-          obj.add_decoration Wee::PageDecoration.new(title||'')
-        end
-      end
-      obj
-    end
-
-    #
-    # Is this a root component, which doesn't need to be wrapped with a
-    # PageDecoration and FormDecoration.
-    #
-    def root?
-      false
+      new(*args, &block)
     end
 
     #
@@ -97,8 +87,8 @@ module Wee
     end
 
     #
-    # Process and invoke all input callbacks specified for this component and all of
-    # it's child components.
+    # Process and invoke all input callbacks specified for this component 
+    # and all of it's child components.
     #
     # Returns the action callback to be invoked.
     #
@@ -133,5 +123,25 @@ module Wee
     include Wee::CallAnswerMixin
 
   end # class Component
+
+  #
+  # A RootComponent has a special instanciate class method that
+  # makes it more comfortable for root components.
+  #
+  class RootComponent < Component
+    def title
+      self.class.name.to_s
+    end
+
+    def self.instanciate(*args, &block)
+      obj = new(*args, &block)
+      unless obj.find_decoration {|d| d.kind_of?(Wee::FormDecoration)}
+        obj.add_decoration Wee::FormDecoration.new
+      end
+      unless obj.find_decoration {|d| d.kind_of?(Wee::PageDecoration)}
+        obj.add_decoration Wee::PageDecoration.new(obj.title)
+      end
+    end
+  end # class RootComponent
 
 end # module Wee
