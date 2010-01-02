@@ -305,7 +305,23 @@ module Wee
         action_callback = page.callbacks.with_triggered(request.fields) do
           @root_component.decoration.process_callbacks(page.callbacks)
         end
-        action_callback.call if action_callback
+        if action_callback
+          action_callback.call
+        else
+          #
+          # An action request with an action-id without a corresponding
+          # registered action callback is considered an invalid request.
+          #
+          # This can happen for AJAX update requests and indicates that
+          # two or more requests are send out too quickly; the first
+          # succeed, renders and updates a div-tag and registers
+          # a new callback (the old is unregistered). The following
+          # request still uses the old callback id, but now the
+          # callback id has already been unregistered by the previous
+          # request.
+          #
+          return NotFoundResponse.new
+        end
       rescue AbortProcessing => abort
         page = @page # CONTINUATIONS!
         if abort.response

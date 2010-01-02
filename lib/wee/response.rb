@@ -43,6 +43,12 @@ module Wee
     end
   end
 
+  class NotFoundResponse < Response
+    def initialize
+      super(['<title>404 - Not Found</title><h1>404 - Not Found</h1>'], 404)
+    end
+  end
+
   class ErrorResponse < Response
     include Rack::Utils
 
