@@ -20,6 +20,7 @@ class AjaxCounter < Wee::Component
     s.add_ivar(self, :@counter, @counter)
   end
 
+=begin
   def style
     "div.wee-AjaxCounter a { border: 1px solid blue; padding: 5px; background-color: #ABABAB; };"
   end
@@ -29,6 +30,11 @@ class AjaxCounter < Wee::Component
     r.div.css_class('wee-AjaxCounter').oid.with {
       r.anchor.update_component_on(:click) { @counter += 1 }.with(@counter.to_s)
     }
+  end
+=end
+
+  def render(r)
+    r.anchor.oid.update_component_on(:click) { @counter += 1 }.with(@counter.to_s)
   end
 
 end
