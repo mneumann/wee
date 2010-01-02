@@ -727,6 +727,7 @@ module Wee
 
     def initialize
       super(HTML_TAG)
+      href('#')
     end
 
     def info(info=nil)
