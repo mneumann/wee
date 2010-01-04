@@ -9,6 +9,10 @@ module Wee
       @obj_map = {}      # obj => [callback_id1, callback_id2, ...]
     end
 
+    def empty?
+      @callbacks.empty?
+    end
+
     def register(object, callback)
       id = @next_id
       @next_id += 1
