@@ -16,6 +16,7 @@ spec = Gem::Specification.new do |s|
     "It is largely inspired by Smalltalk's Seaside framework."
   s.add_dependency('rack', '>= 1.0.0')
   s.add_dependency('mspec', '>= 1.5.9')
+  s.add_dependency('fast_gettext', '>= 0.4.17')
   s.files = Dir['**/*']
   s.require_path = 'lib'
   s.author = "Michael Neumann"
