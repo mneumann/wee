@@ -9,6 +9,10 @@ module Wee
   #
   class RootComponent < Component
 
+    def self.run(*params, &block)
+      Wee.run(self, *params, &block)
+    end
+
     def title
       self.class.name.to_s
     end
