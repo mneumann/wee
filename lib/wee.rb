@@ -1,5 +1,5 @@
 module Wee
-  Version = "2.1.0"
+  Version = "2.2.0"
 end
 
 require 'rack'
@@ -31,6 +31,12 @@ end
 
 Wee::DefaultRenderer = Wee::HtmlCanvas
 
+class Wee::HelloWorld < Wee::RootComponent
+  def render(r)
+    r.text "Hello World from Wee!"
+  end
+end
+
 def Wee.run(component_class=nil, params=nil, &block)
   raise ArgumentError if component_class and block
 
@@ -41,6 +47,7 @@ def Wee.run(component_class=nil, params=nil, &block)
   params[:additional_builder_procs] ||= []
   params[:use_continuations] ||= false
   params[:print_message] ||= false
+  params[:autoreload] ||= false
 
   if component_class <= Wee::RootComponent
     component_class.external_resources.each do |ext_res|  
@@ -63,6 +70,17 @@ def Wee.run(component_class=nil, params=nil, &block)
   app = Rack::Builder.app do
     map params[:mount_path] do
       a = Wee::Application.new(&block)
+
+      if params[:autoreload]
+        require "rack/reloader"
+        if params[:autoreload].kind_of?(Integer)
+          timer = Integer(params[:autoreload])
+        else
+          timer = 0
+        end
+        use Rack::Reloader, timer 
+      end
+
       if params[:public_path]
         run Rack::Cascade.new([Rack::File.new(params[:public_path]), a])
       else
