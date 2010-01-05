@@ -1,5 +1,5 @@
 $LOAD_PATH.unshift "../lib"
-require 'rubygems'
+require 'rubygems' if RUBY_VERSION < "1.9"
 require 'wee'
 
 class HelloWorld < Wee::RootComponent
