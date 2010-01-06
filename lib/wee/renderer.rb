@@ -50,14 +50,14 @@ module Wee
     def render(component)
       close
       self.callbacks.unregister(component)
-      component.decoration.render_on(self)
+      component.decoration.render!(self)
       nil
     end
 
     def render_decoration(decoration)
       close
       self.callbacks.unregister(decoration)
-      decoration.render_on(self)
+      decoration.render!(self)
       nil
     end
 

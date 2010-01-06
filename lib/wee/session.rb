@@ -286,7 +286,7 @@ module Wee
       r.callbacks = Wee::Callbacks.new
 
       begin
-        @root_component.decoration.render_on(r)
+        @root_component.decoration.render!(r)
         r.close
         r.response << r.document.to_s
       rescue AbortProcessing => abort

@@ -9,7 +9,7 @@ module Wee
   # 
   class Presenter
 
-    def render_on(r)
+    def render!(r)
       r.with(self) {|new_r| render(new_r)}
     end
 

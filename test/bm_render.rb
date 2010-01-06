@@ -26,7 +26,7 @@ Integer(ARGV[0] || raise).times do
   r.callbacks = Wee::Callbacks.new
 
   begin
-    root_component.decoration.render_on(r)
+    root_component.decoration.render!(r)
   ensure
     r.close
   end

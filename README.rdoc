@@ -102,7 +102,7 @@ The request/response cycle in Wee is actually split into two separate phases.
 
 The rendering phase is assumed to be side-effect free! So, you as a programmer
 should take care to meet this assumption. Rendering is performed by method
-Wee::Component#render_on.
+Wee::Component#render!.
 
 === Action Phase (Invoking Callbacks)
 

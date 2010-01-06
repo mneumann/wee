@@ -4,7 +4,7 @@ module Wee
 
   #
   # Abstract base class of all decorations. Forwards the methods
-  # #process_callbacks, #render_on and #state to the next decoration in
+  # #process_callbacks, #render! and #state to the next decoration in
   # the chain. Subclasses should provide special behaviour in these methods,
   # otherwise the decoration does not make sense.
   #
@@ -12,7 +12,7 @@ module Wee
   # around the decorations or components below itself:
   #
   #   class HeaderFooterDecoration < Wee::Decoration
-  #     alias render_on render_presenter_on
+  #     alias render! render_presenter!
   #     def render(r)
   #       r.text "header"
   #       r.render_decoration(@next)
@@ -47,12 +47,12 @@ module Wee
       @next.process_callbacks(callbacks)
     end
 
-    alias render_presenter_on render_on
+    alias render_presenter! render!
     #
     # Forwards method call to the next decoration in the chain.
     #
-    def render_on(r)
-      @next.render_on(r)
+    def render!(r)
+      @next.render!(r)
     end
 
     #
@@ -71,7 +71,7 @@ module Wee
 
   #
   # A Wee::Delegate breaks the decoration chain and forwards the methods
-  # #process_callbacks, #render_on and #state to the corresponding *chain*
+  # #process_callbacks, #render! and #state to the corresponding *chain*
   # method of it's _delegate_ component (a Wee::Component).
   #
   class Delegate < Decoration
@@ -92,8 +92,8 @@ module Wee
     # Forwards method to the corresponding top-level *chain* method of the
     # _delegate_ component.
     #
-    def render_on(r)
-      @delegate.decoration.render_on(r)
+    def render!(r)
+      @delegate.decoration.render!(r)
     end
 
     #
@@ -159,7 +159,7 @@ module Wee
 
   class WrapperDecoration < Decoration
 
-    alias render_on render_presenter_on
+    alias render! render_presenter!
 
     #
     # Overwrite this method, and call render_inner(r) 
