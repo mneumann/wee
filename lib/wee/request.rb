@@ -29,6 +29,8 @@ module Wee
       @fields.empty?
     end
 
+    alias ajax? xhr?
+
     def build_url(hash={})
       session_id = hash.has_key?(:session_id) ? hash[:session_id] : @session_id
       page_id = hash.has_key?(:page_id) ? hash[:page_id] : @page_id

@@ -307,7 +307,7 @@ module Wee
         end
         if action_callback
           action_callback.call
-        elsif not page.callbacks.action_callbacks.empty?
+        elsif request.ajax?
           #
           # An action request with an action-id without a corresponding
           # registered action callback is considered an invalid request.
