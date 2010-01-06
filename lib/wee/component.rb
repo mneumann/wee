@@ -127,8 +127,217 @@ module Wee
       s.add_ivar(self, :@decoration, @decoration)
     end
 
-    include Wee::DecorationMixin
-    include Wee::CallAnswerMixin
+    # -------------------------------------------------------------
+    # Decoration Methods
+    # -------------------------------------------------------------
+
+    def decoration=(d) @decoration = d end
+    def decoration() @decoration || self end 
+
+    #
+    # Iterates over all decorations
+    # (note that the component itself is excluded)
+    #
+    def each_decoration # :yields: decoration
+      d = @decoration
+      while d and d != self
+        yield d
+        d = d.next
+      end
+    end
+
+    # 
+    # Searches a decoration in the decoration chain
+    #
+    def find_decoration
+       each_decoration {|d| yield d and return d }
+       return nil
+    end
+ 
+    #
+    # Adds decoration +d+ to the decoration chain.
+    #
+    # A global decoration is added in front of the decoration chain, a local
+    # decoration is added in front of all other local decorations but after all
+    # global decorations.
+    #
+    # Returns: +self+
+    #
+    def add_decoration(d)
+      if d.global?
+        d.next = self.decoration
+        self.decoration = d
+      else
+        last_global = nil
+        each_decoration {|i| 
+          if i.global?
+            last_global = i
+          else
+            break
+          end
+        }
+        if last_global.nil?
+          # no global decorations specified -> add in front
+          d.next = self.decoration
+          self.decoration = d
+        else
+          # add after last_global
+          d.next = last_global.next
+          last_global.next = d
+        end
+      end
+
+      return self
+    end
+
+    #
+    # Remove decoration +d+ from the decoration chain. 
+    # 
+    # Returns the removed decoration or +nil+ if it did not exist in the
+    # decoration chain.
+    #
+    def remove_decoration(d)
+      if d == self.decoration  # 'd' is in front
+        self.decoration = d.next
+      else
+        last_decoration = self.decoration
+        next_decoration = nil
+        loop do
+          return nil if last_decoration == self or last_decoration.nil?
+          next_decoration = last_decoration.next
+          break if d == next_decoration
+          last_decoration = next_decoration
+        end
+        last_decoration.next = d.next
+      end
+      d.next = nil  # decoration 'd' no longer is an owner of anything!
+      return d
+    end
+
+    #
+    # Remove all decorations that match the block condition.
+    # 
+    # Example (removes all decorations of class +HaloDecoration+):
+    # 
+    #   remove_decoration_if {|d| d.class == HaloDecoration}
+    #
+    def remove_decoration_if # :yields: decoration
+      to_remove = []
+      each_decoration {|d| to_remove << d if yield d}
+      to_remove.each {|d| remove_decoration(d)}
+    end
+
+    # -------------------------------------------------------------
+    # Call/Answer Methods
+    # -------------------------------------------------------------
+
+    #
+    # Call another component (without using continuations). The calling
+    # component is neither rendered nor are it's callbacks processed
+    # until the called component answers using method #answer. 
+    #
+    # [+component+]
+    #   The component to be called.
+    #
+    # [+return_callback+]
+    #   Is invoked when the called component answers.
+    #
+    # <b>How it works</b>
+    # 
+    # The component to be called is wrapped with an AnswerDecoration and a
+    # Delegate decoration. The latter is used to redirect to the called
+    # component. Once the decorations are installed, we end the processing of
+    # callbacks prematurely.
+    #
+    # When at a later point in time the called component invokes #answer, this
+    # will raise a AnswerDecoration::Answer exception which is catched by the
+    # AnswerDecoration we installed before calling this component, and as such,
+    # whose process_callbacks method was called before we gained control.
+    #
+    # The AnswerDecoration then invokes the <tt>answer_callback</tt> to cleanup
+    # the decorations we added during #call and finally passes control to the
+    # <tt>return_callback</tt>.
+    #
+    def call(component, &return_callback)
+      delegate = Delegate.new(component)
+      answer = AnswerDecoration.new
+      answer.answer_callback = UnwindCall.new(self, component, delegate, answer, &return_callback)
+      add_decoration(delegate)
+      component.add_decoration(answer)
+      session.send_response(nil)
+    end
+
+    #
+    # Reverts the changes made due to Component#call. Is called when
+    # Component#call 'answers'.
+    #
+    class UnwindCall
+      def initialize(calling, called, delegate, answer, &return_callback)
+        @calling, @called, @delegate, @answer = calling, called, delegate, answer
+        @return_callback = return_callback
+      end
+
+      def call(answ)
+        @calling.remove_decoration(@delegate)
+        @called.remove_decoration(@answer)
+        @return_callback.call(*answ.args) if @return_callback
+      end
+    end
+
+    #
+    # Similar to method #call, but using continuations.
+    #
+    def callcc(component)
+      delegate = Delegate.new(component)
+      answer = AnswerDecoration.new
+
+      add_decoration(delegate)
+      component.add_decoration(answer)
+
+      answ = Kernel.callcc {|cc|
+        answer.answer_callback = cc
+        session.send_response(nil)
+      }
+      remove_decoration(delegate)
+      component.remove_decoration(answer)
+
+      args = answ.args
+      case args.size
+      when 0
+        return
+      when 1
+        return args.first
+      else
+        return *args
+      end
+    end
+
+    #
+    # Chooses one of #call or #callcc depending on whether a block is
+    # given or not.
+    #
+    def call!(comp, &block)
+      if block
+        call comp, &block
+      else
+        callcc comp
+      end
+    end
+
+    def call_inline(&render_block)
+      callcc BlockComponent.new(&render_block)
+    end
+
+    #
+    # Return from a called component.
+    # 
+    # NOTE that #answer never returns.
+    #
+    # See #call for a detailed description of the call/answer mechanism.
+    #
+    def answer(*args)
+      raise AnswerDecoration::Answer.new(args)
+    end
 
   end # class Component
 

@@ -69,106 +69,6 @@ module Wee
 
   end # class Decoration
 
-  module DecorationMixin
-
-    def decoration=(d) @decoration = d end
-    def decoration() @decoration || self end 
-
-    #
-    # Iterates over all decorations
-    # (note that the component itself is excluded)
-    #
-    def each_decoration # :yields: decoration
-      d = @decoration
-      while d and d != self
-        yield d
-        d = d.next
-      end
-    end
-
-    # 
-    # Searches a decoration in the decoration chain
-    #
-    def find_decoration
-       each_decoration {|d| yield d and return d }
-       return nil
-    end
- 
-    #
-    # Adds decoration +d+ to the decoration chain.
-    #
-    # A global decoration is added in front of the decoration chain, a local
-    # decoration is added in front of all other local decorations but after all
-    # global decorations.
-    #
-    # Returns: +self+
-    #
-    def add_decoration(d)
-      if d.global?
-        d.next = self.decoration
-        self.decoration = d
-      else
-        last_global = nil
-        each_decoration {|i| 
-          if i.global?
-            last_global = i
-          else
-            break
-          end
-        }
-        if last_global.nil?
-          # no global decorations specified -> add in front
-          d.next = self.decoration
-          self.decoration = d
-        else
-          # add after last_global
-          d.next = last_global.next
-          last_global.next = d
-        end
-      end
-
-      return self
-    end
-
-    #
-    # Remove decoration +d+ from the decoration chain. 
-    # 
-    # Returns the removed decoration or +nil+ if it did not exist in the
-    # decoration chain.
-    #
-    def remove_decoration(d)
-      if d == self.decoration  # 'd' is in front
-        self.decoration = d.next
-      else
-        last_decoration = self.decoration
-        next_decoration = nil
-        loop do
-          return nil if last_decoration == self or last_decoration.nil?
-          next_decoration = last_decoration.next
-          break if d == next_decoration
-          last_decoration = next_decoration
-        end
-        last_decoration.next = d.next
-      end
-      d.next = nil  # decoration 'd' no longer is an owner of anything!
-      return d
-    end
-
-    #
-    # Remove all decorations that match the block condition.
-    # 
-    # Example (removes all decorations of class +HaloDecoration+):
-    # 
-    #   remove_decoration_if {|d| d.class == HaloDecoration}
-    #
-    def remove_decoration_if # :yields: decoration
-      to_remove = []
-      each_decoration {|d| to_remove << d if yield d}
-      to_remove.each {|d| remove_decoration(d)}
-    end
-
-  end # module DecorationMixin
-
   #
   # A Wee::Delegate breaks the decoration chain and forwards the methods
   # #process_callbacks, #render_on and #state to the corresponding *chain*
@@ -298,6 +198,5 @@ module Wee
     end
 
   end # class PageDecoration
-
 
 end # module Wee
