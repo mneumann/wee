@@ -38,7 +38,7 @@ module Wee
       @objects[object.object_id] ||= Snapshot.new(object, object.take_snapshot)
     end
 
-    def add_ivar(object, ivar, value)
+    def add_ivar(object, ivar, value=object.instance_variable_get(ivar))
       (@objects_ivars[object.object_id] ||= SnapshotIVars.new(object, {})).add(ivar, value)
     end
 
