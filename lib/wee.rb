@@ -30,8 +30,6 @@ if RUBY_VERSION >= "1.9"
   end
 end
 
-Wee::DefaultRenderer = Wee::HtmlCanvas
-
 class Wee::HelloWorld < Wee::RootComponent
   def render(r)
     r.text "Hello World from Wee!"

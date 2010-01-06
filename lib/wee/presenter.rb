@@ -25,7 +25,7 @@ module Wee
     # Returned class must be a subclass of Wee::Renderer.
     #
     def renderer_class
-      Wee::DefaultRenderer
+      Wee::HtmlCanvas
     end
 
     protected
