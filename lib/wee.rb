@@ -12,6 +12,7 @@ require 'wee/decoration'
 require 'wee/component'
 require 'wee/root_component'
 require 'wee/task'
+require 'wee/dialog'
 
 require 'wee/application'
 require 'wee/request'
