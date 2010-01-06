@@ -120,11 +120,11 @@ module Wee
       return action_callback
     end
 
-    protected
-
     def state_decoration(s)
       s.add_ivar(self, :@decoration, @decoration)
     end
+
+    protected :state_decoration
 
     # -------------------------------------------------------------
     # Decoration Methods
@@ -266,6 +266,8 @@ module Wee
       session.send_response(nil)
     end
 
+    protected :call
+
     #
     # Reverts the changes made due to Component#call. Is called when
     # Component#call 'answers'.
@@ -311,6 +313,8 @@ module Wee
       end
     end
 
+    protected :callcc
+
     #
     # Chooses one of #call or #callcc depending on whether a block is
     # given or not.
@@ -323,9 +327,13 @@ module Wee
       end
     end
 
+    protected :call!
+
     def call_inline(&render_block)
       callcc BlockComponent.new(&render_block)
     end
+
+    protected :call_inline
 
     #
     # Return from a called component.
@@ -337,6 +345,8 @@ module Wee
     def answer(*args)
       raise AnswerDecoration::Answer.new(args)
     end
+
+    protected :answer
 
   end # class Component
 
