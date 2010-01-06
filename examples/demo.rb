@@ -23,18 +23,15 @@ class ArcChallengeWrapper < Wee::WrapperDecoration
   end
 end
 
-class Demo < Wee::Component
+class Demo < Wee::RootComponent
   class E < Struct.new(:component, :title, :file); end
 
-  def root?
-    true
+  def title
+    'Wee Demos'
   end
 
   def initialize
-    super
-    add_decoration Wee::PageDecoration.new('Wee Demos')
-
-    @components = [] 
+    @components = []
     @components << E.new(Counter.new, "Counter", 'demo/counter.rb')
     @components << E.new(Calculator.new, "Calculator", 'demo/calculator.rb')
     @components << E.new(CustomCalendarDemo.new, "Calendar", 'demo/calendar.rb')
@@ -64,7 +61,7 @@ class Demo < Wee::Component
 
   def render(r)
     r.form.enctype_multipart.with do
-      r.h1 'Wee Component Demos' 
+      r.h1 'Wee Component Demos'
       r.div.style('float: left; width: 200px;').with {
         r.select_list(@components).
           labels(@components.map {|c| c.title}).
