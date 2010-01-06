@@ -9,7 +9,6 @@
 $LOAD_PATH.unshift "../lib"
 require 'rubygems'
 require 'wee'
-require "wee/conversation"
 
 class Wee::IO
   def initialize(component)
@@ -17,19 +16,21 @@ class Wee::IO
   end
 
   def ask
-    @component.display do |r|
-      text = nil
-      r.text_input.callback {|t| text = t}
-      r.submit_button.callback { answer(text) }.value("Enter")
+    @component.call_inline do |r|
+      r.form do
+        text = nil
+        r.text_input.callback {|t| text = t}
+        r.submit_button.callback { answer(text) }.value("Enter")
+      end
     end 
   end
 
   def pause(text)
-    @component.display {|r| r.anchor.callback { answer }.with(text) }
+    @component.call_inline {|r| r.anchor.callback { answer }.with(text) }
   end
 
   def tell(text)
-    @component.display {|r| r.text text.to_s }
+    @component.call_inline {|r| r.text text.to_s }
   end
 end
 

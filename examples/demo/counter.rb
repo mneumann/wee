@@ -2,13 +2,12 @@ class Counter < Wee::Component
   attr_accessor :count
 
   def initialize(initial_count=0)
-    super()
-    @count = initial_count 
+    @count = initial_count
+    add_decoration Wee::StyleDecoration.new(self)
   end
 
-  def state(s)
-    super
-    s.add_ivar(self, :@count, @count)
+  def state(s) super
+    s.add_ivar(self, :@count)
   end
 
   def dec
@@ -19,11 +18,12 @@ class Counter < Wee::Component
     @count += 1
   end
 
+  def style
+    ".wee-Counter a { border: 1px dotted blue; margin: 2px; }"
+  end
+
   def render(r)
-    r.once(self.class) {
-      r.css ".wee-Counter a { border: 1px dotted blue; margin: 2px; }"
-    }
-    r.div.id("wee-#{object_id.to_s(36)}").css_class('wee-Counter').with {
+    r.div.oid.css_class('wee-Counter').with {
       r.anchor.callback_method(:dec).with("--")
       r.space
       render_count(r)

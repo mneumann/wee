@@ -1,10 +1,8 @@
 $LOAD_PATH.unshift "../lib"
 require 'rubygems'
 require 'wee'
-require 'wee/conversation'
 
 class CheeseTask < Wee::Task
-
   def go
     begin choose_cheese end until confirm_cheese
     inform_cheese
@@ -24,7 +22,6 @@ class CheeseTask < Wee::Task
   def inform_cheese
     inform "Your favorite is #{@cheese}."
   end
-
 end
 
 Wee.runcc(CheeseTask) if __FILE__ == $0
