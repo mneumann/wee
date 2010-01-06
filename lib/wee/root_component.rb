@@ -36,13 +36,8 @@ module Wee
 
     def self.instanciate(*args, &block)
       obj = new(*args, &block)
-      unless obj.find_decoration {|d| d.kind_of?(Wee::FormDecoration)}
-        obj.add_decoration Wee::FormDecoration.new
-      end
-      unless obj.find_decoration {|d| d.kind_of?(Wee::PageDecoration)}
-        obj.add_decoration Wee::PageDecoration.new(obj.title, obj.stylesheets,
-                                                   obj.javascripts)
-      end
+      obj.add_decoration Wee::PageDecoration.new(obj.title, obj.stylesheets, obj.javascripts)
+      return obj
     end
 
   end # class RootComponent
