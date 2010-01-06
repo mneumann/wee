@@ -18,11 +18,6 @@ module Wee
 
     attr_accessor :answer_callback
 
-    def initialize(&answer_callback)
-      super()
-      @answer_callback = answer_callback
-    end
-
     class Interceptor
       attr_accessor :action_callback, :answer_callback
 
@@ -56,9 +51,9 @@ module Wee
   module CallAnswerMixin
 
     #
-    # Call another component. The calling component is neither rendered nor are
-    # it's callbacks processed until the called component answers using method
-    # #answer. 
+    # Call another component (without using continuations). The calling
+    # component is neither rendered nor are it's callbacks processed
+    # until the called component answers using method #answer. 
     #
     # [+component+]
     #   The component to be called.
@@ -83,23 +78,37 @@ module Wee
     # <tt>return_callback</tt>.
     #
     def call(component, &return_callback)
-      delegate = Wee::Delegate.new(component)
-      answer = Wee::AnswerDecoration.new {|answ|
-        remove_decoration(delegate)
-        component.remove_decoration(answer)       
-        return_callback.call(*answ.args) if return_callback
-      }
+      delegate = Delegate.new(component)
+      answer = AnswerDecoration.new
+      answer.answer_callback = UnwindCall.new(self, component, delegate, answer, &return_callback)
       add_decoration(delegate)
       component.add_decoration(answer)
       session.send_response(nil)
     end
 
     #
+    # Reverts the changes made due to Component#call. Is called when
+    # Component#call 'answers'.
+    #
+    class UnwindCall
+      def initialize(calling, called, delegate, answer, &return_callback)
+        @calling, @called, @delegate, @answer = calling, called, delegate, answer
+        @return_callback = return_callback
+      end
+
+      def call(answ)
+        @calling.remove_decoration(@delegate)
+        @called.remove_decoration(@answer)
+        @return_callback.call(*answ.args) if @return_callback
+      end
+    end
+
+    #
     # Similar to method #call, but using continuations.
     #
     def callcc(component)
-      delegate = Wee::Delegate.new(component)
-      answer = Wee::AnswerDecoration.new
+      delegate = Delegate.new(component)
+      answer = AnswerDecoration.new
 
       add_decoration(delegate)
       component.add_decoration(answer)
@@ -120,6 +129,22 @@ module Wee
       else
         return *args
       end
+    end
+
+    #
+    # Chooses one of #call or #callcc depending on whether a block is
+    # given or not.
+    #
+    def call!(comp, &block)
+      if block
+        call comp, &block
+      else
+        callcc comp
+      end
+    end
+
+    def call_inline(&render_block)
+      callcc BlockComponent.new(&render_block)
     end
 
     #
