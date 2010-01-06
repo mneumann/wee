@@ -1,6 +1,5 @@
 require 'wee/presenter'
 require 'wee/decoration'
-require 'wee/call_answer'
 
 module Wee
 
