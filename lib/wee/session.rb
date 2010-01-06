@@ -8,7 +8,7 @@ module Wee
   class Session
 
     #
-    # The default serializer, when no continuation are going to be used.
+    # The default serializer, when no continuations are going to be used.
     # Ensures that only one request of the same session is executed at
     # the same time.
     #
