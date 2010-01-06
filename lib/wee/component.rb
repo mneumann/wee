@@ -132,4 +132,14 @@ module Wee
 
   end # class Component
 
+  class BlockComponent < Component
+    def initialize(&block)
+      @block = block
+    end
+
+    def render(r)
+      instance_exec(r, &@block)
+    end
+  end # class BlockComponent
+
 end # module Wee
