@@ -10,43 +10,45 @@ module Wee
   #
   class State
     class Snapshot
-      attr_accessor :object, :snapshot
-      def initialize(object, snapshot)
-        @object, @snapshot = object, snapshot
+      def initialize(object)
+        @object = object
+        @snapshot = nil
+        @has_snapshot = false
+        @ivars = nil
       end
-    end
 
-    class SnapshotIVars
-      attr_accessor :object, :ivars
-      def initialize(object, ivars)
-        @object, @ivars = object, ivars
+      def take
+        @snapshot = @object.take_snapshot unless @has_snapshot
+        @has_snapshot = true
       end
-      def add(ivar, value)
+
+      def add_ivar(ivar, value)
+        @ivars ||= {}
         @ivars[ivar] = value
       end
+
       def restore
-        @ivars.each_pair {|k,v| @object.instance_variable_set(k, v) }
+        @object.restore_snapshot(@snapshot) if @has_snapshot
+        @ivars.each_pair {|k,v| @object.instance_variable_set(k, v) } if @ivars
       end
     end
 
     def initialize
-      @objects = Hash.new
-      @objects_ivars = Hash.new 
+      @snapshots = Hash.new
     end
 
     def add(object)
-      @objects[object.object_id] ||= Snapshot.new(object, object.take_snapshot)
+      (@snapshots[object.object_id] ||= Snapshot.new(object)).take
     end
 
     def add_ivar(object, ivar, value=object.instance_variable_get(ivar))
-      (@objects_ivars[object.object_id] ||= SnapshotIVars.new(object, {})).add(ivar, value)
+      (@snapshots[object.object_id] ||= Snapshot.new(object)).add_ivar(ivar, value)
     end
 
     alias << add
 
     def restore
-      @objects.each_value {|s| s.object.restore_snapshot(s.snapshot) }
-      @objects_ivars.each_value {|s| s.restore }
+      @snapshots.each_value {|snapshot| snapshot.restore}
     end
   end # class State
 
