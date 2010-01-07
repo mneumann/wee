@@ -71,7 +71,6 @@ def Wee.run(component_class=nil, params=nil, &block)
       a = Wee::Application.new(&block)
 
       if params[:autoreload]
-        require "rack/reloader"
         if params[:autoreload].kind_of?(Integer)
           timer = Integer(params[:autoreload])
         else
@@ -88,8 +87,6 @@ def Wee.run(component_class=nil, params=nil, &block)
     end
     params[:additional_builder_procs].each {|bproc| bproc.call(self)}
   end
-
-  require 'rack/handler/webrick'
 
   if params[:print_message]
     url = "http://localhost:#{params[:port]}#{params[:mount_path]}"
