@@ -38,7 +38,21 @@ module Wee
 
     def initialize(salt='wee')
       @salt = salt
+
+      @use_secure = false
+      if defined?(::SecureRandom)
+        begin
+          @use_secure = true if next_secure != next_secure
+        rescue NotImplementedError
+        end
+      end
     end
+
+    def next
+      pack(@use_secure ? next_secure : next_md5)
+    end
+
+    protected
 
     def next_md5
       now = Time.now
@@ -50,15 +64,12 @@ module Wee
       dig.update(@salt.to_s)
       dig.digest
     end
-
+    
     def next_secure
       SecureRandom.random_bytes(16)
-    rescue NotImplementedError
-      next_md5
     end
 
-    def next
-      str = defined?(::SecureRandom) ? next_secure : next_md5
+    def pack(str)
       packed = [str].pack('m')
       packed.tr!("=\r\n", '')
       packed.tr!('+/', '-_')
