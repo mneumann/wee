@@ -57,12 +57,11 @@ def Wee.run(component_class=nil, params=nil, &block)
   raise ArgumentError if params[:use_continuations] and block 
 
   unless block
-    block = proc do
-      if params[:use_continuations]
-        Wee::Session.new(component_class.instanciate, Wee::Session::ThreadSerializer.new)
-      else
-        Wee::Session.new(component_class.instanciate)
-      end
+    block ||= if params[:use_continuations]
+      proc { Wee::Session.new(component_class.instanciate,
+                 Wee::Session::ThreadSerializer.new) }
+    else
+      proc { Wee::Session.new(component_class.instanciate) }
     end
   end
 
