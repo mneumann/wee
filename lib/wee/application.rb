@@ -16,7 +16,7 @@ module Wee
 
     class SessionCache < Wee::LRUCache
       def garbage_collect
-        delete_if {|id, session| session.dead? }
+        delete_if {|id, session| session.dead?}
       end
     end
 
@@ -26,7 +26,7 @@ module Wee
     #
     #   Wee::Application.new { Wee::Session.new(root_component) }
     #
-    def initialize(max_sessions=10_000, &block)
+    def initialize(max_sessions=10_000, &block)#max sessions???
       @session_factory = block || raise(ArgumentError)
       @session_ids ||= Wee::IdGenerator::Secure.new
       @sessions = SessionCache.new(max_sessions)
@@ -44,7 +44,6 @@ module Wee
     # Handles a web request
     #
     def call(env)
-      request = Wee::Request.new(env)
 
       if request.session_id
         session = @mutex.synchronize { @sessions[request.session_id] }

@@ -23,3 +23,4 @@ class Test_HtmlCanvas < Test::Unit::TestCase
     assert_equal %[<form action="foo" method="POST"><table><tr id="myrow"><td align="top">Hello world</td></tr></table>&nbsp;</form>], doc
   end
 end
+

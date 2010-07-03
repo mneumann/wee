@@ -49,12 +49,12 @@ def Wee.run(component_class=nil, params=nil, &block)
   params[:autoreload] ||= false
 
   if component_class <= Wee::RootComponent
-    component_class.external_resources.each do |ext_res|  
+    component_class.external_resources.each do |ext_res|
       params[:additional_builder_procs] << proc {|builder| ext_res.install(builder)}
     end
   end
 
-  raise ArgumentError if params[:use_continuations] and block 
+  raise ArgumentError if params[:use_continuations] and block
 
   unless block
     block ||= if params[:use_continuations]
@@ -75,7 +75,7 @@ def Wee.run(component_class=nil, params=nil, &block)
         else
           timer = 0
         end
-        use Rack::Reloader, timer 
+        use Rack::Reloader, timer
       end
 
       if params[:public_path]
@@ -94,8 +94,10 @@ def Wee.run(component_class=nil, params=nil, &block)
     io.puts "Open your browser at: #{url}"
     io.puts
   end
+  server = eval ("Rack::Handler::#{params[:server]}")
+  server.run(app, :Port => params[:port])
 
-  Rack::Handler::WEBrick.run(app, :Port => params[:port])
+#  Rack::Handler::WEBrick.run(app, :Port => params[:port])
 end
 
 #
@@ -106,3 +108,5 @@ def Wee.runcc(component_class, params=nil)
   params[:use_continuations] = true
   Wee.run(component_class, params)
 end
+
+
