@@ -16,6 +16,11 @@ task :test do
   sh 'mspec -I./lib -f s test/component_spec.rb'
 end
 
+task :install do
+  sh 'sudo gem install wee-2.2.0.gem'
+end
+
+
 task :package do
   sh 'gem build wee.gemspec' 
 end

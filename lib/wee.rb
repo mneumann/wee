@@ -47,6 +47,7 @@ def Wee.run(component_class=nil, params=nil, &block)
   params[:use_continuations] ||= false
   params[:print_message] ||= false
   params[:autoreload] ||= false
+  params[:server] ||= "WEBrick"
 
   if component_class <= Wee::RootComponent
     component_class.external_resources.each do |ext_res|  
@@ -94,8 +95,10 @@ def Wee.run(component_class=nil, params=nil, &block)
     io.puts "Open your browser at: #{url}"
     io.puts
   end
+  server = eval ("Rack::Handler::#{params[:server]}")
+  server.run(app, :Port => params[:port])
 
-  Rack::Handler::WEBrick.run(app, :Port => params[:port])
+#  Rack::Handler::WEBrick.run(app, :Port => params[:port])
 end
 
 #
