@@ -2,6 +2,7 @@ require 'thread'
 require 'wee/lru_cache'
 require 'wee/id_generator'
 require 'wee/renderer'
+require 'wee/response'
 
 module Wee
 
@@ -169,6 +170,7 @@ module Wee
     # Handles a web request.
     #
     def call(env)
+	#puts "CALLCALLCALLCALL"
       if env['wee.session']
         # we are already serialized
         raise if env['wee.session'] != self
@@ -180,8 +182,10 @@ module Wee
           response = handle(env)
           sleep
           return response
+	rescue Exception => e	 #before this was added wee would just hang when there was an exception in Component.render
+	@response = Response.new(Rack::ShowExceptions.new(application).pretty(env,e)).finish
         ensure
-          Thread.current[:wee_session] = nil
+         Thread.current[:wee_session] = nil
         end
       else
         env['wee.session'] = self
@@ -219,6 +223,14 @@ module Wee
     #
     def handle(env)
       request = Wee::Request.new(env)
+	
+#	begin
+#	  raise "testing exceptions"
+#	rescue Exception => e
+	
+#	 r = Response.new(se = Rack::ShowExceptions.new(application).pretty(env,e)).finish
+#	 return r
+#	end
       @request = request # CONTINUATIONS!
       page = @page_cache.fetch(request.page_id)
 
@@ -245,7 +257,8 @@ module Wee
 
         url = request.build_url(:page_id => new_page.id)
         if request.page_id
-          return Wee::RefreshResponse.new("Invalid or expired page", url).finish
+	return 	Wee::Response.new ("<html><body>!HELLO!</body></html>").finish
+#          return Wee::RefreshResponse.new("Invalid or expired page", url).finish
         else
           return Wee::RedirectResponse.new(url).finish
         end
@@ -346,6 +359,7 @@ module Wee
       @current_page = new_page
 
       url = request.build_url(:page_id => new_page.id)
+	#puts "ACTION() -> REDIRECT"
       return Wee::RedirectResponse.new(url)
     end
 
