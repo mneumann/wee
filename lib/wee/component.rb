@@ -107,13 +107,13 @@ module Wee
       # process callbacks of all children
       for child in self.children
         if act = child.decoration.process_callbacks(callbacks)
-          raise "Duplicate action callback" if action_callback
+          raise "Duplicate action callback in child" if action_callback
           action_callback = act
         end
       end
 
       if act = callbacks.action_callbacks.first_triggered(self)
-        raise "Duplicate action callback" if action_callback
+        raise "Duplicate action callback in self" if action_callback
         action_callback = act
       end
 

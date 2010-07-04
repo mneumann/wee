@@ -1,16 +1,22 @@
 require 'test/unit'
 module Wee; end
-require 'wee/renderer/html/writer'
-require 'wee/renderer/html/brushes'
-require 'wee/renderer/html/canvas'
-require 'wee/context'
+require 'wee/html_document'
+require 'wee/html_brushes'
+require 'wee/html_canvas'
+#require 'wee/context'
 
 class Test_HtmlCanvas < Test::Unit::TestCase
   def test_simple
-    rctx = Wee::RenderingContext.new
-    rctx.document = Wee::HtmlWriter.new(doc='')
+	
+   doc = Wee::HtmlDocument.new
+   session=nil
+   request=nil
+  response=nil
+ callbacks=nil
+  document=doc
+current_component=nil
 
-    c = Wee::HtmlCanvas.new(rctx)
+   c = Wee::HtmlCanvas.new(session,request,response,callbacks,document,current_component)
     c.form.action("foo").with {
       c.table {
         c.table_row.id("myrow").with {
@@ -20,6 +26,22 @@ class Test_HtmlCanvas < Test::Unit::TestCase
       c.space
     }
 
-    assert_equal %[<form action="foo" method="POST"><table><tr id="myrow"><td align="top">Hello world</td></tr></table>&nbsp;</form>], doc
+   assert_equal %[<form method="POST" action="foo"><table><tr id="myrow"><td align="top">Hello world</td></tr></table>&nbsp;</form>], doc.to_s
   end
+
+def test_wrong_brushname
+   doc = Wee::HtmlDocument.new
+   session=nil
+   request=nil
+  response=nil
+ callbacks=nil
+  document=doc
+current_component=nil
+
+   c = Wee::HtmlCanvas.new(session,request,response,callbacks,document,current_component)
+    c.form.action("foo").with {
+	c.password_field.value "hello"
+    }
+
+end
 end

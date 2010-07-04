@@ -10,7 +10,9 @@ module Wee
   class Presenter
 
     def render!(r)
+	#begin
       r.with(self) {|new_r| render(new_r)}
+	#
     end
 
     def render(r); raise end
