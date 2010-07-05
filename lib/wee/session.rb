@@ -182,7 +182,7 @@ module Wee
           sleep
           return response
 	rescue Exception => e	 #before this was added wee would just hang when there was an exception in Component.render
-	  return Response.new(Rack::ShowExceptions.new(application).pretty(env,e)).finish
+	  return Response.new(Rack::ShowExceptions.new(application).pretty(env,e)).finish####
         ensure
          Thread.current[:wee_session] = nil
         end
