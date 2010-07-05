@@ -28,7 +28,7 @@ module Wee
   end
 
   class RefreshResponse < Response
-    def initialize(message, location, seconds=5)
+    def initialize(message, location, seconds=2)
       super([%[<html>
         <head>
           <meta http-equiv="REFRESH" content="#{seconds};URL=#{location}">
@@ -36,11 +36,12 @@ module Wee
         </head>
         <body>
           <h1>#{message}</h1>
-          You are being redirected to <a href="#{location}">#{location}</a> 
-          in #{seconds} seconds.
+          <a href="#{location}">You are being redirected to #{location} 
+          in #{seconds} seconds.</a>
         </body>
         </html>]])
     end
+#made the anchor around whe whole line because it is annoying to try and click on '/'and set seconds default to 2. Dominic
   end
 
   class NotFoundResponse < Response

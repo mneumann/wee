@@ -20,7 +20,6 @@ task :install do
   sh 'sudo gem install wee-2.2.0.gem'
 end
 
-
 task :package do
   sh 'gem build wee.gemspec' 
 end
@@ -28,3 +27,4 @@ end
 task :clean => [:clobber_rdoc]
 
 task :default => [:test, :rdoc, :clean]
+

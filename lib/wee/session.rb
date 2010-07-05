@@ -2,6 +2,7 @@ require 'thread'
 require 'wee/lru_cache'
 require 'wee/id_generator'
 require 'wee/renderer'
+require 'wee/response'
 
 module Wee
 
@@ -180,8 +181,10 @@ module Wee
           response = handle(env)
           sleep
           return response
+	rescue Exception => e	 #before this was added wee would just hang when there was an exception in Component.render
+	  return Response.new(Rack::ShowExceptions.new(application).pretty(env,e)).finish####
         ensure
-          Thread.current[:wee_session] = nil
+         Thread.current[:wee_session] = nil
         end
       else
         env['wee.session'] = self
@@ -219,6 +222,7 @@ module Wee
     #
     def handle(env)
       request = Wee::Request.new(env)
+	
       @request = request # CONTINUATIONS!
       page = @page_cache.fetch(request.page_id)
 

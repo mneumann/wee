@@ -47,6 +47,7 @@ def Wee.run(component_class=nil, params=nil, &block)
   params[:use_continuations] ||= false
   params[:print_message] ||= false
   params[:autoreload] ||= false
+  params[:server] ||= "WEBrick"
 
   if component_class <= Wee::RootComponent
     component_class.external_resources.each do |ext_res|
