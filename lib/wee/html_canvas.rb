@@ -214,7 +214,7 @@ module Wee
       if cbs.respond_to?("#{type}_callbacks")
         cbs.send("#{type}_callbacks").register(@current_component, callback)
       else
-        raise
+        raise "callbacks(#{cbs}.inspect) does not respond_to? (\"#{type}_callbacks\")"
       end
     end
 

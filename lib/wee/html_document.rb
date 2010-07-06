@@ -48,5 +48,38 @@ module Wee
     def to_s
       @port.join
     end
+
+#    def to_s
+ #     @port.join
+  #  end
+    public
+    alias_method :orig_to_s,:to_s
+    def to_s
+	#out insert new lines and indentation to make html human-readable
+	#start of tag gets new line & increase indent.
+	#closetag decrease indent
+	s = ""
+	indent = ""
+	intag = false
+	indent_str = "   "
+	@port.dup.each{|e|
+		if (e =~ /^<\w+$/) then #start of a tag.
+			s << indent << e
+			indent << indent_str
+			intag = true
+		elsif (e =~ /^<\/\w+>$/) then #start of a closing tag.
+			indent = indent.sub(indent_str,"") #sub only applies once. so removes the first indent_str from indent.
+			s << indent << e << "\n"
+		elsif e == ">" then #end of tag.
+			s << e << "\n"
+			intag = false
+		elsif intag #attributes of a starting tab.
+			s << e
+		else
+			s << indent << e << "\n"
+		end
+	}
+	s
+   end
   end
 end
