@@ -73,9 +73,16 @@ module Wee
 		elsif e == ">" then #end of tag.
 			s << e << "\n"
 			intag = false
+		elsif e =~ /^\s+\/>$/ then #closing a start tag. cancel indent
+			s << e << "\n"
+			intag = false
+			indent = indent.sub(indent_str,"") #sub only applies once. so removes the first indent_str from indent.
+
 		elsif intag #attributes of a starting tab.
+			puts "INTAG [#{e}]"
 			s << e
 		else
+			puts "OUTTAG #{e}"
 			s << indent << e << "\n"
 		end
 	}
