@@ -9,6 +9,15 @@ module Wee
   #
   class Component < Presenter
 
+	 # create a Wee::Application around this component, suitable for running in Rack::Builder.app
+	 def self.app (cc = true)
+	 	if cc then
+		  Wee::Application.new { Wee::Session.new(self.instanciate, Wee::Session::ThreadSerializer.new) }
+		else
+		  Wee::Application.new { Wee::Session.new(self.instanciate) }
+		end
+	end
+
     #
     # Constructs a new instance of the component.
     #
@@ -313,7 +322,6 @@ module Wee
         return *args
       end
     end
-
     protected :callcc
 
     #
@@ -334,7 +342,8 @@ module Wee
       callcc BlockComponent.new(&render_block)
     end
 
-    protected :call_inline
+ 	 #i'm unprotecting these because it breaks the ArcChallenge2 example
+	 # protected :call_inline
 
     #
     # Return from a called component.
@@ -347,7 +356,7 @@ module Wee
       raise AnswerDecoration::Answer.new(args)
     end
 
-    protected :answer
+   protected :answer
 
   end # class Component
 

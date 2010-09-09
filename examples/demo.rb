@@ -1,8 +1,10 @@
+puts File.open(__FILE__).path
+
 $LOAD_PATH.unshift "../lib"
 require 'rubygems'
 require 'wee'
 
-$LOAD_PATH.unshift "./demo"
+$LOAD_PATH.unshift "./examples/demo"
 require 'demo/calculator'
 require 'demo/counter'
 require 'demo/calendar'
