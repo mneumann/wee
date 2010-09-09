@@ -103,17 +103,18 @@ module Wee
       callbacks.input_callbacks.each_triggered_call_with_value(self)
 
       action_callback = nil
-
+      callback_child = nil
       # process callbacks of all children
       for child in self.children
         if act = child.decoration.process_callbacks(callbacks)
-          raise "Duplicate action callback in child" if action_callback
+          raise "Duplicate action callback in child: #{child}" if action_callback
+	  callback_child = child
           action_callback = act
         end
       end
 
       if act = callbacks.action_callbacks.first_triggered(self)
-        raise "Duplicate action callback in self" if action_callback
+        raise "Duplicate action callback in self, already one from #{callback_child}" if action_callback
         action_callback = act
       end
 

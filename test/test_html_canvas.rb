@@ -19,6 +19,13 @@ def new_canvas (doc,cbs = nil,req = nil)
 current_component=nil
    c = Wee::HtmlCanvas.new(session,request,response,callbacks,document,current_component)
 end
+
+  def assert_html_equal (expect,other, message = "")
+	
+	r = /#{expect.gsub(/\s+/,"\\s*")}/
+	assert r =~ other, "expected #{r}}  =~ #{other} \n#{message}"
+
+end
   def test_simple
 	
    doc = Wee::HtmlDocument.new
@@ -31,10 +38,8 @@ end
       }
       c.space
     }
-   puts doc.to_s
-
-   assert_equal %[<form method="POST" action="foo"> <table> <tr id="myrow"> <td align="top">Hello world</td></tr></table>&nbsp;</form>], doc.to_s
-#USER REGEXP's TO COMPARE THIS TO OTHER OUTPUT HTML IGNORING WHITESPACE.
+	string = %[<form [method="POST"|action="foo"| ]+> <table> <tr id="myrow"> <td align="top"> Hello world </td> </tr> </table> &nbsp; </form>]
+	assert_html_equal string, doc.to_s
   end
 def test_wrong_brushname
    doc = Wee::HtmlDocument.new
@@ -50,7 +55,7 @@ end
 def test_mock_callback
    doc = Wee::HtmlDocument.new
    cbs = Wee::Callbacks.new
-   req = flexmock(:build_url => "test/")
+   req = flexmock(:build_url => "test/") #THIS SETS UP THE ROUT BACK TO THE CALLBACK. MAY WANT A MORE FULL MOCK OF REQUEST.
 
 #      cb = flexmock("callbacks")
 #	sensor.should_receive(:"respond_to?").times(1).
@@ -60,8 +65,8 @@ def test_mock_callback
 	@callback = false
 	c.anchor.callback {@callback = true}.with("hello!")
 
-	puts cbs.inspect.split(" ").join("\n")
-	puts doc.to_s
+#	puts cbs.inspect.split(" ").join("\n")
+#	puts doc.to_s
 end
 
 end

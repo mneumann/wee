@@ -236,7 +236,8 @@ module Wee
         if request.render?
           return render(request, page).finish
         else # request.action?
-          return action(request, page).finish
+		#if everything is good, it will return a new RedirectResponse.
+          return action(request, page).finish  
         end
       else
         #
@@ -282,6 +283,8 @@ module Wee
     public :render_ajax_proc
 
     def render(request, page)
+	puts "RENDER!"
+
       r = Wee::Renderer.new
       r.session   = self
       r.request   = request
@@ -300,12 +303,13 @@ module Wee
       page.callbacks = r.callbacks
       return r.response
     end
-
+	#the request fields are passed into the 
     def action(request, page)
       @current_page = nil
-
+	puts "ACTION!"
       begin
         @page = page # CONTINUATIONS!
+	#puts request.fields
         action_callback = page.callbacks.with_triggered(request.fields) do
           @root_component.decoration.process_callbacks(page.callbacks)
         end
