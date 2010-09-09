@@ -1,4 +1,4 @@
-require 'wee/component'
+	require 'wee/component'
 require 'wee/external_resource'
 
 module Wee

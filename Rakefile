@@ -17,7 +17,10 @@ task :test do
 end
 
 task :install do
-  sh 'sudo gem install wee-2.2.0.gem'
+unless File.read('lib/wee.rb') =~ /Version\s+=\s+"(\d+\.\d+\.\d+)"/
+  raise "no version"
+end
+  sh "sudo gem install wee-#{$1}.gem"
 end
 
 task :package do

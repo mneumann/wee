@@ -211,7 +211,7 @@ module Wee
 
     def register_callback(type, callback)
       cbs = @callbacks
-      if cbs.respond_to?("#{type}_callbacks")
+      if cbs.respond_to?("#{type}_callbacks")#type is either action or input... funny way to do it.
         cbs.send("#{type}_callbacks").register(@current_component, callback)
       else
         raise "callbacks(#{cbs}.inspect) does not respond_to? (\"#{type}_callbacks\")"

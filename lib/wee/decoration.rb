@@ -236,14 +236,14 @@ module Wee
     def global?() true end
 
     def render(r)
-      r.page.title(@title).head {
+     r.page.title(@title).head {
         @stylesheets.each {|s| r.link_css(s) }
         @javascripts.each {|j| r.javascript.src(j) }
         r.style.type('text/css').with { r.define_divert(:styles) }
-        r.javascript.with { r.define_divert(:javascripts) }
+ 		  r.javascript.with { r.define_divert(:javascripts) }
       }.with {
         render_inner(r)
-      }
+    }
     end
 
   end # class PageDecoration

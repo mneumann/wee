@@ -13,6 +13,7 @@ module Wee
     attr_accessor :page_id
 
     def initialize(env)
+	#puts env.inspect.gsub(", ",",\n")
       super(env)
       @fields = self.params
       @session_id = @fields.delete("_s")
@@ -36,6 +37,8 @@ module Wee
       page_id = hash.has_key?(:page_id) ? hash[:page_id] : @page_id
       callback_id = hash[:callback_id]
       info = hash.has_key?(:info) ? hash[:info] : @info
+
+      puts "callback_id: #{callback_id}"
 
       raise ArgumentError if session_id.nil? and not page_id.nil?
       raise ArgumentError if page_id.nil? and not callback_id.nil?
