@@ -117,7 +117,8 @@ module Wee
     EVENTS = {:click => 'onclick'.freeze,
               :dblclick => 'ondblclick'.freeze,
               :mouseover => 'onmouseover'.freeze,
-              :mouseout => 'onmouseout'.freeze}.freeze
+              :mouseout => 'onmouseout'.freeze,
+              :change => 'onchange'.freeze}.freeze
 
     def javascript_on(event, javascript)
       ev = EVENTS[event] 
