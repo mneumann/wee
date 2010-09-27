@@ -69,6 +69,10 @@ def Wee.run(component_class=nil, params=nil, &block)
     map params[:mount_path] do
       a = Wee::Application.new(&block)
 
+      if params[:auth_basic]
+        a = Rack::Auth::Basic.new(a, params[:auth_realm] || 'Wee App', &params[:auth_basic])
+      end
+
       if params[:autoreload]
         if params[:autoreload].kind_of?(Integer)
           timer = Integer(params[:autoreload])
