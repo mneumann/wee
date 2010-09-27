@@ -69,6 +69,12 @@ def Wee.run(component_class=nil, params=nil, &block)
     map params[:mount_path] do
       a = Wee::Application.new(&block)
 
+      if params[:auth_md5]
+        a = Rack::Auth::Digest::MD5.new(a, &params[:auth_md5])
+        a.realm = params[:auth_realm] || 'Wee App'
+        a.opaque = params[:auth_md5_opaque] || Wee::IdGenerator::Secure.new.next
+      end
+
       if params[:auth_basic]
         a = Rack::Auth::Basic.new(a, params[:auth_realm] || 'Wee App', &params[:auth_basic])
       end
