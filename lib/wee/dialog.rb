@@ -106,6 +106,51 @@ module Wee
     end
   end # class SingleSelectionDialog
 
+  class TextInputDialog < Wee::FormDialog
+    attr_accessor :text
+
+    def initialize(caption=nil, text="", size=50)
+      super(caption)
+      @text = text
+      @size = size
+    end
+
+    def state(s) super
+      s.add_ivar(self, :@text)
+    end
+
+    def render_body(r)
+      r.text_input.size(@size).callback_method(:set_text).value(@text || "")
+    end
+
+    def set_text(text)
+      @text = text.strip
+    end
+
+    def buttons
+      [['Ok', nil, :ok, :ok], ['Cancel', nil, :cancel, :cancel]]
+    end
+
+    def ok
+      answer @text
+    end
+
+    def cancel
+      answer nil
+    end
+  end # class TextInputDialog 
+
+  class TextAreaDialog < TextInputDialog
+    def initialize(caption=nil, text="", cols=50, rows=5)
+      super(caption, text, cols)
+      @rows = rows
+    end
+
+    def render_body(r)
+      r.text_area.cols(@size).rows(@rows).callback_method(:set_text).with(@text || "")
+    end
+  end # class TextAreaDialog
+
   #
   # Extend class Component with shortcuts for the dialogs above
   #
