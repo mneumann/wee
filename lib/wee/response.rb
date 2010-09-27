@@ -10,10 +10,13 @@ module Wee
   class GenericResponse < Response
     EXPIRE_OFFSET = 3600*24*365*20   # 20 years
     EXPIRES_HEADER = 'Expires'.freeze
+    CONTENT_TYPE_HEADER = 'Content-Type'.freeze
+    CONTENT_TYPE = 'text/html; charset=UTF-8'.freeze
 
     def initialize(*args)
       super
       self[EXPIRES_HEADER] ||= (Time.now + EXPIRE_OFFSET).rfc822
+      self[CONTENT_TYPE_HEADER] = CONTENT_TYPE 
     end
   end
 
