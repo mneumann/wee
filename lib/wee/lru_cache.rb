@@ -4,21 +4,16 @@ module Wee
   # Implementation of a Least Recently Used (LRU) Cache
   #
   class LRUCache
-    class Item
-      attr_accessor :value, :time
 
-      def initialize(value=nil, time=nil)
-        @value, @time = value, time
-      end
-
-      def <=>(other)
-        @time <=> other.time
-      end
+    #
+    # Common interface for all items
+    #
+    module Item
+      attr_accessor :lru_time
     end
 
-    def initialize(capacity=20, &replace_callback)
+    def initialize(capacity=20)
       @capacity = capacity
-      @replace_callback = replace_callback
       @store = Hash.new
       @time = 0
     end
@@ -31,62 +26,63 @@ module Wee
       @store.delete(key)
     end
 
-    def delete_if
-      @store.delete_if {|id, item|
-        yield id, item.value
-      }
+    def delete_if(&block)
+      @store.delete_if(&block)
     end
 
     def fetch(key, default_value=nil)
       if item = @store[key]
-        item.time = (@time += 1)
-        item.value
+        touch(item)
+        item
       else
         default_value
       end
     end
 
-    def store(key, value)
-      if item = @store[key]
-        # update item only
-        item.time = (@time += 1)
-        item.value = value
-      else
-        # insert new item
-        item = Item.new
-        item.time = (@time += 1)
-        item.value = value
-        garbage_collect() if @store.size >= @capacity
-        while @store.size >= @capacity
-          old_item = @store.delete(min_key()) || raise
-          @replace_callback.call(old_item) if @replace_callback
-        end
-        @store[key] = item
-      end
+    def store(key, item)
+      touch(item)
+      compact()
+      @store[key] = item
     end
 
+    protected
+
+    #
+    # Is called whenever an item is looked up or stored to update it's
+    # timestamp to maintain least recently used information.
+    #
+    def touch(item)
+      item.lru_time = (@time += 1)
+    end
+
+    #
+    # Is called for each item that is replaced from cache. Overwrite.
+    #
+    def purge(item)
+    end
+
+    #
+    # Is called before replacing old items in order to remove items
+    # known-to-be no longer in use. Overwrite.
+    #
     def garbage_collect
     end
 
-    def each(&block)
-      @store.each(&block)
+    #
+    # Replaces old items and makes place for new.
+    #
+    def compact
+      garbage_collect() if @store.size >= @capacity
+      while @store.size >= @capacity
+        purge(@store.delete(min_key()) || raise)
+      end
     end
-
-    alias [] fetch
-    alias []= store
-
-    protected
 
     #
     # Returns the key of the minimum item
     #
     def min_key
-      min_k, min_time = nil, @time
-      @store.each {|k, v|
-        if v.time < min_time 
-          min_k, min_time = k, v.time
-        end
-      }
+      min_k, _ = @store.min_by {|_, item| item.lru_time}
       return min_k
     end
 

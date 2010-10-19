@@ -7,6 +7,8 @@ module Wee
 
   class Session
 
+    include LRUCache::Item
+
     #
     # The default serializer, when no continuations are going to be used.
     # Ensures that only one request of the same session is executed at
@@ -47,6 +49,7 @@ module Wee
 
     class Page
       attr_accessor :id, :state, :callbacks
+      include LRUCache::Item
       def initialize(id=nil, state=nil, callbacks=nil)
         @id, @state, @callbacks = id, state, callbacks
       end
@@ -241,7 +244,7 @@ module Wee
         #
         @initial_state ||= take_snapshot() 
         new_page = Page.new(@page_ids.next, @initial_state, nil) 
-        @page_cache[new_page.id] = new_page
+        @page_cache.store(new_page.id, new_page)
 
         url = request.build_url(:page_id => new_page.id)
         if request.page_id
@@ -330,7 +333,7 @@ module Wee
           #
           @current_page = page
           page.state = take_snapshot()
-          @page_cache[page.id] = page
+          @page_cache.store(page.id, page)
           return abort.response
         else
           # pass on - this is a premature response from Component#call
@@ -342,7 +345,7 @@ module Wee
       # create new page (state)
       #
       new_page = Page.new(@page_ids.next, take_snapshot(), nil) 
-      @page_cache[new_page.id] = new_page
+      @page_cache.store(new_page.id, new_page)
       @current_page = new_page
 
       url = request.build_url(:page_id => new_page.id)

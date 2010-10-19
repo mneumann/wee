@@ -47,7 +47,7 @@ module Wee
       request = Wee::Request.new(env)
 
       if request.session_id
-        session = @mutex.synchronize { @sessions[request.session_id] }
+        session = @mutex.synchronize { @sessions.fetch(request.session_id) }
         if session and session.alive?
           session.call(env)
         else
@@ -74,8 +74,8 @@ module Wee
       retries.times do
         @mutex.synchronize {
           id = @session_ids.next
-          if @sessions[id].nil?
-            @sessions[id] = session 
+          if not @sessions.has_key?(id)
+            @sessions.store(id, session)
             session.id = id
             return
           end
