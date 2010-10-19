@@ -44,7 +44,7 @@ def Wee.run(component_class=nil, params=nil, &block)
   params[:port] ||= 2000
   params[:public_path] ||= nil
   params[:additional_builder_procs] ||= []
-  params[:use_continuations] ||= false
+  params[:use_continuations] ||= true
   params[:print_message] ||= false
   params[:autoreload] ||= false
 
@@ -106,13 +106,4 @@ def Wee.run(component_class=nil, params=nil, &block)
   end
 
   Rack::Handler::WEBrick.run(app, :Port => params[:port])
-end
-
-#
-# Like Wee.run, but for use with continuations.
-#
-def Wee.runcc(component_class, params=nil)
-  params ||= Hash.new
-  params[:use_continuations] = true
-  Wee.run(component_class, params)
 end

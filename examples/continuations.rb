@@ -25,4 +25,4 @@ class MainPage < Wee::Component
 
 end
 
-Wee.runcc(MainPage)
+Wee.run(MainPage)

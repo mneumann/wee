@@ -127,10 +127,9 @@ end
 
 if __FILE__ == $0
   if ARGV[0] == "cc"
-    # Enable continuation demos
     $cc = true 
-    Wee.runcc(Demo)
-  else
     Wee.run(Demo)
+  else
+    Wee.run(Demo, :use_continuations => false)
   end
 end

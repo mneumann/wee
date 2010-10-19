@@ -24,4 +24,4 @@ class CheeseTask < Wee::Task
   end
 end
 
-Wee.runcc(CheeseTask) if __FILE__ == $0
+Wee.run(CheeseTask) if __FILE__ == $0

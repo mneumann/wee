@@ -43,4 +43,4 @@ class ArcChallenge < Wee::Task
   end
 end
 
-Wee.runcc(ArcChallenge) if __FILE__ == $0
+Wee.run(ArcChallenge) if __FILE__ == $0
