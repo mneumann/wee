@@ -2,7 +2,7 @@ $LOAD_PATH.unshift "../lib"
 require 'rubygems'
 require 'wee'
 
-$LOAD_PATH.unshift "./demo"
+$LOAD_PATH.unshift "."
 require 'demo/calculator'
 require 'demo/counter'
 require 'demo/calendar'
