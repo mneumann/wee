@@ -1,4 +1,5 @@
 module Wee
+  DEFAULT_ADAPTER = :WEBrick
   Version = "2.2.0"
 end
 
@@ -40,6 +41,7 @@ def Wee.run(component_class=nil, params=nil, &block)
   raise ArgumentError if component_class and block
 
   params ||= Hash.new
+  params[:adapter] ||= Wee::DEFAULT_ADAPTER
   params[:mount_path] ||= '/'
   params[:port] ||= 2000
   params[:public_path] ||= nil
@@ -49,12 +51,12 @@ def Wee.run(component_class=nil, params=nil, &block)
   params[:autoreload] ||= false
 
   if component_class <= Wee::RootComponent
-    component_class.external_resources.each do |ext_res|  
+    component_class.external_resources.each do |ext_res|
       params[:additional_builder_procs] << proc {|builder| ext_res.install(builder)}
     end
   end
 
-  raise ArgumentError if params[:use_continuations] and block 
+  raise ArgumentError if params[:use_continuations] and block
 
   unless block
     block ||= if params[:use_continuations]
@@ -85,7 +87,7 @@ def Wee.run(component_class=nil, params=nil, &block)
         else
           timer = 0
         end
-        use Rack::Reloader, timer 
+        use Rack::Reloader, timer
       end
 
       if params[:public_path]
@@ -105,5 +107,15 @@ def Wee.run(component_class=nil, params=nil, &block)
     io.puts
   end
 
-  Rack::Handler::WEBrick.run(app, :Port => params[:port])
+  adapter_class = nil
+
+  Rack::Handler.constants.each do |adapter|
+    if adapter.to_s.downcase == params[:adapter].to_s.downcase
+      adapter_class = Rack::Handler.const_get(adapter)
+      adapter_class = nil unless adapter_class.respond_to?(:run)
+      break if adapter_class
+    end
+  end
+  adapter_class = Rack::Handler.const_get(Wee::DEFAULT_ADAPTER) unless adapter_class
+  adapter_class.send(:run, app, :Port => params[:port])
 end
