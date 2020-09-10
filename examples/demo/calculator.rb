@@ -1,4 +1,4 @@
-require 'demo/messagebox'
+require_relative 'messagebox'
 
 class Calculator < Wee::Component
   def initialize

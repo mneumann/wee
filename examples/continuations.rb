@@ -1,7 +1,5 @@
-$LOAD_PATH.unshift "../lib"
-require 'rubygems'
 require 'wee'
-require 'demo/messagebox'
+require_relative 'demo/messagebox'
 
 class MainPage < Wee::Component
 

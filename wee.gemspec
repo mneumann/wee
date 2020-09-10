@@ -1,26 +1,39 @@
-require 'rubygems'
+require_relative 'lib/wee/version'
 
-if File.read('lib/wee.rb') =~ /Version\s+=\s+"(\d+\.\d+\.\d+)"/
-  version = $1 
-else
-  raise "no version"
-end
+Gem::Specification.new do |spec|
+  spec.name          = "wee"
+  spec.version       = Wee::VERSION
+  spec.platform      = Gem::Platform::RUBY
+  spec.authors       = ["Michael Neumann"]
+  spec.email         = ["mneumann@ntecs.de"]
 
-spec = Gem::Specification.new do |s|
-  s.name = 'wee'
-  s.version = version 
-  s.summary = 'Wee is a framework for building highly dynamic web applications.'
-  s.description = 
-    "Wee is a stateful component-orient web framework which supports "
-    "continuations as well as multiple page-states, aka backtracking. "
-    "It is largely inspired by Smalltalk's Seaside framework."
-  s.add_dependency('rack', '>= 1.0.0')
-  s.add_dependency('mspec', '>= 1.5.9')
-  s.add_dependency('fast_gettext', '>= 0.4.17')
-  s.files = Dir['**/*']
-  s.require_path = 'lib'
-  s.author = "Michael Neumann"
-  s.email = "mneumann@ntecs.de"
-  s.homepage = "http://rubyforge.org/projects/wee"
-  s.rubyforge_project = "wee"
+  spec.summary       = 'Wee is a framework for building highly dynamic web applications.'
+  spec.description   = <<~EOF
+    Wee is a stateful component-orient web framework which supports
+    continuations as well as multiple page-states, aka backtracking.
+    It is largely inspired by Smalltalk's Seaside framework.
+  EOF
+  spec.homepage      = "https://github.com/mneumann/wee"
+  spec.license       = "MIT"
+
+  # spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
+
+  spec.metadata["homepage_uri"] = spec.homepage
+  spec.metadata["source_code_uri"] = "https://github.com/mneumann/wee"
+  spec.metadata["changelog_uri"] = "https://raw.githubusercontent.com/mneumann/wee/master/CHANGELOG.rdoc"
+
+  # Specify which files should be added to the gem when it is released.
+  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
+  spec.files         = Dir.chdir(File.expand_path('..', __FILE__)) do
+    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  end
+  spec.bindir        = "exe"
+  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.require_path  = "lib"
+
+  spec.add_development_dependency "bundler"
+  spec.add_development_dependency "rake"
+
+  spec.add_dependency('rack', '~> 2.0')
+  spec.add_dependency('fast_gettext', '>= 0.4.17')
 end

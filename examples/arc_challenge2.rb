@@ -6,8 +6,6 @@
 # http://onestepback.org/index.cgi/Tech/Ruby/ArcChallenge.red
 #
 
-$LOAD_PATH.unshift "../lib"
-require 'rubygems'
 require 'wee'
 
 class Wee::IO

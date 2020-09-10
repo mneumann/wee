@@ -1,6 +1,6 @@
 # NEEDS: FormDecoration
 
-require 'demo/counter'
+require_relative 'counter'
 
 class EditableCounter < Counter 
 

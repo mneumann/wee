@@ -1,10 +1,7 @@
-$LOAD_PATH.unshift "../lib"
-require 'rubygems'
 require 'wee'
-
-require 'demo/window'
-require 'demo/editable_counter'
-require 'demo/messagebox'
+require_relative 'window'
+require_relative 'editable_counter'
+require_relative 'messagebox'
 
 class RegexpValidatedInput < Wee::Component
 
