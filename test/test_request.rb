@@ -1,5 +1,4 @@
 require 'test/unit'
-module Wee; end
 require 'wee/request'
 
 class Test_Request < Test::Unit::TestCase

@@ -1,9 +1,5 @@
 require 'test/unit'
-module Wee; end
-require 'wee/renderer/html/writer'
-require 'wee/renderer/html/brushes'
-require 'wee/renderer/html/canvas'
-require 'wee/context'
+require 'wee'
 
 class Test_HtmlCanvas < Test::Unit::TestCase
   def test_simple

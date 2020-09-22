@@ -1,6 +1,5 @@
 require 'test/unit'
-module Wee; end
-require 'wee/core'
+require 'wee'
 
 class Test_Component < Test::Unit::TestCase
   def test_add_remove_one_decoration
@@ -102,5 +101,4 @@ class Test_Component < Test::Unit::TestCase
 
     assert_equal c, c.decoration
   end
-
 end
