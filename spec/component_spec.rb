@@ -6,11 +6,11 @@ describe Wee::Component, "when first created" do
   end
 
   it "should have no children" do
-    @component.children.should be_empty
+    expect(@component.children).to be_empty
   end
 
   it "should have no decoration" do
-    @component.decoration.should == @component 
+    expect(@component.decoration).to eq(@component)
   end
 end
 
@@ -22,19 +22,19 @@ describe Wee::Component, "after adding one decoration" do
   end
 
   it "should point to the added decoration" do
-    @component.decoration.should == @decoration
+    expect(@component.decoration).to eq(@decoration)
   end
 
   it "the added decoration should point back to the component" do
-    @component.decoration.next.should == @component
+    expect(@component.decoration.next).to eq(@component)
   end
 
   it "should return decoration after removing it" do
-    @component.remove_decoration(@decoration).should == @decoration
+    expect(@component.remove_decoration(@decoration)).to eq(@decoration)
   end
 
   it "should have no decoration after removing it" do
     @component.remove_decoration(@decoration)
-    @component.decoration.should == @component 
+    expect(@component.decoration).to eq(@component)
   end
 end
